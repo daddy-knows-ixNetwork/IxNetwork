@@ -1,3 +1,81 @@
-*pycache*
+# Python
+# Byte-code files
 *.pyc
-*.log
+__pycache__/
+
+# Distribution / Packaging
+.Python
+build/
+dist/
+wheels/
+*.egg-info/
+*.egg
+
+# Virtual environments
+venv/
+env/
+# if you use virtualenvwrapper, add this
+.virtualenvs/
+# if you use pipenv, add this
+.venv/
+
+# Environment variables
+.env
+.flaskenv
+
+# Editors/IDEs
+.project
+.idea/  # For PyCharm
+.vscode/ # For VS Code (consider only ignoring user-specific files)
+*.swp
+*~
+*.bak
+*.tmp
+
+# System
+.DS_Store # macOS
+Thumbs.db # Windows
+
+# Specific directories for various tools/frameworks
+# Tox
+.tox/
+# Coverage
+.coverage
+.coverage.*
+htmlcov/
+# Sphinx documentation
+docs/_build/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Ruff cache
+.ruff_cache
+
+# Tcl
+# Tcl/Tk specific
+*.o
+*.so
+*.dll
+*.a
+*.dylib
+*.bak
+*.tmp
+tags
+
+# Build artifacts
+Makefile
+config.log
+config.status
+config.cache
+autom4te.cache/
+
+# Editor/OS specific
+.DS_Store
+*~
+*.swp
+.vscode/
+.idea/
+
+# IxNetwork Linux API Server binary
+IxNetworkAPI*

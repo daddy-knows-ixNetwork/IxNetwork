@@ -1,3 +1,18 @@
+# IxNetwork for Human
+
+## How to get started
+
+```
+sajang@macpro:~/supports/IxNetwork$ docker compose build
+sajang@macpro:~/supports/IxNetwork$ docker compose run --rm ixnetwork
+ubuntu@d7a13ee8e448:/IxNetwork$ ls
+Dockerfile    IxNetworkAPI11.00.2407.37Linux64.bin  LowLevelApi  RestApi  Utilities  docker-compose.yaml
+HighLevelApi  LICENSE                               Readme       RestPy   VM
+ubuntu@d7a13ee8e448:/IxNetwork$sajang@macpro:~/supports/IxNetwork$
+```
+
+# The orginal README from the upstream
+
 PlEASE READ:
 
 The IxNetRestApi library in this level /IxNetwork/RestApi is deprecated in favor of using /IxNetwork/RestPy.
