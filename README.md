@@ -11,37 +11,39 @@ seunyang@SY-ubuntu24:~/supports/IxNetwork$ docker compose build
  => resolving provenance for metadata file  
 [+] build 1/1
  ✔ Image ghcr.io/daddy-knows-ixnetwork/ixnetwork:main Built  
+seunyang@SY-ubuntu24:~/supports/IxNetwork$
 seunyang@SY-ubuntu24:~/supports/IxNetwork$ docker compose run --rm ixnetwork
-Container ixnetwork-ixnetwork-run-44b92091e841 Creating 
-Container ixnetwork-ixnetwork-run-44b92091e841 Created 
-ubuntu@655794ae48c4:/IxNetwork$ python HighLevelApi/Ngpf/Python/Traffic/demo_ngpf_traffic.py 
+Container ixnetwork-ixnetwork-run-5bbc2e1f77b2 Creating 
+Container ixnetwork-ixnetwork-run-5bbc2e1f77b2 Created 
+ubuntu@319964059de2:/IxNetwork$ python HighLevelApi/Ngpf/Python/Traffic/demo_ngpf_traffic.py 
 ixiatcl:info: Tcl version: 8.6.12
 Tcl 8.6 is installed on 64bit architecture.
-IXIA_VERSION env variable is set to 26.0, but this value is not matching any HLTSET. Using default HLTSET (HLTSET289) instead.
-Using products based on HLTSET289
+Using products based on: HLTSET289
 IxTclHal is not be used for current HLTSET.
 Loaded IxTclNetwork 26.0.2601.6
 Mpexpr is not installed.
 HLT release 26.0.2601.5
 Loaded ixia_hl_lib-26.0 
+Connecting to IxNetwork Tcl Server 10.36.94.244 -apiKey XXXXXXXXXX -clientId {HLAPI-Tcl} ...
+.
 .
 .
 .
 ==== flow count:   2
 ==== flow:  2  ====
-        tx total_pkts:  82305995
-        rx total_pkts:  82305995
+        tx total_pkts:  99634411
+        rx total_pkts:  99634411
         rx loss_pkts:  0
 ==== flow:  1  ====
-        tx total_pkts:  82305995
-        rx total_pkts:  82305995
+        tx total_pkts:  99634411
+        rx total_pkts:  99634411
         rx loss_pkts:  0
 
----Flow 1 RX total_pkts:  82305995
+---Flow 1 RX total_pkts:  99634411
 
 
 Script ended SUCCESSFULLY!
-ubuntu@655794ae48c4:/IxNetwork$
+ubuntu@319964059de2:/IxNetwork$
 ```
 
 # The orginal README from the upstream
