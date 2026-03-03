@@ -4,6 +4,13 @@
 
 ```
 seunyang@SY-ubuntu24:~/supports/IxNetwork$ docker compose build
+.
+.
+.
+.
+ => resolving provenance for metadata file  
+[+] build 1/1
+ ✔ Image ghcr.io/daddy-knows-ixnetwork/ixnetwork:main Built  
 seunyang@SY-ubuntu24:~/supports/IxNetwork$ docker compose run --rm ixnetwork
 Container ixnetwork-ixnetwork-run-44b92091e841 Creating 
 Container ixnetwork-ixnetwork-run-44b92091e841 Created 
