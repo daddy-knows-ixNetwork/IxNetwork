@@ -1,4 +1,4 @@
-# IxNetwork for Human
+# IxNetwork for Humans
 
 ## How to get started
 
