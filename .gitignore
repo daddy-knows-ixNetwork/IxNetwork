@@ -79,3 +79,4 @@ autom4te.cache/
 
 # IxNetwork Linux API Server binary
 IxNetworkAPI*
+api.key

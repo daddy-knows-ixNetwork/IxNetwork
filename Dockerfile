@@ -57,7 +57,8 @@ RUN set -ex && \
     python-is-python3 \
     python3-setuptools \
     python3-pip \
-    python3-tk && \
+    python3-tk \
+    tcl tcltls tcllib tcl-dev tclx && \
     echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME && \
     chmod 0440 /etc/sudoers.d/$USERNAME
 
@@ -97,14 +98,14 @@ ENV LANG "en_US.UTF-8"
 #sudo usermod -aG docker ${USERNAME} && \
 #sudo usermod -aG root ${USERNAME}
 
-#RUN sudo rm -rf /var/lib/apt/lists/*
-#RUN sudo apt clean
+RUN rm -rf /var/lib/apt/lists/*
+RUN apt clean
 
 
-# https://downloads.ixiacom.com/support/downloads_and_updates/public/IxNetwork/11.00-Update1/11.00.2407.67/IxNetworkAPI11.00.2407.37Linux64.bin.tgz
-COPY IxNetworkAPI11.00.2407.37Linux64.bin /IxNetwork/IxNetworkAPI11.00.2407.37Linux64.bin
-RUN bash /IxNetwork/IxNetworkAPI11.00.2407.37Linux64.bin -i silent && \
-    pip install --no-cache-dir -r /opt/ixia/ixnetwork/11.00.2407.37/lib/PythonApi/requirements.txt
+COPY IxNetworkAPI26.0.2601.6PI.tar.gz ${WORKDIR}/IxNetworkAPI26.0.2601.6PI.tar.gz
+RUN tar xvzf ${WORKDIR}/IxNetworkAPI26.0.2601.6PI.tar.gz -C /opt && \
+    pip install -r /opt/ixia/ixnetwork/26.0.2601.6/lib/PythonApi/requirements.txt
+
 
 USER $USERNAME
 ENV HOME "/home/${USERNAME}"
