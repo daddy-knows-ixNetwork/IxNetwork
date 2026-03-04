@@ -101,10 +101,12 @@ ENV LANG "en_US.UTF-8"
 RUN rm -rf /var/lib/apt/lists/*
 RUN apt clean
 
-ADD IxNetworkAPI26.0.2601.6PI.tar.gz /opt/
-RUN pip install -r /opt/ixia/ixnetwork/26.0.2601.6/lib/PythonApi/requirements.txt
-ADD IxNetworkAPI11.10.2508.10PI.tar.gz /opt11.10/
-ADD IxNetworkAPI11.00.2504.10PI.tar.gz /opt11.00/
+#ADD IxNetworkAPI26.0.2601.6PI.tar.gz /opt/
+#ADD IxNetworkAPI11.00.2504.10PI.tar.gz /opt11.00/
+#RUN pip install -r /opt/ixia/ixnetwork/26.0.2601.6/lib/PythonApi/requirements.txt
+#ADD IxNetworkAPI26.0.2601.6PI.tar.gz /opt/
+ADD IxNetworkAPI11.10.2508.10PI.tar.gz /opt/
+RUN pip install -r /opt/ixia/ixnetwork/11.10.2508.10/lib/PythonApi/requirements.txt
 
 USER $USERNAME
 ENV HOME "/home/${USERNAME}"
