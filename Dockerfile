@@ -58,7 +58,7 @@ RUN set -ex && \
     python3-setuptools \
     python3-pip \
     python3-tk \
-    tcl tcltls tcllib tcl-dev tclx && \
+    tcl tcltls tcllib tcl-dev tclx  && \
     echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME && \
     chmod 0440 /etc/sudoers.d/$USERNAME
 
@@ -101,11 +101,10 @@ ENV LANG "en_US.UTF-8"
 RUN rm -rf /var/lib/apt/lists/*
 RUN apt clean
 
-
-COPY IxNetworkAPI26.0.2601.6PI.tar.gz ${WORKDIR}/IxNetworkAPI26.0.2601.6PI.tar.gz
-RUN tar xvzf ${WORKDIR}/IxNetworkAPI26.0.2601.6PI.tar.gz -C /opt && \
-    pip install -r /opt/ixia/ixnetwork/26.0.2601.6/lib/PythonApi/requirements.txt
-
+ADD IxNetworkAPI26.0.2601.6PI.tar.gz /opt/
+RUN pip install -r /opt/ixia/ixnetwork/26.0.2601.6/lib/PythonApi/requirements.txt
+ADD IxNetworkAPI11.10.2508.10PI.tar.gz /opt11.10/
+ADD IxNetworkAPI11.00.2504.10PI.tar.gz /opt11.00/
 
 USER $USERNAME
 ENV HOME "/home/${USERNAME}"

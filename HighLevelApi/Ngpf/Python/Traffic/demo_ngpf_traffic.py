@@ -87,9 +87,12 @@ except (NameError,):
         raise IxiaError(IxiaError.COMMAND_FAIL, additional_info)
 
 
-chassis_ip = "10.36.88.71"
-ixnetwork_tcl_server = '10.36.94.244'  
-port_list = ['8/3', '8/4']     
+#chassis_ip = "10.36.88.71"
+chassis_ip = "10.36.88.110"
+#ixnetwork_tcl_server = '10.36.94.244'  
+ixnetwork_tcl_server = '10.36.94.229'  
+#port_list = ['8/3', '8/4']     
+port_list = ['1/1', '1/2']     
 cfgErrors = 0
 
 
