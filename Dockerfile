@@ -2,6 +2,8 @@
 # switching back to 22.04 due to 24.04 does not allow pip install as root
 # will switch back to 24.04 after testing virtualenv with uv
 FROM ubuntu:22.04
+# ubuntu 22.04 requires creating ubuntu user
+# will remove when switching to 24.04
 ARG USERNAME=ubuntu
 ARG USER_UID=1000
 ARG USER_GID=1000
@@ -62,18 +64,32 @@ RUN set -ex && \
     echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME && \
     chmod 0440 /etc/sudoers.d/$USERNAME
 
-# set environmental variables
-#USER $USERNAME
-#ENV HOME "/home/${USERNAME}"
+RUN rm -rf /var/lib/apt/lists/*
+RUN apt clean
 
-
+USER $USERNAME
+ENV HOME "/home/${USERNAME}"
 ENV LC_ALL "C.UTF-8"
 ENV LANG "en_US.UTF-8"
 
-# uv
-#RUN set -ex && \
-#    curl -LsSf https://astral.sh/uv/install.sh | sh
+# pyenv
+ENV PYENV_ROOT "${HOME}/.pyenv"
+ENV PATH "${HOME}/.pyenv/shims:${HOME}/.pyenv/bin:${PATH}"
+RUN echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+RUN echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
+#
+RUN set -ex && \
+    curl https://pyenv.run | bash && \
+    pyenv install 3.14 && \
+    pyenv global 3.14 && \
+    pip install --upgrade pip
 
+RUN set -ex && \
+    # ansible, uv, pre-commit
+    pip install \
+    ansible \
+    uv \
+    pre-commit
 
 # ohmybash
 #RUN set -ex && \
@@ -92,23 +108,18 @@ ENV LANG "en_US.UTF-8"
 #    echo 'alias k=kubectl' >> ~/.bashrc
 
 # inherited from ubuntu 22.04 ssh rsa does not work for pakcer-provisioner-ansible; let's add temporary workaround
-#RUN set -ex && \
-#    echo '    PubkeyAcceptedKeyTypes +ssh-rsa' | sudo tee -a /etc/ssh/ssh_config && \
-#    echo '    HostKeyAlgorithms +ssh-rsa' | sudo tee -a /etc/ssh/ssh_config
+RUN set -ex && \
+    echo '    PubkeyAcceptedKeyTypes +ssh-rsa' | sudo tee -a /etc/ssh/ssh_config && \
+    echo '    HostKeyAlgorithms +ssh-rsa' | sudo tee -a /etc/ssh/ssh_config
 #sudo usermod -aG docker ${USERNAME} && \
 #sudo usermod -aG root ${USERNAME}
 
-RUN rm -rf /var/lib/apt/lists/*
-RUN apt clean
-
-#ADD IxNetworkAPI26.0.2601.6PI.tar.gz /opt/
-#ADD IxNetworkAPI11.00.2504.10PI.tar.gz /opt11.00/
-#RUN pip install -r /opt/ixia/ixnetwork/26.0.2601.6/lib/PythonApi/requirements.txt
-#ADD IxNetworkAPI26.0.2601.6PI.tar.gz /opt/
+ADD IxNetworkAPI26.0.2601.6PI.tar.gz /opt/
+RUN pip install -r /opt/ixia/ixnetwork/26.0.2601.6/lib/PythonApi/requirements.txt
+# By default, pip install the requirements from 26.0 that's the same requirements.txt for the 11.xx release
 ADD IxNetworkAPI11.10.2508.10PI.tar.gz /opt/
-RUN pip install -r /opt/ixia/ixnetwork/11.10.2508.10/lib/PythonApi/requirements.txt
-
-USER $USERNAME
-ENV HOME "/home/${USERNAME}"
+ADD IxNetworkAPI11.00.2504.10PI.tar.gz /opt/
+# different requirements.txt for 10.00
+ADD IxNetworkAPI10.00.2312.4PI.tar.gz /opt/
 
 WORKDIR ${WORKDIR}

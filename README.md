@@ -8,14 +8,14 @@ seunyang@SY-ubuntu24:~/supports/IxNetwork$ docker compose build
 .
 .
 .
- => resolving provenance for metadata file  
+ => resolving provenance for metadata file
 [+] build 1/1
- ✔ Image ghcr.io/daddy-knows-ixnetwork/ixnetwork:main Built  
+ ✔ Image ghcr.io/daddy-knows-ixnetwork/ixnetwork:main Built
 seunyang@SY-ubuntu24:~/supports/IxNetwork$
 seunyang@SY-ubuntu24:~/supports/IxNetwork$ docker compose run --rm ixnetwork
-Container ixnetwork-ixnetwork-run-5bbc2e1f77b2 Creating 
-Container ixnetwork-ixnetwork-run-5bbc2e1f77b2 Created 
-ubuntu@319964059de2:/IxNetwork$ python HighLevelApi/Ngpf/Python/Traffic/demo_ngpf_traffic.py 
+Container ixnetwork-ixnetwork-run-5bbc2e1f77b2 Creating
+Container ixnetwork-ixnetwork-run-5bbc2e1f77b2 Created
+ubuntu@319964059de2:/IxNetwork$ python HighLevelApi/Ngpf/Python/Traffic/demo_ngpf_traffic.py
 ixiatcl:info: Tcl version: 8.6.12
 Tcl 8.6 is installed on 64bit architecture.
 Using products based on: HLTSET289
@@ -23,7 +23,7 @@ IxTclHal is not be used for current HLTSET.
 Loaded IxTclNetwork 26.0.2601.6
 Mpexpr is not installed.
 HLT release 26.0.2601.5
-Loaded ixia_hl_lib-26.0 
+Loaded ixia_hl_lib-26.0
 Connecting to IxNetwork Tcl Server 10.36.94.244 -apiKey XXXXXXXXXX -clientId {HLAPI-Tcl} ...
 .
 .

@@ -88,15 +88,19 @@ except (NameError,):
 
 # previous version
 #chassis_ip = "10.36.88.71"
-#ixnetwork_tcl_server = '10.36.94.244'  
-#port_list = ['8/3', '8/4']     
+#ixnetwork_tcl_server = '10.36.94.244'
+#port_list = ['8/3', '8/4']
 
 #ixnetwork_tcl_server = '10.36.94.229'  # SY 11.10 ixNetwork web
+#ixnetwork_tcl_server = '10.36.93.72'  # SY 11.00 ixNetwork web
 #ixnetwork_tcl_server = '10.36.94.228'  # SY 10.00 ixNetwork web
 
-chassis_ip = "10.36.88.110"
 ixnetwork_tcl_server = '10.36.94.229'  # SY 11.10 ixNetwork web
-port_list = ['1/3', '1/4']             #      
+#xnetwork_tcl_server = '10.36.93.72'  # SY 11.00 ixNetwork web
+#ixnetwork_tcl_server = '10.36.94.228'  # SY 10.00 ixNetwork web
+
+chassis_ip = "10.36.88.110" # Chassis 11.10
+port_list = ['1/3', '1/4']  # The ports from 88.110
 cfgErrors = 0
 
 
@@ -123,13 +127,13 @@ ports = connect_result['vport_list'].split()
 
 result = ixiahlt.interface_config(
     mode='config',
-    port_handle = ports, 
+    port_handle = ports,
     phy_mode = ['fiber', 'fiber']
 )
 
 if result['status'] != '1':
     ErrorHandler('interface_config', result)
-    
+
 # import pdb; pdb.set_trace()
 ############################################################
 ##  CREATING FIRST TOPOLOGY WITH ETHERNET AND IPV4 STACKS ##
@@ -366,7 +370,7 @@ if start['status'] != IxiaHlt.SUCCESS:
 print("\nSleeping for 10 seconds ... ")
 time.sleep(10)
 
-pdb.set_trace()
+# pdb.set_trace()
 
 # enable sequence checking
 traffic_config_result = ixiahlt.traffic_config(
