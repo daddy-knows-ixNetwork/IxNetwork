@@ -89,7 +89,7 @@ RUN set -ex && \
     pip install \
     ansible \
     uv \
-    pre-commit   
+    pre-commit
 
 # ohmybash
 #RUN set -ex && \
@@ -120,6 +120,6 @@ RUN pip install -r /opt/ixia/ixnetwork/26.0.2601.6/lib/PythonApi/requirements.tx
 ADD IxNetworkAPI11.10.2508.10PI.tar.gz /opt/
 ADD IxNetworkAPI11.00.2504.10PI.tar.gz /opt/
 # different requirements.txt for 10.00
-ADD IxNetworkAPI10.00.2312.4PI.tar.gz /opt/ 
+ADD IxNetworkAPI10.00.2312.4PI.tar.gz /opt/
 
 WORKDIR ${WORKDIR}
