@@ -102,9 +102,12 @@ RUN rm -rf /var/lib/apt/lists/*
 RUN apt clean
 
 ADD IxNetworkAPI26.0.2601.6PI.tar.gz /opt/
-RUN pip install -r /opt/ixia/ixnetwork/26.0.2601.6/lib/PythonApi/requirements.txt
+#RUN pip install -r /opt/ixia/ixnetwork/26.0.2601.6/lib/PythonApi/requirements.txt
+# the same requirements.txt for the 11.xx release
 ADD IxNetworkAPI11.10.2508.10PI.tar.gz /opt11.10/
 ADD IxNetworkAPI11.00.2504.10PI.tar.gz /opt11.00/
+# different requirements.txt for 10.00
+ADD IxNetworkAPI10.00.2312.4PI.tar.gz /opt10.00/ 
 
 USER $USERNAME
 ENV HOME "/home/${USERNAME}"
