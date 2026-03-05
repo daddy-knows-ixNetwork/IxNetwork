@@ -22,7 +22,7 @@ services:
       - ./ixnetwork.env
     working_dir: /IxNetwork
 
-  ixnetwork12.0:
+  ixnetwork26.0:
     platform: linux/amd64
     privileged: true
     build:
@@ -37,7 +37,7 @@ services:
       #- ~/.kube:/home/ubuntu/.kube_host:ro
       #environment:
     env_file:
-      - ./ixenv/ixnetwork12.0.env
+      - ./ixenv/ixnetwork26.0.env
     working_dir: /IxNetwork
 
   ixnetwork11.10:
