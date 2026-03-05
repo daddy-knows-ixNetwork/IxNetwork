@@ -49,7 +49,7 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#    This sample assign one Novus 100G normal port to virtural port,           # 
+#    This sample assign one Novus 100G normal port to virtural port,           #
 #    Then it switches the mode to high stream mode of same speed               #
 #                                                                              #
 ################################################################################
@@ -114,5 +114,5 @@ body = {
 	'arg3': True
 }
 
-  
+
 response = requests.request('POST', node+'/api/v1/sessions/1/ixnetwork/operations/switchmodelocations', headers=headers, json=body, verify=False)

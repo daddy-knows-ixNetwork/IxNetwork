@@ -72,7 +72,7 @@
 #   11. Retrieve L2-L3 traffic stats.                                          #
 #   12. Stop L2-L3 traffic.                                                    #
 #   13. Stop all protocols.                                                    #
-#                                                                              #                                                                                
+#                                                                              #
 ################################################################################
 import os
 import sys

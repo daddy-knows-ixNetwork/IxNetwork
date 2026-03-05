@@ -103,7 +103,7 @@ my @portHandleList         = ();
 my @ethStackList           = ();
 my $eth_stack              = '';
 # Connect to the chassis, reset to factory defaults and take ownership
-# When using P2NO HLTSET, for loading the IxTclNetwork package please 
+# When using P2NO HLTSET, for loading the IxTclNetwork package please
 # provide –ixnetwork_tcl_server parameter to ::ixia::connect
 $_result_ = ixiahlt::connect ( {
     reset                  => 1,
@@ -135,34 +135,34 @@ print ("Configure interfaces ...\n");
 # Configure Protocol Interfaces on both ports                                  #
 ################################################################################
 $_result_ = ixiahlt::interface_config  ( {
-    mode                   => 'config',    
-    port_handle            => $port_src_handle,    
-    tx_gap_control_mode    => 'average',    
-    transmit_mode          => 'advanced',    
-    port_rx_mode           => 'packet_group',    
-    data_integrity         => 1,    
-    intf_mode              => 'ethernet',    
-    speed                  => 'ether1000',    
-    duplex                 => 'full',    
-    autonegotiation        => 1,    
-    phy_mode               => 'copper',    
+    mode                   => 'config',
+    port_handle            => $port_src_handle,
+    tx_gap_control_mode    => 'average',
+    transmit_mode          => 'advanced',
+    port_rx_mode           => 'packet_group',
+    data_integrity         => 1,
+    intf_mode              => 'ethernet',
+    speed                  => 'ether1000',
+    duplex                 => 'full',
+    autonegotiation        => 1,
+    phy_mode               => 'copper',
 });
 &catch_error();
 
 
 
 $_result_ = ixiahlt::interface_config  ( {
-    mode                   => 'config',    
-    port_handle            => $port_dst_handle,    
-    tx_gap_control_mode    => 'average',    
-    transmit_mode          => 'advanced',    
+    mode                   => 'config',
+    port_handle            => $port_dst_handle,
+    tx_gap_control_mode    => 'average',
+    transmit_mode          => 'advanced',
     port_rx_mode           => 'packet_group',
-    data_integrity         => 1,    
+    data_integrity         => 1,
     intf_mode              => 'ethernet',
-    speed                  => 'ether1000',    
-    duplex                 => 'full',    
-    autonegotiation        => 1,    
-    phy_mode               => 'copper',    
+    speed                  => 'ether1000',
+    duplex                 => 'full',
+    autonegotiation        => 1,
+    phy_mode               => 'copper',
 });
 &catch_error();
 
@@ -173,10 +173,10 @@ $_result_ = ixiahlt::interface_config  ( {
 
 print ("Reset traffic ...\n");
 $_result_ = ixiahlt::traffic_control  ( {
-    action                      => 'reset',    
-    traffic_generator           => 'ixnetwork_540',    
-    latency_bins                => 'enabled',    
-    latency_control             => 'store_and_forward',    
+    action                      => 'reset',
+    traffic_generator           => 'ixnetwork_540',
+    latency_bins                => 'enabled',
+    latency_control             => 'store_and_forward',
 });
 &catch_error();
 
@@ -291,12 +291,12 @@ print  ("Set non repeatable random mac ...\n");
 # Configure Traffic Item with non-repeatbale random mac                        #
 ################################################################################
 $_result_ = ixiahlt::traffic_config  ( {
-    mode               => 'modify',    
-    traffic_generator  => 'ixnetwork_540',    
-    stream_id          => $eth_stack,    
-    l2_encap           => 'ethernet_ii',    
-    mac_dst_mode       => 'random',    
-    mac_src_mode       => 'random',    
+    mode               => 'modify',
+    traffic_generator  => 'ixnetwork_540',
+    stream_id          => $eth_stack,
+    l2_encap           => 'ethernet_ii',
+    mac_dst_mode       => 'random',
+    mac_src_mode       => 'random',
 });
 &catch_error();
 

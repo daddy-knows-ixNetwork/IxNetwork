@@ -45,7 +45,7 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#    This sample configures 10 IPv4 sessions on each of the two ports,         # 
+#    This sample configures 10 IPv4 sessions on each of the two ports,         #
 #    adds a traffic Item that uses IPv4 endpoints, sends traffic,              #
 #    using statistics, the performs the following actions:                     #
 #    - enable/disable CSV Logging                                              #
@@ -218,7 +218,7 @@ ti1 = @ixNet.getList(@ixNet.getRoot() + '/traffic', 'trafficItem')[0]
 @ixNet.commit()
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 vports = @ixNet.getList(@ixNet.getRoot(), 'vport')
 puts "Assigning ports to " + vports.to_s + " ..."
@@ -294,7 +294,7 @@ def takeViewCSVSnapshot(ixNet, viewName, csvPath="c:\\Regression\\Snapshot CSVs"
     puts("- take Snapshot CSV")
     snapSettingList = [ 'Snapshot.View.Csv.Location: "' + csvPath + '"',
                         'Snapshot.View.Csv.GeneratingMode: "kOverwriteCSVFile"',
-                        'Snapshot.Settings.Name: ' + viewName, 
+                        'Snapshot.Settings.Name: ' + viewName,
                         'Snapshot.View.Contents: ' + csvType ]
     @ixNet.execute('TakeViewCSVSnapshot',str('"' + viewName + '"'),snapSettingList)
     puts "- snapshot CSV complete"
@@ -347,14 +347,14 @@ def compareTwoStats(ixNet, viewName, statA, statB)
     for ip, st1, st2 in zip(ipv4source, statsA, statsB)
         if st1.to_i == st2.to_i then
             puts("\t- Source IP: "+ip+" --> OK ")
-        else 
+        else
             puts("\t- Source IP: "+ip+" --> Failed: "+statA+" = "+st1+", "+statB+" = "+st2)
         end
     end
 end
 
 ################################################################################
-# Enable CSV Logging across all views 
+# Enable CSV Logging across all views
 ################################################################################
 
 puts "Enable CSV Logging across all views"
@@ -395,4 +395,3 @@ compareTwoStats(@ixNet, viewName, "Tx Frames", "Rx Frames")
 
 puts("Disable CSV Logging across all views")
 setEnableCsvLogging(@ixNet, false)
-

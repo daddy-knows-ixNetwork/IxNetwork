@@ -118,13 +118,13 @@ rest.ixNetAssignPorts(sessionUrl, py.ports)
 time.sleep(10)
 
 #######################################################
-# Starts IGMP Router 
+# Starts IGMP Router
 #######################################################
 
 print "Starting IGMP Router first"
 igmp_router_url=sessionUrl+'topology'
 data = {"arg1":["/api/v1/sessions/1/ixnetwork/topology/2"]}
-rest.ixNetExec(igmp_router_url,"start",data) 
+rest.ixNetExec(igmp_router_url,"start",data)
 time.sleep(10)
 
 #######################################################
@@ -133,7 +133,7 @@ time.sleep(10)
 print "Starting IGMP Host Second"
 igmp_host_url=sessionUrl+'topology/deviceGroup/ethernet/ipv4/igmpHost'
 data = {"arg1":["/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/igmpHost/1"]}
-rest.ixNetExec(igmp_host_url,"start",data) 
+rest.ixNetExec(igmp_host_url,"start",data)
 time.sleep(30)
 
 #######################################################
@@ -143,7 +143,7 @@ data = rest.ixNetGetStats(sessionUrl, "Protocols Summary",["Protocol Type","Sess
 print "Checking for all the sessions to be up"
 if rest.verifyStatsForUP(sessionUrl):
     print "PASS-All Sessions are UP!!"
-	
+
 ################################################################################
 # Generate, apply and start traffic
 ################################################################################

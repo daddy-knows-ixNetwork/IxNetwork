@@ -15,7 +15,7 @@
 #2.    Configure ipv4, ovsdb controller in TLS and cluster data.
 #3.    Add device group for hypervisor and VM.
 #4.    Associate connection between Hypervisor VxLAN and ovsdb controller.
-#5.    Add Replicator as another device group, configure its ip address, BFD 
+#5.    Add Replicator as another device group, configure its ip address, BFD
 #      interface.
 #6.    Associate replicator VXLAN and BFD interface to ovsdb controller.
 #7.    Start each device group separately.
@@ -42,7 +42,7 @@ class ovsdb(object):
     ################################################################################
     # Connecting to IxTCl server and cretaing new config                           #
     ################################################################################
-    
+
     #Procedure to connect to IxTclNetwork Server
     def __init__(self, ix_tcl_server, ix_tcl_port, ix_version="8.20"):
         ixNet = IxNetwork.IxNet()
@@ -55,8 +55,8 @@ class ovsdb(object):
         ixNet.execute('newConfig')
         self.ixNet = ixNet
         self.root = ixNet.getRoot()
-    
-    # Procedure for assigning ports to ixNetTclServer    
+
+    # Procedure for assigning ports to ixNetTclServer
     def assignPorts(self, realPort1):
         chassis1 = realPort1[0]
         card1 = realPort1[1]
@@ -106,19 +106,19 @@ class ovsdb(object):
         print("Starting protocols and waiting for 45 seconds for protocols to come up")
         self.ixNet.execute("start", startDeviceGroup)
         time.sleep(20)
-    
+
     #Procedure to stop protocol
     def stop_protocol(self, stopDeviceGroup):
         print("stopping protocols")
         self.ixNet.execute("stop", stopDeviceGroup)
         time.sleep(20)
-    
+
     #Procedure to get vport list connected to IxTclNetwork
 
     def get_vport(self):
         root = self.ixNet.getRoot()
         return self.ixNet.getList(root, 'vport')[0]
-    
+
     #Procedure to add and get topology list
 
     def add_and_get_topology(self, vportTx):
@@ -129,7 +129,7 @@ class ovsdb(object):
         topologies = self.ixNet.getList(self.ixNet.getRoot(), 'topology')
         return topologies[0]
 
-    #procedure to add and get device groups if its OVSDB controller, Hypervisor, Replicator    
+    #procedure to add and get device groups if its OVSDB controller, Hypervisor, Replicator
     def add_and_get_device_group(self, topology, device_index=0):
         print("Adding  device group  ovsdb controller")
         device_group_controller = self.ixNet.add(topology, 'deviceGroup')
@@ -142,34 +142,34 @@ class ovsdb(object):
         print("Configuring the multipliers (number of sessions)")
         self.ixNet.setMultiAttribute(device_group_controller, '-multiplier', val, '-name', name_attribute)
         self.ixNet.commit()
-    
-    # Procedure to add and get ethernet    
+
+    # Procedure to add and get ethernet
     def add_and_get_ethernet(self, device, device_group):
         print("Adding ethernet/mac endpoints in ovsdb controller")
         self.ixNet.add(device, 'ethernet')
         self.ixNet.commit()
         return self.ixNet.getList(device_group, 'ethernet')[0]
-    
+
     #Procedure to get and add ipv4
     def add_and_get_ipv4(self, ethernet):
         print("Adding ipv4")
         ipv4_controller = self.ixNet.add(ethernet, 'ipv4')
         self.ixNet.commit()
         return ipv4_controller, self.ixNet.getList(ethernet, 'ipv4')[0]
-    
-    # procedure to Call assign_ip function 
+
+    # procedure to Call assign_ip function
     def configure_ipv4_and_gateway_address(self, ovsdb_controller_ip, controller_ip_address, gateway_ip_address):
         print("Configuring Ipv4 and gateway address in OVSDB Controller!!")
         self.assign_ip(ovsdb_controller_ip, controller_ip_address, gateway_ip_address)
 
-    # Procedure to add ovsdb controller    
+    # Procedure to add ovsdb controller
     def add_ovsdb_controller(self, ovsdb_controller_ip):
         print("Adding  controller IP4 stacks")
         ovsdb_controller = self.ixNet.add(ovsdb_controller_ip, 'ovsdbcontroller')
         self.ixNet.commit()
         return ovsdb_controller
 
-    #Procedure to add TLS connection and set its certificate files    
+    #Procedure to add TLS connection and set its certificate files
     def add_tls_and_certs(self, ovsdb_controller):
         print("Adding tls Connection and its related certificate files!!")
         connection_type = self.ixNet.getAttribute(ovsdb_controller, '-connectionType')
@@ -222,8 +222,8 @@ class ovsdb(object):
         self.ixNet.setMultiAttribute(file_cert_key_value,
                                       '-pattern', 'controller-cert.pem')
         self.ixNet.commit()
-    
-    
+
+
     # Procedure to get and set physical port name
     def get_and_set_physical_port_name(self, ovsdb_controller):
         print("Modifying Physical Port name !!!")
@@ -243,7 +243,7 @@ class ovsdb(object):
                                       '-value', 'ens256')
         self.ixNet.commit()
 
-    # Procedure to get and set Physical switch name     
+    # Procedure to get and set Physical switch name
     def get_and_set_physical_switch_name(self, ovsdb_controller):
         print("Modifying Physical Switch name !!!")
         physical_switch_name = self.ixNet.getAttribute(ovsdb_controller + '/clusterData', '-physicalSwitchName')
@@ -254,7 +254,7 @@ class ovsdb(object):
         self.ixNet.setMultiAttribute(physical_switch_name_values, '-value', 'br0')
         self.ixNet.commit()
 
-    #Procedure to get and set logical switch name    
+    #Procedure to get and set logical switch name
     def get_and_set_logical_switch_name(self, ovsdb_controller):
         print("Modifying Logical Switch name !!!")
         logical_switch_name = self.ixNet.getAttribute(ovsdb_controller + '/clusterData', '-logicalSwitchName')
@@ -265,7 +265,7 @@ class ovsdb(object):
         self.ixNet.setMultiAttribute(logical_sw_name,
                                       '-pattern', 'LS_{Inc:5000,1}')
         self.ixNet.commit()
-    
+
     #Procedure to get and set ovsdb_vni
     def get_and_set_ovsdb_vni(self, ovsdb_controller):
         ovsdb_vni = self.ixNet.getAttribute(ovsdb_controller + '/clusterData', '-vni')
@@ -286,7 +286,7 @@ class ovsdb(object):
         attach_at_start_val = self.ixNet.add(ovsdb_attach_at_start, 'singleValue')
         self.ixNet.setMultiAttribute(attach_at_start_val, '-value', 'false')
         self.ixNet.commit()
-    
+
     #Procedure to add and get hypervisor as device group
     def add_and_get_hypervisor_device_group(self, topology):
         print("Adding  device group 2  as Hypervisor")
@@ -295,7 +295,7 @@ class ovsdb(object):
         t2devices = self.ixNet.getList(topology, 'deviceGroup')
         return device_group_hypervisor, t2devices[1]
 
-    #Procedure to add and get VxLan    
+    #Procedure to add and get VxLan
     def add_and_get_vxlan(self, hypervisor_ip, ovsdb_controller):
         print("Adding VXLAN over IP4 stacks")
         vxlan_hypervisor = self.ixNet.add(hypervisor_ip, 'vxlan')
@@ -353,7 +353,7 @@ class ovsdb(object):
         device_group_controller, t1dev1 = self.add_and_get_device_group(topo1)
         print ('''
     #---------------------------------------------------------------------------
-    # Configuring OVSDB Controller and its cluster data 
+    # Configuring OVSDB Controller and its cluster data
     #---------------------------------------------------------------------------
     ''')
         #self.set_multiplier(device_group_controller, 'OVSDB Controller')
@@ -516,7 +516,7 @@ class ovsdb(object):
         self.resolve_gateway_disable(ipv4_replicator)
         print ('''
     #---------------------------------------------------------------------------
-    #Start Protocols one by one 
+    #Start Protocols one by one
     ''')
         print("Start Replicator")
         self.start_protocol(device_group_replicator)
@@ -579,7 +579,7 @@ class ovsdb(object):
 
         print ('''
     #---------------------------------------------------------------------------
-    #Stopping all Protocols 
+    #Stopping all Protocols
     #---------------------------------------------------------------------------
     ''')
         print("Stop Replicator")

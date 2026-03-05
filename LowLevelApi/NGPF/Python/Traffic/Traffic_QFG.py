@@ -144,7 +144,7 @@ ixNet.setMultiAttribute(ixNet.getAttribute(ipv4_2, '-resolveGateway') + '/single
 ixNet.commit()
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 vports = ixNet.getList(ixNet.getRoot(), 'vport')
 print ("Assigning ports to " + str(vports) + " ...")
@@ -239,4 +239,3 @@ print ("Stop All Protocols")
 ixNet.execute('stopAllProtocols')
 print ("Sleep 30sec for protocols to stop")
 time.sleep(30)
-

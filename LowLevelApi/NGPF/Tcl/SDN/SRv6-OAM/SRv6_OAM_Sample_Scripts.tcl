@@ -7,7 +7,7 @@
 #                                                                              #
 ################################################################################
 
-####################################################################################    
+####################################################################################
 #                                                                                  #
 #                                LEGAL  NOTICE:                                    #
 #                                ==============                                    #
@@ -42,24 +42,24 @@
 # damages limitations set forth herein and will not obligate Keysight to provide   #
 # any additional maintenance or support services.                                  #
 #                                                                                  #
-####################################################################################   
+####################################################################################
 
-##########################################################################################################              
+##########################################################################################################
 #                                                                                                        #
 # Description:                                                                                           #
 #    This script intends to demonstrate how to use SRv6 OAM (Ping/TraceRoute)in L3vpn Over SRv6 TCL APIs #
 #                                                                                                        #
 #    1. It will create 2 ISISL3 topologies, each having an ipv6 network                                  #
-#       topology and loopback device group behind the network group(NG) with                             # 
+#       topology and loopback device group behind the network group(NG) with                             #
 #       loopback interface on it. L3vpn configure behind IPv6 Loopback.                                  #
-#       IPv4 NG configured begind L3vpn DG.                           								     # 
+#       IPv4 NG configured begind L3vpn DG.                           								     #
 #    2. Start the protocol.                                                                              #
 #    3. Retrieve protocol statistics.                                                                    #
 #    4. Send Ping Request to VPN SID.                                                                    #
 #    5. Retrieve Ping Learned information.                                                               #
 #    6. Send Ping Request to VPN SID.                                                                    #
 #    7. Retrieve Traceroute Learned information.                                                         #
-#    8. Stop all protocols.                                                                              #                                                                                          
+#    8. Stop all protocols.                                                                              #
 ##########################################################################################################
 
 # Script Starts
@@ -85,7 +85,7 @@ ixNet exec newConfig
 ################################################################################
 # 1. Protocol configuration section. Configure ISISL3/BGP+ as per the description
 #    give above
-################################################################################ 
+################################################################################
 set Root [ixNet getRoot]
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
@@ -231,7 +231,7 @@ set single_value_1 [ixNet add $ipv6Srh_1 "singleValue"]
 ixNet setMultiAttribute $single_value_1 -value true
 ixNet commit
 
-#Configure Locator in isisL3Router in topology 2 
+#Configure Locator in isisL3Router in topology 2
 puts "Configure Locator in isisL3Router in topology 2"
 set locator_1 [ixNet getAttribute $t2dev1/isisL3Router:1/isisSRv6LocatorEntryList -locator]
 ixNet setMultiAttribute $locator_1 \
@@ -245,7 +245,7 @@ ixNet setMultiAttribute $counter \
 	-direction increment
 ixNet commit
 
-#Configure End SID in isisL3Router in topology 2 
+#Configure End SID in isisL3Router in topology 2
 puts "Configure End SID in isisL3Router in topology 2"
 set EndSid [ixNet getAttribute $t2dev1/isisL3Router:1/isisSRv6LocatorEntryList/isisSRv6EndSIDList -sid]
 ixNet setMultiAttribute $EndSid \
@@ -258,7 +258,7 @@ ixNet setMultiAttribute $counter \
 	-start 5001:0:0:1:10:0:0:0 \
 	-direction increment
 ixNet commit
-		
+
 #Create Network Group At PEER1 Side
 set IPv6_LoopBack [ixNet add $t1dev1 "networkGroup"]
 ixNet setMultiAttribute $IPv6_LoopBack \
@@ -329,7 +329,7 @@ set singleValue [ixNet add $active "singleValue"]
 ixNet setMultiAttribute $singleValue -value true
 ixNet commit
 
-#Configure locator in isisL3PseudoRouter in topology 2 
+#Configure locator in isisL3PseudoRouter in topology 2
 puts "Configure locator in isisL3PseudoRouter in topology 2"
 set locator [ixNet getAttribute $Network_Topology/simRouter:1/isisL3PseudoRouter:1/isisPseudoSRv6LocatorEntryList -locator]
 ixNet setMultiAttribute $locator \
@@ -343,8 +343,8 @@ ixNet setMultiAttribute $counter \
 	-direction increment
 ixNet commit
 
-#Configure End SID in isisL3PseudoRouter in topology 2 
-puts "Configure End SID in isisL3PseudoRouter in topology 2"		
+#Configure End SID in isisL3PseudoRouter in topology 2
+puts "Configure End SID in isisL3PseudoRouter in topology 2"
 set sid [ixNet getAttribute $Network_Topology/simRouter:1/isisL3PseudoRouter:1/isisPseudoSRv6LocatorEntryList/isisPseudoSRv6EndSIDList -sid]
 ixNet setMultiAttribute $sid \
 	-clearOverlays false
@@ -356,7 +356,7 @@ ixNet setMultiAttribute $counter \
 	-start 5001:0:0:2:10:0:0:0 \
 	-direction increment
 ixNet commit
-		
+
 #Add Device Group Behind IPv6 Network Group
 set deviceGroup_bgp [ixNet add $IPv6_LoopBack "deviceGroup"]
 ixNet setMultiAttribute $deviceGroup_bgp \
@@ -393,7 +393,7 @@ ixNet commit
 set Single_Value [ixNet add $prefix "singleValue"]
 ixNet setMultiAttribute $Single_Value \
 	-value 128
-ixNet commit        
+ixNet commit
 set address [ixNet getAttribute $ipv6Loopback -address]
 ixNet setMultiAttribute $address \
 	-clearOverlays false
@@ -689,7 +689,7 @@ puts "Enable srv6OAMService in BGP+ Peer in Topology 1 and Topology 2"
 ixNet setMultiAttribute $bgpIpv6Peer_1 -enableSRv6OAMService true
 ixNet commit
 
-ixNet setAttribute $bgpIpv6Peer_p2 -enableSRv6OAMService true 
+ixNet setAttribute $bgpIpv6Peer_p2 -enableSRv6OAMService true
 ixNet commit
 
 puts "Adding srv6Oam over IPv6 stacks"
@@ -793,7 +793,7 @@ ixNet setMultiAttribute $singleValue \
 	-value 250
 ixNet commit
 
-#Configure the value for field oFlag 
+#Configure the value for field oFlag
 puts "Configure the value for field oFlag"
 set oFlag [ixNet getAttribute $srv6OamDestination -oFlag]
 set singleValue [ixNet add $oFlag "singleValue"]
@@ -803,7 +803,7 @@ ixNet commit
 
 
 set srv6oamSegmentNode [ixNet getList $srv6OamDestination  srv6oamSegmentNode]
-#Configure the value for field segmentAddress 
+#Configure the value for field segmentAddress
 puts "Configure the value for field segmentAddress"
 set segmentAddress [ixNet getAttribute $srv6oamSegmentNode -segmentAddress]
 set counter [ixNet add $segmentAddress "counter"]
@@ -813,7 +813,7 @@ ixNet setMultiAttribute $counter \
 	-direction increment
 ixNet commit
 
-#Configure the value for field gSIDEnableFlag 
+#Configure the value for field gSIDEnableFlag
 puts "Configure the value for field gSIDEnableFlag"
 set gSIDEnableFlag [ixNet getAttribute $srv6oamSegmentNode -gSIDEnableFlag]
 set singleValue [ixNet add $gSIDEnableFlag "singleValue"]
@@ -821,7 +821,7 @@ ixNet setMultiAttribute $singleValue \
 	-value true
 ixNet commit
 
-#Configure the value for field locatorBlkLen 
+#Configure the value for field locatorBlkLen
 puts "Configure the value for field locatorBlkLen"
 set locatorBlkLen [ixNet getAttribute $srv6oamSegmentNode -locatorBlkLen]
 set singleValue [ixNet add $locatorBlkLen "singleValue"]

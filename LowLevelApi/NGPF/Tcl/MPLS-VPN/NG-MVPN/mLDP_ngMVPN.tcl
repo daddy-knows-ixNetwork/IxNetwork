@@ -173,7 +173,7 @@ ixNet setMultiAttr [ixNet getAttr $mac1 -mac]/counter\
 ixNet setAttr [ixNet getAttr $mac2 -mac]/counter\
         -direction  increment                        \
         -start      {44:44:44:44:44:44}              \
-        -step       {00:00:00:00:00:01} 
+        -step       {00:00:00:00:00:01}
 ixNet commit
 
 puts "Enabling VLAN"
@@ -195,7 +195,7 @@ ixNet setMultiAttr [ixNet getAttr $mac2/vlan:1 -vlanId]/counter\
         -start      {400}              \
         -step       {1}
 ixNet commit
-		
+
 puts "Add ipv4"
 ixNet add $mac1 ipv4
 ixNet add $mac2 ipv4
@@ -319,7 +319,7 @@ ixNet setMultiAttr $ldp2/ldpLeafRangeV4 -numberOfTLVs 3
 ixNet commit
 
 puts "Activating mLDP Leaf range in Sender LDP router"
-set active1 [ixNet getAttribute $ldp1/ldpLeafRangeV4 -active] 
+set active1 [ixNet getAttribute $ldp1/ldpLeafRangeV4 -active]
 ixNet setMultiAttr $active1/singleValue -value true
 ixNet commit
 
@@ -1433,7 +1433,7 @@ set endpointSet1 [lindex [ixNet remapIds $endpointSet1] 0]
 
 ixNet setMultiAttribute $trafficItem1/tracking -trackBy \
     [list sourceDestEndpointPair0 mplsFlowDescriptor0 trackingenabled0 mplsMplsLabelValue0 ipv6DestIp0 ipv6SourceIp0]
-ixNet commit	
+ixNet commit
 
 ################################################################################
 # 9. Configure L2-L3 IPv4 S-PMSI traffic.
@@ -1507,4 +1507,3 @@ after 5000
 ################################################################################
 ixNet exec stopAllProtocols
 puts "!!! Test Script Ends !!!"
-

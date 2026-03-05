@@ -50,16 +50,16 @@
 #    This script intends to demonstrate how to use L3vpn Over SRv6 TCL APIs.   #
 #                                                                              #
 #    1. It will create 2 ISISL3 topologies, each having an ipv6 network        #
-#       topology and loopback device group behind the network group(NG) with   # 
+#       topology and loopback device group behind the network group(NG) with   #
 #       loopback interface on it. L3vpn configure behind IPv6 Loopback.        #
-#       IPv4 NG  configured begind L3vpn DG which is used to generate traffic. # 
+#       IPv4 NG  configured begind L3vpn DG which is used to generate traffic. #
 #    2. Start the ISISL3 protocol.                                             #
 #    3. Retrieve protocol statistics.                                          #
 #    4. Retrieve protocol learned info.                                        #
 #    5. Start the L2-L3 traffic.                                               #
 #    6. Retrieve L2-L3 traffic stats.                                          #
 #    7. Stop L2-L3 traffic.                                                    #
-#    8. Stop all protocols.                                                    #                                                                                          
+#    8. Stop all protocols.                                                    #
 ################################################################################
 
 # Script Starts
@@ -85,7 +85,7 @@ ixNet exec newConfig
 ################################################################################
 # 1. Protocol configuration section. Configure ISISL3/BGP+ as per the description
 #    give above
-################################################################################ 
+################################################################################
 set Root [ixNet getRoot]
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
@@ -701,7 +701,7 @@ ixNet commit
 set Single_Value [ixNet add $prefix "singleValue"]
 ixNet setMultiAttribute $Single_Value \
 	-value 128
-ixNet commit        
+ixNet commit
 set address [ixNet getAttribute $ipv6Loopback -address]
 ixNet setMultiAttribute $address \
 	-clearOverlays false
@@ -1244,7 +1244,7 @@ foreach statValList [ixNet getAttr $viewPage -rowValues] {
 puts "***************************************************"
 
 ################################################################################
-# 4. Configure L2-L3 traffic 
+# 4. Configure L2-L3 traffic
 ################################################################################
 puts "Congfiguring L2-L3 Traffic Item"
 set statistic_1 [ixNet add $Root/globals/testInspector "statistic"]

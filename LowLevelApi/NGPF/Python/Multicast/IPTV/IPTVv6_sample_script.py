@@ -210,7 +210,7 @@ ixNet.commit()
 
 ################################################################################
 # Adding MLD Host over ipv6 stack
-################################################################################ 
+################################################################################
 print("Adding MLD Host over IPv6 stack")
 ixNet.add(ip1, 'mldHost')
 ixNet.commit()
@@ -223,7 +223,7 @@ ixNet.setAttribute(topo2, '-name', 'IPv6 Topology 2')
 ixNet.commit()
 
 ################################################################################
-# Enabling IPTV in MLD host 
+# Enabling IPTV in MLD host
 ################################################################################
 print("Enabling IPTV")
 enableIptv = ixNet.getAttribute(mldHost, '-enableIptv')
@@ -269,7 +269,7 @@ ixNet.setAttribute(singleValue, '-value', 'zapandview')
 ixNet.commit()
 
 ################################################################################
-# Start protocol 
+# Start protocol
 ################################################################################
 print("Starting protocols and waiting for 20 seconds for protocols to come up")
 ixNet.execute('startAllProtocols')
@@ -416,9 +416,8 @@ ixNet.execute('stop', ixNet.getRoot() + '/traffic')
 time.sleep(5)
 
 ################################################################################
-# Stop protocol 
+# Stop protocol
 ################################################################################
 print("Stopping protocol")
 ixNet.execute('stopAllProtocols')
 print("!!! Test Script Ends !!!")
-

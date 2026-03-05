@@ -43,10 +43,10 @@
 ################################################################################
 
 proc bgpImportFunctionality {importRouteOptions fileName {changeList ""}} {
-   
+
     set isError 0
     set FAILED 1
-   
+
     if {$changeList == 1} {
         ixNet setAttr $importRouteOptions -routeFileType "Ixia Format"
         log "IXIA Format importing"
@@ -62,7 +62,7 @@ proc bgpImportFunctionality {importRouteOptions fileName {changeList ""}} {
         log "JUNIPER Format importing"
      }
      ixNet commit
-   
+
      if {[ixNet exec importOpaqueRouteRangeFromFile $importRouteOptions \
          [ixNet readFrom $fileName]] != "::ixNet::OK"} {
          log "FAILURE : Could not import file to neighbor"
@@ -70,11 +70,11 @@ proc bgpImportFunctionality {importRouteOptions fileName {changeList ""}} {
      } else {
          puts "SUCCESS : Successfully imported file to neighbor"
      }
-   
+
     set isError 0
     return $isError
 }
- 
+
 
 proc learnedInfoFetchForRouteImport {bgpNeighbor expectedList} {
     set noMatch 1
@@ -85,10 +85,10 @@ proc learnedInfoFetchForRouteImport {bgpNeighbor expectedList} {
             multiExitDiscriminator \
             neighbor               \
             ipPrefix}
-       
+
     set learnedInformationList    [ixNet getList $bgpNeighbor learnedInformation]
     set BGPlearnedInformationList [ixNet getList $learnedInformationList ipv4Unicast]
-    
+
     set matchList {}
     foreach BGPInfo $BGPlearnedInformationList  {
         set temp {}
@@ -99,7 +99,7 @@ proc learnedInfoFetchForRouteImport {bgpNeighbor expectedList} {
         lappend matchList $temp
     }
 
-    puts "$matchList" 
+    puts "$matchList"
     foreach expectedRoute $expectedList {
         set matchIndex [lsearch $matchList $expectedRoute]
         log "<Expected> : $expectedRoute"
@@ -110,5 +110,5 @@ proc learnedInfoFetchForRouteImport {bgpNeighbor expectedList} {
         }
     }
 
-   return 1 
+   return 1
 }

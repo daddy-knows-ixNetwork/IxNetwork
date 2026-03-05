@@ -52,12 +52,12 @@ proc SendArp {} {
 	foreach interface [ixNet getList $vPort interface] {
 	    # Don't send arps on Unconnected (Routed) and GRE interfaces
 	    set interfaceType [ixNet getAttribute $interface -type]
-	    
+
 	    if {[regexp "default" $interfaceType]} {
 		set isIntEnabled [ixNet getAttribute $interface -enabled]
 		if {$isIntEnabled == "true" || $isIntEnabled == "True"} {
 		    puts "Sendt ARP on $interface"
-		    
+
 		    ixNet exec sendArp $interface
 		    ixNet exec sendNs $interface
 		    #if {$ipv4ErrMsg != "::ixNet::OK" || $ipv6ErrMsg2 != "::ixNet::OK" } {
@@ -75,7 +75,7 @@ proc VerifyArpDiscoveries { {ExitTest doNotExitTest} } {
     # interface isn't enable.
     # Then get a list of all the discovered arps.
     # At the end, compare the two list. Any left overs are unresolved arps.
-    
+
     set resolvedArp {}
     set allIpGateways {}
 
@@ -95,18 +95,18 @@ proc VerifyArpDiscoveries { {ExitTest doNotExitTest} } {
 		set isIntEnabled [ixNet getAttribute $int -enabled]
 		if {$isIntEnabled == "true" || $isIntEnabled == "True"} {
 		    catch {ixNet getAttribute $int/ipv4 -gateway} ipv4GatewayReturn
-		    
+
 		    if {[regexp "null" $ipv4GatewayReturn] != 1} {
 			if {[lsearch $allIpGateways $ipv4GatewayReturn] == -1} {
 			    lappend allIpGateways $ipv4GatewayReturn
 			}
 		    }
-		    
+
 		    catch {ixNet getList $int ipv6} ipv6GatewayList
 		    if {$ipv6GatewayList != ""} {
 			foreach ipv6Gateway $ipv6GatewayList {
 			    set ipv6 [ixNet getAttribute $ipv6Gateway -gateway]
-			    
+
 			    if {$ipv6 != "0:0:0:0:0:0:0:0"} {
 				if {[lsearch $allIpGateways $ipv6] == -1} {
 				    lappend allIpGateways $ipv6
@@ -128,19 +128,19 @@ proc VerifyArpDiscoveries { {ExitTest doNotExitTest} } {
     foreach vP [ixNet getList [ixNet getRoot] vport] {
 	# Get all the discovered ARPs for the current vPort
 	set vPortInterfaceList [ixNet getList $vP discoveredNeighbor]
-	
+
 	if {$vPortInterfaceList != ""} {
 	    set currentPort $::getPort($vP)
 
 	    # vPortInt = ::ixNet::OBJ-/vport:1/discoveredNeighbor:1
 	    foreach vPortInt $vPortInterfaceList {
 		set currentVp [join [lrange [split $vPortInt /] 0 1] /]
-		
+
 		set discoveredIp [ixNet getAttribute $vPortInt -neighborIp]
 		set discoveredMac [ixNet getAttribute $vPortInt -neighborMac]
-		
+
 		puts "Discovered arp on $currentPort: $discoveredIp : $discoveredMac"
-		
+
 		if {$discoveredMac != "" || $discoveredMac != "00:00:00:00:00:00"} {
 		    if {[lsearch $allIpGateways $discoveredIp] != -1} {
 			lappend resolvedArp $discoveredIp
@@ -187,7 +187,7 @@ proc VerifyProtocolSessions {} {
     set protocolFailures {}
 
     # All protocols: arp bfd bgp cfm eigrp elmi igmp isis lacp ldp linkOam lisp mld mplsOam mplsTp ospf ospfV3 pimsm ping rip ripng rsvp static stp
-    
+
     # $viewList = {::ixNet::OBJ-/statistics/view:"Port Statistics"} {::ixNet::OBJ-/statistics/view:"Tx-Rx Frame Rate Statistics"} {::ixNet::OBJ-/statistics/view:"Port CPU Statistics"} {::ixNet::OBJ-/statistics/view:"Global Protocol Statistics"} {::ixNet::OBJ-/statistics/view:"BGP Aggregated Statistics"} {::ixNet::OBJ-/statistics/view:"BGP Aggregated State Counts"} {::ixNet::OBJ-/statistics/view:"LDP Aggregated Statistics"} {::ixNet::OBJ-/statistics/view:"LDP Aggregated State Counts"} {::ixNet::OBJ-/statistics/view:"OSPF Aggregated Statistics"} {::ixNet::OBJ-/statistics/view:"OSPF Aggregated State Counts"}
 
     set viewList [ixNet getList [ixNet getRoot]/statistics view]
@@ -205,7 +205,7 @@ proc VerifyProtocolSessions {} {
 	set flowStatsViewIndex [lsearch -regexp $viewList "$protocol aggregated statistics"]
 	if {$flowStatsViewIndex != -1} {
 	    set view [lindex $viewList $flowStatsViewIndex]
-	    
+
 	    ixNet setAttribute $view -enabled true
 	    ixNet commit
 
@@ -214,9 +214,9 @@ proc VerifyProtocolSessions {} {
 
 	    while {$startTimer < $stopTimer} {
 		set pageList [ixNet getAttribute $view/page -rowValues]
-		
+
 		puts "\nVerifying Protocol status: $protocol"
-		
+
 		foreach stats $pageList {
 		    set stats [lindex $stats 0]
 		    set cardAndPortNumber [string map {" " /} [lrange [split [lindex $stats 0] /] 1 2]]
@@ -224,7 +224,7 @@ proc VerifyProtocolSessions {} {
 		    # BGP  session UP stat = column 3 on gui
 		    # LDP  session UP stat = column 2 on gui
 		    # OSPF session UP stat = column 3 on gui
-		    
+
 		    if {[regexp -nocase "bgp" $protocol]} {
 			set sessionStatus [lindex $stats 2]
 		    }
@@ -234,14 +234,14 @@ proc VerifyProtocolSessions {} {
 		    if {[regexp -nocase "ospf" $protocol]} {
 			set sessionStatus [lindex $stats 2]
 		    }
-		    
+
 		    if {$sessionStatus > 0} {
 			set protocolStatus up
 		    } else {
 			set protocolStatus down
 			set loopProtocol 1
 			incr retryProtocolAttempts
-		    }		    
+		    }
 		    puts"\t$cardAndPortNumber $protocol status=$protocolStatus"
 		}
 
@@ -290,16 +290,16 @@ proc AddProtocolStack { protocol trafficItem configElementObject insertAfterInde
     # protocolTemplate = ::ixNet::OBJ-/traffic/protocolTemplate:"udp"
     set protocolTemplate [lindex [ixNet getList [ixNet getRoot]/traffic protocolTemplate] $index]
 
-    # ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1 
+    # ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1
     #set configElementList [ixNet getList $trafficItem highLevelStream]
 
     # Example on how the protocol stack looks like for configElement:1
-    # 
+    #
     # 0 = trafficItem:1/configElement:1/stack:\"ethernet-1\"
     # 1 = trafficItem:1/configElement:1/stack:\"ipv4-2\"
     # 2 = trafficItem:1/configElement:1/stack:\"udp-3\"
     # 3 = trafficItem:1/configElement:1/stack:\"fcs-4\"
-    # 
+    #
     # If $insertAfterIndex = 1 (zero based indexing), then add after the ipv4 layer.
     # $addToStackLevel is ...
     #  ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:"ipv4-2"
@@ -372,7 +372,7 @@ proc StartTraffic { } {
 		exit
 	    }
 	}
-	
+
 	if {$trafficState == "started"} {
 	    puts "Traffic Started"
 	    break
@@ -473,7 +473,7 @@ foreach port $portList {
     ixNet commit
     set vPort [lindex [ixNet remapIds $vPort] 0]
     lappend vPortList $vPort
-    
+
     ixNet setAttribute $vPort \
 	-connectedTo $ixChassisIp/card:$cardNumber/port:$portNumber
     #ixNet commit
@@ -504,7 +504,7 @@ foreach vPort $vportList {
 	-description "Port $getPort($vPort)"
     #ixNet commit
     set vPortInterfaceObj [lindex [ixNet remapIds $vPortInterfaceObj] 0]
-    
+
     ixNet setAttribute $vPortInterfaceObj/ethernet -macAddress [lindex $portConfig($portNumber) 2]
     #ixNet commit
 
@@ -533,7 +533,7 @@ ixNet setAttribute $trafficItem1Obj/tracking \
     -trackBy {trackingenabled0 flowGroup0 sourceDestEndpointPair0}
 #ixNet commit
 
-# vPortList: ::ixNet::OBJ-/vport:1 ::ixNet::OBJ-/vport:2 
+# vPortList: ::ixNet::OBJ-/vport:1 ::ixNet::OBJ-/vport:2
 #            ::ixNet::OBJ-/vport:3 ::ixNet::OBJ-/vport:4
 
 puts "Creating Endpoint 1 ..."
@@ -557,21 +557,21 @@ set trafficItem1Endpoint2Obj [lindex [ixNet remapIds $trafficItem1Endpoint2Obj] 
 foreach  traffic1ConfigElementObj [ixNet getList $trafficItem1Obj configElement] {
     # use highLevelStream to configure individual streams
     #    --> [ixNet getList $trafficItemObject highLevelStream]
-    
+
     puts "Configuring: $traffic1ConfigElementObj"
-    
+
     ixNet setAttribute $traffic1ConfigElementObj/frameSize -fixedSize 777
     #ixNet commit
-    
+
     ixNet setAttribute $traffic1ConfigElementObj/frameRate -rate 75
     #ixNet commit
-    
+
     ixNet setMultiAttrs $traffic1ConfigElementObj/framePayload \
 	-type incrementByte \
 	-customRepeat True \
 	-customPattern {}
     #ixNet commit
-    
+
     # -type: Choices fixedFrameCount or continuous
     ixNet setMultiAttrs $traffic1ConfigElementObj/transmissionControl -type fixedFrameCount -frameCount 25000
     #ixNet commit

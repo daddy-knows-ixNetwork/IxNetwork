@@ -66,7 +66,7 @@ try:
                                ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
     ixNetwork = session.Ixnetwork
-    
+
     ixNetwork.info('Assign ports')
     portMap = session.PortMapAssistant()
     vport = dict()
@@ -92,14 +92,14 @@ try:
     bgp1.DutIp.Increment(start_value='10.1.2.1', step_value='0.0.0.1')
     bgp1.Type.Single('internal')
     bgp1.LocalAs2Bytes.Increment(start_value=101, step_value=0)
-    bgp1.AdvertiseEvpnRoutesForOtherVtep = 'True' 
+    bgp1.AdvertiseEvpnRoutesForOtherVtep = 'True'
     bgp1.FilterEvpn.Single(True)
 
     ixNetwork.info('Configuring EVPN 1')
     evpn1 = bgp1.BgpIPv4EvpnVXLAN.add(Name='EVPN_VXLAN_1')
     bgp1.BgpEthernetSegmentV4.EvisCount = eviCount
     bgp1.BgpEthernetSegmentV4.VtepIpv4Address.Increment(start_value='10.1.1.1', step_value='0.0.0.1')
-    evpn1.NumBroadcastDomainV4 = '1' 
+    evpn1.NumBroadcastDomainV4 = '1'
     evpn1.RdEvi.Custom(start_value='1', step_value='0',increments=[('1', l3RtCount, [('0', l3RtRepeatValue , [])])])
     evpn1.BgpL3VNIExportRouteTargetList.find()[0].TargetAssignedNumber.Custom(start_value=l3LabelStartValue, step_value='0',increments=[('1', l3RtCount, [('0', l3RtRepeatValue , [])])])
     evpn1.BgpExportRouteTargetList.find()[0].TargetAssignedNumber.Custom(start_value=l2LabelStartValue, step_value='0',increments=[('1', eviCount, [])])
@@ -136,14 +136,14 @@ try:
     bgp2.DutIp.Increment(start_value='10.1.1.1', step_value='0.0.0.1')
     bgp2.Type.Single('internal')
     bgp2.LocalAs2Bytes.Increment(start_value=101, step_value=0)
-    bgp2.AdvertiseEvpnRoutesForOtherVtep = 'True' 
+    bgp2.AdvertiseEvpnRoutesForOtherVtep = 'True'
     bgp2.FilterEvpn.Single(True)
 
     ixNetwork.info('Configuring EVPN 2')
     evpn2 = bgp2.BgpIPv4EvpnVXLAN.add(Name= 'EVPN_VXLAN_2')
     bgp2.BgpEthernetSegmentV4.EvisCount = eviCount
     bgp2.BgpEthernetSegmentV4.VtepIpv4Address.Increment(start_value='10.1.2.1', step_value='0.0.0.1')
-    evpn2.NumBroadcastDomainV4 = '1' 
+    evpn2.NumBroadcastDomainV4 = '1'
     evpn2.RdEvi.Custom(start_value='1', step_value='0',increments=[('1', l3RtCount, [('0', l3RtRepeatValue , [])])])
     evpn2.BgpL3VNIExportRouteTargetList.find()[0].TargetAssignedNumber.Custom(start_value=l3LabelStartValue, step_value='0',increments=[('1', l3RtCount, [('0', l3RtRepeatValue , [])])])
     evpn2.BgpExportRouteTargetList.find()[0].TargetAssignedNumber.Custom(start_value=l2LabelStartValue, step_value='0',increments=[('1', eviCount, [])])
@@ -206,7 +206,7 @@ try:
         for vport in ixNetwork.Vport.find():
             vport.ReleasePort()
         session.Session.remove()
-        print ('Releasing ports and Removing Session')        
+        print ('Releasing ports and Removing Session')
 
 except Exception as errMsg:
     print('\n%s' % traceback.format_exc(None, errMsg))

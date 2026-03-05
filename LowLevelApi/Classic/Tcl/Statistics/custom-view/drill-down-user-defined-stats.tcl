@@ -105,7 +105,7 @@ set ddOption "Drill Down per Rx Port"
 set targetRow 0
 
 puts "Creating  DD  $ddOption  ON  $view  view"
-set index [lsearch -regexp [ixNet getL [ixNet getRoot]/statistics view] "$view"]	
+set index [lsearch -regexp [ixNet getL [ixNet getRoot]/statistics view] "$view"]
 if {$index== -1} {
 	error "Cannot find $view in view list !"
 
@@ -119,7 +119,7 @@ puts "Target row used: [ixNet getA $usedView/drillDown -targetRow]"
 set targets [ixNet getA $usedView/drillDown -availableDrillDownOptions]
 puts "Available Drill Down Options: $targets"
 
-set index [lsearch -regexp $targets "$ddOption"]	
+set index [lsearch -regexp $targets "$ddOption"]
 if {$index== -1} {
 	error "DD option $ddOption is not available for $view view !"
 }
@@ -134,7 +134,7 @@ ixNet exec doDrillDown $usedView/drillDown
 puts "Finished creating  DD  $ddOption  ON  $view  view"
 
 set view "User Defined Statistics"
-set index [lsearch -regexp [ixNet getL [ixNet getRoot]/statistics view] "$view"]	
+set index [lsearch -regexp [ixNet getL [ixNet getRoot]/statistics view] "$view"]
 if {$index== -1} {
 	error "Cannot find $view in view list !"
 

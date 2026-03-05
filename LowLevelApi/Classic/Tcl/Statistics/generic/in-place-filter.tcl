@@ -82,28 +82,28 @@ after 30000
 proc executeDrillDown {ddOption  rowN  view} {
 	puts "Creating  DD  $ddOption  ON  $view  view"
 	set root [ixNet getRoot]
-	set index [lsearch -regexp [ixNet getL $root/statistics view] "$view"]	
+	set index [lsearch -regexp [ixNet getL $root/statistics view] "$view"]
 	if {$index== -1} {
 		puts "Cannot find $view in view tree !"
 		return 1
 	}
 	set usedView [lindex [ixNet getL $root/statistics view] $index]
-	
+
 	ixNet setA $usedView/drillDown -targetRowIndex $rowN
 	ixNet commit
 
 	set targets [ixNet getA $usedView/drillDown -availableDrillDownOptions]
 	puts "Available Drill Down Options: $targets"
 
-	set index [lsearch -regexp $targets "$ddOption"]	
+	set index [lsearch -regexp $targets "$ddOption"]
 	if {$index== -1} {
 		puts "DD option $ddOption is not available for $view view !"
 		return 1
 	}
-	
+
 	set target [lindex $targets $index]
 	puts "Drill down option used: $target"
-	
+
 	ixNet setA $usedView/drillDown -targetDrillDownOption $target
 	ixNet commit
 
@@ -133,21 +133,21 @@ set filExpr {Equals([Lease#], '2') Or Equals([Lease#], '4') Or Equals([Lease#], 
 set sortExpr {[Lease#] = desc}
 
 puts "Creating filter $filName for $viewName view"
-set index [lsearch -regexp [ixNet getL [ixNet getRoot]/statistics view] $viewName]	
+set index [lsearch -regexp [ixNet getL [ixNet getRoot]/statistics view] $viewName]
 if {$index== -1} {
 	error "Cannot find $viewName in view tree !"
 }
-set usedView [lindex [ixNet getL [ixNet getRoot]/statistics view] $index]	
+set usedView [lindex [ixNet getL [ixNet getRoot]/statistics view] $index]
 
 set filters [ixNet getA $usedView/layer23NextGenProtocolFilter -allAdvancedFilters]
 puts "All advanced filters: "
 foreach item $filters {
 	puts "** $item"
-}	
+}
 
-set index [lsearch -regexp $filters $filName]	
+set index [lsearch -regexp $filters $filName]
 if {$index== -1} {
-	puts "Cannot find the expected filter in the filter list, the filter will be created"	
+	puts "Cannot find the expected filter in the filter list, the filter will be created"
 	set trackingFilter [ixNet add $usedView/layer23NextGenProtocolFilter advancedFilter]
 
 	puts "Set the name of the tracking filter"
@@ -165,11 +165,11 @@ if {$index== -1} {
 
 	puts "Apply the filter id to the target view"
 	ixNet exec addAdvancedFilter $usedView/layer23NextGenProtocolFilter $id_1
-	puts "Finished creating the filter"		
+	puts "Finished creating the filter"
 } else {
 	puts "Filter already exists, applying the filter"
 	set usedFilter [lindex $filters $index]
-	puts "Used filter: $usedFilter"	
+	puts "Used filter: $usedFilter"
 
 	ixNet exec addAdvancedFilter $usedView/layer23NextGenProtocolFilter $usedFilter
 	puts "Finished applying the filter"
@@ -178,14 +178,14 @@ if {$index== -1} {
 # Delete the filter
 # ixNet exec removeAdvancedFilter $usedView/layer23NextGenProtocolFilter $usedFilter
 
-# set filters [ixNet getA $usedView/layer23NextGenProtocolFilter -allAdvancedFilters]	
+# set filters [ixNet getA $usedView/layer23NextGenProtocolFilter -allAdvancedFilters]
 
-# set index [lsearch -regexp $filters $filName]	
+# set index [lsearch -regexp $filters $filName]
 # if {$index != -1} {
 	# error "The filter was found in the filter list although it has been deleted !"
 # }
 # puts "Finished deleting the filter"
-	
+
 puts "TEST END ."
 
 puts " "

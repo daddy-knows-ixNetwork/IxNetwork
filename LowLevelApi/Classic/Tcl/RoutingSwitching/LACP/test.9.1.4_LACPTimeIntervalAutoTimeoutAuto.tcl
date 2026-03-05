@@ -152,7 +152,7 @@ proc Action {portData1 portData2} {
         return $FAILED
     }
 
-	
+
     puts "Wait for 35sec. so that atleast one lacpdu is captured from each port"
     after 35000
 
@@ -161,7 +161,7 @@ proc Action {portData1 portData2} {
     if {[stopLacpOnPorts $proto1] ==1} {
 
         puts "Error In Starting LACP protocol on port2"
-            
+
         return $FAILED
     }
     puts "Wait for $lacpGlobalParams(pktCaptureDurLong) sec"
@@ -172,16 +172,16 @@ proc Action {portData1 portData2} {
     puts "Stopping the capture"
     if {[catch {ixNet exec stopCapture} err] == 1} {
         puts "Failed to stop packet capture "
-            
+
         return $FAILED
     }
 
-	
+
     # Stop LACP on Port1
     puts "Stop LACP Protocol on port1"
     if {[stopLacpOnPorts $proto] ==1} {
         puts "Error In Starting LACP protocol on port1"
-            
+
         return $FAILED
     }
 
@@ -193,7 +193,7 @@ proc Action {portData1 portData2} {
     if {$lastPacketTimeStamp == 1 || $lastPacketTimeStamp == 0} {
 
         puts "Error In getting time stamp last LACP packet sent by port2..."
-            
+
         return $FAILED
     }
 
@@ -206,7 +206,7 @@ proc Action {portData1 portData2} {
     if {$firstExpbitSetPckTimestamp == 1 || $firstExpbitSetPckTimestamp == 0} {
         puts "Error In getting time stamp of first LACP packet in \
               which expiry bit set  sent by port1..."
-            
+
         return $FAILED
     }
 
@@ -221,7 +221,7 @@ proc Action {portData1 portData2} {
 
         puts "FAILURE : Observed Lacp Timeout is <$obsLacpTimeout>sec. \
               should have been 90sec for long."
-            
+
         return $FAILED
     }
 
@@ -231,7 +231,7 @@ proc Action {portData1 portData2} {
     if {$firstDefbitSetPckTimestamp == 1 || $firstDefbitSetPckTimestamp == 0} {
 
         puts "Error In getting time stamp..."
-            
+
         return $FAILED
     }
 
@@ -246,11 +246,11 @@ proc Action {portData1 portData2} {
 
         puts "FAILURE: Time taken to go to defaulted state from expiry state is \
              <$defTimeout>sec. should have been 3sec."
-            
+
         return $FAILED
     }
 
-        
+
     return $PASSED
 }
 

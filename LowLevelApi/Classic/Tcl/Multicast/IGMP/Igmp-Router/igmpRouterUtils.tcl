@@ -481,6 +481,3 @@ proc PrintArray { StatValueArray} {
         logMsg $mystring
      }
 }
-
-
-

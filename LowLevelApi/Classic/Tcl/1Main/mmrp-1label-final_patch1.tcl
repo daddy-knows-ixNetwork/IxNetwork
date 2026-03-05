@@ -1,10 +1,10 @@
 #!/opt/ActiveTcl-8.5/bin/tclsh
 
 # Written by: Hubert Gee
-# 
+#
 # For this script, it was tested with Guang_mmrp3.ixncfg config file
 #
-# NOTE!  This script assumes that there is a duplicate RAW 
+# NOTE!  This script assumes that there is a duplicate RAW
 #        Traffic Item with flow groups copied from Traffic Item #1.
 #        Therefore, this script will be modifying the second
 #        RAW Traffic Item of flow groups.
@@ -33,7 +33,7 @@ ixNet connect $ixNetworkTclServer -version $ixNetworkVersion
 
 # User's input
 set isidStartingValue "000001"
-set isidCount 3 
+set isidCount 3
 set isidStep 1
 set isidInstantSkip 1 ;# Ex: 01 02 03 <skip 1> 05 06 07 <skip 1> 09 0a 0b
 
@@ -61,11 +61,11 @@ for {set peCount 1} {$peCount <= $bMacCount} {incr peCount} {
 	# Convert hex to decimal
 	set startingMacValue [expr 0x$srcMacLastByteStartingValue]
 	set flag 1
-    } 
+    }
     if {$flag == 1} {
 	set startingMacValue [incr startingMacValue]
     }
-    
+
     for {set repeat 1} {$repeat <= [expr $bMacRepeat * $isidCount]} {incr repeat} {
 	lappend srcMacList $srcMacFirstFiveBytes:[format "%02x" $startingMacValue]
     }
@@ -108,7 +108,7 @@ if {$totalFlowGroups != [expr $bMacCount * $bMacRepeat]} {
     puts "Total expected Flow Groups on Traffic Item: [expr $bMacCount * $bMacRepeat]"
     puts "ERROR:  Traffic Item name [ixNet getAttribute $trafficItem -name]"
     puts "        has total flow groups: $totalFlowGroups"
-    
+
     puts "\nExiting test!\n\n\n"
     return
     exit
@@ -134,8 +134,8 @@ set mplsValueList1 {}
 set mplsValueList2 {}
 
 # Going to get the MPLS labels and other packet info and build a list.
-# Then delete the flow group because there seems to be a bug that 
-# the payload cannot get modified. We are going to recreate all 
+# Then delete the flow group because there seems to be a bug that
+# the payload cannot get modified. We are going to recreate all
 # the flow groups after removing the existing ones.
 foreach highLevelStream $allHighLevelStreams {
     puts "\nFlow Group: $highLevelStream"
@@ -154,7 +154,7 @@ foreach highLevelStream $allHighLevelStreams {
     foreach lable2 $mpls2 {
 	append mplsValueList "\"$lable2\" "
     }
-    
+
     set frameSize     [ixNet getAttribute $highLevelStream/frameSize -fixedSize]
     set frameRateType [ixNet getAttribute $highLevelStream/frameRate -type]
     set frameRate     [ixNet getAttribute $highLevelStream/frameRate -rate]
@@ -183,28 +183,28 @@ for {set totalFlowGroups 1} {$totalFlowGroups <= [llength $allHighLevelStreams]}
 	ixNet commit
 	set tiEndpointSetObj [lindex [ixNet remapIds $tiEndpointSetObj] 0]
 	puts "\nCreated new Flow Group: $newFlowGroup/$isidCount"
-	
+
 	# Get the endpointSet-Id
 	regexp "endpointSet:(\[0-9]+)" $tiEndpointSetObj - newEndpointSetId
-	
+
 	# Must search all created flow groups to see which flow group has the
 	# endpointSetId that is just created.
 	foreach newHighLevelStream [ixNet getList $trafficItem highLevelStream] {
 	    if {[ixNet getAttribute $newHighLevelStream -endpointSetId] == $newEndpointSetId} {
-		
+
 		catch {ixNet setAttribute $newHighLevelStream/stack:\"ethernet-1\"/field:\"ethernet.header.sourceAddress-2\" \
 			   -singleValue $ethernetSrc \
 		       } errMsg
 		puts "\tConfiguring ethernetSrcAddr: $errMsg"
-		
+
 		catch {ixNet setAttribute $newHighLevelStream/stack:\"ethernet-1\"/field:\"ethernet.header.destinationAddress-1\" \
 			   -singleValue $ethernetDst \
 		       } errMsg
 		puts "\tConfiguring ethernetDstAddr: $errMsg"
-		
+
 		set mplsIndex [lsearch -regexp [ixNet getList [ixNet getRoot]/traffic protocolTemplate] mpls]
 		set mplsStack [lindex [ixNet getList [ixNet getRoot]/traffic protocolTemplate] $mplsIndex]
-		
+
 		puts "\tAdding MPLS-1 stack ..."
 		set addToStackLevel [lindex [ixNet getList $newHighLevelStream stack] 0]
 		ixNet exec append $addToStackLevel $mplsStack
@@ -213,24 +213,24 @@ for {set totalFlowGroups 1} {$totalFlowGroups <= [llength $allHighLevelStreams]}
 			   -valueType singleValue \
 			   -singleValue \"[lindex $mplsValueList $mplsIndexCounter]\"} errMsg
 		puts "\t\tsetAttrib mpls-1 \"[lindex $mplsValueList`< $mplsIndexCounter]\": $errMsg"
-		
+
 		set ethernetNoFcsIndex [lsearch -regexp [ixNet getList [ixNet getRoot]/traffic protocolTemplate] ethernetNoFCS]
 		set ethernetNoFcsStack [lindex [ixNet getList [ixNet getRoot]/traffic protocolTemplate] $ethernetNoFcsIndex]
-		
+
 		puts "\tAdding EthernetNoFCS stack ..."
 		set addToStackLevel [lindex [ixNet getList $newHighLevelStream stack] 1]
 		ixNet exec append $addToStackLevel $ethernetNoFcsStack
-		
+
 		catch {ixNet setMultiAttribute $newHighLevelStream/stack:\"ethernetNoFCS-3\"/field:\"ethernetNoFCS.header.destinationAddress-1\" \
 			   -valueType valueList \
 			   -valueList $bMacDstMac} errMsg
 		puts "\t\tsetAttrib bMacDestAddr: $errMsg"
-		
+
 		catch {ixNet setMultiAttribute $newHighLevelStream/stack:\"ethernetNoFCS-3\"/field:\"ethernetNoFCS.header.sourceAddress-2\" \
 			   -valueType valueList \
 			   -valueList [lindex $srcMacList $payloadIndexNumber]} errMsg
 		puts "\t\tsetAttrib bMacSrcAddr: $errMsg"
-		
+
 		puts "\tConfiguring Ethernet Type 0x88f6 on new flow group"
 		catch {ixNet setMultiAttribute $newHighLevelStream/stack:\"ethernetNoFCS-3\"/field:\"ethernetNoFCS.header.etherType-3\" \
 			   -auto false \
@@ -245,26 +245,26 @@ for {set totalFlowGroups 1} {$totalFlowGroups <= [llength $allHighLevelStreams]}
 			   -startValue 0xFFFF \
 		       } errMsg
 		puts "\t\tsetMultiAttr 88f6: $errMsg"
-		
+
 		puts "\tConfiguring custom payload: $newHighLevelStream\n\t[lindex $isidList $payloadIndexNumber] ..."
 		catch {ixNet setMultiAttribute $newHighLevelStream/framePayload \
 			   -customPattern [list [lindex $isidList $payloadIndexNumber]] \
 			   -type custom \
 			   -customRepeat false} errMsg
 		puts "\t\tsetMultiAttr: $errMsg"
-		
+
 		catch {ixNet setMultiAttribute $newHighLevelStream/frameSize \
 			   -fixedSize $frameSize} errMsg
-		puts "\t\tsetMultiAttr frameSize: $errMsg"		
-		
+		puts "\t\tsetMultiAttr frameSize: $errMsg"
+
 		catch {ixNet setMultiAttribute $newHighLevelStream/frameRate \
 			   -type $frameRateType \
 			   -rate $frameRate} errMsg
-		puts "\t\tsetMultiAttr frameRate: $errMsg"		
-		
+		puts "\t\tsetMultiAttr frameRate: $errMsg"
+
 		catch {ixNet commit} errMsg
 		puts "\t\tPushing config to hardware: $errMsg"
-		
+
 		incr payloadIndexNumber
 	    }
 	}

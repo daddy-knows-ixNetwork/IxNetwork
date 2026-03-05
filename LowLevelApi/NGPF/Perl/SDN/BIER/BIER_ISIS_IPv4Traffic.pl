@@ -84,7 +84,7 @@
 ##################################################################################
 
 ################################################################################
-# Please ensure that PERL5LIB environment variable is set properly so that 
+# Please ensure that PERL5LIB environment variable is set properly so that
 # IxNetwork.pm module is available. IxNetwork.pm is generally available in
 # C:\<IxNetwork Install Path>\API\Perl
 ################################################################################
@@ -102,13 +102,13 @@ sub assignPorts {
     my $port2    = $my_resource[6];
     my $vport1   = $my_resource[7];
     my $vport2   = $my_resource[8];
-    
+
     my $root = $ixNet->getRoot();
     my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-    
+
     my $chassisObj2 = '';
     if ($chassis1 ne $chassis2) {
         $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -118,7 +118,7 @@ sub assignPorts {
     } else {
         $chassisObj2 = $chassisObj1;
     }
-    
+
     my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -136,7 +136,7 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.39.40.148';
 my $ixTclPort   = '8239';
 my @ports       = (('10.39.50.123', '11', '7'), ('10.39.50.123', '11', '8'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
@@ -650,13 +650,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-        my $statIndiv = ''; 
+        my $statIndiv = '';
         $index = 0;
         foreach $statIndiv (@$statVal) {
             printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
             $index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -744,12 +744,12 @@ $ixNet->commit();
 ################################################################################
 print("Configuring L2-L3 IPv4 S-PMSI Traffic Item\n ");
 my $SpmsiTrafficItem = $ixNet->add($ixNet->getRoot().'/traffic', 'trafficItem');
-$ixNet->setMultiAttribute($SpmsiTrafficItem, '-name', 'NGMVPN S-PMSI Traffic', 
-		'-multicastForwardingMode', 'replication', 
-		'-useControlPlaneRate', 'true', 
-		'-useControlPlaneFrameSize', 'true', 
-		'-roundRobinPacketOrdering', 'false', 
-		'-numVlansForMulticastReplication', '1', 
+$ixNet->setMultiAttribute($SpmsiTrafficItem, '-name', 'NGMVPN S-PMSI Traffic',
+		'-multicastForwardingMode', 'replication',
+		'-useControlPlaneRate', 'true',
+		'-useControlPlaneFrameSize', 'true',
+		'-roundRobinPacketOrdering', 'false',
+		'-numVlansForMulticastReplication', '1',
 		'-trafficType', 'ipv4');
 $ixNet->commit();
 
@@ -793,13 +793,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 

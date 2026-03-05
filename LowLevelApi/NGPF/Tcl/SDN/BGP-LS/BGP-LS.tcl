@@ -70,7 +70,7 @@ ixNet exec newConfig
 
 ################################################################################
 # protocol configuration section                                               #
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -308,7 +308,7 @@ foreach statValList [ixNet getAttr $viewPage -rowValues] {
 puts "***************************************************"
 
 ################################################################################
-# On the fly section                                                           #  
+# On the fly section                                                           #
 ################################################################################
 puts "Changing the Ipv4 & Ipv6 PrefixPool Address"
 ixNet setAttr [ixNet getAttr $ip4pool -networkAddress]/singleValue -value "90.90.90.1"

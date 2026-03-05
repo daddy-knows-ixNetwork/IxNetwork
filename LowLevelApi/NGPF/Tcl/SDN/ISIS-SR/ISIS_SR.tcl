@@ -52,7 +52,7 @@
 #        topology and topology2 will have IPv4 & IPv6 prefix pool.             #
 #    2. Enable Segment Routing in ISIS Emulated Router.                        #
 #    3. Set SRGB range and SID Count for Emulated Router.                      #
-#    4. Enable Segment Routing in Simulated Router.                            #  
+#    4. Enable Segment Routing in Simulated Router.                            #
 #    5. Start protocol.                                                        #
 #    6. Retrieve protocol statistics.                                          #
 #    7. Retrieve protocol learned info in Port1.                               #
@@ -61,7 +61,7 @@
 #    10. On the fly Change SID Index Label in IPv4 & IPv6 PseudoNode Routes in #
 #         Simulated Topology.                                                  #
 #    11. Retrieve protocol learned info in Port1 after On the Fly change.      #
-#    12. Change IPv4 & V6 PseudoNode Routes addresses in Simulated Topology    # 
+#    12. Change IPv4 & V6 PseudoNode Routes addresses in Simulated Topology    #
 #    13. Retrieve protocol learned info in Port2 after On the Fly change.      #
 #    14. Configuring ISIS L2-L3 Traffic Item				                   #
 #    15. Verifying all the L2-L3 traffic stats                                 #
@@ -93,7 +93,7 @@ ixNet exec newConfig
 ################################################################################
 # 1. Protocol configuration section. Configure ISIS as per the description
 #  give above
-################################################################################ 
+################################################################################
 # Adding Virtual ports
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
@@ -394,7 +394,7 @@ puts "***************************************************\n"
 ###############################################################################
 
 puts "Fetching ISIS IPv4 & IPv6 Learned Info in Port 1"
-ixNet exec getLearnedInfo $isisL3_1 
+ixNet exec getLearnedInfo $isisL3_1
 after 5000
 set learnedInfoList [ixNet getList $isisL3_1 learnedInfo]
 set linfoList [ixNet getList $learnedInfoList table]
@@ -518,11 +518,11 @@ if {[catch {ixNet exec applyOnTheFly $topology}] == 1} {
 after 5000
 
 ################################################################################
-# 12. Changing IPv4 & IPv6 PseudoNode Routes in Simulated Topology  from 
+# 12. Changing IPv4 & IPv6 PseudoNode Routes in Simulated Topology  from
 #      default addresses. And apply changes On The Fly (OTF).
 ################################################################################
 puts "Changing IPv4 Addresses in IPv4 PseudoNode Routes in Simulated Topology 1"
-ixNet setMultiAttr [ixNet getAttr $IPv4PseudoNodeRoutes -networkAddress]/singleValue -value "251.1.1.1" 
+ixNet setMultiAttr [ixNet getAttr $IPv4PseudoNodeRoutes -networkAddress]/singleValue -value "251.1.1.1"
 puts "Changing IPv6 Addresses in IPv6 PseudoNode Routes in Simulated Topology 1"
 ixNet setMultiAttr [ixNet getAttr $IPv6PseudoNodeRoutes -networkAddress]/singleValue -value "3222:0:1:1:0:0:0:1"
 
@@ -539,7 +539,7 @@ after 5000
 
 ###############################################################################
 # 13. Retrieve protocol learned info again and compare with
-#    previously retrieved learned info.  
+#    previously retrieved learned info.
 ###############################################################################
 puts "Fetching ISIS Leanred Info in Port2 after the change"
 ixNet exec getLearnedInfo $isisL3_2
@@ -562,7 +562,7 @@ foreach table $linfoList {
 }
 puts "***************************************************"
 ################################################################################
-# 14. Configure L2-L3 traffic 
+# 14. Configure L2-L3 traffic
 ################################################################################
 puts "Configuring  L2-L3 IPv4 Traffic Item # 1"
 
@@ -594,7 +594,7 @@ ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/configElement:1/transmissionDistribution \
     -distributions [list ipv4SourceIp0 ]
-	
+
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\
@@ -602,7 +602,7 @@ ixNet setMultiAttribute $trafficItem1/tracking\
     -fieldWidth     thirtyTwoBits\
     -protocolOffset Root.0\
     -values         [list]\
-	
+
 ixNet commit
 
 puts "Configuring  L2-L3 IPv4 Traffic Item # 2"
@@ -629,12 +629,12 @@ ixNet setMultiAttribute $endpointSet2\
     -ngpfFilters           [list]\
     -trafficGroups         [list]\
     -sources               $source\
-    -destinations          $destination 
+    -destinations          $destination
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem2/configElement:1/transmissionDistribution \
     -distributions [list ipv4SourceIp0 ]
-	
+
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem2/tracking\
@@ -642,7 +642,7 @@ ixNet setMultiAttribute $trafficItem2/tracking\
     -fieldWidth     thirtyTwoBits\
     -protocolOffset Root.0\
     -values         [list]\
-	
+
 ixNet commit
 
 puts "Enabling option Display Dynamic Value when Tracking by Dynamic Flow Descriptor from Traffic Options in Global"
@@ -732,4 +732,3 @@ after 5000
 ################################################################################
 ixNet exec stopAllProtocols
 puts "!!! Test Script Ends !!!"
-

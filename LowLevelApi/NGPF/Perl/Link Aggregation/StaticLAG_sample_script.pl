@@ -53,16 +53,16 @@
 #	 Script uses four ports to demonstrate LAG properties					   #
 #                                                                              #
 #    1. It will create 2 StaticLag topologies, each having two ports which are #
-#       LAG members. It will then modify the Lag Id	for	both the LAG systems   # 
+#       LAG members. It will then modify the Lag Id	for	both the LAG systems   #
 #    2. Start the StaticLag protocol                                           #
 #    3. Retrieve protocol statistics and StaticLag per port statistics         #
-#	 4. Perform Simulate Link Down on port1 in System1-StaticLag-LHS           # 
+#	 4. Perform Simulate Link Down on port1 in System1-StaticLag-LHS           #
 #	 5. Retrieve protocol statistics, StaticLag per port statistics		       #
 #    6. Retrieve StaticLag global learned info                                 #
-#	 7. Perform Simulate Link Up on port1 in System1-StaticLag-LHS             # 
+#	 7. Perform Simulate Link Up on port1 in System1-StaticLag-LHS             #
 #	 8. Retrieve protocol statistics and StaticLag per port statistics         #
 #    9. Retrieve StaticLag global learned info                                 #
-#	 10. Stop All protocols                                                    # 
+#	 10. Stop All protocols                                                    #
 #                                                                              #
 # 	Ixia Software:                                                             #
 #    IxOS      6.90 EA                                                         #
@@ -71,7 +71,7 @@
 ################################################################################
 
 ################################################################################
-# Please ensure that PERL5LIB environment variable is set properly so that 
+# Please ensure that PERL5LIB environment variable is set properly so that
 # IxNetwork.pm module is available. IxNetwork.pm is generally available in
 # C:\<IxNetwork Install Path>\API\Perl
 ################################################################################
@@ -97,28 +97,28 @@ sub assignPorts {
 	my $vport2   = $my_resource[14];
 	my $vport3   = $my_resource[15];
 	my $vport4   = $my_resource[16];
-	
+
 	my $root = $ixNet->getRoot();
 	my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-	
+
 	my $chassisObj2 = '';
 	my $chassisObj3 = '';
 	my $chassisObj4 = '';
-	
+
 	if ($chassis1 ne $chassis2) {
 	    $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
         $ixNet->setAttribute($chassisObj2, '-hostname', $chassis2);
         $ixNet->commit();
         $chassisObj2 = ($ixNet->remapIds($chassisObj2))[0];
-	    
+
 		$chassisObj3 = $ixNet->add($root.'/availableHardware', 'chassis');
         $ixNet->setAttribute($chassisObj3, '-hostname', $chassis3);
         $ixNet->commit();
         $chassisObj3 = ($ixNet->remapIds($chassisObj3))[0];
-		
+
 		$chassisObj4 = $ixNet->add($root.'/availableHardware', 'chassis');
         $ixNet->setAttribute($chassisObj4, '-hostname', $chassis4);
         $ixNet->commit();
@@ -146,7 +146,7 @@ sub assignPorts {
     my $cardPortRef4 = $chassisObj4.'/card:'.$card4.'/port:'.$port4;
     $ixNet->setMultiAttribute($vport4, '-connectedTo', $cardPortRef4,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 004');
-		
+
     $ixNet->commit();
 }
 
@@ -160,7 +160,7 @@ sub gererateStaticLagLearnedInfoView {
     my $root    = $ixNet->getRoot();
     my $statistics = $root.'/statistics';
     my $statsViewList = $ixNet->getList($statistics, 'view');
-	
+
    # Add a StatsView
     my $view = $ixNet->add($statistics, 'view');
     $ixNet->setAttribute($view, '-caption', $viewCaption);
@@ -169,14 +169,14 @@ sub gererateStaticLagLearnedInfoView {
     $ixNet->commit();
     $view = ($ixNet->remapIds($view))[0];
 
-   # Set Filters        
+   # Set Filters
     my $trackingFilter = $ixNet->add($view, 'advancedCVFilters');
     $ixNet->setAttribute($trackingFilter, '-protocol', $protocol);
     $ixNet->commit();
-    #ixNet getAttr $trackingFilter -availableGroupingOptions        
+    #ixNet getAttr $trackingFilter -availableGroupingOptions
     $ixNet->setAttribute($trackingFilter, '-grouping', $drillDownType);
     $ixNet->commit();
-    my $layer23NextGenProtocolFilter = $view.'/'.'layer23NextGenProtocolFilter';        
+    my $layer23NextGenProtocolFilter = $view.'/'.'layer23NextGenProtocolFilter';
     $ixNet->setAttribute($layer23NextGenProtocolFilter, '-advancedCVFilter', $trackingFilter);
     $ixNet->commit();
 
@@ -199,7 +199,7 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.205.28.122';
 my $ixTclPort   = '8987';
 my @ports       = (('10.205.28.173', '1', '1'), ('10.205.28.173', '1', '2'), ('10.205.28.173', '1', '3'), ('10.205.28.173', '1', '4'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
@@ -334,13 +334,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 print("\nFetching all Static LAG Per Port Stats\n");
@@ -353,13 +353,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 sleep(5);
@@ -382,13 +382,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 print("\nFetching all Static LAG Per Port Stats\n");
@@ -401,13 +401,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 sleep(5);
@@ -429,13 +429,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 sleep(5);
@@ -446,7 +446,7 @@ print ("\n\nPerform Simulate Link Up on port1 in System1-StaticLag-LHS ");
 $ixNet->execute('linkUpDn', $vportTx1, 'up');
 sleep(5);
 ################################################################################
-# Retrieve protocol statistics and StaticLag per port statistics               #      
+# Retrieve protocol statistics and StaticLag per port statistics               #
 ################################################################################
 print("\nFetching all Protocol Summary Stats\n");
 my $viewPage = '::ixNet::OBJ-/statistics/view:"Protocols Summary"/page';
@@ -458,13 +458,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 print("\nFetching all Static LAG Per Port Stats\n");
@@ -477,13 +477,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 sleep(5);
@@ -503,13 +503,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 sleep(5);
@@ -519,5 +519,3 @@ sleep(5);
 print("Stopping all protocols\n");
 $ixNet->execute('stopAllProtocols');
 print("!!! Test Script Ends !!!");
-
-

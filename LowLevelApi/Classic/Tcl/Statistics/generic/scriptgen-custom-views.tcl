@@ -209,7 +209,7 @@ puts "Wait 30 sec"
 after 30000
 
 set view "custom-view-traffic"
-set index [lsearch -regexp [ixNet getL [ixNet getRoot]/statistics view] "$view"]	
+set index [lsearch -regexp [ixNet getL [ixNet getRoot]/statistics view] "$view"]
 if {$index== -1} {
 	error "Cannot find $view in view list !"
 

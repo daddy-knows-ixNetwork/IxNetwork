@@ -45,7 +45,7 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#    This sample configures 10 IPv4 sessions on each of the two ports,         # 
+#    This sample configures 10 IPv4 sessions on each of the two ports,         #
 #    adds a traffic Item that uses IPv4 endpoints, sends traffic and           #
 #    generate a pdf report                                                     #
 #                                                                              #
@@ -194,7 +194,7 @@ ixNet setMultiAttribute $ti1/tracking -trackBy {{sourceDestValuePair0}}
 ixNet commit
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 set vPorts [ixNet getList [ixNet getRoot] vport]
 puts "Assigning ports to $vPorts"
@@ -267,4 +267,4 @@ proc generateReport { {reportName "MasterTemplate"} {templateName "None"} { outp
 # Generate the pdf report
 ################################################################################
 puts "Generate Master Template pdf report"
-generateReport 
+generateReport

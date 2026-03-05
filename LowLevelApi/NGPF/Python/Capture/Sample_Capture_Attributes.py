@@ -208,7 +208,7 @@ ixNet.setMultiAttribute(ti1 + "/tracking", '-trackBy', ['sourceDestValuePair0'])
 ixNet.commit()
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 
 vports = ixNet.getList(ixNet.getRoot(), 'vport')

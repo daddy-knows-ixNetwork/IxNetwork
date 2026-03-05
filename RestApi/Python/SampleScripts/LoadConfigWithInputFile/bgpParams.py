@@ -10,19 +10,19 @@ params = {
     "configLicense": True,
     "licenseServerIp": ["192.168.70.3"],
     "licenseModel": "subscription",
-    "licenseTier": "tier3",    
+    "licenseTier": "tier3",
     "ixChassisIp": "192.168.70.11",
     "portList": [["192.168.70.11", "1", "1"],
                  ["192.168.70.11", "2", "1"]
              ],
-    
+
     "topology": [
         {
             "name": "Topology-1",
             "ports": [["192.168.70.11", "1", "1"]],
             "deviceGroup": [
                 {
-                    "name": "DG-1",		
+                    "name": "DG-1",
                     "multiplier": 1,
                     "ethernet": [
                         {
@@ -72,12 +72,12 @@ params = {
                     ]
                 }
             ]
-        },	
+        },
         {
             "name": "Topology-2",
             "ports": [["192.168.70.11", "2", "1"]],
             "deviceGroup": [
-                {"name": "DG-2",		
+                {"name": "DG-2",
                  "multiplier": 1,
                  "ethernet": [
                      {
@@ -125,11 +125,11 @@ params = {
                                         "step": "0.0.0.1"}
                      }
                  ]
-             }	
+             }
             ]
         }
     ],
-    
+
     "trafficItem":  [
         {"name": "Port1 to Port2",
          "trafficType": "ipv4",
@@ -152,5 +152,3 @@ params = {
      }
     ]
 }
-
-

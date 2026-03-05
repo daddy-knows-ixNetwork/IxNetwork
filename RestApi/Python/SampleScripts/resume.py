@@ -37,7 +37,7 @@ try:
     enableDebugTracing = True
     deleteSessionAfterTest = False ;# For Windows Connection Mgr and Linux API server only
 
-    # If the licenses are activated in the Linux based XGS chassis or if the licenses are configured 
+    # If the licenses are activated in the Linux based XGS chassis or if the licenses are configured
     # in the Windows IxNetwork GUI API server in preferences, then you won't need to config license.
     configLicense = True
     licenseServerIp = '192.168.70.3'
@@ -67,7 +67,7 @@ try:
                           serverOs=osPlatform,
                           deleteSessionAfterTest=deleteSessionAfterTest
                           )
-    
+
     if osPlatform in ['windowsConnectionMgr']:
         mainObj = Connect(apiServerIp='192.168.70.3',
                           serverIpPort='11009',
@@ -76,13 +76,13 @@ try:
                           sessionId=8021,
                           httpsSecured=False
                           )
-    
+
     trafficObj = Traffic(mainObj)
     statObj = Statistics(mainObj)
     protocolObj = Protocol(mainObj)
     portObj = PortMgmt(mainObj)
-    
-    
+
+
 except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
     print('\nTest failed! {0}\n'.format(traceback.print_exc()))
     print(errMsg)

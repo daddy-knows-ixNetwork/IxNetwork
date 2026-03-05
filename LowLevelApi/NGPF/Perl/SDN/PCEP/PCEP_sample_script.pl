@@ -65,12 +65,12 @@
 #      7. Verify L2/L3 traffic statistics.                                     #
 #      8. Stop traffic.                                                        #
 #      9. Change the MPLS Label value in ERO1 of LSP1 at the PCE end in        #
-#         topology1.                                                           #      
+#         topology1.                                                           #
 #     10. Wait for a few seconds and verify learned info                       #
 #     11. Apply L2/L3 traffic.                                                 #
 #     12. Verify traffic L2/L3 statistics.                                     #
 #     13. Stop traffic.                                                        #
-#     14. Stop all protocols.                                                  # 
+#     14. Stop all protocols.                                                  #
 # Ixia Software:                                                               #
 #    IxOS      8.00 EA                                                         #
 #    IxNetwork 8.00 EA                                                         #
@@ -78,7 +78,7 @@
 ################################################################################
 
 ################################################################################
-# Please ensure that PERL5LIB environment variable is set properly so that 
+# Please ensure that PERL5LIB environment variable is set properly so that
 # IxNetwork.pm module is available. IxNetwork.pm is generally available in
 # C:\<IxNetwork Install Path>\API\Perl
 ################################################################################
@@ -96,13 +96,13 @@ sub assignPorts {
     my $port2    = $my_resource[6];
     my $vport1   = $my_resource[7];
     my $vport2   = $my_resource[8];
-    
+
     my $root = $ixNet->getRoot();
     my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-    
+
     my $chassisObj2 = '';
     if ($chassis1 ne $chassis2) {
         $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -112,7 +112,7 @@ sub assignPorts {
     } else {
         $chassisObj2 = $chassisObj1;
     }
-    
+
     my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -121,7 +121,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-        
+
     $ixNet->commit();
 }
 
@@ -132,7 +132,7 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.216.108.113';
 my $ixTclPort   = '8027';
 my @ports       = (('10.216.108.104', '4', '1'), ('10.216.108.104', '4', '2'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
@@ -285,8 +285,8 @@ $ixNet->commit();
 
 my $includeSymbolicPathMv = $ixNet->getAttribute($pccGroup.'/pceInitiateLspParameters', '-includeSymbolicPathNameTlv');
 $ixNet->setAttribute($includeSymbolicPathMv.'/singleValue',  '-value',  'True');
-$ixNet->commit();    
-    
+$ixNet->commit();
+
 my $symbolicPathNameMv = $ixNet->getAttribute($pccGroup.'/pceInitiateLspParameters', '-symbolicPathName');
 $ixNet->setAttribute($symbolicPathNameMv.'/singleValue',  '-value', 'IXIA_SAMPLE_LSP_1');
 $ixNet->commit();
@@ -296,7 +296,7 @@ $ixNet->setMultiAttribute($pccGroup.'/pceInitiateLspParameters', '-numberOfEroSu
 $ixNet->commit();
 
 ################################################################################
-# Set the properties of ERO1                                                   # 
+# Set the properties of ERO1                                                   #
 # a. Active                                                                    #
 # b. Sid Type                                                                  #
 # c. MPLS Label                                                                #
@@ -314,7 +314,7 @@ my $ero1MplsLabelMv = $ixNet->getAttribute($pccGroup.'/pceInitiateLspParameters/
 $ixNet->setAttribute($ero1MplsLabelMv.'/singleValue', '-value', '1111');
 
 my $ero1TcMv = $ixNet->getAttribute($pccGroup.'/pceInitiateLspParameters/pcepEroSubObjectsList:1', '-tc');
-$ixNet->setAttribute($ero1TcMv.'/singleValue', '-value',  '1'); 
+$ixNet->setAttribute($ero1TcMv.'/singleValue', '-value',  '1');
 
 my $ero1TtlMv = $ixNet->getAttribute($pccGroup.'/pceInitiateLspParameters/pcepEroSubObjectsList:1', '-ttl');
 $ixNet->setAttribute($ero1TtlMv.'/singleValue', '-value', '125');
@@ -361,7 +361,7 @@ $ixNet->setMultiAttribute($pcc.'/expectedInitiatedLspList','-maxExpectedSegmentC
 $ixNet->commit();
 
 ################################################################################
-# Add expected PCC's Expected Initiated LSP traffic end point                  # 
+# Add expected PCC's Expected Initiated LSP traffic end point                  #
 # a. Active                                                                    #
 # b. Source IP addresses                                                       #
 # c. Symbolic path name                                                        #
@@ -379,7 +379,7 @@ $ixNet->setAttribute($pccExpectedSymbolicPathMv.'/singleValue', '-value', '{IXIA
 $ixNet->commit();
 
 ################################################################################
-# 2. # 2. Start PCEP protocol and wait for 60 seconds  
+# 2. # 2. Start PCEP protocol and wait for 60 seconds
 ################################################################################
 print("Starting protocols and waiting for 60 seconds for protocols to come up\n");
 $ixNet->execute('startAllProtocols');
@@ -398,13 +398,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-        my $statIndiv = ''; 
+        my $statIndiv = '';
         $index = 0;
         foreach $statIndiv (@$statVal) {
             printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
             $index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -428,7 +428,7 @@ foreach $v (@values) {
 print("***************************************************\n");
 
 ################################################################################
-# 5. Configure L2-L3 traffic 
+# 5. Configure L2-L3 traffic
 ################################################################################
 print("Congfiguring L2-L3 Traffic Item\n");
 $ixNet->setAttribute($ixNet->getRoot().'/traffic', '-refreshLearnedInfoBeforeApply', 'true');
@@ -486,13 +486,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-        my $statIndiv = ''; 
+        my $statIndiv = '';
         $index = 0;
         foreach $statIndiv (@$statVal) {
             printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
             $index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -559,13 +559,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-        my $statIndiv = ''; 
+        my $statIndiv = '';
         $index = 0;
         foreach $statIndiv (@$statVal) {
             printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
             $index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -582,4 +582,3 @@ sleep(5);
 print("Stopping All Protocols\n");
 $ixNet->execute('stopAllProtocols');
 print("!!! Test Script Ends !!!");
-

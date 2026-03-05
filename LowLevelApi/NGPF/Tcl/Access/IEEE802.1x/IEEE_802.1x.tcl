@@ -7,10 +7,10 @@
 ################################################################################
 
 ################################################################################
-# Description:                                                                 
+# Description:
 #    This script intends to demonstrate how to use IEEE 802.1x API
 #    It will do the  following :
-#1.    Add topology and devicegroup 
+#1.    Add topology and devicegroup
 #2.    Configure ethernet and dot1x Layer.
 #3.    Change protocol type to PEAPV0
 #4.    Change few global parameters
@@ -36,7 +36,7 @@ puts "Creating a new config"
 ixNet exec newConfig
 
 ##############################################################################
-# Connecting to IxTCl server and cretaing new config                           
+# Connecting to IxTCl server and cretaing new config
 ##############################################################################
 puts "Adding 1 vport"
 ixNet add [ixNet getRoot] vport
@@ -84,10 +84,10 @@ set dot1x_protocol_single_val [ixNet add $dot1x_protocol "singleValue"]
 ixNet setMultiAttribute $dot1x_protocol_single_val -value eappeapv0
 ixNet commit
 
-#############################################################################   
+#############################################################################
 ################## Change few global parameters #############################
 #############################################################################
- 
+
 puts " Change few global parameters "
 set glob [ixNet getList [ixNet getRoot] "globals"]
 set glob_topo [ixNet getList $glob "topology"]
@@ -117,7 +117,7 @@ set eapol_version_single_val [ixNet add $eapol_version "singleValue"]
 ixNet setMultiAttribute $eapol_version_single_val -value "eapolver2020"
 ixNet commit
 
-puts "Enable Ignore Authenticator EAPOL Version" 
+puts "Enable Ignore Authenticator EAPOL Version"
 set ignore_auth_eapol_ver [ixNet getAttribute $dot1x -ignoreAuthEapolVer]
 set ignore_auth_eapol_ver_single_val [ixNet add $ignore_auth_eapol_ver "singleValue"]
 ixNet setMultiAttribute $ignore_auth_eapol_ver_single_val -value "true"
@@ -177,8 +177,3 @@ puts "ixNet help ::ixNet::OBJ-/topology:1/deviceGroup:1/ethernet:1"
 puts "ixNet help ::ixNet::OBJ-/topology:1/deviceGroup:1/ethernet:1/dotOneX:1"
 
 puts "*****************END************************"
-
-
-
-
-

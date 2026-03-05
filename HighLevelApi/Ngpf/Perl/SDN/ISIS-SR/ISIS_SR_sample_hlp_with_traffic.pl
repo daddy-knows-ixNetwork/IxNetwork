@@ -59,8 +59,8 @@
 ################################################################################
 
 ################################################################################
-# Utils                                                                        #	
-################################################################################       
+# Utils                                                                        #
+################################################################################
 # Running from Linux:
 # use lib ".";
 # use lib "..";
@@ -71,7 +71,7 @@
 # use ixiahlt {TclAutoPath => ['/root/ixos/lib','/root/hltapi']};
 # use ixiahlt {IXIA_VERSION => $ENV{'IXIA_VERSION'}, TclAutoPath  => [$ENV{'PERL_IXOS_LIB_PATH'}, $ENV{'PERL_IXNET_LIB_PATH'}]};
 
-# Running from Windows: 
+# Running from Windows:
 # use lib "C:/Program Files (x86)/Ixia/hltapi/4.95.117.44/TclScripts/lib/hltapi/library/common/ixia_hl_lib-7.40";
 # use lib "C:/Program Files (x86)/Ixia/hltapi/4.95.117.44/TclScripts/lib/hltapi/library/common/ixiangpf/perl";
 
@@ -143,8 +143,8 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $topology_1_handle = $HashRef->{'topology_handle'};
 
-# Creating a device group in topology 
-print("Creating device group 1 in topology 1\n"); 
+# Creating a device group in topology
+print("Creating device group 1 in topology 1\n");
 my $device_group_1_status = ixiangpf::topology_config({
     topology_handle          =>    $topology_1_handle,
     device_group_name        =>    "ISIS Topology 1 Router",
@@ -165,7 +165,7 @@ my $deviceGroup_1_handle = $HashRef->{'device_group_handle'};
 print("Adding topology 2 on port 2\n");
 my $topology_2_status = ixiangpf::topology_config({
     topology_name   =>   "ISIS Topology 2",
-    port_handle     =>   $port_handles_list[1],                 
+    port_handle     =>   $port_handles_list[1],
 });
 
 $HashRef = ixiangpf::get_result_hash();
@@ -293,7 +293,7 @@ my $ipv4_2_handle = $HashRef->{'ipv4_handle'};
 #   -sr_tunnel_description                                                     #
 #   -using_head_end_node_prefix                                                #
 #   -source_ipv4                                                               #
-#   -source_ipv6                                                               # 
+#   -source_ipv6                                                               #
 #   -number_of_segments                                                        #
 #   -enable_segment                                                            #
 #   -segment_type                                                              #
@@ -432,7 +432,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $sr_tunnel_description_handle = $HashRef->{'multivalue_handle'};
 
-# source_ipv4    
+# source_ipv4
 my $source_ipv4_status = ixiangpf::multivalue_config ({
     pattern                => "counter",
     counter_start          => "101.0.0.1",
@@ -470,7 +470,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $source_ipv6_handle = $HashRef->{'multivalue_handle'};
 
-# node_system_id 1    
+# node_system_id 1
 my $node_system_id1_status = ixiangpf::multivalue_config ({
     pattern                 => "counter",
     counter_start           => "65:01:00:01:00:00",
@@ -494,7 +494,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $node_system_id1_handle = $HashRef->{'multivalue_handle'};
 
-# node_system_id 2    
+# node_system_id 2
 my $node_system_id2_status = ixiangpf::multivalue_config ({
     pattern                 => "counter",
     counter_start           => "69:01:00:01:00:00",
@@ -518,7 +518,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $node_system_id2_handle = $HashRef->{'multivalue_handle'};
 
-# node_system_id 3    
+# node_system_id 3
 my $node_system_id3_status = ixiangpf::multivalue_config ({
     pattern                 => "counter",
     counter_start           => "6A:01:00:01:00:00",
@@ -542,7 +542,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $node_system_id3_handle = $HashRef->{'multivalue_handle'};
 
-# node_system_id 4    
+# node_system_id 4
 my $node_system_id4_status = ixiangpf::multivalue_config ({
     pattern                 => "counter",
     counter_start           => "6B:01:00:01:00:00",
@@ -645,7 +645,7 @@ my $neighbour_node_system_id4_handle = $HashRef->{'multivalue_handle'};
 ################################################################################
 # configure ISIS on topology 2                                                 #
 # Following are the new SR related parameters                                  #
-#   -sr_tunnel_active                                                          #  
+#   -sr_tunnel_active                                                          #
 #   -number_of_sr_tunnels                                                      #
 #   -sr_tunnel_description                                                     #
 #   -using_head_end_node_prefix                                                #
@@ -812,7 +812,7 @@ my $networkGroup_1_handle = $HashRef->{'network_group_handle'};
 # -pseudo_node_sid_index_label                                                 #
 # -grid_router_id                                                              #
 # -pseudo_node_route_ipv4_sid_index_label                                      #
-################################################################################ 
+################################################################################
 # si_adj_sid attribute
 my $si_adj_sid_status = ixiangpf::multivalue_config ({
     pattern                => "counter",
@@ -832,7 +832,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $si_adj_sid_handle = $HashRef->{'multivalue_handle'};
 
-# from_ip    
+# from_ip
 my $from_ip_status = ixiangpf::multivalue_config ({
     pattern                => "counter",
     counter_start          => "31.0.10.1",
@@ -851,7 +851,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $from_ip_handle = $HashRef->{'multivalue_handle'};
 
-# to_ip    
+# to_ip
 my $to_ip_status = ixiangpf::multivalue_config ({
     pattern                => "counter",
     counter_start          => "31.0.10.2",
@@ -870,7 +870,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $to_ip_handle = $HashRef->{'multivalue_handle'};
 
-# from_ipv6    
+# from_ipv6
 my $from_ipv6_status = ixiangpf::multivalue_config ({
     pattern                => "counter",
     counter_start          => "aa:0:0:0:0:0:0:1",
@@ -889,7 +889,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $from_ipv6_handle = $HashRef->{'multivalue_handle'};
 
-# to_ipv6    
+# to_ipv6
 my $to_ipv6_status = ixiangpf::multivalue_config ({
     pattern                => "counter",
     counter_start          => "aa:0:0:0:0:0:0:2",
@@ -908,7 +908,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $to_ipv6_handle = $HashRef->{'multivalue_handle'};
 
-# router_system_id    
+# router_system_id
 my $router_system_id_status = ixiangpf::multivalue_config ({
     pattern                => "counter",
     counter_start          => "AB:01:00:00:00:01",
@@ -927,7 +927,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $router_system_id_handle = $HashRef->{'multivalue_handle'};
 
-# pseudo_node_node_prefix    
+# pseudo_node_node_prefix
 my $pseudo_node_node_prefix_status = ixiangpf::multivalue_config ({
     pattern                => "counter",
     counter_start          => "1.1.1.1",
@@ -946,7 +946,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $pseudo_node_node_prefix_handle = $HashRef->{'multivalue_handle'};
 
-# pseudo_node_rtrcap_id    
+# pseudo_node_rtrcap_id
 my $pseudo_node_rtrcap_id_status = ixiangpf::multivalue_config ({
     pattern                => "counter",
     counter_start          => "1.1.1.1",
@@ -984,7 +984,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $pseudo_node_sid_index_label_handle = $HashRef->{'multivalue_handle'};
 
-# grid_router_id    
+# grid_router_id
 my $grid_router_id_status = ixiangpf::multivalue_config ({
     pattern                => "counter",
     counter_start          => "201.1.0.0",
@@ -1003,7 +1003,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $grid_router_id_handle = $HashRef->{'multivalue_handle'};
 
-# pseudo_node_route_ipv4_sid_index_label 
+# pseudo_node_route_ipv4_sid_index_label
 my $pseudo_node_route_ipv4_sid_index_label_status = ixiangpf::multivalue_config ({
     pattern                => "counter",
     counter_start          => "1",
@@ -1022,7 +1022,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $pseudo_node_route_ipv4_sid_index_label_handle = $HashRef->{'multivalue_handle'};
 
-# grid_ipv6_router_id    
+# grid_ipv6_router_id
 my $grid_ipv6_router_id_status = ixiangpf::multivalue_config ({
     pattern                => "counter",
     counter_start          => "3000:0:1:1:0:0:0:0",
@@ -1175,7 +1175,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     print  "Error: $error";
     return "FAILED - $error";
 }
-  
+
 ################################################################################
 # Start all configured protocols                                               #
 ################################################################################
@@ -1200,7 +1200,7 @@ sleep(60);
 print "Fetching learned info\n";
 my $handle = $isisL3_1_handle;
 $run_status = ixiangpf::emulation_isis_info({
-    handle  => $handle, 
+    handle  => $handle,
     mode    => "stats",
 });
 
@@ -1253,7 +1253,7 @@ sleep(30);
 ############################################################################
 # Retrieve L2-L3 traffic stats                                             #
 ############################################################################
-$run_status = ixiangpf::traffic_stats({ 
+$run_status = ixiangpf::traffic_stats({
     mode              => "all",
     traffic_generator => "ixnetwork_540",
     measure_mode      => "mixed",
@@ -1275,7 +1275,7 @@ $run_status = ::ixiangpf::traffic_control({
     traffic_generator => "ixnetwork_540",
     type              => "{l23 l47}",
 });
-   
+
 ############################################################################
 # Stop all protocols                                                       #
 ############################################################################
@@ -1284,4 +1284,3 @@ $run_status = ixiangpf::test_control({
     action => "stop_all_protocols",
 });
 print "!!!!! TEST ENDS !!!!!\n";
-

@@ -16,7 +16,7 @@ class Statistics(object):
         """
         viewResults = []
         counterStop = 60
-        for counter in range(1, counterStop+1): 
+        for counter in range(1, counterStop+1):
             print('\nWaiting for statview: {0}\n'.format(caption))
             viewResults = self.ixNetObj.Statistics.View.find(Caption=caption)
             if counter < counterStop and len(viewResults) == 0:
@@ -37,9 +37,9 @@ class Statistics(object):
         Wait for a statistic view to be ready with stats. Cannot assume the stats are ready.
         For example, if startAllProtocols was executed, protocol summary stats may not be ready
         provided by the API server.
-    
+
         This function takes in statViewName as a mandatory parameter.
-        
+
         Note:
            Getting stats is always a two step process.  You normally need to get the statview and then
            get the stat page values.  You must verify each seperately for readiness.
@@ -49,16 +49,16 @@ class Statistics(object):
 
         :param getColumnCaptions: <bool>: Optional: Returns the statViewName column caption names in a list.
         :param getPageValues: <bool>: Optional: Returns the statViewName page values in a list.
-        :param rowValuesLabel: <str>: Optional: Return the stats for just the row's label name. 
+        :param rowValuesLabel: <str>: Optional: Return the stats for just the row's label name.
         :param getTotalPages: <bool>: Optional: Return the total amount of pages for the statview.
 
         Example 1:
            # Wait for statViewName='Protocols Summary' to be ready and return the data.
            results = self.getStatView(caption='Protocols Summary')
-   
+
         Example 2:
            # Wait for each statViewName to be ready.
-           # Then get the column captions, which are the names of the stats 
+           # Then get the column captions, which are the names of the stats
            # and get the page values, which are the stat values for each caption.
            columnCaptions = self.getStatViewResults(statViewName='Protocols Summary', getColumnCaptions=True)
            pageValues = self.getStatViewResults(statViewName='Protocols Summary', getPageValues=True)
@@ -75,7 +75,7 @@ class Statistics(object):
 
         viewResults = []
         counterStop = timeout
-        for counter in range(1, counterStop+1): 
+        for counter in range(1, counterStop+1):
             if getColumnCaptions:
                 print('\nWaiting for {0} Data.ColumnCaptions\n'.format(statViewName))
                 viewResults = self.ixNetObj.Statistics.View.find(Caption=statViewName)[0].Data.ColumnCaptions
@@ -118,9 +118,9 @@ class Statistics(object):
 
         columnCaptions = self.getStatViewResults(statViewName='Protocols Summary', getColumnCaptions=True, timeout=timeout)
         counterStop = timeout
-        for counter in range(1, counterStop+1): 
+        for counter in range(1, counterStop+1):
             pageValues = self.getStatViewResults(statViewName='Protocols Summary', getPageValues=True, timeout=timeout)
-            
+
             print('\n%-16s %-14s %-16s %-23s' % \
                   (columnCaptions[0], columnCaptions[1], columnCaptions[2], columnCaptions[3]))
             print('%s' % '-' * 70)
@@ -179,7 +179,7 @@ class Statistics(object):
         :param statViewName: 'Port Statistics', 'Traffic Item Statistics', 'Protocols Summary', 'Port CPU Statistics'
                              'Global Protocol Statistics', 'Data Plane Statistics'
 
-        :param rowLabelName: <str|list|all>: If you look at the IxNetwork GUI for any of the statViewName listed above, 
+        :param rowLabelName: <str|list|all>: If you look at the IxNetwork GUI for any of the statViewName listed above,
                                              their rowLabelName is the first in the column stats.
 
                              If you're just getting one specific stat, pass in the rowLabelName.
@@ -212,7 +212,7 @@ class Statistics(object):
                     # Get all the traffic items
                     for eachViewStat in statViewValues:
                         currentRowLabelName = eachViewStat[0][0]
-                        stats[currentRowLabelName] = {}                
+                        stats[currentRowLabelName] = {}
                         for columnName, statValue in zip(columnNames, eachViewStat[0]):
                             stats[currentRowLabelName][columnName] = statValue
         else:
@@ -255,7 +255,7 @@ class Statistics(object):
         """
         Get Traffic Item statistics.
 
-        :param trafficItemName: <str|list>: The Traffic Item name. 
+        :param trafficItemName: <str|list>: The Traffic Item name.
                                 If you're just getting one traffic item stat, pass in a string name.
                                 If you want to get multiple traffic item stats, pass in a list.
                                 Defaults to return all Traffic Item stats.
@@ -285,7 +285,7 @@ class Statistics(object):
         """
         Get port cpu statistics.
 
-        :param rowLabelName: <str|list>: Format: '192.168.70.128/Card01/Port01' 
+        :param rowLabelName: <str|list>: Format: '192.168.70.128/Card01/Port01'
                              If you're just getting one port stat, pass in a rowLabelName.
                              If you want to get multiple port stats, pass in a list of rowLabelName.
                              Defaults to return all stats.
@@ -300,7 +300,7 @@ class Statistics(object):
         """
         Get global protocol statistics.
 
-        :param rowLabelName: <str|list>: Format: '192.168.70.128/Card01/Port01' 
+        :param rowLabelName: <str|list>: Format: '192.168.70.128/Card01/Port01'
                              If you're just getting one protocol stat, pass in a string rowLabelName.
                              If you want to get multiple protocol stats, pass in a list of rowLabelName.
                              Defaults to return all stats.

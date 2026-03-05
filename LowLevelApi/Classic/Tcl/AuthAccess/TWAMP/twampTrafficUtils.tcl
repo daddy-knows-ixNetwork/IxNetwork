@@ -271,6 +271,3 @@ proc CheckAndValidateStats {option1 option2 expValue {per 0} } {
     }
     return $retValue
 }
-
-
-

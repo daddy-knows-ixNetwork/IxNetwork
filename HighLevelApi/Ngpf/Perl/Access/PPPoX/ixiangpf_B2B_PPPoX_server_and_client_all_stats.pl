@@ -107,16 +107,16 @@ use warnings;
 sub main {
 
 	my @inputArgs = @_;
-	
+
 	# Parse the input arguments looking for the IxNetwork server, chassis and ports
 	my $index = 0;
 	++$index until $inputArgs[$index] eq '-ixnetwork_server' or $index > $#inputArgs;
 	my $ixNetServer = $inputArgs[$index+1];
-	
+
 	$index = 0;
 	++$index until $inputArgs[$index] eq '-chassis' or $index > $#inputArgs;
 	my $chassis = $inputArgs[$index+1];
-	
+
 	$index = 0;
 	++$index until $inputArgs[$index] eq '-port_list' or $index > $#inputArgs;
 	my $ports = $inputArgs[$index+1];
@@ -125,8 +125,8 @@ sub main {
 	# Initialize variables that are used to get the command status
 	my $_result_ = '';
 	my @status_keys = ();
-	my $command_status = '';    
-	
+	my $command_status = '';
+
 	# Connect and add chassis & ports
 	$_result_ = ixiangpf::connect({
 		reset                => '1',
@@ -140,7 +140,7 @@ sub main {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
 	}
-	
+
 	my $port_handles = ixiangpf::status_item('vport_list');
 	my @port_handles_list = split(/ /,$port_handles);
 	my @topology_1_ports = ($port_handles_list[0]);
@@ -148,7 +148,7 @@ sub main {
 
 	# Create the PPP server topology
 	print "\n\nCreating PPP servers...";
-	
+
     my $topology_1_status = ixiangpf::topology_config ({
         topology_name      => "PPP Servers Topology",
         port_handle        => \@topology_1_ports,
@@ -160,7 +160,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $topology_1_handle = ixiangpf::status_item('topology_handle');
-    
+
     my $device_group_1_status = ixiangpf::topology_config ({
         topology_handle              => "$topology_1_handle",
         device_group_name            => "PPP Servers",
@@ -174,7 +174,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $deviceGroup_1_handle = ixiangpf::status_item('device_group_handle');
-       
+
     my $ethernet_1_status = ixiangpf::interface_config ({
         protocol_handle              => $deviceGroup_1_handle,
         mtu                          => "1500",
@@ -188,7 +188,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $ethernet_1_handle = ixiangpf::status_item('ethernet_handle');
-       
+
     my $multivalue_7_status = ixiangpf::multivalue_config ({
         pattern                 => "single_value",
         single_value            => "0",
@@ -208,8 +208,8 @@ sub main {
 		return "FAILED - $error";
 	}
     my $multivalue_7_handle = ixiangpf::status_item('multivalue_handle');
-    
-    
+
+
     my $multivalue_9_status = ixiangpf::multivalue_config ({
         pattern                 => "single_value",
         single_value            => "0",
@@ -229,7 +229,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $multivalue_9_handle = ixiangpf::status_item('multivalue_handle');
-    
+
     my $pppoxserver_1_status = ixiangpf::pppox_config ({
         port_role                            => "network",
         handle                               => $ethernet_1_handle,
@@ -283,12 +283,12 @@ sub main {
 		return "FAILED - $error";
 	}
     my $pppoxserver_1_handle = ixiangpf::status_item('pppox_server_handle');
-	
+
 	print "\nDONE creating PPP servers.\n";
-    
+
 	# Create PPP Clients
 	print "\n\nCreating PPP clients...\n";
-	
+
     my $topology_2_status = ixiangpf::topology_config ({
         topology_name      => "PPP Clients Topology",
         port_handle        => \@topology_2_ports,
@@ -300,7 +300,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $topology_2_handle = ixiangpf::status_item('topology_handle');
-    
+
     my $device_group_2_status = ixiangpf::topology_config ({
         topology_handle              => $topology_2_handle,
         device_group_name            => "PPP Clients",
@@ -312,8 +312,8 @@ sub main {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
 	}
-    my $deviceGroup_2_handle = ixiangpf::status_item('device_group_handle');       
-	
+    my $deviceGroup_2_handle = ixiangpf::status_item('device_group_handle');
+
     my $multivalue_12_status = ixiangpf::multivalue_config ({
         pattern                      => "repeatable_random",
         nest_step                    => "1",
@@ -331,7 +331,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $multivalue_12_handle = ixiangpf::status_item('multivalue_handle');
-    
+
     my $pppoxclient_1_status = ixiangpf::pppox_config ({
         port_role                            => "access",
         handle                               => $deviceGroup_2_handle,
@@ -388,7 +388,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $pppoxclient_1_handle = ixiangpf::status_item('pppox_client_handle');
-    	
+
     my $multivalue_13_status = ixiangpf::multivalue_config ({
         pattern                => "distributed",
         distributed_value      => "1",
@@ -400,7 +400,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $multivalue_13_handle = ixiangpf::status_item('multivalue_handle');
-    
+
     my $multivalue_14_status = ixiangpf::multivalue_config ({
         pattern                => "distributed",
         distributed_value      => "10",
@@ -412,7 +412,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $multivalue_14_handle = ixiangpf::status_item('multivalue_handle');
-    
+
     my $multivalue_15_status = ixiangpf::multivalue_config ({
         pattern                => "distributed",
         distributed_value      => "10",
@@ -424,7 +424,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $multivalue_15_handle = ixiangpf::status_item('multivalue_handle');
-    
+
     my $pppoxclient_2_status = ixiangpf::pppox_config ({
         port_role                                => "access",
         handle                                   => "/globals",
@@ -455,12 +455,12 @@ sub main {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
 	}
-	
+
 	print "\nDONE creating and configuring PPP clients.\n";
-	
+
 	# Start protocols
 	print "\n\nStarting protocols...\n";
-	
+
 	$_result_ = ixiangpf::test_control({
 		action	=>	'start_protocol',
 		handle	=>	$topology_1_handle,
@@ -470,8 +470,8 @@ sub main {
 	if ($command_status != $ixiangpf::SUCCESS) {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
-	}	
-	
+	}
+
 	$_result_ = ixiangpf::test_control({
 		action	=>	'start_protocol',
 		handle	=>	$topology_2_handle,
@@ -482,14 +482,14 @@ sub main {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
 	}
-	
+
 	print "\n\nSleeping for 60 seconds to allow sessions to get negociated...";
-	
+
 	# Sleep for 60 seconds
 	sleep(60);
 
 	print "\nDONE waiting for protocol start.\n";
-	
+
 	# Get statistics
 	print "\n\nGetting statistics for PPP...\n";
 
@@ -505,12 +505,12 @@ sub main {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
 	}
-	
+
 	print "\nThe aggregate statistics for the PPP clients are:\n";
 	my $ppp_client_aggregate_stats = ixiangpf::get_result_hash();
 	ixiangpf::PrintHash($ppp_client_aggregate_stats);
-	print "\n";	
-	
+	print "\n";
+
 	$_result_ = ixiangpf::pppox_stats({
         handle				=>	$pppox_clients,
 		mode				=>	'session',
@@ -522,12 +522,12 @@ sub main {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
 	}
-	
+
 	print "\nThe per-session statistics for the PPP clients are:\n";
 	my $ppp_client_session_stats = ixiangpf::get_result_hash();
 	ixiangpf::PrintHash($ppp_client_session_stats);
-	print "\n";	
-    
+	print "\n";
+
 	my $pppox_servers = $pppoxserver_1_handle;
 	$_result_ = ixiangpf::pppox_stats({
         handle				=>	$pppox_servers,
@@ -540,12 +540,12 @@ sub main {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
 	}
-	
+
 	print "\nThe aggregate statistics for the PPP servers are:\n";
 	my $ppp_server_aggregate_stats = ixiangpf::get_result_hash();
 	ixiangpf::PrintHash($ppp_server_aggregate_stats);
-	print "\n";		
-	
+	print "\n";
+
 	$_result_ = ixiangpf::pppox_stats({
         handle				=>	$pppox_servers,
 		mode				=>	'session',
@@ -557,13 +557,13 @@ sub main {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
 	}
-	
+
 	print "\nThe per-session statistics for the PPP servers are:\n";
 	my $ppp_server_session_stats = ixiangpf::get_result_hash();
 	ixiangpf::PrintHash($ppp_server_session_stats);
-	print "\n";	
-	
-	
+	print "\n";
+
+
 	$_result_ = ixiangpf::pppox_stats({
 		mode				=>	'session_all',
 		execution_timeout	=>	60,
@@ -574,14 +574,14 @@ sub main {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
 	}
-	
+
 	print "\nThe per-session statistics for the PPP protocol are:\n";
 	my $ppp_session_stats = ixiangpf::get_result_hash();
 	ixiangpf::PrintHash($ppp_session_stats);
-	print "\n";	
-    
+	print "\n";
+
 	print "\nDONE getting PPP statistics.\n";
-	
+
 	# Stop all and clean up
 	print "\n\nStopping all protocols...\n";
 	$_result_ = ixiangpf::test_control({
@@ -595,7 +595,7 @@ sub main {
 	}
 
 	print "\n\nSleeping for 30 seconds to allow them to go down...";
-	
+
 	# Sleep for 30 seconds
 	sleep(30);
 
@@ -603,7 +603,7 @@ sub main {
 
 	# Remove all topologies
 	print "\n\nRemoving topologies...\n";
-	
+
 	$_result_ = ixiangpf::topology_config({
 		mode			=>	'destroy',
 		topology_handle	=>	$topology_1_handle,
@@ -627,12 +627,12 @@ sub main {
 	}
 
 	print "\nDONE removing topologies.\n";
-	
+
 	# Clean up the session
 	print "\n\nPerforming final session cleanup...\n";
-	
+
 	$_result_ = ixiangpf::cleanup_session();
-	
+
 	print "\nSession cleanup completed.\n";
 
 	return "SUCCESS";
@@ -640,4 +640,3 @@ sub main {
 
 my $test_result = main(@ARGV);
 print "\nTest execution complete.\nStatus: $test_result\n";
-    

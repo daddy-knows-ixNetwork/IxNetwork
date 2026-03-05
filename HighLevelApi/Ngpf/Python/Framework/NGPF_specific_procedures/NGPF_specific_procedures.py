@@ -68,7 +68,7 @@ import time
 
 # Append paths to python APIs
 
-# sys.path.append('/path/to/hltapi/library/common/ixiangpf/python') 
+# sys.path.append('/path/to/hltapi/library/common/ixiangpf/python')
 # sys.path.append('/path/to/ixnetwork/api/python')
 
 from ixiatcl import IxiaTcl
@@ -91,7 +91,7 @@ except (NameError,):
 		additional_info = '> command: %s\n> tcl errorInfo: %s\n> log: %s' % (cmd, err, log)
 		raise IxiaError(IxiaError.COMMAND_FAIL, additional_info)
 
-        
+
 
 chassis_ip = "ixro-hlt-xm2-09"
 tcl_server = "ixro-hlt-xm2-09"
@@ -122,10 +122,10 @@ connect_result = ixiangpf.connect(
 
 if connect_result['status'] != '1':
     ErrorHandler('connect', connect_result)
-    
+
 print " Printing connection result"
 pprint(connect_result)
- 
+
 ports = connect_result['vport_list'].split()
 
 
@@ -139,9 +139,9 @@ topology_1 = ixiangpf.topology_config(
 )
 if topology_1['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', topology_1)
-	
+
 topology_1_handle = topology_1['topology_handle']
-	
+
 deviceGroup_1 = ixiangpf.topology_config(
 	topology_handle              = topology_1_handle,
 	device_group_name            = "{Device Group 1}",
@@ -152,8 +152,8 @@ if deviceGroup_1['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', deviceGroup_1)
 
 deviceGroup_1_handle = deviceGroup_1['device_group_handle']
-	
-    
+
+
 mv1 = ixiangpf.multivalue_config(
     pattern                = "counter",
     counter_start          = "00.11.01.00.00.01",
@@ -480,13 +480,13 @@ ipv4_2_handle = interface_4['ipv4_handle']
 ##  STARTING ALL PROTOCOLS ##
 #############################
 
-print "\nStarting all protocols ... "    
+print "\nStarting all protocols ... "
 start = ixiangpf.test_control(action='start_all_protocols')
 
 if start['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('test_control', start)
 
-print "\nSleeping for 30 seconds ... "	
+print "\nSleeping for 30 seconds ... "
 time.sleep(30)
 
 #############################
@@ -497,14 +497,14 @@ print "\nStopping all protocols ... "
 stop = ixiangpf.test_control(action='stop_all_protocols')
 
 if stop['status'] != IxiaHlt.SUCCESS:
-    ErrorHandler('test_control', stop)	
+    ErrorHandler('test_control', stop)
 
 
 ####################################
 ##  RETRIEVE AND PRINT STATISTICS ##
 ####################################
-    
-print "\n====>Gather and print ethernet and ipv4 protocol_info stats (mode = aggregate) ...\n\n"    
+
+print "\n====>Gather and print ethernet and ipv4 protocol_info stats (mode = aggregate) ...\n\n"
 
 eth_1_info = ixiangpf.protocol_info(
     handle = ethernet_1_handle,
@@ -516,7 +516,7 @@ if eth_1_info['status'] != IxiaHlt.SUCCESS:
 
 print "\n====>Ethernet info (port 0) ... \n"
 pprint(eth_1_info)
-     
+
 eth_2_info = ixiangpf.protocol_info(
     handle = ethernet_2_handle,
     mode = 'aggregate',
@@ -527,7 +527,7 @@ if eth_2_info['status'] != IxiaHlt.SUCCESS:
 
 print "\n====>Ethernet info (port 1) ... \n"
 pprint(eth_2_info)
-    
+
 
 ipv4_1_info = ixiangpf.protocol_info(
     handle = ipv4_1_handle,
@@ -536,10 +536,10 @@ ipv4_1_info = ixiangpf.protocol_info(
 
 if ipv4_1_info['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('protocol_info', ipv4_1_info)
-    
+
 print "\n====>IPv4 info (port 0) ... \n"
 pprint(ipv4_1_info)
-    
+
 ipv4_2_info = ixiangpf.protocol_info(
     handle = ipv4_2_handle,
     mode = 'aggregate',
@@ -547,13 +547,13 @@ ipv4_2_info = ixiangpf.protocol_info(
 
 if ipv4_2_info['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('protocol_info', ipv4_2_info)
-    
+
 print "\n====>IPv4 info (port 1) ... \n"
 pprint(ipv4_2_info)
 
 
-print "\n====>Gather and print ethernet and ipv4 protocol_info stats (mode = handles) ...\n\n"   
-    
+print "\n====>Gather and print ethernet and ipv4 protocol_info stats (mode = handles) ...\n\n"
+
 eth_3_info = ixiangpf.protocol_info(
     handle = ethernet_1_handle,
     mode = 'handles',
@@ -561,10 +561,10 @@ eth_3_info = ixiangpf.protocol_info(
 
 if eth_3_info['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('protocol_info', eth_3_info)
-    
+
 print "\n====>Ethernet info (port 0) ... \n"
 pprint(eth_3_info)
-     
+
 eth_4_info = ixiangpf.protocol_info(
     handle = ethernet_2_handle,
     mode = 'handles',
@@ -575,7 +575,7 @@ if eth_4_info['status'] != IxiaHlt.SUCCESS:
 
 print "\n====>Ethernet info (port 1) ... \n"
 pprint(eth_4_info)
-    
+
 
 ipv4_3_info = ixiangpf.protocol_info(
     handle = ipv4_1_handle,
@@ -584,10 +584,10 @@ ipv4_3_info = ixiangpf.protocol_info(
 
 if ipv4_3_info['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('protocol_info', ipv4_3_info)
-    
+
 print "\n====>IPv4 info (port 0) ... \n"
 pprint(ipv4_3_info)
-    
+
 ipv4_4_info = ixiangpf.protocol_info(
     handle = ipv4_2_handle,
     mode = 'handles',
@@ -595,7 +595,7 @@ ipv4_4_info = ixiangpf.protocol_info(
 
 if ipv4_4_info['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('protocol_info', ipv4_4_info)
-    
+
 print "\n====>IPv4 info (port 1) ... \n"
 pprint(ipv4_4_info)
 

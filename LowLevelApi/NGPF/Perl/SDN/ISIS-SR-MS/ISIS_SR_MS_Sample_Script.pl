@@ -2,7 +2,7 @@
 ################################################################################
 # Version 1.0    $Revision: #1 $                                                #
 #                                                                              #
-#    Copyright © 1997 - 2016 by IXIA                                           # 
+#    Copyright © 1997 - 2016 by IXIA                                           #
 #    All Rights Reserved.                                                      #
 #                                                                              #
 #    Revision Log:                                                             #
@@ -63,7 +63,7 @@
 #    7. Retrieve protocol learned info in Port2.                               #
 #    8. On the fly change SID Index value for IPv4 MS Ranges in Device Group1. #
 #    9. On the fly Change IPV6 prefix in MS range and accordingly IPV6 address #
-#        count of Node Routes in  Mesh Simulated Topology behind Device Group2.#  
+#        count of Node Routes in  Mesh Simulated Topology behind Device Group2.#
 #    10.On the fly Change in IPV6 FEC prefix in MS  and accordingly IPV6       #
 #       address of Node Routes in Mesh Simulated Topology behind Device Group2.#
 #    11. Retrieve protocol learned info in both ports after On the Fly changes.#
@@ -93,13 +93,13 @@ sub assignPorts {
 	my $port2    = $my_resource[6];
 	my $vport1   = $my_resource[7];
 	my $vport2   = $my_resource[8];
-	
+
 	my $root = $ixNet->getRoot();
 	my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-	
+
 	my $chassisObj2 = '';
 	if ($chassis1 ne $chassis2) {
 	    $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -109,7 +109,7 @@ sub assignPorts {
 	} else {
 	    $chassisObj2 = $chassisObj1;
 	}
-	
+
 	my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -118,7 +118,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-		
+
     $ixNet->commit();
 }
 
@@ -129,7 +129,7 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.216.104.58';
 my $ixTclPort   = '8245';
 my @ports       = (('10.216.108.99', '11', '1'), ('10.216.108.99', '11', '2'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
@@ -141,7 +141,7 @@ $ixNet->execute('newConfig');
 ################################################################################
 # 1. Protocol configuration section. Configure ISIS as per the description
 #  give above
-################################################################################ 
+################################################################################
 print("Adding 2 vports\n");
 $ixNet->add($ixNet->getRoot(), 'vport');
 $ixNet->add($ixNet->getRoot(), 'vport');
@@ -292,7 +292,7 @@ $ixNet->commit();
 print("Add Linear ST on the back of Device Group1");
 my $networkGoup1 = $ixNet->add($t1dev1, 'networkGroup');
 $ixNet->commit();
-my $networkTopology1 = $ixNet->add($networkGoup1, 'networkTopology'); 
+my $networkTopology1 = $ixNet->add($networkGoup1, 'networkTopology');
 $ixNet->commit();
 my $lineartopo = $ixNet->add($networkTopology1, 'netTopologyLinear');
 $ixNet->commit();
@@ -301,7 +301,7 @@ print( "Add Mesh ST on the back of Device Group2 ");
 my $networkGoup2 = $ixNet->add($t2dev1, 'networkGroup');
 
 $ixNet->commit();
-my $networkTopology2 = $ixNet->add($networkGoup2, 'networkTopology'); 
+my $networkTopology2 = $ixNet->add($networkGoup2, 'networkTopology');
 $ixNet->commit();
 my $lineartopo = $ixNet->add($networkTopology2, 'netTopologyMesh');
 $ixNet->commit();
@@ -313,7 +313,7 @@ $ixNet->setAttribute($networkGoup1, '-name', 'ISIS_Linear Topology 1');
 $ixNet->setAttribute($networkGoup2, '-name', 'ISIS_Mesh Topology 2');
 $ixNet->commit();
 ########################################################################################
-# 2.Enabling Segment Routing in Emulated Router on Device Group 1 and Device Group 2 
+# 2.Enabling Segment Routing in Emulated Router on Device Group 1 and Device Group 2
 ########################################################################################
 print ( "Enabling Segment Routing for ISIS");
 $ixNet->setAttribute($isisL3Router1, '-enableSR', 'true');
@@ -344,8 +344,8 @@ my $sidcountsv2 = ($ixNet->getList($sidCount2, 'singleValue'))[0];
 $ixNet->setAttribute($sidcountsv2, '-value', '100');
 $ixNet->commit();
 ###########################################################################################################################################
-# 4. Set IPV4 and IPV6 Ranges for both router acts as Mapping Server(MS)and accordingly IPV4 & IPV6 Node Routes in Simulated Topologies    
-###########################################################################################################################################         
+# 4. Set IPV4 and IPV6 Ranges for both router acts as Mapping Server(MS)and accordingly IPV4 & IPV6 Node Routes in Simulated Topologies
+###########################################################################################################################################
 print ("Enabling IPV4  and IPV6 Node Routes Simulated Routers on Linear Network Group behind Device Group1\n");
 
 my $networkTopo1 = ($ixNet->getList($networkGoup1, 'networkTopology'))[0];
@@ -353,7 +353,7 @@ my $simRouter1 = ($ixNet->getList($networkTopo1, 'simRouter'))[0];
 $ixNet->commit();
 my $isisPseudoRouter1 = ($ixNet->getList($simRouter1, 'isisL3PseudoRouter'))[0];
 my $ipv4noderoutes = ($ixNet->getList($isisPseudoRouter1, 'IPv4PseudoNodeRoutes'))[0];
-my $active = $ixNet->getAttribute( $ipv4noderoutes, '-active'); 
+my $active = $ixNet->getAttribute( $ipv4noderoutes, '-active');
 my $activesin = $ixNet->add($active, 'singleValue');
 $ixNet->setAttribute($activesin, '-value', 'True');
 $ixNet->commit();
@@ -379,7 +379,7 @@ my $simRouter2 = ($ixNet->getList($networkTopo2, 'simRouter'))[0];
 $ixNet->commit();
 my $isisPseudoRouter2 = ($ixNet->getList($simRouter2, 'isisL3PseudoRouter'))[0];
 my $ipv4noderoutes2 = ($ixNet->getList($isisPseudoRouter2, 'IPv4PseudoNodeRoutes'))[0];
-my $active2 = $ixNet->getAttribute( $ipv4noderoutes2, '-active'); 
+my $active2 = $ixNet->getAttribute( $ipv4noderoutes2, '-active');
 my $activesin2 = $ixNet->add($active2 , 'singleValue');
 $ixNet->setAttribute($activesin2,' -value', 'True');
 $ixNet->commit();
@@ -479,13 +479,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 ###############################################################################
@@ -497,15 +497,15 @@ sleep(5);
 my $linfo = ($ixNet->getList($isisL3_1, 'learnedInfo'))[0];
 my $ipv6table = ($ixNet->getList($linfo, 'table'))[0];
      my @values   = $ixNet->getAttribute($ipv6table, '-values');
-     my $v        = ''; 
-	 
+     my $v        = '';
+
 
 print("***************************************************\n");
 foreach $v (@values) {
  	my $w = '0';
 	foreach $w (@$v) {
 	    printf("%15s", $w);
-	}    
+	}
 	print("\n");
 }
 print("***************************************************\n");
@@ -515,15 +515,15 @@ sleep(5);
 my $linfo = ($ixNet->getList($isisL3_1, 'learnedInfo'))[0];
 my $ipv6table = ($ixNet->getList($linfo, 'table'))[1];
      my @values   = $ixNet->getAttribute($ipv6table, '-values');
-     my $v        = ''; 
-	 
+     my $v        = '';
+
 
 print("***************************************************\n");
 foreach $v (@values) {
  	my $w = '0';
 	foreach $w (@$v) {
 	    printf("%15s", $w);
-	}    
+	}
 	print("\n");
 }
 print("***************************************************\n");
@@ -536,15 +536,15 @@ sleep(5);
 my $linfo = ($ixNet->getList($isisL3_2, 'learnedInfo'))[0];
 my $ipv6table = ($ixNet->getList($linfo, 'table'))[0];
      my @values   = $ixNet->getAttribute($ipv6table, '-values');
-     my $v        = ''; 
-	 
+     my $v        = '';
+
 
 print("***************************************************\n");
 foreach $v (@values) {
  	my $w = '0';
 	foreach $w (@$v) {
 	    printf("%15s", $w);
-	}    
+	}
 	print("\n");
 }
 print("***************************************************\n");
@@ -554,15 +554,15 @@ sleep(5);
 my $linfo = ($ixNet->getList($isisL3_2, 'learnedInfo'))[0];
 my $ipv6table = ($ixNet->getList($linfo, 'table'))[1];
      my @values   = $ixNet->getAttribute($ipv6table, '-values');
-     my $v        = ''; 
-	 
+     my $v        = '';
+
 
 print("***************************************************\n");
 foreach $v (@values) {
  	my $w = '0';
 	foreach $w (@$v) {
 	    printf("%15s", $w);
-	}    
+	}
 	print("\n");
 }
 print("***************************************************\n");
@@ -579,7 +579,7 @@ $ixNet->commit();
 # 9. OTF on  Address  Of Mapping Server  IPV6 and Simulated Topology  And Apply Changes
 ######################################################################################################
 print("OTF on Device Group 2 Topology 1 Address Field\n");
-my $isisvmsppingserverv6 = ($ixNet->getList($isisL3Router2, 'isisMappingServerIPV6List'))[0]; 
+my $isisvmsppingserverv6 = ($ixNet->getList($isisL3Router2, 'isisMappingServerIPV6List'))[0];
 my $fecprefix = $ixNet->getAttribute($isisvmsppingserverv6, '-fECPrefix');
 my $overlay10 = $ixNet->add($fecprefix, 'overlay');
 $ixNet->setMultiAttribute($overlay10, '-count', '1', '-index', '2', '-value', '3000:4:1:2:0:0:0:0');
@@ -617,7 +617,7 @@ $ixNet->execute('applyOnTheFly', $topology);
 print("Wait for 30 seconds ...\n");
 sleep(30);
 ###############################################################################
-# 11 . Retrieve protocol learned info in Both Port 
+# 11 . Retrieve protocol learned info in Both Port
 ###############################################################################
 print("Fetching ISIS IPv4 & IPv6 Learned Info of Device Group1 Topology1 Emulated Router  for Proper Prefix-Label Binding in Port1\n");
 $ixNet->execute('getLearnedInfo', $isisL3_1, '1');
@@ -625,15 +625,15 @@ sleep(5);
 my $linfo = ($ixNet->getList($isisL3_1, 'learnedInfo'))[0];
 my $ipv6table = ($ixNet->getList($linfo, 'table'))[0];
      my @values   = $ixNet->getAttribute($ipv6table, '-values');
-     my $v        = ''; 
-	 
+     my $v        = '';
+
 
 print("***************************************************\n");
 foreach $v (@values) {
  	my $w = '0';
 	foreach $w (@$v) {
 	    printf("%15s", $w);
-	}    
+	}
 	print("\n");
 }
 print("***************************************************\n");
@@ -643,15 +643,15 @@ sleep(5);
 my $linfo = ($ixNet->getList($isisL3_1, 'learnedInfo'))[0];
 my $ipv6table = ($ixNet->getList($linfo, 'table'))[1];
      my @values   = $ixNet->getAttribute($ipv6table, '-values');
-     my $v        = ''; 
-	 
+     my $v        = '';
+
 
 print("***************************************************\n");
 foreach $v (@values) {
  	my $w = '0';
 	foreach $w (@$v) {
 	    printf("%15s", $w);
-	}    
+	}
 	print("\n");
 }
 print("***************************************************\n");
@@ -661,15 +661,15 @@ sleep(5);
 my $linfo = ($ixNet->getList($isisL3_2, 'learnedInfo'))[0];
 my $ipv6table = ($ixNet->getList($linfo, 'table'))[0];
      my @values   = $ixNet->getAttribute($ipv6table, '-values');
-     my $v        = ''; 
-	 
+     my $v        = '';
+
 
 print("***************************************************\n");
 foreach $v (@values) {
  	my $w = '0';
 	foreach $w (@$v) {
 	    printf("%15s", $w);
-	}    
+	}
 	print("\n");
 }
 print("***************************************************\n");
@@ -679,20 +679,20 @@ sleep(5);
 my $linfo = ($ixNet->getList($isisL3_2, 'learnedInfo'))[0];
 my $ipv6table = ($ixNet->getList($linfo, 'table'))[1];
      my @values   = $ixNet->getAttribute($ipv6table, '-values');
-     my $v        = ''; 
-	 
+     my $v        = '';
+
 
 print("***************************************************\n");
 foreach $v (@values) {
  	my $w = '0';
 	foreach $w (@$v) {
 	    printf("%15s", $w);
-	}    
+	}
 	print("\n");
 }
 print("***************************************************\n");
 ################################################################################
-# 12. Configure L2-L3 traffic 
+# 12. Configure L2-L3 traffic
 ################################################################################
 
 print ("Congfigure L2-L3 Traffic Item\n");
@@ -703,7 +703,7 @@ $ixNet->setMultiAttribute($trafficItem1, '-name', 'IPv4_MPLS_Traffic_Item_1',
     '-useControlPlaneRate', 'true',
     '-useControlPlaneFrameSize', 'true',
     '-mergeDestinations', 'false',
-    '-roundRobinPacketOrdering', 'false', 
+    '-roundRobinPacketOrdering', 'false',
     '-numVlansForMulticastReplication', '1',
     '-trafficType', 'ipv4');
 $ixNet->commit();
@@ -740,7 +740,7 @@ $ixNet->setMultiAttribute($trafficItem2, '-name', 'IPv6_MPLS_Traffic_Item_1',
     '-useControlPlaneRate', 'true',
     '-useControlPlaneFrameSize', 'true',
     '-mergeDestinations', 'false',
-    '-roundRobinPacketOrdering', 'false', 
+    '-roundRobinPacketOrdering', 'false',
     '-numVlansForMulticastReplication', '1',
     '-trafficType', 'ipv6');
 $ixNet->commit();
@@ -770,7 +770,7 @@ $ixNet->setMultiAttribute($trafficItem2.'/tracking',
     '-values',         (''));
 $ixNet->commit();
 ###############################################################################
-#13 Apply and start L2/L3 traffic and Retrieve L2/L3 traffic item statistics  #                                              
+#13 Apply and start L2/L3 traffic and Retrieve L2/L3 traffic item statistics  #
 ###############################################################################
 print("Applying L2/L3 traffic\n");
 $ixNet->execute('apply', ($ixNet->getRoot()).'/traffic');
@@ -788,13 +788,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 #################################################################################

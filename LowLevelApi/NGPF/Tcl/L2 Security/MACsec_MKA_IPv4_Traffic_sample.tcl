@@ -43,7 +43,7 @@
 ################################################################################
 
 ################################################################################
-# Description: 
+# Description:
 # 1. Configue MKA and MACSec (HW based)
 # 2. Create traffic Item
 # 3. Assign ports
@@ -293,7 +293,7 @@ ixNet setMultiAttribute $trafficItem1/configElement:1/frameSize \
         -incrementFrom   72									\
 		-incrementTo  1518
 ixNet setMultiAttribute $trafficItem1/configElement:1/frameRate   \
-        -rate       100                                     
+        -rate       100
 
 ixNet setMultiAttribute $trafficItem1/configElement:1/transmissionControl \
     -duration               1                                   \
@@ -311,7 +311,7 @@ ixNet setMultiAttribute $trafficItem1/configElement:1/transmissionControl \
     -startDelay             0                                   \
     -burstPacketCount       1
 
-ixNet setMultiAttribute $trafficItem1/tracking -trackBy ipv4DestIp0 
+ixNet setMultiAttribute $trafficItem1/tracking -trackBy ipv4DestIp0
 ixNet commit
 
 ################################################################################

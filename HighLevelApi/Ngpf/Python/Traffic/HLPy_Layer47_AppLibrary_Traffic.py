@@ -49,17 +49,17 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#   The script below walks through the workflow of an AppLibrary end to end    #	
-#	test, using the below steps:											   #	
+#   The script below walks through the workflow of an AppLibrary end to end    #
+#	test, using the below steps:											   #
 #		1. Connection to the chassis, IxNetwork Tcl Server 					   #
 #		2. Topology configuration											   #
-#		3. Configure trafficItem 1 for Layer 4-7 AppLibrary Profile			   #	
+#		3. Configure trafficItem 1 for Layer 4-7 AppLibrary Profile			   #
 #		4. Configure trafficItem 2 for Layer 4-7 AppLibrary Profile			   #
-#		5. Start protocols													   #	
+#		5. Start protocols													   #
 #		6. Apply and run AppLibrary traffic									   #
 #		7. Drill down per IP addresses during traffic run					   #
-#		8. Stop Traffic.													   #	
-#																			   #	
+#		8. Stop Traffic.													   #
+#																			   #
 #                                                                              #
 ################################################################################
 
@@ -105,7 +105,7 @@ except (NameError,):
 # Connection to the chassis, IxNetwork Tcl Server                 			   #
 ################################################################################
 
-# This section should contain the connect procedure values (device ip, port list etc) and, of course, the connect procedure		
+# This section should contain the connect procedure values (device ip, port list etc) and, of course, the connect procedure
 
 chassis_ip = '10.205.23.38'
 tcl_server = '10.205.23.38'
@@ -135,8 +135,8 @@ port_4 = port_handle.split(' ')[3]
 port_handle = ('port_1','port_2','port_3','port_4')
 
 
-	
-	
+
+
 ################################################################################
 # Configure Topology 1, Device Group 1                                         #
 ################################################################################
@@ -156,10 +156,10 @@ device_group_1_status = ixiangpf.topology_config(
         device_group_multiplier	    = "45",
         device_group_enabled		= "1",
     )
-	
+
 if device_group_1_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', device_group_1_status)
-	
+
 deviceGroup_1_handle = device_group_1_status['device_group_handle']
 
 
@@ -176,7 +176,7 @@ multivalue_1_status = ixiangpf.multivalue_config(
         nest_owner             =topology_1_handle,
         nest_enabled           ="1",
     )
-	
+
 if multivalue_1_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('multivalue_config', multivalue_1_status)
 
@@ -198,7 +198,7 @@ ethernet_1_status =ixiangpf.interface_config(
         use_vpn_parameters           ="0"                          ,
         site_id                      ="0"                          ,
     )
-	
+
 if ethernet_1_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', ethernet_1_status)
 
@@ -214,9 +214,9 @@ multivalue_2_status = ixiangpf.multivalue_config(
         nest_owner             =topology_1_handle      ,
         nest_enabled           ="1"                       ,
     )
-	
+
 if multivalue_2_status['status'] != IxiaHlt.SUCCESS:
-    ErrorHandler('multivalue_config', multivalue_2_status)	
+    ErrorHandler('multivalue_config', multivalue_2_status)
 
 multivalue_2_handle = multivalue_2_status['multivalue_handle']
 
@@ -230,9 +230,9 @@ multivalue_3_status = ixiangpf.multivalue_config(
         nest_owner             =topology_1_handle      ,
         nest_enabled           ="0"                       ,
     )
-	
+
 if multivalue_3_status['status'] != IxiaHlt.SUCCESS:
-    ErrorHandler('multivalue_config', multivalue_3_status)	
+    ErrorHandler('multivalue_config', multivalue_3_status)
 
 multivalue_3_handle = multivalue_3_status['multivalue_handle']
 
@@ -246,10 +246,10 @@ ipv4_1_status = ixiangpf.interface_config(
         intf_ip_addr                 =multivalue_2_handle      ,
         netmask                      ="255.255.255.0"             ,
     )
-	
+
 if ipv4_1_status['status'] != IxiaHlt.SUCCESS:
-    ErrorHandler('interface_config', ipv4_1_status)	
-	
+    ErrorHandler('interface_config', ipv4_1_status)
+
 ipv4_1_handle =ipv4_1_status['ipv4_handle']
 
 
@@ -264,7 +264,7 @@ topology_2_status =ixiangpf.topology_config(
 
 if topology_2_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('multivalue_config', topology_2_status)
-	
+
 topology_2_handle = topology_2_status['topology_handle']
 
 
@@ -293,7 +293,7 @@ multivalue_4_status =ixiangpf.multivalue_config(
         nest_owner            =topology_2_handle      ,
         nest_enabled          ="1"                       ,
     )
-	
+
 if multivalue_4_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('multivalue_config', multivalue_4_status)
 
@@ -317,7 +317,7 @@ ethernet_2_status = ixiangpf.interface_config(
     )
 if ethernet_2_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', ethernet_2_status)
-	
+
 ethernet_2_handle=ethernet_2_status['ethernet_handle']
 
 
@@ -330,10 +330,10 @@ multivalue_5_status = ixiangpf.multivalue_config(
         nest_owner             =topology_2_handle      ,
         nest_enabled           ="1"                       ,
     )
-	
+
 if multivalue_5_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('multivalue_config', multivalue_5_status)
-	
+
 multivalue_5_handle = multivalue_5_status['multivalue_handle']
 
 
@@ -345,10 +345,10 @@ multivalue_6_status = ixiangpf.multivalue_config(
         nest_step              ="0.0.0.1"                 ,
         nest_owner             =topology_2_handle      ,
         nest_enabled           ="0"                       ,
-    )	
+    )
 if multivalue_6_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('multivalue_config', multivalue_6_status)
-	
+
 multivalue_6_handle = multivalue_6_status['multivalue_handle']
 
 
@@ -361,7 +361,7 @@ ipv4_2_status = ixiangpf.interface_config(
         intf_ip_addr                 =multivalue_5_handle      ,
         netmask                      ="255.255.255.0"             ,
     )
-	
+
 if ipv4_2_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', ipv4_2_status)
 
@@ -376,8 +376,8 @@ ipv4_2_handle = ipv4_2_status['ipv4_handle']
 topology_3_status = ixiangpf.topology_config(
         topology_name      ="Topology 3"                          ,
         port_handle        =port_3								  ,
-    )	
-	
+    )
+
 if topology_3_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('multivalue_config', topology_3_status)
 
@@ -390,10 +390,10 @@ device_group_3_status = ixiangpf.topology_config(
         device_group_multiplier      ="45"                      ,
         device_group_enabled         ="1"                       ,
     )
-	
+
 if device_group_3_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('multivalue_config', device_group_3_status)
-	
+
 deviceGroup_3_handle = device_group_3_status['device_group_handle']
 
 ################################################################################
@@ -409,8 +409,8 @@ multivalue_7_status = ixiangpf.multivalue_config(
         nest_owner             =topology_3_handle      ,
         nest_enabled           ="1"                       ,
     )
-	
-	
+
+
 if multivalue_7_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('multivalue_config', multivalue_7_status)
 
@@ -433,10 +433,10 @@ ethernet_3_status = ixiangpf.interface_config(
         use_vpn_parameters           ="0"                          ,
         site_id                      ="0"                          ,
     )
-	
+
 if ethernet_3_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', ethernet_3_status)
-	
+
 ethernet_3_handle = ethernet_3_status ['ethernet_handle']
 
 
@@ -449,7 +449,7 @@ multivalue_8_status = ixiangpf.multivalue_config (
         nest_owner             ="topology_3_handle"      ,
         nest_enabled           ="1"                       ,
     )
-	
+
 if multivalue_8_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('multivalue_config', multivalue_8_status)
 
@@ -464,10 +464,10 @@ multivalue_9_status = ixiangpf.multivalue_config(
         nest_owner             =topology_3_handle      ,
         nest_enabled           ="1"                       ,
     )
-	
+
 if multivalue_9_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('multivalue_config', multivalue_9_status)
-	
+
 multivalue_9_handle = multivalue_9_status["multivalue_handle"]
 
 
@@ -483,10 +483,10 @@ ipv6_3_status =ixiangpf.interface_config(
         ipv6_intf_addr                    =multivalue_8_handle      ,
         ipv6_intf_addr_step               ="::0"                       ,
         ipv6_prefix_length                ="64"                        ,
-    )	
+    )
 if ipv6_3_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', ipv6_3_status)
-	
+
 ipv6_3_handle = ipv6_3_status["ipv6_handle"]
 
 ################################################################################
@@ -497,10 +497,10 @@ topology_4_status = ixiangpf.topology_config(
         topology_name      ="Topology 4"                          ,
         port_handle        =port_4								  ,
     )
-	
+
 if topology_4_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('multivalue_config', topology_4_status)
-	
+
 topology_4_handle = topology_4_status["topology_handle"]
 
 
@@ -512,7 +512,7 @@ device_group_4_status=ixiangpf.topology_config(
     )
 if device_group_4_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('multivalue_config', device_group_4_status)
-	
+
 deviceGroup_4_handle = device_group_4_status["device_group_handle"]
 
 ################################################################################
@@ -551,7 +551,7 @@ ethernet_4_status = ixiangpf.interface_config (
         site_id                      ="0"                          ,
     )
 
-	
+
 if ethernet_4_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', ethernet_4_status)
 
@@ -586,7 +586,7 @@ multivalue_12_status=ixiangpf.multivalue_config(
 
 if multivalue_12_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('multivalue_config', multivalue_12_status)
-	
+
 multivalue_12_handle = multivalue_12_status["multivalue_handle"]
 
 
@@ -603,10 +603,10 @@ ipv6_4_status = ixiangpf.interface_config(
         ipv6_intf_addr_step               ="::0"                       ,
         ipv6_prefix_length                ="64"                        ,
     )
-	
+
 if ipv6_4_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', ipv6_4_status)
-	
+
 ipv6_4_handle = ipv6_4_status ["ipv6_handle"]
 
 
@@ -646,7 +646,7 @@ traffic_item_1_status = ixiangpf.traffic_l47_config(
 
 if traffic_item_1_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('multivalue_config', traffic_item_1_status)
-	
+
 ##########################################################
 # Configure trafficItem 2 for Layer 47 AppLibrary Profile
 ##########################################################
@@ -678,10 +678,10 @@ traffic_item_2_status =ixiangpf.traffic_l47_config(
         flows                       =flows2																			  ,
     )
 
-	
+
 if traffic_item_2_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('multivalue_config', traffic_item_2_status)
-	
+
 
 
 
@@ -740,7 +740,7 @@ time.sleep(10)
 
 if stats1['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('traffic_stats', stats1)
-	
+
 stats2 = ixiangpf.traffic_stats(
 					mode						="L47_flow_initiator_tcp"			,
 					drill_down_type				="per_initiator_ports"				,
@@ -767,7 +767,7 @@ stop_traffic =ixiangpf.traffic_control(
     )
 if stop_traffic['status'] != IxiaHlt.SUCCESS:
    ErrorHandler('traffic_control', stop_traffic)
-	
+
 time.sleep(15)
 
 ####################################################
@@ -781,24 +781,3 @@ print "###################"
 
 ##################################################################################################################################################
 ##################################################################################################################################################
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

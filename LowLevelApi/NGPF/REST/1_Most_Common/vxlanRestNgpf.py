@@ -67,13 +67,13 @@ try:
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           verifySslCert=False,
                           serverOs=connectToApiServer)
-        
+
     if connectToApiServer in ['windows', 'windowsConnectionMgr']:
         mainObj = Connect(apiServerIp='192.168.70.3',
                           serverIpPort='11009',
                           serverOs=connectToApiServer,
                           deleteSessionAfterTest=deleteSessionAfterTest)
-        
+
     #---------- Preference Settings End --------------
 
     mainObj.newBlankConfig()
@@ -98,18 +98,18 @@ try:
     protocolObj = Protocol(mainObj, portObj)
     topologyObj1 = protocolObj.createTopologyNgpf(portList=[portList[0]],
                                                   topologyName='Topo1')
-    
+
     deviceGroupObj1 = protocolObj.createDeviceGroupNgpf(topologyObj1,
                                                         multiplier=1,
                                                         deviceGroupName='DG1')
-    
+
     topologyObj2 = protocolObj.createTopologyNgpf(portList=[portList[1]],
                                                   topologyName='Topo2')
-    
+
     deviceGroupObj2 = protocolObj.createDeviceGroupNgpf(topologyObj2,
                                                         multiplier=1,
                                                         deviceGroupName='DG2')
-    
+
     ethernetObj1 = protocolObj.createEthernetNgpf(deviceGroupObj1,
                                                   ethernetName='MyEth1',
                                                   macAddress={'start': '00:01:01:00:00:01',
@@ -117,7 +117,7 @@ try:
                                                               'step': '00:00:00:00:00:01'},
                                                   macAddressPortStep='disabled',
                                                   vlanId=100)
-    
+
     ethernetObj2 = protocolObj.createEthernetNgpf(deviceGroupObj2,
                                                   ethernetName='MyEth2',
                                                   macAddress={'start': '00:01:02:00:00:01',
@@ -125,7 +125,7 @@ try:
                                                               'step': '00:00:00:00:00:01'},
                                                   macAddressPortStep='disabled',
                                                   vlanId=100)
-    
+
     ipv4Obj1 = protocolObj.createIpv4Ngpf(ethernetObj1,
                                           ipv4Address={'start': '100.1.1.1',
                                                        'direction': 'increment',
@@ -137,7 +137,7 @@ try:
                                           gatewayPortStep='disabled',
                                           prefix=16,
                                           resolveGateway=True)
-    
+
     ipv4Obj2 = protocolObj.createIpv4Ngpf(ethernetObj2,
                                           ipv4Address={'start': '100.1.3.1',
                                                        'direction': 'increment',
@@ -149,7 +149,7 @@ try:
                                           gatewayPortStep='disabled',
                                           prefix=16,
                                           resolveGateway=True)
-    
+
     vxlanObj1 = protocolObj.configVxlanNgpf(ipv4Obj1,
                                             vtepName='vtep_1',
                                             vtepVni={'start':1008,
@@ -158,8 +158,8 @@ try:
                                             vtepIpv4Multicast={'start':'225.8.0.1',
                                                                'step':'0.0.0.1',
                                                                'direction':'increment'})
-    
-    
+
+
     vxlanObj2 = protocolObj.configVxlanNgpf(ipv4Obj2,
                                             vtepName='vtep_2',
                                             vtepVni={'start':1008,
@@ -168,17 +168,17 @@ try:
                                             vtepIpv4Multicast={'start':'225.8.0.1',
                                                                'step':'0.0.0.1',
                                                                'direction':'increment'})
-    
+
     vxlanDeviceGroupObj1 = protocolObj.createDeviceGroupNgpf(deviceGroupObj1,
                                                              multiplier=3, deviceGroupName='vxlanHost1')
-    
+
     vxlanEthernetObj1 = protocolObj.createEthernetNgpf(vxlanDeviceGroupObj1,
                                                        ethernetName='VxLan1-Eth1',
                                                        macAddress={'start': '00:01:11:00:00:01',
                                                                    'direction': 'increment',
                                                                    'step': '00:00:00:00:00:01'},
                                                        vlanId='101')
-    
+
     vxlanIpv4Obj1 = protocolObj.createIpv4Ngpf(vxlanEthernetObj1,
                                                ipv4Address={'start': '10.1.1.1',
                                                             'step': '0.0.0.0',
@@ -188,16 +188,16 @@ try:
                                                         'direction': 'increment'},
                                                prefix=16,
                                                resolveGateway=True)
-    
+
     vxlanDeviceGroupObj2 = protocolObj.createDeviceGroupNgpf(deviceGroupObj2, multiplier=3, deviceGroupName='vxlanHost2')
-    
+
     vxlanEthernetObj2 = protocolObj.createEthernetNgpf(vxlanDeviceGroupObj2,
                                                        ethernetName='VxLan1-Eth1',
                                                        macAddress={'start': '00:01:22:00:00:01',
                                                                    'direction': 'increment',
                                                                    'step': '00:00:00:00:00:01'},
                                                        vlanId='101')
-    
+
     vxlanIpv4Obj2 = protocolObj.createIpv4Ngpf(vxlanEthernetObj2,
                                                ipv4Address={'start': '10.1.3.1',
                                                             'step': '0.0.0.0',
@@ -207,10 +207,10 @@ try:
                                                         'direction': 'increment'},
                                                prefix=16,
                                                resolveGateway=True)
-    
+
     protocolObj.startAllProtocols()
     protocolObj.verifyProtocolSessionsNgpf()
-    
+
     # For all parameter options, please go to the API configTrafficItem
     # mode = create or modify
     trafficObj = Traffic(mainObj)
@@ -233,7 +233,7 @@ try:
                            'frameRate': 88,
                            'frameRateType': 'percentLineRate',
                            'frameSize': 128}])
-    
+
     trafficItemObj   = trafficStatus[0]
     endpointObj      = trafficStatus[1][0]
     configElementObj = trafficStatus[2][0]

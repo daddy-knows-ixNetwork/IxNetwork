@@ -622,4 +622,3 @@ sleep(5)
 puts('Stopping protocols')
 @ixNet.execute('stopAllProtocols')
 puts('!!! Test Script Ends !!!')
-

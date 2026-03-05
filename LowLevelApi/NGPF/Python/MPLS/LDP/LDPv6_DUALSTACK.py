@@ -55,7 +55,7 @@
 #     dual stack router connected to both IPv4 and IPv6 interface. The         #
 #     transport connection preference in LDP router is set to IPv6.            #
 #     The network groups consists of both IPv4 and IPv6 prefix pools.          #
-#     Traffic is configured in between IPv6 prefix pools as end points.        #       
+#     Traffic is configured in between IPv6 prefix pools as end points.        #
 #                                                                              #
 # Script Flow:                                                                 #
 #    1. Configuration of protocols as described in topology.                   #
@@ -69,7 +69,7 @@
 #   11. Retrieve L2-L3 traffic stats.                                          #
 #   12. Stop L2-L3 traffic.                                                    #
 #   13. Stopallprotocols.                                                      #
-#                                                                              #                                                                                
+#                                                                              #
 ################################################################################
 
 import os
@@ -332,10 +332,10 @@ print("All configuration is completed..Wait for 5 seconds...")
 time.sleep(5)
 
 ################################################################################
-# Start LDPv6 protocol and wait for 60 seconds                                 #  
+# Start LDPv6 protocol and wait for 60 seconds                                 #
 ################################################################################
 print("Starting protocols and waiting for 60 seconds for protocols to come up")
-ixNet.execute('startAllProtocols')      
+ixNet.execute('startAllProtocols')
 time.sleep(60)
 
 ################################################################################

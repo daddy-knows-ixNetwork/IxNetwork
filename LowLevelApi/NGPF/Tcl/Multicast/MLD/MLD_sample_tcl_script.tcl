@@ -61,7 +61,7 @@
 #    5. Start MLD protocol.                                                    #
 #    6. Configure L2-L3 traffic.                                               #
 #    7. Start L2/L3 protocol.                                                  #
-#    8. Retreive protocol statistics                                           #                                                             
+#    8. Retreive protocol statistics                                           #
 #    9. Retreive  L2/L3 protocol statistics.                                   #
 #   10. Change mldstart group address and applyOnTheFly                        #
 #   11. Stop protocol and L2/L3 traffic.                                       #
@@ -69,7 +69,7 @@
 #       when protocol is not started.                                          #
 #   13. Start protocol.                                                        #
 #   14. Retreive protocol statistics                                           #
-#   15. Stop all protocols.                                                    #                
+#   15. Stop all protocols.                                                    #
 # Ixia Softwares:                                                              #
 #    IxOS      6.80 EB (6.80.1101.95)                                          #
 #    IxNetwork 7.40 EB (7.40.0.336)                                            #
@@ -96,7 +96,7 @@ ixNet exec newConfig
 
 ################################################################################
 # protocol configuration section
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -185,7 +185,7 @@ ixNet commit
 
 ################################################################################
 # adding MLD over ipv6 stack
-################################################################################ 
+################################################################################
 puts "Adding MLD over IP6 stack"
 ixNet add $ip1 mldHost
 ixNet add $ip2 mldQuerier
@@ -327,7 +327,7 @@ ixNet setMultiAttribute $endpointSet1\
 	-ngpfFilters           [list]\
 	-trafficGroups         [list]\
 	-sources               $source\
-	-destinations          $destination\	
+	-destinations          $destination\
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\
@@ -393,7 +393,7 @@ ixNet exec stop [ixNet getRoot]/traffic
 after 5000
 
 ################################################################################
-# stop protocol 
+# stop protocol
 ################################################################################
 puts "Stopping protocol"
 ixNet exec stopAllProtocols
@@ -412,7 +412,7 @@ ixNet commit
 # change number of source address count
 #(to be changed only when the protocol is not started)
 ################################################################################
-puts "Changing number of source address count" 
+puts "Changing number of source address count"
 set ipv6sourcelist1 [ixNet getList $ipv6grouplist1 mldUcastIPv6SourceList]
 set ucastSrcAddrCnt [ixNet getAttr $ipv6sourcelist1 -ucastSrcAddrCnt]
 ixNet setAttr $ucastSrcAddrCnt/singleValue -value 2
@@ -509,7 +509,7 @@ ixNet setMultiAttr $enableProxyReporting\
 ixNet setMultiAttr [ixNet add $enableProxyReporting singleValue]\
         -value true
 	ixNet commit
-	
+
 ################################################################################
 # change number of source ranges
 #(to be changed only when the protocol is not started)

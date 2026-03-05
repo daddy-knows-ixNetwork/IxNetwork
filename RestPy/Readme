@@ -14,10 +14,10 @@ Supports Python 2.7 and 3.6+
 
 Requirement:
      - IxNetwork 8.50
-     
+
 Prerequisite:
      - Familiar with the IxNetwork API Browser first.
-	
+
 Where is the IxNetwork API Browser located:
      - In Windows GUI, make a simple configuration, go to Files, Tools, IxNetwork API Browser.
          - The left pane is the root level entry points to all the APIs in a hierarchical view of
@@ -31,12 +31,12 @@ Where is the IxNetwork API Browser located:
               - Allows viewing and modifying Topologies, Traffic Items and Statistics.
 	      - Can start/stop protocols and traffic.
 
-Installation: 
+Installation:
     You could either do a pip install or get it from Github:
 
     Pip install:
         - pip install -U --no-cache-dir ixnetwork_restpy
-    
+
     Github:
         - Clone from: https://github.com/OpenIxia/ixnetwork_restpy
         - The tool is under https://github.com/OpenIxia/ixnetwork_restpy
@@ -53,13 +53,3 @@ How to use ixnetwork_restpy:
     - Look at the sample scripts and see how the object oriented dot notation correlates to the IxNetwork
       API tree and the WebUI doc.
     - RESTPy Guide: https://openixia.github.io/ixnetwork_restpy/index.html
-    
-
-
-
-
-
-
-    
-
-    

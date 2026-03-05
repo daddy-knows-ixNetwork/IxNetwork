@@ -164,5 +164,3 @@ puts "\nTxFrames: $txFrames  RxFrames: $rxFrames  Delta: $delta"
 
 
 ixNet disconnect
-
-

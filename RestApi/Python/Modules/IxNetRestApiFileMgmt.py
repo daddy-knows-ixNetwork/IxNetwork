@@ -39,7 +39,7 @@ class FileMgmt(object):
         if localFile == False:
             # The config file is located in Windows
             fileName = configFile.split('\\')[-1]
-            copyFileUrl = self.ixnObj.sessionUrl+'/operations/copyfile'            
+            copyFileUrl = self.ixnObj.sessionUrl+'/operations/copyfile'
             destinationPath = '{0}/ixnetwork/files/'.format(self.ixnObj.headlessSessionId) + fileName
             response = self.ixnObj.post(copyFileUrl,data={"arg1": configFile, "arg2": destinationPath})
             self.ixnObj.waitForComplete(response, self.ixnObj.httpHeader+'/'+response.json()['url'], silentMode=False, timeout=30)
@@ -65,7 +65,7 @@ class FileMgmt(object):
             uploadFile = self.ixnObj.sessionUrl+'/files?filename='+fileName
             self.ixnObj.logInfo('\nUploading file to server: %s' % uploadFile)
 
-            # Note: 
+            # Note:
             #    There is no status checking for this POST. This command is synchronous. The server won't return until it's done.
             #    The response payload: {'absolute': None, 'files': [{'name': 'bgp_ngpf_8.30.ixncfg', 'length': 177791, 'modifiedUnixTime': 1572009307,
             #                                                        'createdUnixTime': 1568302806}], 'directories': []}
@@ -75,11 +75,11 @@ class FileMgmt(object):
 
         # Set the payload to load the given filename:  /api/v1/sessions/{id}/ixnetwork/files/ospfNgpf_8.10.ixncfg
         payload = {'arg1': '{0}/ixnetwork/files/{1}'.format(self.ixnObj.headlessSessionId, fileName)}
-        
+
         # Tell the server to load the config file
         if localFile == True:
             response = self.ixnObj.post(loadConfigUrl, data=payload)
-            
+
         if localFile == False:
             response = self.ixnObj.post(loadConfigUrl, data=payload)
 
@@ -256,10 +256,10 @@ class FileMgmt(object):
 
         Parameters
             linuxApiServerPathAndFileName: (str): The full path and filename to retrieve.
-            linuxApiServerPathExtension: (str): In a situation such as packet capture for Linux API server only, the 
+            linuxApiServerPathExtension: (str): In a situation such as packet capture for Linux API server only, the
                                                 captured file is saved at 'captures/<temp folder>/file.
                                                 Value example: 'captures/packetCaptureFolder/port2_HW.cap'
-                                                
+
             localPath: (str): The Linux destination path to put the file to.
             renameDestinationFile: (str): You could rename the destination file.
             includeTimestamp: (bool):  If False, each time you copy the same file will be overwritten.
@@ -275,7 +275,7 @@ class FileMgmt(object):
 
         fileName = linuxApiServerPathAndFileName.split('/')[-1]
         fileName = fileName.replace(' ', '_')
-         
+
         destinationPath = self.ixnObj.sessionUrl.split(self.ixnObj.httpHeader)[1]
         destinationPath = destinationPath + '/files/' + fileName
         currentTimestamp = datetime.datetime.now().strftime('%H%M%S')
@@ -448,7 +448,7 @@ class FileMgmt(object):
         Parameters
             jsonFileName: (str): The JSON config file name to create. Could include absolute path also.
 
-            xpathList:  <list> 
+            xpathList:  <list>
                         To get entire configuration = ['/descendant-or-self::*']
                         To get code fragments such as /vport = ['/vport/descendant-or-self::*']
 
@@ -470,7 +470,7 @@ class FileMgmt(object):
 
         Example
             restObj.exportJsonConfigFile(jsonFileName='/path/exportedJsonConfig.json')
-        
+
         """
         if xpathList == None:
             xpathList = ['/descendant-or-self::*']
@@ -523,7 +523,7 @@ class FileMgmt(object):
                                            localPath=destinationPath,
                                            renameDestinationFile=None,
                                            includeTimestamp=False)
-            
+
         # Indent the serialized json config file
         jsonObj = self.jsonReadConfig(jsonFileName)
         self.jsonWriteToFile(jsonObj, jsonFileName)
@@ -543,7 +543,7 @@ class FileMgmt(object):
         """
         if xpathList == None:
             xpathList = ['/descendant-or-self::*']
-        
+
         data = {'arg1': self.ixnObj.apiSessionId+"/resourceManager",
                 'arg2': xpathList,
                 'arg3': True,
@@ -574,7 +574,7 @@ class FileMgmt(object):
         """
         Description
            Read the input json file.
-        
+
         Parameter
            jsonFile: (json object): The json file to read.
         """
@@ -589,7 +589,7 @@ class FileMgmt(object):
         """
         Description
            Write data to a json file.
-        
+
         Parameters
            dataObj: (json object): The json object containing the data.
            jsonFile (str): The the destination json file to write the json data.
@@ -611,7 +611,7 @@ class FileMgmt(object):
         """
         Description
            Collect diagnostics for debugging.
-        
+
         Parameter
            diagZipFileName: <str>: The diagnostic filename to name with .zip extension.
            localPath: <str>: The local destination where you want to put the collected diag file.

@@ -52,8 +52,8 @@
 #    This script intends to demonstrate how to use NGPF OSPFv2 API.            #
 #                                                                              #
 #    1. It will create 2 OSPFv2 topologies, each having an ipv4 network        #
-#       topology and loopback device group behind the network group(NG) with   # 
-#       loopback interface on it. A loopback device group(DG) behind network   # 
+#       topology and loopback device group behind the network group(NG) with   #
+#       loopback interface on it. A loopback device group(DG) behind network   #
 #       group is needed to support applib traffic.                             #
 #    2. Start the ospfv2 protocol.                                             #
 #    3. Retrieve protocol statistics.                                          #
@@ -66,14 +66,14 @@
 #    8. Start the L2-L3 traffic.                                               #
 #    9. Retrieve L2-L3 traffic stats.                                          #
 #   10. Stop L2-L3 traffic.                                                    #
-#   11. Stop all protocols.                                                    # #                                                                              #           
+#   11. Stop all protocols.                                                    # #                                                                              #
 # Ixia Software:                                                               #
 #    IxOS      6.80 EA                                                         #
 #    IxNetwork 7.40 EA                                                         #
 #                                                                              #
 ################################################################################
 ################################################################################
-# Utils                                                                        #    
+# Utils                                                                        #
 ################################################################################
 
 # Libraries to be included
@@ -92,7 +92,7 @@
     # use ixiahlt {IXIA_VERSION => $ENV{'IXIA_VERSION'}, TclAutoPath  => [$ENV{'PERL_IXOS_LIB_PATH'}, $ENV{'PERL_IXNET_LIB_PATH'}]};
 
 
-# Running from Windows: 
+# Running from Windows:
 
     # use lib "C:/Program Files (x86)/Ixia/hltapi/4.95.117.44/TclScripts/lib/hltapi/library/common/ixia_hl_lib-7.40";
     # use lib "C:/Program Files (x86)/Ixia/hltapi/4.95.117.44/TclScripts/lib/hltapi/library/common/ixiangpf/perl";
@@ -142,13 +142,13 @@ if ($command_status != $ixiangpf::SUCCESS) {
 # Saving the port handles, which will be used later on in the script
 my $port_handles = ixiangpf::status_item('vport_list');
 my @port_handles_list = split(/ /,$port_handles);
-  
+
 ################################################################################
 # Creating topology and device group                                           #
 ################################################################################
 
 # Creating a topology on first port
-print "Adding topology 1 on port 1\n";     
+print "Adding topology 1 on port 1\n";
 my $topology_1_status = ixiangpf::topology_config ({
     topology_name      => "{ldp Topology 1}",
     port_handle        => $port_handles_list[0],
@@ -162,8 +162,8 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $topology_1_handle = $HashRef->{'topology_handle'};
 
-# Creating a device group in topology 
-print "Creating device group 1 in topology 1\n";      
+# Creating a device group in topology
+print "Creating device group 1 in topology 1\n";
 my $device_group_1_status = ixiangpf::topology_config ({
     topology_handle              => "$topology_1_handle",
     device_group_name            => "{ldp Topology 1 Router}",
@@ -215,7 +215,7 @@ my $deviceGroup_2_handle = $HashRef->{'device_group_handle'};
 #  Configure protocol interfaces                                               #
 ################################################################################
 
-# Creating ethernet stack for the first Device Group 
+# Creating ethernet stack for the first Device Group
 print "Creating ethernet stack for the first Device Group\n";
 my $ethernet_1_status = ixiangpf::interface_config ({
     protocol_name                => "{Ethernet 1}",
@@ -251,8 +251,8 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $ethernet_2_handle = $HashRef->{'ethernet_handle'};
 
-# Creating IPv4 Stack on top of Ethernet Stack for the first Device Group                                 
-print "Creating IPv4 Stack on top of Ethernet Stack for the first Device Group\n";     
+# Creating IPv4 Stack on top of Ethernet Stack for the first Device Group
+print "Creating IPv4 Stack on top of Ethernet Stack for the first Device Group\n";
 my $ipv4_1_status = ixiangpf::interface_config ({
     protocol_name                     => "{IPv4 1}",
     protocol_handle                   => "$ethernet_1_handle",
@@ -274,7 +274,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $ipv4_1_handle = $HashRef->{'ipv4_handle'};
 
-# Creating IPv4 Stack on top of Ethernet Stack for the second Device Group 
+# Creating IPv4 Stack on top of Ethernet Stack for the second Device Group
 print "Creating IPv4 2 stack on ethernet 2 stack for the second Device Group\n";
 my $ipv4_2_status = ixiangpf::interface_config ({
     protocol_name                     => "{IPv4 2}",
@@ -298,7 +298,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 my $ipv4_2_handle = $HashRef->{'ipv4_handle'};
 
 ################################################################################
-# Other protocol configurations                                                # 
+# Other protocol configurations                                                #
 ################################################################################
 
 # Configuration of LDP Router and LDP Interface for the first Device Group with label space = 30, hello interval= 10, hold time = 45, keepalive interval = 30, keepalive holdtime =30
@@ -382,7 +382,7 @@ my $network_group_2_status = ixiangpf::emulation_ldp_route_config ({
     label_value_start           => "516",
     label_value_start_step      => "1",
     lsp_handle                  => "$networkGroup_1_handle",
-    fec_name                    => "{LDP FEC Range 1}",    
+    fec_name                    => "{LDP FEC Range 1}",
     });
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
@@ -424,7 +424,7 @@ $network_group_2_status = ixiangpf::emulation_ldp_route_config ({
     label_value_start           => "216",
     label_value_start_step      => "1",
     lsp_handle                  => "$networkGroup_2_handle",
-    fec_name                    => "{LDP FEC Range 2}",    
+    fec_name                    => "{LDP FEC Range 2}",
 });
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
@@ -434,7 +434,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $fec_handle_2 = ixiangpf::status_item('fecproperty_handle');
-# Creating multivalue for Device Group 3 for multiplier 10 
+# Creating multivalue for Device Group 3 for multiplier 10
 print "Creating multivalue for Device Group 3\n";
 $device_group_2_status = ixiangpf::topology_config ({
     device_group_name            => "{Device Group 3}",
@@ -468,7 +468,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $ipv4Loopback_1_handle = ixiangpf::status_item('ipv4_loopback_handle');
-# # Creating multivalue for Device Group 4 for multiplier 10  
+# # Creating multivalue for Device Group 4 for multiplier 10
 print "Creating multivalue for Device Group 4\n";
 my $device_group_4_status = ixiangpf::topology_config ({
         device_group_name            => "{Device Group 4}",
@@ -521,12 +521,12 @@ if ($command_status != $ixiangpf::SUCCESS) {
 print "Starting LDP in topology2\n";
 ixiangpf::test_control({
     handle => $topology_2_handle,
-    action => 'start_protocol',});    
+    action => 'start_protocol',});
 if ($command_status != $ixiangpf::SUCCESS) {
     my $error = ixiangpf::status_item('log');
     print "Error: $error";
     return "FAILED - $error";
-}    
+}
 print "Waiting for 20 seconds\n";
 sleep(20);
 ############################################################################
@@ -643,7 +643,7 @@ foreach (@status_keys) {
 # 5. Frame Size: 512 bytes                                                 #
 # 6. Tracking  : Source Destination EndPoint Set                           #
 ############################################################################
-print "Configuring L2-L3 traffic\n";  
+print "Configuring L2-L3 traffic\n";
 $_result_ = ixiahlt::traffic_config({
     mode                                    => 'create',
     traffic_generator                       => 'ixnetwork_540',
@@ -654,12 +654,12 @@ $_result_ = ixiahlt::traffic_config({
     frame_sequencing_mode                   => 'rx_threshold',
     name                                    => 'Traffic_1_Item',
     circuit_endpoint_type                   => 'ipv4',
-    transmit_distribution                   => 'ipv4DestIp0',                               
-    rate_pps                                => '1000',                                      
-    frame_size                              => '512',                                       
+    transmit_distribution                   => 'ipv4DestIp0',
+    rate_pps                                => '1000',
+    frame_size                              => '512',
     track_by                                => '{sourceDestEndpointPair0 trackingenabled0}'
 });
-    
+
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
 if ($command_status != $ixiangpf::SUCCESS) {
@@ -702,7 +702,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     my $error = ixiangpf::status_item('log');
     print "Error: $error";
     return "FAILED - $error";
-}   
+}
 @status_keys = ixiahlt::status_item_keys();
  foreach (@status_keys) {
     my $my_key = $_;
@@ -742,5 +742,5 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 sleep(2);
 
-print "!!! Test Script Ends !!!\n";           
-print "SUCCESS - $0\n";         
+print "!!! Test Script Ends !!!\n";
+print "SUCCESS - $0\n";

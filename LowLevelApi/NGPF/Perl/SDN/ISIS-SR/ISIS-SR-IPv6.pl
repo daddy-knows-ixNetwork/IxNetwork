@@ -53,7 +53,7 @@
 #    2. Enable SR and SR IPv6 in ISIS Emulated Router.                         #
 #    3. Set IPv6 Node Prefix & IPv6 Adj-Sid.                                   #
 #    4. Enable Segment Routing in Simulated Router and                         #
-#       Set IPv6 Node Prefix & IPv6 Adj-Sid in Simulated Router.               #  
+#       Set IPv6 Node Prefix & IPv6 Adj-Sid in Simulated Router.               #
 #    5. Start protocol.                                                        #
 #    6. Retrieve protocol statistics.                                          #
 #    7. Retrieve protocol learned info in Port1.                               #
@@ -79,13 +79,13 @@ sub assignPorts {
 	my $port2    = $my_resource[6];
 	my $vport1   = $my_resource[7];
 	my $vport2   = $my_resource[8];
-	
+
 	my $root = $ixNet->getRoot();
 	my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-	
+
 	my $chassisObj2 = '';
 	if ($chassis1 ne $chassis2) {
 	    $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -95,7 +95,7 @@ sub assignPorts {
 	} else {
 	    $chassisObj2 = $chassisObj1;
 	}
-	
+
 	my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -104,7 +104,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-		
+
     $ixNet->commit();
 }
 
@@ -115,7 +115,7 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.216.104.58';
 my $ixTclPort   = '5555';
 my @ports       = (('10.216.108.99', '11', '3'), ('10.216.108.99', '11', '4'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
@@ -138,7 +138,7 @@ sleep(5);
 
 ################################################################################
 # protocol configuration section                                               #
-################################################################################ 
+################################################################################
 
 print("Adding 2 topologies\n");
 $ixNet->add($ixNet->getRoot(), 'topology', '-vports', $vportTx);
@@ -413,13 +413,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -432,15 +432,15 @@ sleep(5);
 my $linfo = ($ixNet->getList($isisL3_1, 'learnedInfo'))[0];
 my $ipv6table = ($ixNet->getList($linfo, 'table'))[2];
      my @values   = $ixNet->getAttribute($ipv6table, '-values');
-     my $v        = ''; 
-	 
+     my $v        = '';
+
 
 print("***************************************************\n");
 foreach $v (@values) {
  	my $w = '0';
 	foreach $w (@$v) {
 	    printf("%15s", $w);
-	}    
+	}
 	print("\n");
 }
 print("***************************************************\n");
@@ -451,15 +451,15 @@ sleep(5);
 my $linfo = ($ixNet->getList($isisL3_1, 'learnedInfo'))[0];
 my $ipv6table = ($ixNet->getList($linfo, 'table'))[3];
      my @values   = $ixNet->getAttribute($ipv6table, '-values');
-     my $v        = ''; 
-	 
+     my $v        = '';
+
 
 print("***************************************************\n");
 foreach $v (@values) {
  	my $w = '0';
 	foreach $w (@$v) {
 	    printf("%15s", $w);
-	}    
+	}
 	print("\n");
 }
 print("***************************************************\n");
@@ -489,15 +489,15 @@ sleep(5);
 my $linfo = ($ixNet->getList($isisL3_1, 'learnedInfo'))[0];
 my $ipv6table = ($ixNet->getList($linfo, 'table'))[3];
      my @values   = $ixNet->getAttribute($ipv6table, '-values');
-     my $v        = ''; 
-	 
+     my $v        = '';
+
 
 print("***************************************************\n");
 foreach $v (@values) {
  	my $w = '0';
 	foreach $w (@$v) {
 	    printf("%15s", $w);
-	}    
+	}
 	print("\n");
 }
 print("***************************************************\n");
@@ -508,4 +508,3 @@ print("***************************************************\n");
 ################################################################################
 $ixNet->execute('stopAllProtocols');
 print("!!! Test Script Ends !!!");
-

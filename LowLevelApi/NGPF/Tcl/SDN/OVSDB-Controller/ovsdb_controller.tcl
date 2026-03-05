@@ -8,22 +8,22 @@
 ################################################################################
 
 ################################################################################
-#                                                                              
-# Description:                                                                 
+#
+# Description:
 #    This script intends to demonstrate how to use OVSDB Protocol API#
 #    It will create following :
 #1.    Add topology for ovsdb controller
 #2.    Configure ipv4, ovsdb controller in TCP and cluster data.
 #3.    Add device group for hypervisor and VM.
 #4.    Associate connection between Hypervisor VxLAN and ovsdb controller.
-#5.    Add Replicator as another device group, configure its ip address, BFD 
+#5.    Add Replicator as another device group, configure its ip address, BFD
 #      interface.
 #6.    Associate replicator VXLAN and BFD interface to ovsdb controller.
 #7.    Start each device group separately.
 #8.    Wait for some time
 #9.    Check Stats
 #10.   Execute dump db
-#11.   Stop each device group separately.                       
+#11.   Stop each device group separately.
 ################################################################################
 namespace eval ::py {
     set ixTclServer 10.214.100.11
@@ -146,7 +146,7 @@ ixNet commit
 puts "Start configuring cluster data for ovsdb controller"
 
 ixNet setMultiAttribute $ovsdb_controller/clusterData \
-        -bindingsCount 10 
+        -bindingsCount 10
 ixNet commit
 
 puts "Set vlan value for cluster data from range 1000-1009"
@@ -320,11 +320,11 @@ ixNet setMultiAttribute $hypervisor_vni_val \
     -direction increment
 ixNet commit
 
-    
+
 ################################################################################
 # Configure  VM                    #
-###############################################################################    
-    
+###############################################################################
+
 set ethernet_vm [ixNet add $vm_dg "ethernet"]
 ixNet setMultiAttribute $ethernet_vm \
     -name "Ethernet\ 3"
@@ -349,16 +349,16 @@ ixNet setMultiAttribute $ipv4_address_val \
         -step 0.0.1.0 \
         -start 100.1.0.2 \
         -direction increment
-ixNet commit        
-puts "Connecting link of VM to hypervisor via ConnectedTo "        
+ixNet commit
+puts "Connecting link of VM to hypervisor via ConnectedTo "
 set vm_dg_connector [ixNet add $ethernet_vm "connector"]
 ixNet setMultiAttribute $vm_dg_connector \
     -connectedTo $hypervisor
 ixNet commit
-   
+
 ################################################################################
 # Configure  Replicator                #
-###############################################################################  
+###############################################################################
 set ethernet_replicator [ixNet add $replicator_device_group "ethernet"]
 ixNet setMultiAttribute $ethernet_replicator \
     -name "Ethernet\ 4"
@@ -412,14 +412,14 @@ set replicator_vxlan_vni_val [ixNet add $replicator_vxlan_vni_custom "increment"
 ixNet setMultiAttribute $replicator_vxlan_vni_val \
     -count 9 \
     -value 1
-ixNet commit        
+ixNet commit
 
-puts "Set connector from controller to replicator"  
+puts "Set connector from controller to replicator"
 ixNet setMultiAttribute $ovsdb_controller \
     -pseudoConnectedToVxlanReplicator $replicator_vxlan
 ixNet setMultiAttribute $ovsdb_controller \
     -vxlanReplicator $replicator_vxlan
-ixNet commit        
+ixNet commit
 
 set replicator_bfd [ixNet add $replicator_vxlan "bfdv4Interface"]
 ixNet setMultiAttribute $replicator_bfd \
@@ -463,7 +463,7 @@ ixNet commit
 
 ################################################################################
 # Starting Protocols DG one by one as start all is not supported                                                     #
-############################################################################### 
+###############################################################################
 puts "Starting Replicator DG"
 ixNet exec start $replicator_device_group
 after 10000
@@ -478,7 +478,7 @@ after 30000
 
 ################################################################################
 # Check Stats                                                  #
-############################################################################### 
+###############################################################################
 
 puts "Verifying all the stats\n"
 set viewPage {::ixNet::OBJ-/statistics/view:"Protocols Summary"/page}
@@ -514,13 +514,13 @@ puts "***************************************************"
 
 ################################################################################
 # Execute dump db                                                 #
-############################################################################### 
+###############################################################################
 
 ixNet exec dumpDB $ovsdb_controller 1
 
 ################################################################################
 # Stopping Protocols DG one by one as start all is not supported                                                     #
-############################################################################### 
+###############################################################################
 puts "Stopping Replicator DG"
 ixNet exec stop $replicator_device_group
 after 10000
@@ -534,8 +534,3 @@ ixNet exec stop $controller_device_group1
 after 10000
 
 puts "************TEST CASE ENDS HERE*********************"
-
-
-
-
-

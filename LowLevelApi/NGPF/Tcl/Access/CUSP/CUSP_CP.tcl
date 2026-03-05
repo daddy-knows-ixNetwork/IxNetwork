@@ -51,7 +51,7 @@
 #                                                                              #
 #    1. It will create 2 topologies. CUSP CP with PPPoX Server is configured   #
 #       in one topology & CUSP UP with PPPoX Subscribers are configured in     #
-#       another topology.                                                      # 
+#       another topology.                                                      #
 #    2. Start all protocol.                                                    #
 #    3. Retrieve protocol statistics.                                          #
 #    4. Retrieve protocol learned info.                                        #
@@ -81,7 +81,7 @@ ixNet exec newConfig
 
 # ###############################################################################
 # 1. Configure CUSP CP & UP
-# ############################################################################### 
+# ###############################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -209,7 +209,7 @@ ixNet setAttr [ixNet getAttr $vxlangpe2 -vni]/singleValue -value 1000
 ixNet setAttr [ixNet getAttr $vxlangpe2 -ipv4_multicast]/singleValue -value 225.0.1.1
 ixNet commit
 
-# Add PPPoX Server behind CP 
+# Add PPPoX Server behind CP
 puts "Adding PPPoX Server behind CP"
 ixNet add $t1dev1 deviceGroup
 ixNet commit
@@ -278,7 +278,7 @@ puts "***************************************************"
 # ##############################################################################
 
 puts "Fetching PPP Subscriber  Learned Info"
-ixNet exec getPppSubscriberInfo $upGroupInfo 1 
+ixNet exec getPppSubscriberInfo $upGroupInfo 1
 
 after 5000
 set learnedInfoList [ixNet getList $upGroupInfo learnedInfo]

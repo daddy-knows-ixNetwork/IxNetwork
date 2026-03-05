@@ -49,7 +49,7 @@ my @portHandleList         = ();
 ################################################################################
 
 # Connect to the chassis, reset to factory defaults and take ownership
-# When using P2NO HLTSET, for loading the IxTclNetwork package please 
+# When using P2NO HLTSET, for loading the IxTclNetwork package please
 # provide –ixnetwork_tcl_server parameter to ::ixia::connect
 
 $_result_ = ixiahlt::connect ( {
@@ -110,7 +110,7 @@ foreach my $port (@portHandleList) {
     my @stat_list = ixiahlt::status_item_keys("$port.aggregate");
     print ("\n\nELMI Aggregated Stats for Port: $port\n");
     foreach my $stat (@stat_list) {
-        my $stat_value = ixiahlt::status_item("$port.aggregate.$stat");        
+        my $stat_value = ixiahlt::status_item("$port.aggregate.$stat");
          printf $format, $stat, "=", $stat_value;
     }
 }

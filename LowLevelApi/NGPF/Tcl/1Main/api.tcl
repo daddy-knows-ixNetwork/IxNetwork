@@ -17,11 +17,11 @@ proc Connect {args} {
     #           The Proc will automatically get the API-key when login is authenticated.
     #           Optionally, you could pass it in.
     # closeServerOnDisconnect: 0|1
-    # 
+    #
     # Examples:
     #    To connect to an existing Linux API server session:
     #       Connect -apiServerIp 192.168.70.12 -port 443 -ixNetworkVersion 8.50 -sessionId 1 -apiKey $apiKey -closeServerOnDisconnect 0
-    
+
     # Set the Linux API server admin login default credentials
     set username None
     set password None
@@ -114,7 +114,7 @@ proc ConnectToIxChassis {ixChassisIpList} {
 	    puts "Error: ConnectToIxChassis: $errMsg"
 	    return 1
 	}
-	
+
 	puts "\nConnectToIxChassis: $ixChassisIp"
 	if {[catch {set status [ixNet setAttribute $chassisObj -hostname $ixChassisIp]} errMsg]} {
 	    puts "\nError: ConnectToIxChassis: $errMsg"
@@ -146,7 +146,7 @@ proc GetApiKey {apiServerIp {username admin} {password admin}} {
     # apiServerIp: The IxNetwork API server IP
     # username: The Linux API server login username
     # password: The Linux API server login password
-    
+
     if {[catch {set apiKey [ixNet getApiKey $apiServerIp -username $username -password $password]} errMsg]} {
     	puts "\nError: Login to Linux API server $apiServerIp failed as $username/$password"
     	return 1
@@ -174,7 +174,7 @@ proc LoadConfigFile {configFile} {
 
 proc GetVportPhyPort {vport {returnValue addSlash}} {
     # vport: ::ixNet::OBJ-/vport:1
-    # returnValue: 
+    # returnValue:
     #    addSlash: Return port format 1/2
     #    noSlash:  Return port format "1 1"
 
@@ -222,7 +222,7 @@ proc GetPorts {{ixChassisIp None}} {
 	    set cardId [lindex [split [lindex [split $port /] 3] :] end]
 	    set portId [lindex [split [lindex [split $port /] end] :] end]
 	    lappend portList [list $ixChassisIp $cardId $portId]
-	} 
+	}
     }
     return $portList
 }
@@ -290,12 +290,12 @@ proc AssignPorts {ixChassisIp {portList None}} {
     }
 
     puts "\tPortList: [list $portList]"
-    puts "\tVportList: [list $vportList]" 
+    puts "\tVportList: [list $vportList]"
     if {[catch {ixTclNet::AssignPorts $portList {} $vportList true} errMsg]} {
 	puts "\nError: AssignPorts: Port assigning to vport failed or ports not booting up."
 	return 1
     }
-    
+
     return 0
 }
 
@@ -305,7 +305,7 @@ proc getRawTrafficVports {} {
 
     set vportList [ixNet getList [ixNet getRoot] vport]
     set protocolList {}
-    # Raw traffic vport format: /vport:1/protocols.  
+    # Raw traffic vport format: /vport:1/protocols.
     # Not like this ::ixNet::OBJ-/vport:1/protocols
     foreach vport $vportList {
 	regexp ".*(/vport.*)" $vport - protocolVport
@@ -315,12 +315,12 @@ proc getRawTrafficVports {} {
 }
 
 proc ClearPortOwnership {{portList None}} {
-    # This Proc could get all the ports dynamically or you could pass in 
+    # This Proc could get all the ports dynamically or you could pass in
     # a list of ports.
     #
     # WARNING: If you don't pass in a list of $portList, then this function
     #          will clear port ownership on ALL the ports connected to your chassis.
-    # 
+    #
     # portList: The format is:  [list "$ixChassisIp $cardNum $portNum" ...]
 
     if {$portList == "None"} {
@@ -333,7 +333,7 @@ proc ClearPortOwnership {{portList None}} {
 	set ixChassisIp [lindex $port 0]
 	set cardId [lindex $port 1]
 	set portId [lindex $port 2]
-    
+
 	set isPortOwned [ixNet getAttribute [ixNet getRoot]/availableHardware/chassis:"$ixChassisIp"/card:$cardId/port:$portId -owner]
 
 	if {$isPortOwned != ""} {
@@ -359,7 +359,7 @@ proc ReleaseAllPorts {} {
 proc ReleasePorts {{portList None}} {
     # This Proc could either get all the configured ports dynamically or you
     # could pass in a list of ports.
-    # 
+    #
     # portList: The format is:  [list "$ixChassisIp $cardNum $portNum" ...]
 
     # If user did not include $portList, then get ports from the loaded configuration.
@@ -377,7 +377,7 @@ proc ReleasePorts {{portList None}} {
 	return 0
     }
     puts "releasePorts vportList: $vportList"
-    
+
     foreach vport $vportList {
 	# chassis="192.168.70.11" card="1" port="1" portip="192.168.70.12"
 	set assignedTo [ixNet getAttribute $vport -assignedTo]
@@ -464,7 +464,7 @@ proc GetVportConnectedToPort { vport } {
     set connectedTo [lrange [split $connectedTo /] 3 4]
     set card [lindex [split [lindex $connectedTo 0] :] end]
     set port [lindex [split [lindex $connectedTo 1] :] end]
-    return $card/$port    
+    return $card/$port
 }
 
 proc StartAllProtocols {} {
@@ -495,7 +495,7 @@ proc StopAllProtocols {} {
 proc VerifyAllProtocolSessionsNgpf {} {
     # This API will loop through each created Topology Group and verify
     # all the created protocols for session up for up to 90 seconds total.
-    # 
+    #
     # Returns 0 if all sessions are UP.
     # Returns 1 if any session remains DOWN after 90 seconds.
 
@@ -528,7 +528,7 @@ proc VerifyAllProtocolSessionsNgpf {} {
 			  tag \
 			  vxlan \
 			 ]
-    
+
     set sessionDownList [list down notStarted]
     set startCounter 1
     set timeEnd 120
@@ -537,7 +537,7 @@ proc VerifyAllProtocolSessionsNgpf {} {
         foreach topology [ixNet getList [ixNet getRoot] topology] {
             foreach deviceGroup [ixNet getList $topology deviceGroup] {
                 foreach ethernet [ixNet getList $deviceGroup ethernet] {
-                    foreach ipv4 [ixNet getList $ethernet ipv4] {   
+                    foreach ipv4 [ixNet getList $ethernet ipv4] {
                         foreach currentProtocol [ixNet getList $ipv4 $protocol] {
                             for {set timer $startCounter} {$timer <= $timeEnd} {incr timer} {
 				# up up
@@ -616,7 +616,7 @@ proc GetTrafficItemObjects {{trafficItemName None}} {
     #
     # Parameter
     #    trafficItemName: Provide a traffic item name to look for. This is optional.
-    #                     If no traffic item name is specified, then return the 
+    #                     If no traffic item name is specified, then return the
     #                     first trafficItemObj, configElementObj and endpointSetObj.
 
     set trafficItemObjList [ixNet getList [ixNet getRoot]/traffic trafficItem]
@@ -629,7 +629,7 @@ proc GetTrafficItemObjects {{trafficItemName None}} {
 	    return [list $trafficItemObj $configElementObj $endpointSetObj]
 	}
 	if {$trafficItemName == "None"} {
-	    # If user did not specify which Traffic Item object to get by a name, 
+	    # If user did not specify which Traffic Item object to get by a name,
 	    # return the first objects
 	    return [list $trafficItemObj $configElementObj $endpointSetObj]
 	}
@@ -647,7 +647,7 @@ proc ConfigFrameSize {args} {
     set argIndex 0
     while {$argIndex < [llength $args]} {
 	set currentArg [lindex $args $argIndex]
-	switch -exact -- $currentArg { 
+	switch -exact -- $currentArg {
 	    -configElementObj {
 		set configElementObj [lindex $args [expr $argIndex + 1]]
 		incr argIndex 2
@@ -708,7 +708,7 @@ proc ConfigFrameRate {args} {
     set argIndex 0
     while {$argIndex < [llength $args]} {
 	set currentArg [lindex $args $argIndex]
-	switch -exact -- $currentArg { 
+	switch -exact -- $currentArg {
 	    -configElementObj {
 		set configElementObj [lindex $args [expr $argIndex + 1]]
 		incr argIndex 2
@@ -759,7 +759,7 @@ proc ConfigFramePayload {args} {
     set argIndex 0
     while {$argIndex < [llength $args]} {
 	set currentArg [lindex $args $argIndex]
-	switch -exact -- $currentArg { 
+	switch -exact -- $currentArg {
 	    -configElementObj {
 		set configElementObj [lindex $args [expr $argIndex + 1]]
 		incr argIndex 2
@@ -825,11 +825,11 @@ proc ConfigPortSpeed {args} {
     #           -speed: auto, speed1000, speed100fd, speed100hd, speed10fd, speed10hd
     #
     #        For -cardType ethernetvm
-    #            -speed speed100, speed1000, speed10g, speed2000, speed20g, speed25g, speed3000, speed30g, 
+    #            -speed speed100, speed1000, speed10g, speed2000, speed20g, speed25g, speed3000, speed30g,
     #                   speed4000, speed5000, speed50g, speed6000, speed7000, speed9000
     #
     #        For -cardType hundredGigLan
-    #            -speed speed100g, speed40g   
+    #            -speed speed100g, speed40g
     #
     #        For -cardType novusHundredGigLan
     #           -enableAutoNegotiation: True|False
@@ -838,7 +838,7 @@ proc ConfigPortSpeed {args} {
     #        For -cardType novusTenGigLan
     #           -autoNegotiate: True|False
     #           -speed: speed1000, speed100fd, speed10g, speed2.5g, speed5g
-    # 
+    #
     # Look below under -speed for parameter inputs.
     # Note: Some port speed doesn't have autonegotation.
 
@@ -846,7 +846,7 @@ proc ConfigPortSpeed {args} {
     set argIndex 0
     while {$argIndex < [llength $args]} {
 	set currentArg [lindex $args $argIndex]
-	switch -exact -- $currentArg { 
+	switch -exact -- $currentArg {
 	    -port {
 		set port [lindex $args [expr $argIndex + 1]]
 		incr argIndex 2
@@ -942,8 +942,8 @@ proc ApplyTraffic {} {
 
 proc StartTraffic { {includeApplyTraffic apply} } {
     # Need to make apply traffic an optional parameter because
-    # not every situation can except apply traffic prior to 
-    # starting traffic such as packet capture.  
+    # not every situation can except apply traffic prior to
+    # starting traffic such as packet capture.
     # If apply traffic for packet capture, it will stop the packet
     # capture.
 
@@ -952,7 +952,7 @@ proc StartTraffic { {includeApplyTraffic apply} } {
     if {$includeApplyTraffic == "apply"} {
 	if {[ApplyTraffic] == 1} {
 	        return 1
-	} 
+	}
     }
 
     puts "StartTraffic ..."
@@ -971,11 +971,11 @@ proc StartTraffic { {includeApplyTraffic apply} } {
 	        break
 	}
     }
-    
+
     if {[VerifyTrafficState]} {
 	return 1
     }
-    
+
     return 0
 }
 
@@ -1003,7 +1003,7 @@ proc VerifyTrafficState {} {
 		return 1
 	    }
 	}
-	
+
 	if {$trafficState == "started"} {
 	        puts "VerifyTrafficState: Traffic Started"
 	        return 0
@@ -1099,7 +1099,7 @@ proc GetStats {{viewName "Traffic Item Statistics"}} {
     #    'PIMv6 IF Per Port'
 
     set root [ixNet getRoot]
-    set viewList [ixNet getList $root/statistics view]    
+    set viewList [ixNet getList $root/statistics view]
     set statViewIndex [lsearch -nocase -regexp $viewList $viewName]
     set view [lindex $viewList $statViewIndex]
     puts "\nview: $view"
@@ -1111,7 +1111,7 @@ proc GetStats {{viewName "Traffic Item Statistics"}} {
 
     set columnList [ixNet getAttribute ${view}/page -columnCaptions]
     #puts "\n$columnList\n"
-    
+
     set startTime 1
     set stopTime 30
     while {$startTime < $stopTime} {
@@ -1125,7 +1125,7 @@ proc GetStats {{viewName "Traffic Item Statistics"}} {
     }
     #puts "\ntotal Pages: $totalPages"
 
-    # Iterrate through each page 
+    # Iterrate through each page
     set row 0
     for {set currentPage 1} {$currentPage <= $totalPages} {incr currentPage} {
 	puts "\nGetStatView: Getting statistics on page: $currentPage/$totalPages. Please wait ..."
@@ -1136,7 +1136,7 @@ proc GetStats {{viewName "Traffic Item Statistics"}} {
 	            return 1
 	}
 	ixNet commit
-	
+
 	# Wait for statistics to populate on current page
 	set whileLoopStopCounter 0
 	while {[ixNet getAttribute $view/page -isReady] != "true"} {
@@ -1150,7 +1150,7 @@ proc GetStats {{viewName "Traffic Item Statistics"}} {
 	    }
 	            incr whileLoopStopCounter
 	}
-	
+
 	set pageList [ixNet getAttribute $view/page -rowValues] ;# first list of all rows in the page
 	set totalFlowStatistics [llength $pageList]
 
@@ -1164,7 +1164,7 @@ proc GetStats {{viewName "Traffic Item Statistics"}} {
 
 		# cellList: 1/1/1 1/1/2 TI0-Flow_1 1.1.1.1-1.1.2.1 4000 4000 0 0 0 0 256000 0 0 0 0 0 0 0 0 0 0 0 00:00:00.684 00:00:00.700
 		set cellList [lindex $rowList $rowIndex] ;# third list of cell values
-		
+
 		puts "\n  $row:"
 		for {set index 0} {$index <[llength $cellList]} {incr index} {
 		    keylset getStats flow.$row.[join [lindex $columnList $index] _] [lindex $cellList $index]
@@ -1172,7 +1172,7 @@ proc GetStats {{viewName "Traffic Item Statistics"}} {
 		}
 	    }
 	}
-    }  
+    }
     ixNet setAttribute $view -enabled false
     ixNet commit
 
@@ -1235,7 +1235,7 @@ proc GetEndpointSetHandle { trafficItemHandle endpointSetName } {
     #     ::ixNet::OBJ-/traffic/trafficItem:4/highLevelStream:1
     #
     # Return the EndpointSet handle that matches the $flowGroupName.
-    
+
     set highLevelStreamId ""
     foreach endpointSet [ixNet getList $trafficItemHandle highLevelStream] {
 	set currentName [ixNet getAttrib $endpointSet -name]
@@ -1244,7 +1244,7 @@ proc GetEndpointSetHandle { trafficItemHandle endpointSetName } {
 	    break
 	}
     }
-    
+
     if {$highLevelStreamId == ""} {
 	return 0
     }
@@ -1287,7 +1287,7 @@ proc EnableAllTrafficItems {} {
 proc ConfigFlowGroupName { streamId name } {
     # This is the Flow Group (EndpointSet)
     # You can pass in either the configElement or highLevelStream API
-    
+
     after 5000
     puts "\nConfigFlowGroupName: $streamId: $name"
     ixNet setAttribute $streamId -name $name
@@ -1315,11 +1315,11 @@ proc EnableGlobalArpForEachIp { {args ""} } {
     set arpRate 300
     set maxOutstanding 300
     set sendOneArpFromEachGateway false ;# true|false
-    
+
     set argIndex 0
     while {$argIndex < [llength $args]} {
 	set currentArg [lindex $args $argIndex]
-	switch -exact -- $currentArg { 
+	switch -exact -- $currentArg {
 	    -enable {
 		set enable [lindex $args [expr $argIndex + 1]]
 		incr argIndex 2
@@ -1395,7 +1395,7 @@ proc StopProtocol { protocol } {
 proc StartProtocolOnPortList { portList protocolList } {
     # You can pass in a list of ports and a list of protocols
     # portList format = 1/1
-    
+
     foreach protocol $protocolList {
 	foreach port $portList {
 	    set vport [GetVportMapping $port]
@@ -1431,8 +1431,8 @@ proc StopProtocolOnPortList { portList protocolList } {
 }
 
 proc StartStopPortProtocolNgpf { portList action protocol } {
-    # NOTE: 
-    #     This API will start/stop a protocol on all Device Groups 
+    # NOTE:
+    #     This API will start/stop a protocol on all Device Groups
     #     that the port belongs to.
     #
     #     If you want to start/stop a specific Device Group, then
@@ -1458,7 +1458,7 @@ proc StartStopPortProtocolNgpf { portList action protocol } {
     if {$action == "stop" && $protocol == "igmpHost"} {
 	set action igmpStopHost
     }
-    
+
     set root [ixNet getRoot]
 
     foreach port $portList {
@@ -1466,13 +1466,13 @@ proc StartStopPortProtocolNgpf { portList action protocol } {
 	foreach topology [ixNet getList $root topology] {
 	    foreach portObj [ixNet getList $topology port] {
 		set vport [ixNet getAttribute $portObj -vport]
-		
+
 		# ::ixNet::OBJ-/availableHardware/chassis:"10.10.10.2"/card:1/port:1
 		set connectedTo [ixNet getAttribute $vport -connectedTo]
 		set chassis [lindex [split $connectedTo /] 3]
 		set cardNum [lindex [split [lindex [split $connectedTo /] 3] :] end]
 		set portNum [lindex [split [lindex [split $connectedTo /] 4] :] end]
-		
+
 		if {$port == "$cardNum/$portNum"} {
 		    set portDiscoveredFlag 1
 		    if {$protocol == "ethernet"} {
@@ -1506,7 +1506,7 @@ proc StartStopPortProtocolNgpf { portList action protocol } {
 			    }
 			}
 		    }
-		    
+
 		    if {$protocol != "ethernet" && $protocol != "ipv4" && $protocol != "ipv6"} {
 			foreach deviceGroup [ixNet getList $topology deviceGroup] {
 			    foreach ethernet [ixNet getList $deviceGroup ethernet] {
@@ -1544,7 +1544,7 @@ proc StartStopPortProtocolNgpf { portList action protocol } {
 }
 
 proc StartStopDeviceGroupProtocolNgpf { deviceGroupList action protocol } {
-    # Description: 
+    # Description:
     #     Only start|stop a protocol for specific device group.
     #     Every other protocol on the device group will not be touched.
 
@@ -1617,7 +1617,7 @@ proc StartStaticAuthProtocol { portList } {
 
 proc StopStaticAuthProtocol { portList } {
     foreach port $portList {
-	set vport [GetVportMapping $port]	
+	set vport [GetVportMapping $port]
 	set etherObj [lindex [ixNet getList $vport/protocolStack ethernet] 0]
 	catch {ixNet exec stop $etherObj} errMsg
 	if {$errMsg != "::ixNet::OK"} {
@@ -1638,7 +1638,7 @@ proc GetVportMapping { Port } {
     if {$vportList == ""} {
 	return 0
     }
-    
+
     foreach vport $vportList {
 	set connectedTo [ixNet getAttribute $vport -connectedTo]
 	set chassis [lindex [split [lindex [split $connectedTo /] 2] :] end]
@@ -1684,7 +1684,7 @@ proc GetVportMappingToPhyPort { portList} {
 proc RestartStaticIpAuthProtocol { portList } {
     # This API will restart all protocols.
     # Mainly for re-arping
-    
+
     puts "\nRestartStaticIpAuthProtocol ,,,"
     StopStaticAuthProtocol $portList
     StartStaticAuthProtocol $portList
@@ -1693,9 +1693,9 @@ proc RestartStaticIpAuthProtocol { portList } {
 proc TakeSnapShot { copyToLocalPathAndFileName {view "Flow Statistics"} {getEgress 0} } {
     # This API will create a "Results" folder on the IxNetwork Tcl Server
     # C: drive if it doesn't exist.
-    
+
     # Important note:
-    #     Users must verify if traffic started successfully.  If not, don't call 
+    #     Users must verify if traffic started successfully.  If not, don't call
     #     TakeSnapShot.  Or else you will get the previous stats left behind on the GUI.
     #
     #     If traffic started successfully and taking a snapshot failed, this API
@@ -1703,15 +1703,15 @@ proc TakeSnapShot { copyToLocalPathAndFileName {view "Flow Statistics"} {getEgre
     #     If snapshot is ok, it will return the $$copyToLocalPathAndFileName.
 
     # $copyToLocalPathAndFileName
-    #    
+    #
     #    If using the HLT command to take snapshot:
     #        TakeSnapShot will put the csv result file to the path of your
     #        current destination.  For example:
-    # 
+    #
     #        If you executed TaksSnapShot from /home/hgee, and you stated the destination
     #        as /home/hgee/results, then the csv snapshot result file will be in:
     #         /home/hgee/home/hgee/results/snapshot.csv.
-    # 
+    #
     #    If using low level command to take snapshot:
     #         Then the csv snapshot result file will be in:
     #         /home/hgee/snapshot.csv.
@@ -1732,11 +1732,11 @@ proc TakeSnapShot { copyToLocalPathAndFileName {view "Flow Statistics"} {getEgre
 
     set root [ixNet getRoot]
     set stats $root/statistics
-    
+
     # This is csv logging
     ixNet setAttr $stats -enableCsvLogging "true"
     ixNet setAttr $stats -csvFilePath $csvWindowsPath
-    
+
     #"C:\Users\hgee\AppData\Local\Ixia\IxNetwork\data\logs"
     ixNet setAttr $stats -pollInterval 1
     ixNet commit
@@ -1782,13 +1782,13 @@ proc ConfigStaticIpAuthVlan { args } {
     set portObject      [lindex $args [expr $portObjectIndex + 1]]
 
     # $portObject could be a list of Protocol Stack interfaces
-    # So, use foreach to loop every interface even though if it is only one interface. 
+    # So, use foreach to loop every interface even though if it is only one interface.
     foreach intObject $portObject {
 	set params {}
 	set argIndex 0
 	while {$argIndex < [llength $args]} {
 	    set currentArg [lindex $args $argIndex]
-	    switch -exact -- $currentArg { 
+	    switch -exact -- $currentArg {
 		-portObject {
 		    incr argIndex 2
 		}
@@ -1821,7 +1821,7 @@ proc ConfigStaticIpAuthVlan { args } {
 		    set innerIncrement [lindex $args [expr $argIndex + 1]]
 		    append params "-innerIncrement $innerIncrement "
 		    incr argIndex 2
-		}		
+		}
 		-incrementStep {
 		    set incrementStep [lindex $args [expr $argIndex + 1]]
 		    append params "-incrementStep $incrementStep "
@@ -1872,13 +1872,13 @@ proc ConfigStaticIpAuthVlan { args } {
 		    set uniqueCount [lindex $args [expr $argIndex + 1]]
 		    append params "-uniqueCount $uniqueCount "
 		    incr argIndex 2
-		}		
+		}
 		-innerCount {
 		    # 4094
 		    set innerUniqueCount [lindex $args [expr $argIndex + 1]]
 		    append params "-innerUniqueCount $innerUniqueCount "
 		    incr argIndex 2
-		}		
+		}
 		default {
 		    puts "\nConfigStaticIpAuthVlan ERROR: No such parameter: $currentArg"
 		    return
@@ -1886,7 +1886,7 @@ proc ConfigStaticIpAuthVlan { args } {
 	    }
 	}
 
-	# Default 
+	# Default
 	if {[lsearch $args -enabled] == -1} {
 	    append params "-enabled True "
 	}
@@ -1904,10 +1904,10 @@ proc ConfigStaticIpAuthVlan { args } {
 
 proc GetProtocolIntObjects { args } {
     # This API supports single chassis ports and diasy chained chassis ports.
-    # 
+    #
     # This API will return you all the Protocol Interface objects
     # based on the $port and/or $vlanId
-    # 
+    #
     # -port format = 1/1/3 or $ixiaChassisIp/1/3
     #       -You could pass in a list of ports also:
     #           "1/1/1 1/1/2" or "$ixiaChassisIp/1/1  $ixiaChassisIp/1/2"
@@ -1916,13 +1916,13 @@ proc GetProtocolIntObjects { args } {
     # For a daisy chained chassis, port format must be $ixiaChassisIp1/1
 
     # For -vlanId parameter:
-    #     Currently, you can only pass in one vlan ID for a single port or for 
+    #     Currently, you can only pass in one vlan ID for a single port or for
     #     the list of ports.
 
     set argIndex 0
     while {$argIndex < [llength $args]} {
 	set currentArg [lindex $args $argIndex]
-	switch -exact -- $currentArg { 
+	switch -exact -- $currentArg {
 	    -port {
 		# For a single chassis, port format can be 1/1/1 or $ixiaChassisIp/1/1
 		# For a daisy chained chassis, port format must be $ixiaChassisIp/1/1
@@ -1942,7 +1942,7 @@ proc GetProtocolIntObjects { args } {
 		puts "\nError GetProtocolIntObjects: No such parameter: $currentArg"
 		return 1
 	    }
-	}	    
+	}
     }
 
     set interfaceObjList {}
@@ -1959,7 +1959,7 @@ proc GetProtocolIntObjects { args } {
 		if {[info exists vlanId] == 0} {
 		    lappend interfaceObjList $interface
 		}
-		
+
 		# User can bind a vlanID to a port.
 		if {[info exists vlanId] == 1} {
 		    set currentVlanId [ixNet getAttribute $interface/vlan -vlanId]
@@ -1981,14 +1981,14 @@ proc GetProtocolIntObjects { args } {
 proc GetStaticIpAuthObjects { args } {
     # This API will return you all the Protocol Interface objects
     # based on the $port and/or $vlanId
-    
+
     # port format = 1/1/3
     # not 1/3
-    
+
     set argIndex 0
     while {$argIndex < [llength $args]} {
 	set currentArg [lindex $args $argIndex]
-	switch -exact -- $currentArg { 
+	switch -exact -- $currentArg {
 	    -port {
 		set port [lindex $args [expr $argIndex + 1]]
 		set port [join [lrange [split $port /] 1 end] /]
@@ -2002,9 +2002,9 @@ proc GetStaticIpAuthObjects { args } {
 		puts "GetStaticIpAuthObjects: No such parameter: $currentArg"
 		return 0
 	    }
-	}	    
+	}
     }
-    
+
     foreach vport [ixNet getList [ixNet getRoot] vport] {
 	set currentPort [ixNet getAttribute $vport -assignedTo]
 	set chassis    [lindex [split $currentPort :] 0]
@@ -2016,7 +2016,7 @@ proc GetStaticIpAuthObjects { args } {
 	    foreach ethernet [ixNet getList $vport/protocolStack ethernet] {
 		foreach endpoint [ixNet getList $ethernet ipEndpoint] {
 		    foreach range [ixNet getList $endpoint range] {
-			
+
 			if {[info exists port] == 1 && [info exists vlanId] == 0} {
 			    #set currentIp [ixNet getAttribute $range/ipRange -ipAddress]
 			    lappend interfaceObjList $range
@@ -2050,7 +2050,7 @@ proc GetEgressStats { args } {
     set argIndex 0
     while {$argIndex < [llength $args]} {
 	set currentArg [lindex $args $argIndex]
-	switch -exact -- $currentArg { 
+	switch -exact -- $currentArg {
 	    -trafficItemName {
 		set trafficItemName [lindex $args [expr $argIndex + 1]]
 		incr argIndex 2
@@ -2082,34 +2082,34 @@ proc GetEgressStats { args } {
 	    }
 	}
     }
-    
+
     set offset "Custom: ($bits bits at offset $customOffset)"
 
     set view [ixNet add [ixNet getRoot]statistics "view"]
-    
+
     ixNet setMultiAttribute $view -caption "EgressView" -treeViewNodeName "Egress\\Custom\ Views" -type layer23TrafficFlow -visible true
     #ixNet setMultiAttribute $view -caption "$trafficItemName\View" -type layer23TrafficFlow -visible true
     ixNet setMultiAttribute $view -caption "EgressStats" -type layer23TrafficFlow -visible true
     ixNet commit
     set view [lindex [ixNet remapIds $view] 0]
-    
+
     set trafficFlowFilter [ixNet add $view "layer23TrafficFlowFilter"]
     ixNet setMultiAttribute $trafficFlowFilter -egressLatencyBinDisplayOption showEgressRows
     ixNet commit
     set trafficFlowFilter [lindex [ixNet remapIds $trafficFlowFilter] 0]
-    
+
     # ::ixNet::OBJ-/statistics/view:"EgressView"/layer23TrafficFlowFilter/enumerationFilter:L81
     set enumerationFilter2 [ixNet add $trafficFlowFilter "enumerationFilter"]
     ixNet setMultiAttribute $enumerationFilter2 -sortDirection ascending
     ixNet commit
     set enumerationFilter2 [lindex [ixNet remapIds $enumerationFilter2] 0]
-    
+
     # ::ixNet::OBJ-/statistics/view:"EgressView"/layer23TrafficFlowFilter/enumerationFilter:L81
     set enumerationFilter3 [ixNet add $trafficFlowFilter "enumerationFilter"]
     ixNet setMultiAttribute $enumerationFilter3 -sortDirection ascending
     ixNet commit
     set enumerationFilter3 [lindex [ixNet remapIds $enumerationFilter3] 0]
-    
+
     puts "\n-portFilterIds: [list $view/availablePortFilter:"$port"]"
     # The -portFilterIds needs to be in this format:
     # ::ixNet::OBJ-/statistics/view:"EgressStats"/availablePortFilter:"10.205.4.155/Card1/Port2"
@@ -2118,27 +2118,27 @@ proc GetEgressStats { args } {
     ixNet setMultiAttribute $trafficFlowFilter -trafficItemFilterIds [list $view/availableTrafficItemFilter:"$trafficItemName"]
     ixNet setMultiAttribute $enumerationFilter2 -trackingFilterId $view/availableTrackingFilter:"$offset"
     ixNet setMultiAttribute $enumerationFilter3 -trackingFilterId $view/availableTrackingFilter:"$field"
-    
+
     catch {ixNet commit} errMsg
     if {$errMsg != "::ixNet::OK"} {
 	puts "\nError GetEgressStats: $field must be selected in Flow Tracking for tracking:\n$errMsg\n"
 	return 1
     }
-    
+
     # Enable all the statistic counters
     foreach {statistic} [ixNet getList $view statistic] {
 	ixNet setAttribute $statistic -enabled true
     }
-    ixNet commit 
-    
+    ixNet commit
+
     puts "\nGetEgressStats: Created and enabling: $view"
     puts "\nRetrieving egress stats is intense processing."
     puts "Please wait ~1.5 minutes ..."
-    
+
     catch {ixNet setMultiAttribute $view -enabled true} errMsg
     puts "\nGetEgressStats: Enabling statView $view : $errMsg"
     catch {ixNet commit} errMsg
-    
+
     # These are all the stat counters on the page
     set columnList [ixNet getAttribute ${view}/page -columnCaptions]
 
@@ -2160,19 +2160,19 @@ proc GetEgressStats { args } {
     }
 
     set totalPages [ixNet getAttribute $view/page -totalPages]
-    
+
     for {set currPage 1} {$currPage <= $totalPages} {incr currPage} {
 	ixNet setAttribute $view/page -currentPage $currPage
 	ixNet commit
-	
+
 	set rowValues [ixNet getAttribute ${view}/page -rowValues]
 	set totalRowsOfStatistics [llength $rowValues]
-	
+
 	#puts "\n---- rowValues: $rowValues ----\n"
-	
+
 	for {set pageListIndex 0} {$pageListIndex <= $totalRowsOfStatistics} {incr pageListIndex} {
 	    set rowList [lindex $rowValues $pageListIndex]
-	    
+
 	    for {set rowIndex 0} {$rowIndex < [llength $rowList]} {incr rowIndex} {
 		set cellLineFlag 0
 		set getOneTimeOnlyFlag 0
@@ -2183,28 +2183,28 @@ proc GetEgressStats { args } {
 
 		    #puts "\n---- foreach row: $row ----\n"
 		    foreach column $columnList item $row {
-			# Using cellLineFlag to control only getting stats on the 
+			# Using cellLineFlag to control only getting stats on the
 			# first line. Ignore the second line.
 			# Already parsed out the egress tracking.
 			if {$cellLineFlag == 0} {
 			    if {$getOneTimeOnlyFlag == 0} {
 				set ingressTracking [lindex $row 1]
 				#puts "\nIngressTracking: $ingressTracking"
-				
+
 				if {$column == "Rx Port"} {
 				    set port [GetAssignedPort $item]
 				}
 				set getOneTimeOnlyFlag 1
 			    }
-			    
+
 			    set column [join $column _]
 			    set item   [join $item _]
-			    
+
 			    #puts "--- $column : $item ----"
 			    keylset egressStats rxPort.$port.$trafficItemName.ingress.$ingressTracking.$column $item
-			}			
+			}
 		    }
-		    
+
 		    # We just want the egressing value. That is it.
 		    if {$cellLineFlag == 1} {
 			set egressTrackingIndex [lsearch $columnList "Egress Tracking"]
@@ -2216,7 +2216,7 @@ proc GetEgressStats { args } {
 	    }
 	}
     }
-    
+
     if {[info exists ::removeTclViewStats] == 1 && $::removeTclViewStats == 1} {
 	ixNet remove $view
 	ixNet commit
@@ -2291,12 +2291,12 @@ proc DeviceGroupProtocolStacksNgpf { deviceGroup ipType} {
 		    set srcIpAddrNotResolved [lindex [ixNet getAttribute [ixNet getRoot]$multiValueNumber -values] $index]
 		    puts "\tFailed to resolve ARP: $srcIpAddrNotResolved"
 		    lappend unresolvedArpList "$srcIpAddrNotResolved"
-		    
+
 		}
 	    }
 	}
     }
-    
+
     if {$unresolvedArpList == ""} {
 	puts "\tARP is resolved"
 	return ""
@@ -2311,15 +2311,15 @@ proc VerifyArpNgpf { {ipType ipv4} } {
     #
     # ipType:  ipv4 or ipv6
     #
-    # This API will verify for ARP session resolvement on 
+    # This API will verify for ARP session resolvement on
     # every Device Group including inner Device Groups.
-    # 
+    #
     # How it works?
     #    Each device group has a list of $sessionStatus: up, down or notStarted.
     #    If the deviceGroup has sessionStatus as "up", then ARP will be verified.
     #    It also has a list of $resolvedGatewayMac: MacAddress or removePacket[Unresolved]
     #    These two $sessionStatus and $resolvedGatewayMac lists are aligned.
-    #    If lindex 0 on $sessionSatus is up, then $resolvedGatewayMac on index 0 expects 
+    #    If lindex 0 on $sessionSatus is up, then $resolvedGatewayMac on index 0 expects
     #    to have a mac address.  Not removePacket[Unresolved].
     #    If not, then arp is not resolved.
     #
@@ -2340,7 +2340,7 @@ proc VerifyArpNgpf { {ipType ipv4} } {
 		if {$arpResult != ""} {
 		    set unresolvedArpList [concat $unresolvedArpList $arpResult]
 		}
-		
+
 		if {[ixNet getList $deviceGroup deviceGroup] != ""} {
 		    foreach innerDeviceGroup [ixNet getList $deviceGroup deviceGroup] {
 			puts "\n$innerDeviceGroup"
@@ -2361,7 +2361,7 @@ proc VerifyArpNgpf { {ipType ipv4} } {
 		if {$arpResult != ""} {
 		    set unresolvedArpList [concat $unresolvedArpList $arpResult]
 		}
-		
+
 		if {[ixNet getList $deviceGroup deviceGroup] != ""} {
 		    foreach innerDeviceGroup [ixNet getList $deviceGroup deviceGroup] {
 			puts "\n$innerDeviceGroup"
@@ -2374,7 +2374,7 @@ proc VerifyArpNgpf { {ipType ipv4} } {
 			    }
 			}
 		    }
-		}		
+		}
 	    } else {
 		puts "\nVerifyArpNgpf: Protocol not started successfuly on:\n\t$deviceGroup"
 	    }
@@ -2404,8 +2404,8 @@ proc ConfigIgmpSourceMode { igmpSessionHandle mode } {
     # Usage example:
     #    -mode create
     #    -session_handle ::ixNet::OBJ-/vport:1/protocols/igmp/host:3
-    #    -source_pool_handle [list source1 source2] 
-    #    -group_pool_handle group3 
+    #    -source_pool_handle [list source1 source2]
+    #    -group_pool_handle group3
 
     puts  "\nConfigIgmpSourceMode: $igmpSessionHandle"
     ixNet setAttribute $igmpSessionHandle -sourceMode $mode
@@ -2425,13 +2425,13 @@ proc IgmpJoinLeaveNgpf { port igmpGroupAddrList action } {
     foreach topology [ixNet getList $root topology] {
 	foreach portObj [ixNet getList $topology port] {
 	    set vport [ixNet getAttribute $portObj -vport]
-	    
+
 	    # ::ixNet::OBJ-/availableHardware/chassis:"10.10.10.2"/card:1/port:1
 	    set connectedTo [ixNet getAttribute $vport -connectedTo]
 	    set chassis [lindex [split $connectedTo /] 3]
 	    set cardNum [lindex [split [lindex [split $connectedTo /] 3] :] end]
 	    set portNum [lindex [split [lindex [split $connectedTo /] 4] :] end]
-	    
+
 	    if {$port == "$cardNum/$portNum"} {
 		set portDiscoveredFlag 1
 		foreach deviceGroup [ixNet getList $topology deviceGroup] {
@@ -2440,7 +2440,7 @@ proc IgmpJoinLeaveNgpf { port igmpGroupAddrList action } {
 			    set protocolObjDiscovered [ixNet getList $ipv4 igmpHost]
 			    if {$protocolObjDiscovered != ""} {
 				foreach igmpGroupRangeObj [ixNet getList $protocolObjDiscovered igmpMcastIPv4GroupList] {
-				    
+
 				    foreach igmpPortObj [ixNet getList $igmpGroupRangeObj port] {
 					# igmpPortObj = ::ixNet::OBJ-/topology:1/deviceGroup:1/ethernet:1/ipv4:1/igmpHost:1/igmpMcastIPv4GroupList/port:1
 					foreach rangeObj [ixNet getList $igmpPortObj item] {
@@ -2495,7 +2495,7 @@ proc ModifyIgmpGroupRanges { portList igmpGroupCount } {
 	    foreach igmpHostGroupNumber [ixNet getList $igmpHostNumber group] {
 		puts "\nModifyIgmpGroupRanges: $port igmpGroupCount=$igmpGroupCount"
 		ixNet setAttribute $igmpHostGroupNumber -groupCount [lindex $igmpGroupCount $index]
-		ixNet commit		
+		ixNet commit
 	    }
 	}
     }
@@ -2547,7 +2547,7 @@ proc EnableTrafficItemByName { Name } {
 	    ixNet commit
 	    puts "\nEnableTrafficItemByName: $Name : Done\n"
 	    return 0
-	} 
+	}
     }
 
     puts "\nEnableTrafficItemByName Error: No such traffic item name: $Name\n"
@@ -2582,7 +2582,7 @@ proc VerifyArpDiscoveries { {ExitTest doNotExitTest} } {
     # interface isn't enable.
     # Then get a list of all the discovered arps.
     # At the end, compare the two list. Any left overs are unresolved arps.
-    
+
     set resolvedArp {}
     set allIpGateways {}
 
@@ -2602,13 +2602,13 @@ proc VerifyArpDiscoveries { {ExitTest doNotExitTest} } {
 		set isIntEnabled [ixNet getAttribute $int -enabled]
 		if {$isIntEnabled == "true" || $isIntEnabled == "True"} {
 		    catch {ixNet getAttribute $int/ipv4 -gateway} ipv4GatewayReturn
-		    
+
 		    if {[regexp "null" $ipv4GatewayReturn] != 1} {
 			if {[lsearch $allIpGateways $ipv4GatewayReturn] == -1} {
 			    lappend allIpGateways $ipv4GatewayReturn
 			}
 		    }
-		    
+
 		    catch {ixNet getList $int ipv6} ipv6GatewayList
 		    if {$ipv6GatewayList != ""} {
 			foreach ipv6Gateway $ipv6GatewayList {
@@ -2634,19 +2634,19 @@ proc VerifyArpDiscoveries { {ExitTest doNotExitTest} } {
     foreach vP [ixNet getList [ixNet getRoot] vport] {
 	# Get all the discovered ARPs for the current vPort
 	set vPortInterfaceList [ixNet getList $vP discoveredNeighbor]
-	
+
 	if {$vPortInterfaceList != ""} {
 	    set currentPort [GetVportConnectedToPort $vP]
 
 	    # vPortInt = ::ixNet::OBJ-/vport:1/discoveredNeighbor:1
 	    foreach vPortInt $vPortInterfaceList {
 		set currentVp [join [lrange [split $vPortInt /] 0 1] /]
-		
+
 		set discoveredIp [ixNet getAttribute $vPortInt -neighborIp]
 		set discoveredMac [ixNet getAttribute $vPortInt -neighborMac]
-		
+
 		puts "VerifyArpDiscoveries: Discovered arp on $currentPort: $discoveredIp : $discoveredMac"
-		
+
 		if {$discoveredMac != "" || $discoveredMac != "00:00:00:00:00:00"} {
 		    if {[lsearch $allIpGateways $discoveredIp] != -1} {
 			lappend resolvedArp $discoveredIp
@@ -2712,7 +2712,7 @@ proc ModifyOspfRouteRanges { portList ospfRouteRanges } {
 	    foreach ospfRouteRangeNumber [ixNet getList $ospfRouteNumber routeRange] {
 		puts "\nModifyOspfRouteRanges: $port ospfRouteRanges=[lindex $ospfRouteRanges $index]"
 		ixNet setAttribute $ospfRouteRangeNumber -numberOfRoutes [lindex $ospfRouteRanges $index]
-		ixNet commit		
+		ixNet commit
 	    }
 	}
     }
@@ -2831,7 +2831,7 @@ proc LinkUpDown { portNumber {action down} } {
 proc EnableDisableSuppressArp { ports action } {
     # Description:
     #    This API will disable or enable
-    #    suppress ARP for duplicate gateway on one  
+    #    suppress ARP for duplicate gateway on one
     #    port or a list of ports with ipv4.
     #
 
@@ -2853,25 +2853,25 @@ proc EnableDisableSuppressArp { ports action } {
     set globals $root\globals
     set globalTopology $globals/topology
     set globalTopologyIpv4 $globalTopology/ipv4
-    
+
     foreach port $ports {
 	set vport [GetVportMapping $port]
 	set portName [ixNet getAttribute $vport -name]
 
 	# This is a list of all the ports and its name description
-	set portNameList [ixNet getAttribute $globalTopologyIpv4 -rowNames]	
-	
+	set portNameList [ixNet getAttribute $globalTopologyIpv4 -rowNames]
+
 	# Get the multi-value number
 	set multiValue [ixNet getAttribute $globalTopologyIpv4 -suppressArpForDuplicateGateway]
-	
+
 	# The portIndex is not zero-based. Begins with 1.
 	set portIndex [expr [lsearch $portNameList $portName] + 1]
-	
+
 	puts "\nEnableDisableSuppressArp: Set to $action"
 	if {[SetNgpfCounterMultiValue $multiValue $portIndex $action]} {
 	    return 1
 	}
-	
+
     }
     return 0
 }
@@ -2879,7 +2879,7 @@ proc EnableDisableSuppressArp { ports action } {
 proc EnableDisableSuppressArpAllPorts { action } {
     # Description:
     #    This API will automatically disable or enable
-    #    suppress ARP for duplicate gateway on all the 
+    #    suppress ARP for duplicate gateway on all the
     #    ports with ipv4.
 
     # action = true or false or enable or disable
@@ -2894,8 +2894,8 @@ proc EnableDisableSuppressArpAllPorts { action } {
     set globals $root\globals
     set globalTopology $globals/topology
     set globalTopologyIpv4 $globalTopology/ipv4
-        
-    set portNameList [ixNet getAttribute $globalTopologyIpv4 -rowNames]	
+
+    set portNameList [ixNet getAttribute $globalTopologyIpv4 -rowNames]
 
     foreach portName $portNameList {
 	set multiValue [ixNet getAttribute $globalTopologyIpv4 -suppressArpForDuplicateGateway]
@@ -2913,7 +2913,7 @@ proc EnableDisableSuppressArpAllPorts { action } {
 proc ModifyIgmpReportsPerSecond { portList rate } {
     # Description:
     #    This API will automatically disable or enable
-    #    suppress ARP for duplicate gateway on all the 
+    #    suppress ARP for duplicate gateway on all the
     #    ports with ipv4.
 
     # action = true or false or enable or disable
@@ -2922,8 +2922,8 @@ proc ModifyIgmpReportsPerSecond { portList rate } {
     set globals $root\globals
     set globalTopology $globals/topology
     set globalTopologyIgmpHost $globalTopology/igmpHost
-        
-    set multiValue [ixNet getAttribute $globalTopologyIgmpHost -ratePerInterval]	
+
+    set multiValue [ixNet getAttribute $globalTopologyIgmpHost -ratePerInterval]
     set igmpHostPortList [ixNet getAttribute $globalTopologyIgmpHost -rowNames]
 
     foreach port $portList {
@@ -3032,7 +3032,7 @@ proc StopIpv4ProtocolNgpf { ipv4Handle } {
 proc SaveConfigToFile { configName } {
     # To save the current IxNetwork configuration to a file in Linux.
     # Users need to include .ixncfg to the end of the name.
-    
+
     puts "\nSaveConfigToFile: $configName"
     ixNet exec saveConfig [ixNet writeTo $configName -overwrite]
 }
@@ -3042,22 +3042,22 @@ proc EnableDisablePimRouterIdNgpf { routerId action } {
     #       This API enables/disables PIMv4 router ID.
     #
     # action = enable or disable
-    
+
     if {$action == "enable"} {
 	set action true
     } else {
 	set action false
     }
-    
+
     foreach topology [ixNet getList [ixNet getRoot] topology] {
 	foreach deviceGroup [ixNet getList $topology deviceGroup] {
 	    foreach pimRouter [ixNet getList $deviceGroup pimRouter] {
 		set listOfRouterIds [ixNet getAttribute $pimRouter -localRouterId]
-		
+
 		if {[lsearch $listOfRouterIds $routerId] != -1} {
-		    set routerIdIndex [expr [lsearch $listOfRouterIds $routerId] + 1]		    
+		    set routerIdIndex [expr [lsearch $listOfRouterIds $routerId] + 1]
 		    set activeMultiValue [ixNet getAttribute $pimRouter -active]
-		    
+
 		    puts "\nEnableDisablePimRouterIdNgpf: Setting PIM routerID $routerId to $action"
 		    if {[SetNgpfCounterMultiValue $activeMultiValue $routerIdIndex $action]} {
 			return 1
@@ -3071,7 +3071,7 @@ proc EnableDisablePimRouterIdNgpf { routerId action } {
 
 proc EnableDisablePimInterfaceNgpf { routerId action } {
     # NOTE: Don't get this API confused with PIM "router ID"
-    #       This API enables/disables PIMv4 interfaaces 
+    #       This API enables/disables PIMv4 interfaaces
     #       based on the router ID address.
     #
     # action = enable or disable
@@ -3089,7 +3089,7 @@ proc EnableDisablePimInterfaceNgpf { routerId action } {
 		    foreach pimInterface [ixNet getList $ipv4 pimV4Interface] {
 			set listOfRouterIds [ixNet getAttribute $pimInterface -localRouterId]
 			if {[lsearch $listOfRouterIds $routerId] != -1} {
-			    set routerIdIndex [expr [lsearch $listOfRouterIds $routerId] + 1]		    
+			    set routerIdIndex [expr [lsearch $listOfRouterIds $routerId] + 1]
 			    set activeMultiValue [ixNet getAttribute $pimInterface -active]
 
 			    puts "\nEnableDisablePimInterfaceNgpf: Setting PIM routerID $routerId to $action"
@@ -3106,7 +3106,7 @@ proc EnableDisablePimInterfaceNgpf { routerId action } {
 }
 
 proc ModifyIgmpHostVersionNgpf { deviceGroupName igmpVersion } {
-    # Modifies all the igmp hosts in the given Device Group to 
+    # Modifies all the igmp hosts in the given Device Group to
     # the given $igmpVersion.
     #
     # deviceGroupName: The exact spelling of the Device Group (Case sensitive)
@@ -3122,7 +3122,7 @@ proc ModifyIgmpHostVersionNgpf { deviceGroupName igmpVersion } {
 			foreach igmpHost [ixNet getList $ipv4 igmpHost] {
 			    set multiValue [ixNet getAttribute $igmpHost -versionType]
 
-			    puts "\nModifyIgmpHostVersionNgpf: $deviceGroup: igmpVersion:$igmpVersion"   
+			    puts "\nModifyIgmpHostVersionNgpf: $deviceGroup: igmpVersion:$igmpVersion"
 			    catch {ixNet setAttribute $multiValue/singleValue -value $igmpVersion} errMsg
 			    if {$errMsg != "::ixNet::OK"} {
 				puts "\nError ModifyIgmpHostVersionNgpf: $errMsg"
@@ -3156,7 +3156,7 @@ proc SetCounterMultiValueNgpf { multiValue propertyIndex action } {
     # If exists, verify if the overlay is for the $propertyIndex.
     # If it's not for the $propertyIndex, then create an overlay for it.
 
-    # Example usage: EnableDisableSuppressArp calls this to 
+    # Example usage: EnableDisableSuppressArp calls this to
     #                create, enable or disable a property index
     #                in which a property can have multiple indexes.
 
@@ -3167,15 +3167,15 @@ proc SetCounterMultiValueNgpf { multiValue propertyIndex action } {
 	ixNet setAttribute $multiValue/counter -start $action
 	ixNet commit
     }
-    
+
     set overlayList [ixNet getList $multiValue overlay]
-    
+
     set overlayDiscoveredFlag 0
-    
+
     if {$overlayList != ""} {
 	foreach overlay $overlayList {
 	    set currentIndex [ixNet getAttribute $overlay -index]
-	    
+
 	    if {$currentIndex == $propertyIndex} {
 		set overlayDiscoveredFlag 1
 		puts "\nSetNgpfCounterMultiValue: Action = $action : propertyIndex = $propertyIndex"
@@ -3188,7 +3188,7 @@ proc SetCounterMultiValueNgpf { multiValue propertyIndex action } {
 		ixNet commit
 	    }
 	}
-	
+
 	if {$overlayDiscoveredFlag == 0} {
 	    # Getting here means no overlay found for the property Index.
 	    # Have to create an overlay with the proper -index number.
@@ -3203,14 +3203,14 @@ proc SetCounterMultiValueNgpf { multiValue propertyIndex action } {
 		puts "\nError SetNgpfCounterMultiValue: Set action to $action for overlay $currentOverlay: $errMsg\n"
 		return 1
 	    }
-	    
+
 	    ixNet commit
 	}
     }
-    
+
     if {$overlayList == ""} {
 	# Getting here means there are no overlays
-	
+
 	# Create Overlays with proper index number based on the portIndex
 	# in $root/globals/topology/ipv4 -rowNames indexes
 	puts "\nSetNgpfCounterMultiValue: No overlay exists"
@@ -3261,7 +3261,7 @@ proc GetIgmpQuerierLearnedInfo { deviceGroup } {
 			#puts "\ncurrentNames: $columnNames\n"
 
 			foreach valueList $currentValues {
-			    incr id 
+			    incr id
 			    foreach name $columnNames value $valueList {
 				set igmpLearnedInfo($id,[join $name _]) $value
 				#puts "$id: [join $name _] : $value"
@@ -3300,7 +3300,7 @@ proc ModifyMldGroupRanges { portList mldGroupRanges } {
 	    foreach mldHostGroupNumber [ixNet getList $mldHostNumber groupRange] {
 		puts "\nModifyMldGroupRanges: $port mldGroupRanges=[lindex $mldGroupRanges $index]"
 		ixNet setAttribute $mldHostGroupNumber -groupCount [lindex $mldGroupRanges $index]
-		ixNet commit		
+		ixNet commit
 	    }
 	}
     }
@@ -3515,7 +3515,7 @@ proc CreateEthernetNgpf {args} {
 	ixNet setAttribute $ethernetObj -name $name
     }
     ixNet commit
-    
+
     set ethernetMultivalue [ixNet getAttribute $ethernetObj -mac]
     puts "\n\tEtherent params: $paramList"
     if {[catch {eval ixNet setMultiAttribute $ethernetMultivalue/counter  $paramList} errMsg]} {
@@ -3530,7 +3530,7 @@ proc CreateEthernetNgpf {args} {
 	ixNet setAttribute $ethernetMultivalue/nest:1 -step $macAddressPortStep
 	ixNet commit
     }
-    
+
     if {$enableVlan == "true"} {
 	puts "\nEnabling vlan for: $ethernetObj"
 	set enableVlanMultivalue [ixNet getAttribute $ethernetObj -enableVlans]
@@ -3586,7 +3586,7 @@ proc ConfigVlanIdNgpf {args} {
 	return 1
     }
     ixNet commit
-} 
+}
 
 proc CreateIpv4Ngpf {args} {
     set direction increment
@@ -3638,7 +3638,7 @@ proc CreateIpv4Ngpf {args} {
 	ixNet setAttribute $ipv4Obj -name $name
     }
     ixNet commit
-    
+
     set ipv4Multivalue [ixNet getAttribute $ipv4Obj -address]
 
     puts "\t$paramList"
@@ -3795,7 +3795,7 @@ proc ConfigIpv4AddressNgpf { ipv4StackObj start {step 0.0.0.1} {direction increm
 	-step $step \
 	-direction $direction
     ixNet commit
-    
+
     return [lindex [ixNet remapIds $ipv4AddressObj2] 0]
 }
 
@@ -3815,7 +3815,7 @@ proc CreateIpv4GatewayIpObjNgpf { ipv4StackObj } {
 	-clearOverlays false \
 	-pattern counter
     ixNet commit
-    
+
     return [lindex [ixNet remapIds $ipv4GatewayIpObj] 0]
 }
 
@@ -3826,10 +3826,10 @@ proc ConfigIpv4GatewayIpOverlayNgpf { ipv4GatewayIpObj count index indexStep val
     #-start 1.1.1.4
     #-direction increment
     #
-    #-count 1 
-    #-index 2 
-    #-indexStep 0 
-    #-valueStep 1.1.1.5 
+    #-count 1
+    #-index 2
+    #-indexStep 0
+    #-valueStep 1.1.1.5
     #-value 1.1.1.5
     #
     #-count 1
@@ -3837,7 +3837,7 @@ proc ConfigIpv4GatewayIpOverlayNgpf { ipv4GatewayIpObj count index indexStep val
     #-indexStep 0
     #-valueStep 1.1.1.6
     #-value 1.1.1.6
-    
+
     puts "\nConfigIpv4GatewayIpOverlayNgpf: $ipv4GatewayIpObj : count=$count index=$index indexStep=$indexStep value=$value valueStep=$valueStep "
     set ipv4GatewayOverlayObj [ixNet add $ipv4GatewayIpObj "overlay"]
     ixNet setMultiAttribute $ipv4GatewayOverlayObj \
@@ -3893,12 +3893,12 @@ proc CreateTrafficItem {args} {
 		set srcEndpoint [lindex $args [expr $argIndex + 1]]
 		append paramList " -srcEndpoint $srcEndpoint"
 		incr argIndex 2
-	    }	    
+	    }
 	    -dstEndpoint {
 		set dstEndpoint [lindex $args [expr $argIndex + 1]]
 		append paramList " -dstEndpoint $dstEndpoint"
 		incr argIndex 2
-	    }	    
+	    }
 	    default {
 		puts "Connect: No such parameter: $currentArg"
 		return 1
@@ -3950,12 +3950,12 @@ proc CreateEndpoints {args} {
 		set srcEndpoint [lindex $args [expr $argIndex + 1]]
 		append paramList " -sources $srcEndpoint"
 		incr argIndex 2
-	    }	    
+	    }
 	    -dstEndpoint {
 		set dstEndpoint [lindex $args [expr $argIndex + 1]]
 		append paramList " -destinations $dstEndpoint"
 		incr argIndex 2
-	    }	    
+	    }
 	    default {
 		puts "Connect: No such parameter: $currentArg"
 		return 1
@@ -4004,7 +4004,7 @@ proc ConfigTrafficTransmissionControl {args} {
 	    }
 	}
     }
-    
+
     puts "\nConfigTrafficTransmissionControl: $paramList"
     if {[catch {eval ixNet setMultiAttribute $configElementObj/transmissionControl $paramList} errMsg]} {
 	puts "Error: ConfigTrafficTransmissionControl: $errMsg"
@@ -4016,17 +4016,17 @@ proc ConfigTrafficTransmissionControl {args} {
 proc addTrafficItemPacketStack {configElementObj protocolStackNameToAdd stackNumber action} {
     # Example:
     #    addTrafficItemPacketStack $configElementObj udp 3 append
-    # 
+    #
     # Parameters
     #    configElementObj: The configElementObj object handle
     #    protocolStackNameToAdd: mpls, ipv4, etc.
     #    stackNumber: The stack number to insert before or append after.
     #    action: append or insert.
     #            append goes after $stackNumber, insert goes before $stackNumber
-    
+
     set index [lsearch -regexp [ixNet getList [ixNet getRoot]/traffic protocolTemplate] $protocolStackNameToAdd]
     set stack [lindex [ixNet getList [ixNet getRoot]/traffic protocolTemplate] $index]
-    
+
     puts "\tAdding stack: $stack"
     set addToStackLevel [lindex [ixNet getList $configElementObj stack] $stackNumber]
     ixNet exec append $addToStackLevel $stack
@@ -4049,7 +4049,7 @@ proc configPacketHeaderField {stackObj args} {
 proc CopyFileFromLinuxApiServer {args} {
     # Description
     #    Using REST API to copy files from a Linux API server to local filesystem.
-    # 
+    #
     # Requirements
     #     IxNetwork 8.50+ because the package IxTclNetwork comes with http, tls and json
     #     that this proc needs. Otherwise, you need to install http, tls and json.
@@ -4065,7 +4065,7 @@ proc CopyFileFromLinuxApiServer {args} {
     #                    For example: /captures/packetCapture
     #    -srcFile:       The filename to copy from the Linux API server.
     #    -dstFilePath:   The path+filename in the local filesystem where you want to copy the file to.
-    # 
+    #
     # Example:
     #
     #    package require http
@@ -4082,7 +4082,7 @@ proc CopyFileFromLinuxApiServer {args} {
     #       -linuxSrcFilePath $resultPath \
     #       -srcFile logFile.txt \
     #       -dstFilePath ./qtLogFile.txt
-    #  
+    #
     #    # Example with pathExtension for packet capture
     #    copyFileFromLinuxApiServer \
     #        -apiServerIp $linuxApiServerIp \
@@ -4092,7 +4092,7 @@ proc CopyFileFromLinuxApiServer {args} {
     #        -srcFile port2_HW.cap \
     #        -dstFilePath ./port2_HW.cap
 
-    set linuxSrcFilePath "None"    
+    set linuxSrcFilePath "None"
     set pathExtension ""
 
     set argIndex 0
@@ -4139,7 +4139,7 @@ proc CopyFileFromLinuxApiServer {args} {
     }
 
     set handle [::http::geturl "https://$apiServerIp/api/v1/sessions/$sessionId/ixnetwork/files?absolute=$linuxSrcFilePath$pathExtension&filename=$srcFile" -headers [list "x-api-key" $apiKey]]
-    
+
     set infile [open $dstFilePath "wb"]
     puts $infile [::http::data $handle]
     close $infile
@@ -4174,7 +4174,7 @@ proc SaveCaptureFiles {serverFilePath} {
 proc CopyFile {copyFrom writeTo} {
     # from: c:\\Results\\Port2_HW.cap
     # to: Location filesytem. c:\\Temp\\port2_cap.cap
-    
+
     puts "\nCopyFile: from: $copyFrom  to: $writeTo"
     ixNet exec copyFile [ixNet readFrom $copyFrom -ixNetRelative] [ixNet writeTo $writeTo -overwrite]
 }

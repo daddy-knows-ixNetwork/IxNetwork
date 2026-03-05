@@ -99,7 +99,7 @@ try:
     deviceGroupObj1 = protocolObj.createDeviceGroupNgpf(topologyObj1,
                                                         multiplier=1,
                                                         deviceGroupName='DG1')
-                                                  
+
     topologyObj2 = protocolObj.createTopologyNgpf(portList=[portList[1]], topologyName='Topo2')
 
     deviceGroupObj2 = protocolObj.createDeviceGroupNgpf(topologyObj2,
@@ -160,7 +160,7 @@ try:
                                         restartTime = 45,
                                         type = 'internal',
                                         enableBgpIdSameasRouterId = True)
-    
+
     bgpObj2 = protocolObj.configBgpIpv6(ipv6Obj2,
                                         name = 'bgp_2',
                                         active = True,
@@ -171,7 +171,7 @@ try:
                                         restartTime = 45,
                                         type = 'internal',
                                         enableBgpIdSameasRouterId = True)
-    
+
     networkGroupObj1 = protocolObj.configNetworkGroup(create=deviceGroupObj1,
                                                       ipVersion='ipv6',
                                                       name='networkGroup1',

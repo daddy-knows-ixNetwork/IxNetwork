@@ -68,7 +68,7 @@
 #   11. Retrieve L2-L3 traffic stats.                                          #
 #   12. Stop L2-L3 traffic.                                                    #
 #   13. Stop all protocols.                                                    #
-#                                                                              #                                                                                
+#                                                                              #
 ################################################################################
 
 
@@ -102,7 +102,7 @@ def assignPorts (ixNet, realPort1, realPort2)
          @ixNet.setAttribute(chassisObj2, '-hostname', chassis2)
          @ixNet.commit()
          chassisObj2 = @ixNet.remapIds(chassisObj2)[0]
-     else 
+     else
          chassisObj2 = chassisObj1
      end
 
@@ -373,7 +373,7 @@ puts("All configuration is completed..Wait for 5 seconds...")
 sleep(5)
 
 ################################################################################
-# Start LDPv6 protocol and wait for 60 seconds                                 #  
+# Start LDPv6 protocol and wait for 60 seconds                                 #
 ################################################################################
 puts("Starting protocols and waiting for 60 seconds for protocols to come up")
 @ixNet.execute('startAllProtocols')

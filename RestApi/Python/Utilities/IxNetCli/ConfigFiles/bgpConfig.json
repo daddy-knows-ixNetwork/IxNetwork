@@ -11,7 +11,7 @@
   "deleteSessionAfterTest": false,
   "licenseServerIp": "192.168.70.3",
   "licenseModel": "subscription",
-  "licenseTier": "tier3",    
+  "licenseTier": "tier3",
 
   "xpath": "/",
   "vport": [
@@ -2816,5 +2816,3 @@
     ]
   }
 }
-
-

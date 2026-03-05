@@ -49,13 +49,13 @@ puts [KeylPrint status]
 
 #----------------------------------------------------------------------------------------
 
-set ipv4Handle_src /topology:1/deviceGroup:1/ethernet:1/ipv4:1 
+set ipv4Handle_src /topology:1/deviceGroup:1/ethernet:1/ipv4:1
 set ipv4Handle_dst /topology:2/deviceGroup:1/ethernet:1/ipv4:1
 
 
 if 0 {
 #----- Example 1 -------#
-#   src endpoints interface #1 to #5 
+#   src endpoints interface #1 to #5
 # /topology:1/deviceGroup:1/ethernet:1/ipv4:1
 set srcPortHandle(EndpointSet-1) [list $ipv4Handle_src]
 set srcPortStart(EndpointSet-1)  [list 1]
@@ -74,13 +74,13 @@ set dstIntCount(EndpointSet-1)    [list 5]
 }
 
 #----- Example 2 -------#
-#   src endpoints interface #2, #4, #6, #8, #10 
+#   src endpoints interface #2, #4, #6, #8, #10
 # /topology:1/deviceGroup:1/ethernet:1/ipv4:1
 #
 # As you can see, I'm sending from 5 different interfaces from the same ipv4 stack.
 # To do this, I'm using the same handle and a list containing 5 same handles.
 # For each index on the handle list, they correlate to the index on each of the array list.
-# Meaning that they are aligned accordingly to the index number on every list. 
+# Meaning that they are aligned accordingly to the index number on every list.
 # Now go look at the photo below for an understanding.
 set srcPortHandle(EndpointSet-1) [list $ipv4Handle_src $ipv4Handle_src $ipv4Handle_src $ipv4Handle_src $ipv4Handle_src]
 set srcPortStart(EndpointSet-1)  [list 1 1 1 1 1]
@@ -99,12 +99,12 @@ set dstIntCount(EndpointSet-1)    [list 5]
 
 
 # Traffic Item Notes:
-# NOTE 1: 
-#       - Notice that there is no dollar sign for the variables.  
+# NOTE 1:
+#       - Notice that there is no dollar sign for the variables.
 #       - Even though we are using only scalable parameters, we still need to include the parameters -emulation_src_handle and -emulation_dst_handle.
 #           For those two -emulation handles, you have to pass in an empty list.
 #           But if you are going to create, say 3 endpoints on this Traffic Itrem, then you have to pass in 3 empty list like this: [list  [list]  [list] [list] ]  or {{  {}  {}  {}  }}
-# 
+#
 # NOTE 2:
 #         - Let say our src endpoint are selective.  Then you must use the -scalable parameters.
 #          - But if you destination endpoints are not selective, you MUST remove all of the dest -scalable parameters and use the parameter -emulation_dst_handle
@@ -160,5 +160,3 @@ if {[keylget trafficItemStatus status] != $::SUCCESS} {
     puts "\nError: Traffic Item config failed: $trafficItemStatus\n"
     exit
 }
-
-

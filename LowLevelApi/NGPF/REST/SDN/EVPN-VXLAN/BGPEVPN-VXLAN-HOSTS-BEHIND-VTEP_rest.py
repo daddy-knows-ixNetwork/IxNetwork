@@ -52,14 +52,14 @@
 #    API.                                                                      #
 #    About Topology:                                                           #
 #       It will create 2 BGP EVPN-VXLAN topologies, BGP is configured at both  #
-#       connected as well as unconnected Device Group. EVPN-VXLAN is           # 
-#       configured in chained device along with Mac/IP pools connected behind  # 
-#       the chained Device Group. Hosts are configured behind MAC/IP Pool.     # 
+#       connected as well as unconnected Device Group. EVPN-VXLAN is           #
+#       configured in chained device along with Mac/IP pools connected behind  #
+#       the chained Device Group. Hosts are configured behind MAC/IP Pool.     #
 # Script Flow:                                                                 #
 #        Step 1. Configuration of protocols.                                   #
 #                                                                              #
 #    Configuration flow of the script is as follow:                            #
-#       i.    Adding of Ethernet and IP within both topologies,                # 
+#       i.    Adding of Ethernet and IP within both topologies,                #
 #       ii.   Ading and BGP over IP act as Spine                               #
 #       iii.  Adding of Route Range behind DG of each topology                 #
 #       iv.   Configuring loopback address as Router ID                        #
@@ -106,7 +106,7 @@ forceTakePortOwnership = True
 debugMode = False
 
 # LogLevel: none, info, warning, request, request_response, all
-session = SessionAssistant(IpAddress=apiServerIp, RestPort=11111, UserName='admin', Password='Keysight@123456', 
+session = SessionAssistant(IpAddress=apiServerIp, RestPort=11111, UserName='admin', Password='Keysight@123456',
                                SessionName=None, SessionId=None, ApiKey=None,
                                ClearConfig=True,LogLevel="info", LogFilename='restpy.log')
 ixNetwork = session.Ixnetwork
@@ -118,8 +118,8 @@ for index,port in enumerate(portList):
     vport[portName] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name=portName)
 
 portMap.Connect(forceTakePortOwnership)
-    
-    
+
+
 ixNetwork.info("Creating Topology 1")
 topology1 = ixNetwork.Topology.add(Name="EVPN VXLAN 1", Ports=vport['Port_1'])
 
@@ -179,9 +179,9 @@ bgpIPv4EvpnVXLAN1 = bgp2_1.BgpIPv4EvpnVXLAN.add()
 
 ixNetwork.info("Disabling Import RT List same as Export RT List")
 bgpIPv4EvpnVXLAN1.ImportRtListSameAsExportRtList = 'false'
-    
+
 ixNetwork.info("Changing Import Route Target AS No.")
-bgpImportRouteTargetList1 = bgpIPv4EvpnVXLAN1.BgpImportRouteTargetList.find()[0]  
+bgpImportRouteTargetList1 = bgpIPv4EvpnVXLAN1.BgpImportRouteTargetList.find()[0]
 bgpImportRouteTargetList1.TargetAsNumber.Increment(start_value = "0", step_value = "0")
 bgpExportRouteTargetList1 = bgpIPv4EvpnVXLAN1.BgpExportRouteTargetList.find()[0]
 bgpExportRouteTargetList1.TargetAsNumber.Increment(start_value="2000", step_value = "0")
@@ -200,7 +200,7 @@ macPool1.Mac.Single("22:22:22:22:00:01")
 ixNetwork.info("Enabling using of VLAN in CMAC Ranges")
 macPool1.UseVlans = "true"
 cMacvlan1 = macPool1.Vlan.find()[0]
-    
+
 ixNetwork.info("Configuring VLAN ID")
 cMacvlan1.VlanId.Increment(start_value = '101', step_value = '1')
 
@@ -285,9 +285,9 @@ bgpIPv4EvpnVXLAN2 = bgp2_2.BgpIPv4EvpnVXLAN.add()
 
 ixNetwork.info("Disabling Import RT List same as Export RT List")
 bgpIPv4EvpnVXLAN2.ImportRtListSameAsExportRtList = 'false'
-    
+
 ixNetwork.info("Changing Import Route Target AS No.")
-bgpImportRouteTargetList2 = bgpIPv4EvpnVXLAN2.BgpImportRouteTargetList.find()[0]  
+bgpImportRouteTargetList2 = bgpIPv4EvpnVXLAN2.BgpImportRouteTargetList.find()[0]
 bgpImportRouteTargetList2.TargetAsNumber.Increment(start_value = "0", step_value = "0")
 bgpExportRouteTargetList2 = bgpIPv4EvpnVXLAN2.BgpExportRouteTargetList.find()[0]
 bgpExportRouteTargetList2.TargetAsNumber.Increment(start_value="2000", step_value = "0")
@@ -305,7 +305,7 @@ macPool2.Mac.Single("A0:11:01:00:00:01")
 ixNetwork.info("Enabling using of VLAN in CMAC Ranges")
 macPool2.UseVlans = "true"
 cMacvlan2 = macPool2.Vlan.find()[0]
-    
+
 ixNetwork.info("Configuring VLAN ID")
 cMacvlan2.VlanId.Increment(start_value = '1', step_value = '1')
 
@@ -352,7 +352,7 @@ BgpPerPortStats.AddRowFilter('Port', BgpPerPortStats.EQUAL, 'Ethernet - 001')
 print("#############################################################")
 print("All Routes Received at Port Ethernet 001 : {}".format(BgpPerPortStats))
 
-BgpPerPortStats.CheckCondition(ColumnName='Routes Rx', Comparator=StatViewAssistant.EQUAL, 
+BgpPerPortStats.CheckCondition(ColumnName='Routes Rx', Comparator=StatViewAssistant.EQUAL,
                                ConditionValue=100, CheckInterval=5, Timeout=60)
 
 ixNetwork.info("Displaying EVPN-VXLAN Learned Info")
@@ -372,4 +372,3 @@ ixNetwork.info("Stopping Protocols")
 ixNetwork.StopAllProtocols()
 
 ixNetwork.info("Test Script Ends")
-

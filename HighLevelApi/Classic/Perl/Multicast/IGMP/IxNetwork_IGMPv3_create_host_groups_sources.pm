@@ -254,8 +254,8 @@ my $igmp_source2_handle = ixiahlt::status_item('handle');
 # group_pool_handle group1                            #
 #######################################################
 $_result_ = ixiahlt::emulation_igmp_group_config ({
-	mode              => 'create',          
-	session_handle    => $igmp_handle,        
+	mode              => 'create',
+	session_handle    => $igmp_handle,
 	group_pool_handle => $igmp_group1_handle,
 });
 &catch_error();
@@ -269,9 +269,9 @@ push (@source_pool_handle_list, $igmp_source2_handle);
 # group_pool_handle group2 and source handle          #
 # source1 and source2                                 #
 #######################################################
-$_result_ = ixiahlt::emulation_igmp_group_config ({ 
-	mode               => 'create',          
-	session_handle     => $igmp_handle,        
+$_result_ = ixiahlt::emulation_igmp_group_config ({
+	mode               => 'create',
+	session_handle     => $igmp_handle,
 	group_pool_handle  => $igmp_group2_handle,
 	source_pool_handle => \@source_pool_handle_list,
 });

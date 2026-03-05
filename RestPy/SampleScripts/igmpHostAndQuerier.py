@@ -75,7 +75,7 @@ try:
     testPlatform.Authenticate(username, password)
     session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
-    
+
     ixNetwork.NewConfig()
 
     ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
@@ -85,7 +85,7 @@ try:
     # Create vports and name them so you could use .find() to filter vports by the name.
     vport1 = ixNetwork.Vport.add(Name='Port1')
     vport2 = ixNetwork.Vport.add(Name='Port2')
-    
+
     vportList = [vport.href for vport in ixNetwork.Vport.find()]
 
     # Assign ports
@@ -161,7 +161,7 @@ try:
     ixNetwork.Traffic.Apply()
     ixNetwork.Traffic.Start()
 
-    # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL. 
+    # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL.
     # Examples:
     #    flowStatistics.AddRowFilter('Port Name', StatViewAssistant.REGEX, '^Port 1$')
     #    flowStatistics.AddRowFilter('Tx Frames', StatViewAssistant.LESS_THAN, 50000)
@@ -186,7 +186,3 @@ except Exception as errMsg:
     print('\n%s' % traceback.format_exc(None, errMsg))
     if debugMode == False and 'session' in locals():
         session.remove()
-
-
-
-

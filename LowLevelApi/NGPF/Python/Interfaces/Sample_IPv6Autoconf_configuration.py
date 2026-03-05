@@ -47,7 +47,7 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#    This sample configures 10 IPv6 Autoconfiguration sessions the two ports,  # 
+#    This sample configures 10 IPv6 Autoconfiguration sessions the two ports,  #
 #                                                                              #
 ################################################################################
 
@@ -128,7 +128,7 @@ ixNet.add(mac2, 'ipv6Autoconfiguration')
 ixNet.commit()
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 vports = ixNet.getList(ixNet.getRoot(), 'vport')
 print "Assigning ports to " + str(vports) + " ..."

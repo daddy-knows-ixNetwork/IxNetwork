@@ -9,13 +9,13 @@
 #
 # DESCRIPTION
 #    A dynamic sample script that...
-# 
+#
 #        - Read a parameter file that is in a Python dictionary data structure.
 #        - Testing with two back-to-back Ixia ports.
 #        - This script is scalable.  Meaning you could create n number of Topology Groups and Traffic Items.
 #        - The dictionary parameter file model reflects the IxNework API tree structure.
 #        - Connecting to Windows IxNetwork API server or Linux API server.
-#        - Written in Python3 and supports Python 2 
+#        - Written in Python3 and supports Python 2
 #        - Verify for sufficient amount of port licenses before testing.
 #        - Verify port ownership.
 #        - Configure two Topology Groups
@@ -183,7 +183,7 @@ try:
     for topologyGroup in param['topology']:
         topologyObj = protocolObj.createTopologyNgpf(portList=topologyGroup['ports'],
                                                      topologyName=topologyGroup['name'])
-        
+
         for deviceGroup in topologyGroup['deviceGroup']:
             deviceGroupObj = protocolObj.createDeviceGroupNgpf(topologyObj,
                                                                multiplier=deviceGroup['multiplier'],
@@ -221,7 +221,7 @@ try:
 
         trafficObj = Traffic(mainObj)
         trafficStatus = trafficObj.configTrafficItem(
-            mode='create',            
+            mode='create',
             trafficItem = {
                 'name': trafficItem['name'],
                 'trafficType': trafficItem['trafficType'],

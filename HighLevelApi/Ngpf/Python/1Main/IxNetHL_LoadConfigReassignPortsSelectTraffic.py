@@ -4,12 +4,12 @@
 #
 #   1: If the variable "resume" = 0, then load the config file.
 #      You could reassign ports also: set reassignPorts to 1.
-#   
+#
 #   2: If the variable "resume" = 1, then connect to
 #      an existing configuration.
 #
-#   - This sample script can be applied on any testbed using 
-#     different Ixia chassis and ports. All you do is set 
+#   - This sample script can be applied on any testbed using
+#     different Ixia chassis and ports. All you do is set
 #     the variables accordingly.
 #
 #   - Users will provide a list of Traffic Item names to the variable
@@ -95,7 +95,7 @@ def VerifyPortState( stopTime = 40 ):
             if portState != 'up':
                 print 'VerifyPortState: %s is not up yet. Verifying %d/%d seconds' % (port, timer, stopTime)
                 time.sleep(1)
-            
+
             if timer == stopTime:
                 print 'Port can\'t come up.  Exiting test'
                 return 1
@@ -105,7 +105,7 @@ def VerifyPortState( stopTime = 40 ):
 
 def GetTopologyPortsNgpfPy(topologyName):
     # Gets all the ports associated with the Topology
-    
+
     for topology in ixNet.getList(ixNet.getRoot(), 'topology'):
         currentName = ixNet.getAttribute(topology, '-name')
         if currentName is topologyName:
@@ -122,7 +122,7 @@ def GetTopologyPortsNgpfPy(topologyName):
 def VerifyAllProtocolSessionsNgpfPy():
     # This API will loop through each created Topology Group and verify
     # all the created protocols for session up for up to 90 seconds total.
-    # 
+    #
     # Returns 0 if all sessions are UP.
     # Returns 1 if any session remains DOWN after 90 seconds.
 
@@ -211,7 +211,7 @@ def VerifyArpNgpfPy(ipType='ipv4', maxRetry=3):
                         # Only care for unresolved ARPs
                         for index in xrange(0, len(resolvedGatewayMac)):
                             for timer in xrange(1, maxRetry+1):
-                                if (re.match('.*Unresolved', resolvedGatewayMac[index]) and 
+                                if (re.match('.*Unresolved', resolvedGatewayMac[index]) and
                                     sessionStatus[index] != 'notStarted' and
                                     timer <= maxRetry
                                     ):
@@ -220,7 +220,7 @@ def VerifyArpNgpfPy(ipType='ipv4', maxRetry=3):
                                     ipAddrNotResolved = ixNet.getAttribute(ixNet.getRoot()+multiValueNumber, '-values')[index]
                                     # /topology:2/deviceGroup:1/ethernet:1/ipv4:1 -address
                                     topologyDeviceGroupSource = ixNet.getAttribute(ixNet.getRoot()+multiValueNumber, '-source')
-                                    
+
                                     match = re.match('.*(topology:[0-9]+)/deviceGroup:([0-9]+).*', topologyDeviceGroupSource)
                                     if match:
                                         topologyNum = match.group(1)
@@ -233,7 +233,7 @@ def VerifyArpNgpfPy(ipType='ipv4', maxRetry=3):
                                             )
                                         time.sleep(1)
 
-                                if (re.match('.*Unresolved', resolvedGatewayMac[index]) and 
+                                if (re.match('.*Unresolved', resolvedGatewayMac[index]) and
                                     sessionStatus[index] != 'notStarted' and
                                     timer == maxRetry
                                     ):
@@ -261,7 +261,7 @@ def VerifyArpNgpfPy(ipType='ipv4', maxRetry=3):
 
 def StartTrafficNgpfHlPy():
     print '\nStartTrafficNgpfHlPy'
-    status = ixia_ngpf.traffic_control(action = 'run')    
+    status = ixia_ngpf.traffic_control(action = 'run')
     if status == 1:
         print '\nStartTrafficNgpfHlPy failed: ', status['log']
         return 1
@@ -270,7 +270,7 @@ def StartTrafficNgpfHlPy():
 
 def GetStatsNgpfHlPy(type_of_stats='flow'):
     print '\nGetStatsNgpfHlPy:', type_of_stats
-    status = ixia_ngpf.traffic_stats(mode = type_of_stats)    
+    status = ixia_ngpf.traffic_stats(mode = type_of_stats)
     if status['status'] != '1':
         print '\nGetStatsNgpfHlPy failed: ', status['log']
         sys.exit()
@@ -312,30 +312,30 @@ def PrintDict(obj, nested_level=0, output=sys.stdout):
 if resume == 1:
     # Connect to the existing configuration to resume running traffic.
     print '\nResuming existing configuration ...'
-    connectStatus = ixia_ngpf.connect ( 
+    connectStatus = ixia_ngpf.connect (
         ixnetwork_tcl_server = ixNetworkTclServer,
         tcl_server = tclServer,
         username = userName,
         break_locks = '1',
-       ) 
+       )
 
 if resume == 0 and reassignPorts == 0:
     # Load config file and use the saved config's ports.
     print '\nLoading config file:', configFile
-    connectStatus = ixia_ngpf.connect ( 
+    connectStatus = ixia_ngpf.connect (
         ixnetwork_tcl_server = ixNetworkTclServer,
         tcl_server = tclServer,
         username = userName,
         break_locks = 1,
         config_file = configFile,
         session_resume_keys = 1,
-        ) 
+        )
 
 if resume == 0 and reassignPorts == 1:
     # Load config file and reassign ports.
     print '\nLoading config file:', configFile
     print '\nUsing port list:', portList
-    connectStatus = ixia_ngpf.connect ( 
+    connectStatus = ixia_ngpf.connect (
         ixnetwork_tcl_server = ixNetworkTclServer,
         tcl_server = tclServer,
         device = chassisIp,
@@ -343,8 +343,8 @@ if resume == 0 and reassignPorts == 1:
         username = userName,
         break_locks = 1,
         config_file = configFile,
-        ) 
-    
+        )
+
 PrintDict(connectStatus)
 VerifyPortState()
 

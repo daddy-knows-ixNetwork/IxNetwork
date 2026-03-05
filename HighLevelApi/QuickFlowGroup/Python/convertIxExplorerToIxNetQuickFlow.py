@@ -105,7 +105,7 @@ def ConfigQuickFlowGroup(**trafficParams):
 def RegenerateAllTrafficItemsPy():
     for trafficItem in ixNet.getList(ixNet.getRoot()+'/traffic', 'trafficItem'):
         result = ixNet.execute('generate', trafficItem)
-        
+
         if result != '::ixNet::OK':
             print('\nRegenerate_All_TrafficItems failed: ', trafficItem)
             ixNet.disconnect()
@@ -113,7 +113,7 @@ def RegenerateAllTrafficItemsPy():
 
 def StartTrafficNgpfHlPy():
     print('\nStartTrafficNgpfHlPy')
-    status = ixia_ngpf.traffic_control(action = 'run')    
+    status = ixia_ngpf.traffic_control(action = 'run')
     if status == 1:
         print('\nStartTrafficNgpfHlPy failed: ', status['log'])
         return 1
@@ -309,11 +309,11 @@ trafficItem2 = { 'name': 'rule2',
                  'number_of_packets_per_stream': 50000
              }
 
-connect_result = ixia_ngpf.connect ( 
+connect_result = ixia_ngpf.connect (
     ixnetwork_tcl_server = ixnetwork_tcl_server,
     username = username,
     break_locks = '1'
-    ) 
+    )
 
 PrintDict(connect_result)
 

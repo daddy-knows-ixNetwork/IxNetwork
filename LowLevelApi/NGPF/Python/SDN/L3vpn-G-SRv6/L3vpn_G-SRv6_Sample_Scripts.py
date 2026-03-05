@@ -7,7 +7,7 @@
 #                                                                              #
 ################################################################################
 
-####################################################################################    
+####################################################################################
 #                                                                                  #
 #                                LEGAL  NOTICE:                                    #
 #                                ==============                                    #
@@ -42,7 +42,7 @@
 # damages limitations forth herein and will not obligate Keysight to provide       #
 # any additional maintenance or support services.                                  #
 #                                                                                  #
-####################################################################################    
+####################################################################################
 
 #####################################################################################
 #                                                                              		#
@@ -62,7 +62,7 @@
 #    5. Start the L2-L3 traffic.                                               		#
 #    6. Retrieve L2-L3 traffic stats.                                          		#
 #    7. Stop L2-L3 traffic.                                                    		#
-#    8. Stop all protocols.                                                    		#                                                                                          
+#    8. Stop all protocols.                                                    		#
 #####################################################################################
 
 # Script Starts
@@ -142,7 +142,7 @@ ixNet.execute('newConfig')
 ################################################################################
 # 1. Protocol configuration section. Configure ISISL3/BGP+ as per the description
 #    give above
-################################################################################ 
+################################################################################
 root = ixNet.getRoot()
 assignPorts(ixNet, ports[0], ports[1])
 time.sleep(5)
@@ -358,7 +358,7 @@ ixNet.commit()
 
 #configure sidCount locator in for isisL3Router in t1dev1
 print "configure sidCount locator in for isisL3Router in t1dev1"
-ixNet.setMultiAttribute(t1dev1 + '/isisL3Router:1/isisSRv6LocatorEntryList', '-sidCount', '3') 
+ixNet.setMultiAttribute(t1dev1 + '/isisL3Router:1/isisSRv6LocatorEntryList', '-sidCount', '3')
 ixNet.commit()
 
 #Configure EndSid Value for isisL3Router in t1dev1
@@ -449,7 +449,7 @@ ixNet.commit()
 
 #Configure ipv6AdjSid Value in isisL3_1
 print "Configure ipv6AdjSid Value in isisL3_1"
-ipv6AdjSid_2 = ixNet.getAttribute(isisL3_1 + '/isisSRv6AdjSIDList', '-ipv6AdjSid')		
+ipv6AdjSid_2 = ixNet.getAttribute(isisL3_1 + '/isisSRv6AdjSIDList', '-ipv6AdjSid')
 ixNet.commit()
 counter = ixNet.add(ipv6AdjSid_2, 'counter')
 ixNet.setMultiAttribute(counter,
@@ -497,7 +497,7 @@ ixNet.commit()
 singlV5 = ixNet.add(includeSRv6SIDStructureSubSubTlv_2, 'singleValue')
 ixNet.setMultiAttribute(singlV5,
 	'-value', 'true')
-ixNet.commit() 
+ixNet.commit()
 locatorBlockLength_2 = ixNet.getAttribute(isisL3_1 + '/isisSRv6AdjSIDList', '-locatorBlockLength')
 ixNet.setMultiAttribute(locatorBlockLength_2,
 	'-clearOverlays', 'false')
@@ -505,7 +505,7 @@ ixNet.commit()
 singlV6 = ixNet.add(locatorBlockLength_2, 'singleValue')
 ixNet.setMultiAttribute(singlV6,
 	'-value', '48',)
-ixNet.commit()		
+ixNet.commit()
 ixNet.setMultiAttribute(locatorBlockLength_2 + '/nest:1',
 	'-enabled', 'false',
 	'-step', '1')
@@ -544,7 +544,7 @@ ixNet.commit()
 
 #configure sidCount
 print "configure sidCount"
-ixNet.setMultiAttribute(t2dev1 + '/isisL3Router:1/isisSRv6LocatorEntryList', '-sidCount', '3') 
+ixNet.setMultiAttribute(t2dev1 + '/isisL3Router:1/isisSRv6LocatorEntryList', '-sidCount', '3')
 ixNet.commit()
 
 #Configure EndSid Value
@@ -635,7 +635,7 @@ ixNet.commit()
 
 #Configure ipv6AdjSid Value
 print "Configure ipv6AdjSid Value"
-ipv6AdjSid = ixNet.getAttribute(isisL3_2 + '/isisSRv6AdjSIDList', '-ipv6AdjSid')		
+ipv6AdjSid = ixNet.getAttribute(isisL3_2 + '/isisSRv6AdjSIDList', '-ipv6AdjSid')
 ixNet.commit()
 counter = ixNet.add(ipv6AdjSid, 'counter')
 ixNet.setMultiAttribute(counter,
@@ -683,7 +683,7 @@ ixNet.commit()
 singleV5 = ixNet.add(includeSRv6SIDStructureSubSubTlv, 'singleValue')
 ixNet.setMultiAttribute(singleV5,
 	'-value', 'true')
-ixNet.commit() 
+ixNet.commit()
 locatorBlockLength = ixNet.getAttribute(isisL3_2 + '/isisSRv6AdjSIDList', '-locatorBlockLength')
 ixNet.setMultiAttribute(locatorBlockLength,
 	'-clearOverlays', 'false')
@@ -691,7 +691,7 @@ ixNet.commit()
 singleV6 = ixNet.add(locatorBlockLength, 'singleValue')
 ixNet.setMultiAttribute(singleV6,
 	'-value', '48')
-ixNet.commit()		
+ixNet.commit()
 ixNet.setMultiAttribute(locatorBlockLength + '/nest:1',
 	'-enabled', 'false',
 	'-step', '1')
@@ -771,7 +771,7 @@ ixNet.setMultiAttribute(counter,
 	'-start', '201.1.0.0',
 	'-direction', 'increment')
 ixNet.commit()
-	
+
 #Create Network Group At PEER2 Side
 print "Create Network Group At PEER2 Side"
 networkGroup_P2 = ixNet.add(t2dev1, 'networkGroup')
@@ -1576,7 +1576,7 @@ for statValList in ixNet.getAttribute(viewPage, '-rowValues') :
 print("***************************************************")
 
 ################################################################################
-# 4. Configure L2-L3 traffic 
+# 4. Configure L2-L3 traffic
 ################################################################################
 print "Congfiguring L2-L3 Traffic Item"
 Root = ixNet.getRoot()
@@ -1708,7 +1708,7 @@ for statValList in ixNet.getAttribute(viewPage, '-rowValues') :
             index = index + 1
         # end for
     # end for
-# end for    
+# end for
 print("***************************************************")
 
 #################################################################################

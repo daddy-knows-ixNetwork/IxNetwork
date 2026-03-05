@@ -26,12 +26,12 @@ test
 	${vport_list} =  Get From Dictionary  ${result}  vport_list
 	@{portHandles} =  Split String  ${vport_list}
 	Log Many  @{portHandles}
-	
+
 #################################################
 #  Configure 2 MLD hosts on interface           #
 #  MLD Version 2                                #
 #################################################
-	
+
 	${result} =  Emulation Mld Config  mode=create  port_handle=@{portHandles}[0]  mld_version=v2  count=10  intf_ip_addr=30::31  intf_prefix_len=64  msg_interval=10  max_groups_per_pkts=5  unsolicited_report_interval=30  general_query=1  group_query=1  max_response_control=1  max_response_time=0  ip_router_alert=1  suppress_report=1  mac_address_init=0000.0000.0001  reset=1
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
@@ -42,35 +42,33 @@ test
 #  MLD Version 2                                                    #
 #####################################################################
 # Set multicast group
-	${result} =  Emulation Multicast Group Config  mode=create  num_groups=2  ip_addr_start=FF15::1  ip_addr_step=0::1  ip_prefix_len=64  
+	${result} =  Emulation Multicast Group Config  mode=create  num_groups=2  ip_addr_start=FF15::1  ip_addr_step=0::1  ip_prefix_len=64
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${multicast_group_handle} =  Get From Dictionary  ${result}  handle
-	
+
 # Set multicast sources
-	
-	${result} =  Emulation Multicast Source Config  mode=create  num_sources=5  ip_addr_start=20::21  ip_addr_step=0::1  ip_prefix_len=64  
+
+	${result} =  Emulation Multicast Source Config  mode=create  num_sources=5  ip_addr_start=20::21  ip_addr_step=0::1  ip_prefix_len=64
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${multicast_source_handle} =  Get From Dictionary  ${result}  handle
-	
+
 #####################################################################
 #  Configure 5 MLD sources on each MLD groups for each MLD host     #
 #  MLD Version 2                                                    #
 #####################################################################
-	
+
 	:FOR  ${mld_host_handle}  IN  @{mld_host_handle_list}
 	\  Log  Stats on current port are: ${mld_host_handle}
 	\  ${result} =  Emulation Mld Group Config  mode=create  session_handle=${mld_host_handle}  group_pool_handle=${multicast_group_handle}  source_pool_handle=${multicast_source_handle}
 	\  ${status} =  Get From Dictionary  ${result}  status
 	\  Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
+
 ######################
 # START MLD          #
 ######################
-	
+
 	${result} =  Emulation Mld Control  mode=start  port_handle=@{portHandles}
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
-	

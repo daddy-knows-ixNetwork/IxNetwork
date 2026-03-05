@@ -267,7 +267,7 @@ ixNet.commit()
 addressSet1 = ixNet.remapIds(addressSet1)[0]
 
 
-# Adding BGP over IPv4 loopback interfaces 
+# Adding BGP over IPv4 loopback interfaces
 print("Adding BGP over IPv4 loopback interfaces")
 ixNet.add(loopback1, 'bgpIpv4Peer')
 ixNet.commit()

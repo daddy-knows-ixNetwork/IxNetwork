@@ -72,7 +72,7 @@
 ################################################################################
 
 ################################################################################
-# Utils                                                                        #	
+# Utils                                                                        #
 ################################################################################
 
 # Libraries to be included
@@ -85,7 +85,7 @@ import time, re
 
 # Append paths to python APIs (Linux and Windows)
 
-# sys.path.append('/path/to/hltapi/library/common/ixiangpf/python') 
+# sys.path.append('/path/to/hltapi/library/common/ixiangpf/python')
 # sys.path.append('/path/to/ixnetwork/api/python')
 
 from ixiatcl import IxiaTcl
@@ -96,7 +96,7 @@ from ixiaerror import IxiaError
 ixiatcl = IxiaTcl()
 ixiahlt = IxiaHlt(ixiatcl)
 ixiangpf = IxiaNgpf(ixiahlt)
-    
+
 try:
 	ErrorHandler('', {})
 except (NameError,):
@@ -105,7 +105,7 @@ except (NameError,):
 		err = ixiatcl.tcl_error_info()
 		log = retval['log']
 		additional_info = '> command: %s\n> tcl errorInfo: %s\n> log: %s' % (cmd, err, log)
-		raise IxiaError(IxiaError.COMMAND_FAIL, additional_info)        
+		raise IxiaError(IxiaError.COMMAND_FAIL, additional_info)
 
 ################################################################################
 # Connection to the chassis, IxNetwork Tcl Server                              #
@@ -134,7 +134,7 @@ connect_result = ixiangpf.connect(
 
 if connect_result['status'] != '1':
     ErrorHandler('connect', connect_result)
-    
+
 print " Printing connection result"
 pprint(connect_result)
 
@@ -142,7 +142,7 @@ pprint(connect_result)
 ports = connect_result['vport_list'].split()
 
 ################################################################################
-# Configure Topology, Device Group                                             # 
+# Configure Topology, Device Group                                             #
 ################################################################################
 
 # Creating a topology on first port
@@ -153,11 +153,11 @@ _result_ = ixiangpf.topology_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', _result_)
-    
+
 topology_1_handle = _result_['topology_handle']
 
-# Creating a device group in topology 
-print "Creating device group 1 in topology 1" 
+# Creating a device group in topology
+print "Creating device group 1 in topology 1"
 _result_ = ixiangpf.topology_config(
     topology_handle              = topology_1_handle,
     device_group_name            = """MLD Host Device Group""",
@@ -166,7 +166,7 @@ _result_ = ixiangpf.topology_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', _result_)
-    
+
 deviceGroup_1_handle = _result_['device_group_handle']
 
 # Creating a topology on second port
@@ -210,10 +210,10 @@ _result_ = ixiangpf.multivalue_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('multivalue_config', _result_)
-    
+
 multivalue_1_handle = _result_['multivalue_handle']
 
-# Creating ethernet stack for the first Device Group 
+# Creating ethernet stack for the first Device Group
 print "Creating ethernet stack for the first Device Group"
 _result_ = ixiangpf.interface_config(
     protocol_name                = """Ethernet 1""",
@@ -223,11 +223,11 @@ _result_ = ixiangpf.interface_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', _result_)
-    
+
 ethernet_1_handle = _result_['ethernet_handle']
 
 # Creating ethernet stack for the second Device Group
-print "Creating ethernet for the second Device Group"   
+print "Creating ethernet for the second Device Group"
 _result_ = ixiangpf.interface_config(
     protocol_name                = """Ethernet 2""",
     protocol_handle              = deviceGroup_2_handle,
@@ -240,7 +240,7 @@ if _result_['status'] != IxiaHlt.SUCCESS:
 
 ethernet_2_handle = _result_['ethernet_handle']
 
-# Creating multivalue for IPv6                                 
+# Creating multivalue for IPv6
 print "Creating multivalue pattern for IPv6"
 _result_ = ixiangpf.multivalue_config(
     pattern                = "counter",
@@ -253,10 +253,10 @@ _result_ = ixiangpf.multivalue_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('multivalue_config', _result_)
-    
+
 multivalue_2_handle = _result_['multivalue_handle']
-    
-# Creating IPv6 Stack on top of Ethernet Stack for the first Device Group                                 
+
+# Creating IPv6 Stack on top of Ethernet Stack for the first Device Group
 print "Creating IPv6 Stack on top of Ethernet Stack for the first Device Group"
 _result_ = ixiangpf.interface_config(
     protocol_name                     = """IPv6 1""",
@@ -272,10 +272,10 @@ _result_ = ixiangpf.interface_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', _result_)
-    
+
 ipv6_1_handle = _result_['ipv6_handle']
 
-# Creating IPv6 Stack on top of Ethernet Stack for the second Device Group 
+# Creating IPv6 Stack on top of Ethernet Stack for the second Device Group
 print "Creating IPv6 2 stack on ethernet 2 stack for the second Device Group"
 _result_ = ixiangpf.interface_config(
     protocol_name                     = """IPv6 2""",
@@ -296,13 +296,13 @@ if _result_['status'] != IxiaHlt.SUCCESS:
 ipv6_2_handle = _result_['ipv6_handle']
 
 ################################################################################
-# Other protocol configurations                                                # 
+# Other protocol configurations                                                #
 ################################################################################
 
 # This will create MLD v2 Host Stack with IPTV disabled on top of IPv6 stack
 
 # Creating MLD Host Stack on top of IPv6 stack
-print "Creating MLD Host Stack on top of IPv6 stack in first topology"     
+print "Creating MLD Host Stack on top of IPv6 stack in first topology"
 _result_ = ixiangpf.emulation_mld_config(
     mode                                 = "create",
     handle                               = ipv6_1_handle,
@@ -311,7 +311,7 @@ _result_ = ixiangpf.emulation_mld_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_mld_config', _result_)
-    
+
 mldHost_1_handle = _result_['mld_host_handle']
 
 # Creating multivalue for group address
@@ -330,8 +330,8 @@ if _result_['status'] != IxiaHlt.SUCCESS:
 
 multivalue_3_handle = _result_['multivalue_handle']
 
-# Creating MLD Group Ranges 
-print "Creating MLD Group Ranges" 
+# Creating MLD Group Ranges
+print "Creating MLD Group Ranges"
 _result_ = ixiangpf.emulation_multicast_group_config(
     mode               = "create",
     ip_addr_start      = multivalue_3_handle,
@@ -341,11 +341,11 @@ _result_ = ixiangpf.emulation_multicast_group_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_multicast_group_config', _result_)
-    
+
 mldMcastIPv6GroupList_1_handle = _result_['multicast_group_handle']
 
 # Creating MLD Source Ranges
-print "Creating MLD Source Ranges"    
+print "Creating MLD Source Ranges"
 _result_ = ixiangpf.emulation_multicast_source_config(
     mode               = "create",
     ip_addr_start      = "2001:0:0:1:0:0:0:1",
@@ -355,11 +355,11 @@ _result_ = ixiangpf.emulation_multicast_source_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_multicast_source_config', _result_)
-    
+
 mldUcastIPv6SourceList_1_handle = _result_['multicast_source_handle']
 
 # This will create MLD v2 Querier Stack on top of IPv6 stack
-    
+
 # Creating MLD Group and Source Ranges in MLD Host stack
 print "Creating MLD Group and Source Ranges in MLD Host stack"
 _result_ = ixiangpf.emulation_mld_group_config(
@@ -392,15 +392,15 @@ _result_ = ixiangpf.emulation_mld_querier_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_mld_querier_config', _result_)
-    
+
 mldQuerier_1_handle = _result_['mld_querier_handle']
-    
+
 print "Waiting 05 seconds before starting protocol(s) ..."
 time.sleep(5)
 
 ############################################################################
 # Start MLD protocol                                                       #
-############################################################################    
+############################################################################
 print "Starting MLD Host on topology1"
 _result_ = ixiangpf.emulation_mld_control(
     handle = mldHost_1_handle,
@@ -423,7 +423,7 @@ time.sleep(30)
 ############################################################################
 # Retrieve protocol statistics                                             #
 ############################################################################
-print "Fetching MLD Host aggregated statistics"         
+print "Fetching MLD Host aggregated statistics"
 protostats = ixiangpf.emulation_mld_info(\
     handle = deviceGroup_1_handle,
     type   = 'host',
@@ -459,14 +459,14 @@ if mldLearnedInfo['status'] != IxiaHlt.SUCCESS:
 
 pprint(mldLearnedInfo)
 
-############################################################################ 
+############################################################################
 # Configure L2-L3 traffic                                                  #
 # 1. Endpoints : Source->IPv6, Destination->Multicast group                #
 # 2. Type      : Multicast IPv6 traffic                                    #
 # 3. Flow Group: Source Destination Endpoint Pair                          #
 # 4. Rate      : 1000 packets per second                                   #
 # 5. Frame Size: 512 bytes                                                 #
-# 6. Tracking  : Source Destination Endpoint Pair                          #	
+# 6. Tracking  : Source Destination Endpoint Pair                          #
 ############################################################################
 print "Configuring L2-L3 traffic"
 _result_ = ixiangpf.traffic_config(
@@ -483,8 +483,8 @@ _result_ = ixiangpf.traffic_config(
     emulation_multicast_rcvr_mcast_index        = [0, 0],
     name                                        = 'TI0-Traffic_Item_1',
     circuit_endpoint_type                       = 'ipv6',
-    transmit_distribution                       = 'srcDestEndpointPair0',                             
-    rate_pps                                    = 1000,                                    
+    transmit_distribution                       = 'srcDestEndpointPair0',
+    rate_pps                                    = 1000,
     frame_size                                  = 512,
     track_by                                    = 'trackingenabled0 sourceDestEndpointPair0'
 )
@@ -519,7 +519,7 @@ if trafficStats['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('traffic_stats', trafficStats)
 
 pprint(trafficStats)
-    
+
 ############################################################################
 # Sending leave using MLD host group handle                                #
 ############################################################################
@@ -588,7 +588,7 @@ if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_multicast_source_config', _result_)
 
 time.sleep(5)
- 
+
 ############################################################################
 # Making on the fly changes for MLD Querier                                #
 ############################################################################
@@ -605,7 +605,7 @@ _result_ = ixiangpf.emulation_mld_querier_config (
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_multicast_source_config', _result_)
 
-time.sleep(2)  
+time.sleep(2)
 
 ############################################################################
 # Applying changes one the fly                                             #
@@ -658,16 +658,15 @@ if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('traffic_control', _result_)
 
 time.sleep(5)
-    
+
 ############################################################################
 # Stop all protocols                                                       #
 ############################################################################
 print "Stopping all protocol(s) ..."
 stop = ixiangpf.test_control(action='stop_all_protocols')
 if stop['status'] != IxiaHlt.SUCCESS:
-    ErrorHandler('test_control', stop)	
+    ErrorHandler('test_control', stop)
 
 time.sleep(2)
-       
-print "!!! Test Script Ends !!!"
 
+print "!!! Test Script Ends !!!"

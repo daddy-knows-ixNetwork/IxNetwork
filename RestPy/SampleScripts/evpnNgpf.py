@@ -66,7 +66,7 @@ debugMode = False
 
 try:
     # LogLevel: none, info, warning, request, request_response, all
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin', 
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin',
                                SessionName=None, SessionId=None, ApiKey=None,
                                ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
@@ -244,4 +244,3 @@ except Exception as errMsg:
     print(traceback.print_exception())
     if 'session' in locals():
         session.Session.remove()
-

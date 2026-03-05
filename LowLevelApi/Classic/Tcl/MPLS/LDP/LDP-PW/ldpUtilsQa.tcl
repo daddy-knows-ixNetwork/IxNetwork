@@ -283,4 +283,3 @@ proc checkAllLdpStats { portList stat } {
     }
     after 2000
 }
-

@@ -97,7 +97,7 @@
 
 #       in connected Device Group .BGP EVPN-VPWS configured in chained device  #
 
-#       group along with Mac pools connected behind the chained Device Group.  # 
+#       group along with Mac pools connected behind the chained Device Group.  #
 
 # Script Flow:                                                                 #
 
@@ -107,7 +107,7 @@
 
 #    Configuration flow of the script is as follow:                            #
 
-#       i.    Adding of Ethernet and IP within both topologies,                # 
+#       i.    Adding of Ethernet and IP within both topologies,                #
 
 #       ii.   Adding and configuration of OSPF and LDP router over IP           #
 
@@ -153,7 +153,7 @@
 
 ################################################################################
 
-# Please ensure that PERL5LIB environment variable is set properly so that 
+# Please ensure that PERL5LIB environment variable is set properly so that
 
 # IxNetwork.pm module is available. IxNetwork.pm is generally available in
 
@@ -191,7 +191,7 @@ sub assignPorts {
 
 	my $vport2   = $my_resource[8];
 
-	
+
 
 	my $root = $ixNet->getRoot();
 
@@ -203,7 +203,7 @@ sub assignPorts {
 
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
 
-	
+
 
 	my $chassisObj2 = '';
 
@@ -223,7 +223,7 @@ sub assignPorts {
 
 	}
 
-	
+
 
 	my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
 
@@ -241,7 +241,7 @@ sub assignPorts {
 
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
 
-		
+
 
     $ixNet->commit();
 
@@ -261,7 +261,7 @@ my $ixTclPort   = '8999';
 
 my @ports       = (('10.216.104.208', '7', '1'), ('10.216.104.208', '8', '1'));
 
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 
 my $ixNet = new IxNetwork();
 
@@ -703,7 +703,7 @@ $ixNet->execute('createDefaultStack', $chainedDg2, 'macPools');
 
 
 
-# VPWS Service Instance Configuration 
+# VPWS Service Instance Configuration
 
 print("Changing default values of Ethernet Tag Id\n");
 
@@ -749,9 +749,9 @@ $ixNet->commit();
 
 # Adding MAC pool behind chained DG
 
-my $networkGroup3 = ($ixNet->getList($chainedDg1, 'networkGroup'))[0]; 
+my $networkGroup3 = ($ixNet->getList($chainedDg1, 'networkGroup'))[0];
 
-my $networkGroup4 = ($ixNet->getList($chainedDg2, 'networkGroup'))[0]; 
+my $networkGroup4 = ($ixNet->getList($chainedDg2, 'networkGroup'))[0];
 
 print("Changing name of MAC Pools");
 
@@ -839,7 +839,7 @@ foreach $statValueList (@rowvals) {
 
     foreach $statVal (@$statValueList) {
 
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 
 		$index = 0;
 
@@ -851,7 +851,7 @@ foreach $statValueList (@rowvals) {
 
         }
 
-    }    
+    }
 
 }
 
@@ -929,7 +929,7 @@ print("\n***************************************************\n");
 
 ################################################################################
 
-# 5. Configure L2-L3 traffic 
+# 5. Configure L2-L3 traffic
 
 ################################################################################
 
@@ -1041,7 +1041,7 @@ foreach $statValueList (@rowvals) {
 
     foreach $statVal (@$statValueList) {
 
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 
 		$index = 0;
 
@@ -1053,7 +1053,7 @@ foreach $statValueList (@rowvals) {
 
         }
 
-    }    
+    }
 
 }
 
@@ -1082,6 +1082,3 @@ sleep(5);
 $ixNet->execute('stopAllProtocols');
 
 print("!!! Test Script Ends !!!");
-
-
-

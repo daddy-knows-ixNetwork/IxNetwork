@@ -48,8 +48,8 @@
 #    This script intends to demonstrate how to use NGPF OSPFv2 API.            #
 #                                                                              #
 #    1. It will create 2 OSPFv2 topologies, each having an ipv4 network        #
-#       topology and loopback device group behind the network group(NG) with   # 
-#       loopback interface on it. A loopback device group(DG) behind network   # 
+#       topology and loopback device group behind the network group(NG) with   #
+#       loopback interface on it. A loopback device group(DG) behind network   #
 #       group is needed to support applib traffic.                             #
 #    2. Start the ospfv2 protocol.                                             #
 #    3. Retrieve protocol statistics.                                          #
@@ -71,7 +71,7 @@
 ################################################################################
 
 ################################################################################
-# Please ensure that PERL5LIB environment variable is set properly so that 
+# Please ensure that PERL5LIB environment variable is set properly so that
 # IxNetwork.pm module is available. IxNetwork.pm is generally available in
 # C:\<IxNetwork Install Path>\API\Perl
 ################################################################################
@@ -89,13 +89,13 @@ sub assignPorts {
 	my $port2    = $my_resource[6];
 	my $vport1   = $my_resource[7];
 	my $vport2   = $my_resource[8];
-	
+
 	my $root = $ixNet->getRoot();
 	my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-	
+
 	my $chassisObj2 = '';
 	if ($chassis1 ne $chassis2) {
 	    $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -105,7 +105,7 @@ sub assignPorts {
 	} else {
 	    $chassisObj2 = $chassisObj1;
 	}
-	
+
 	my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -114,7 +114,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-		
+
     $ixNet->commit();
 }
 
@@ -125,7 +125,7 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.205.28.84';
 my $ixTclPort   = '8071';
 my @ports       = (('10.205.28.63', '9', '1'), ('10.205.28.63', '9', '2'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
@@ -353,13 +353,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -413,7 +413,7 @@ sleep(5);
 
 ###############################################################################
 # 6. Retrieve protocol learned info again and compare with
-#    previously retrieved learned info.  
+#    previously retrieved learned info.
 ###############################################################################
 print("Fetching OSPFv2 learned info after enabling ospf external route type1\n");
 $ixNet->execute('getBasicLearnedInfo', $ospf1, '1');
@@ -432,7 +432,7 @@ foreach $v (@values) {
 print("***************************************************\n");
 
 ################################################################################
-# 7. Configure L2-L3 traffic 
+# 7. Configure L2-L3 traffic
 ################################################################################
 print ("Congfiguring L2-L3 Traffic Item\n");
 my $trafficItem1 = $ixNet->add(($ixNet->getRoot()).'/traffic', 'trafficItem');
@@ -490,7 +490,7 @@ $ixNet->setMultiAttribute($endpointSet2,
     '-ngpfFilters',           (''),
     '-trafficGroups',         (''),
     '-sources',               @source_app,
-    '-destinations',          @destin_app);    
+    '-destinations',          @destin_app);
 $ixNet->commit();
 $endpointSet2 = ($ixNet->remapIds($endpointSet2))[0];
 
@@ -563,13 +563,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 ###############################################################################
@@ -585,13 +585,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 #################################################################################
@@ -613,4 +613,3 @@ sleep(5);
 ################################################################################
 $ixNet->execute('stopAllProtocols');
 print("!!! Test Script Ends !!!");
-

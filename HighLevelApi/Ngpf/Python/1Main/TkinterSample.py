@@ -43,4 +43,3 @@ tcl.eval('puts "\nkeylprint: [KeylPrint stats]"')
 
 print '\nflow_stats: ', flow_stats
 tcl.eval('puts "\nFramesSent: [keylget stats flow.1.rx total_pkts]"')
-

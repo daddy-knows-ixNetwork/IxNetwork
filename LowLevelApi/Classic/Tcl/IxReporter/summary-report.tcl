@@ -110,7 +110,7 @@ ixNet setMultiAttrs [ixNet getRoot]/reporter/generate        \
     -outputFormat    html                                    \
     -outputPath      {c:\summaryReport.html}
 puts " -templatePath can be used to specify a custom template"
-    
+
 ixNet commit
 
 puts " saving summary results"
@@ -119,8 +119,8 @@ ixNet exec saveSummaryResults [ixNet getRoot]/reporter/saveResults
 while  {[ixNet getAttribute [ixNet getRoot]/reporter/saveResults -state] != "done"} {
     after  1000
 }
-    
-puts " generating report"    
+
+puts " generating report"
 ixNet exec generateReport [ixNet getRoot]/reporter/generate
 
 while  {[ixNet getAttribute [ixNet getRoot]/reporter/generate -state] != "done"} {
@@ -144,6 +144,3 @@ puts "[ixNet help [ixNet getRoot]/reporter/generate]"
 puts " "
 puts "ixNet help [ixNet getRoot]/reporter/saveResults"
 puts "[ixNet help [ixNet getRoot]/reporter/saveResults]"
-
-
-

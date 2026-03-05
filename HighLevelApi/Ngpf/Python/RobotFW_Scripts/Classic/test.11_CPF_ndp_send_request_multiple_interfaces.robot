@@ -19,7 +19,7 @@ test
 ################################################################################
 # START - Connect to the chassis and get port handles from the result
 ################################################################################
-	
+
 	${result} =  Connect  reset=1  device=${chassis}  ixnetwork_tcl_server=${client}:${client_api_port}  port_list=@{portlist}  tcl_server=${chassis}  username=ixiaHLTQA
 	${connect_status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${connect_status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
@@ -42,7 +42,7 @@ test
 #  Configure interfaces on second port
 ################################################################################
 	\	Log	Configuring ${intf_count} interfaces
-	\	${result} =  Interface Config  port_handle=@{portHandles}[1]  ipv6_intf_addr=3000:0::151  ipv6_prefix_length=64  autonegotiation=1  connected_count=${intf_count}  mode=config  speed=ether1000  ipv6_gateway=3000:0::1  
+	\	${result} =  Interface Config  port_handle=@{portHandles}[1]  ipv6_intf_addr=3000:0::151  ipv6_prefix_length=64  autonegotiation=1  connected_count=${intf_count}  mode=config  speed=ether1000  ipv6_gateway=3000:0::1
 	\	${interface_status} =  Get From Dictionary  ${result}  status
 	\	Run Keyword If  '${interface_status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 
@@ -61,7 +61,3 @@ test
 	${result} =  Interface Config  port_handle=@{portHandles}  mode=destroy
 	${interface_status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${interface_status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-		
-		
-		
-		

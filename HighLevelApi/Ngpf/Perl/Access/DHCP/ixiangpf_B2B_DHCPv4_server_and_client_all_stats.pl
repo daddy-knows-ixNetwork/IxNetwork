@@ -149,7 +149,7 @@ sub main {
 
 	# Create the client topology
 	print "\n\nCreating DHCPv4 clients...\n";
-	
+
 	my $client_dg_name = 'DHCPv4 Clients';
 	$_result_ = ixiangpf::topology_config({
 		port_handle				=>	\@topology_1_ports,
@@ -174,7 +174,7 @@ sub main {
 		dhcp_range_server_address	=>	'10.10.0.1',
 		use_rapid_commit			=>	'0',
         dhcp_range_use_first_server	=>	'1',
-        dhcp4_broadcast				=>	'0',		
+        dhcp4_broadcast				=>	'0',
 	});
 	@status_keys = ixiangpf::status_item_keys();
 	$command_status = ixiangpf::status_item('status');
@@ -184,10 +184,10 @@ sub main {
 	}
 
 	my $dhcp_clients = ixiangpf::status_item('dhcpv4client_handle');
-	
+
 	# Modify the client protocol options
 	print "\nUpdating DHCP client configurations...\n";
-	
+
     my $dhcpv4client_3_status = ixiangpf::emulation_dhcp_config ({
         handle                             => "/globals",
         mode                               => "create",
@@ -216,7 +216,7 @@ sub main {
 	if ($command_status != $ixiangpf::SUCCESS) {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
-	}	
+	}
 
 	# Modify the client stack
 	my $dhcp_clients_count = 100;
@@ -233,10 +233,10 @@ sub main {
 		return "FAILED - $error";
 	}
 	print "\nDONE creating and configuring DHCP clients.";
-	
+
 	# Create the server topology
 	print "\nCreating DHCP servers...\n";
-	
+
 	$_result_ = ixiangpf::topology_config({
 		port_handle        		=>	\@topology_2_ports,
 		topology_name			=>	'Server Topology',
@@ -252,7 +252,7 @@ sub main {
 
 	my $dg_2_handle = ixiangpf::status_item('device_group_handle');
 	my $t_2_handle = ixiangpf::status_item('topology_handle');
-	
+
     $_result_ = ixiangpf::multivalue_config ({
         pattern			=>	'random',
         nest_step		=>	'00.00.00.00.00.01',
@@ -265,23 +265,23 @@ sub main {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
 	}
-	
-    my $multivalue_handle = ixiangpf::status_item('multivalue_handle');	
-	
+
+    my $multivalue_handle = ixiangpf::status_item('multivalue_handle');
+
     $_result_ = ixiangpf::interface_config ({
         protocol_handle			=>	$dg_2_handle,
         ipv4_resolve_gateway	=>	'0',
         ipv4_manual_gateway_mac	=>	$multivalue_handle,
         intf_ip_addr			=>	'10.10.0.1',
 		intf_ip_addr_step		=>	'0.10.0.0',
-    });	
+    });
 	@status_keys = ixiangpf::status_item_keys();
 	$command_status = ixiangpf::status_item('status');
 	if ($command_status != $ixiangpf::SUCCESS) {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
 	}
-	
+
 	my $ipv4_handle = ixiangpf::status_item('ipv4_handle');
 
 	my $pool_start = '10.10.0.2';
@@ -313,10 +313,10 @@ sub main {
 	my $dhcp_servers = ixiangpf::status_item('dhcpv4server_handle');
 
 	print "\nDONE creating and configuring DHCP servers.";
-	
+
 	# Create a low level IxNetwork connection
 	print "\n\nChecking current configuration...\n";
-	
+
 	my $ixNetConnection = new IxNetwork();
 	if (index($ixNetServer,':') > 0) {
 		my @connect_options = split(/:/, $ixNetServer);
@@ -328,12 +328,12 @@ sub main {
 	# Check server IP pool values
 	my $objRef = $dhcp_servers . "/dhcp4ServerSessions";
 	print "\nLooking at $objRef";
-	
+
 	my $ip_pool_mv = $ixNetConnection->getAttribute($objRef, '-ipAddress');
-	
-	$objRef = $ip_pool_mv . "/counter";	
+
+	$objRef = $ip_pool_mv . "/counter";
 	print "\nLookg at $objRef";
-	
+
 	my $poolStart = $ixNetConnection->getAttribute($objRef, '-start');
 	my $poolStep = $ixNetConnection->getAttribute($objRef, '-step');
 	if ($poolStart ne $pool_start || $poolStep ne $pool_step) {
@@ -347,10 +347,10 @@ sub main {
 	}
 
 	print "\nDONE checking configuration.";
-	
+
 	# Start protocols
 	print "\n\nStarting protocols...\n";
-	
+
 	$_result_ = ixiangpf::test_control({
 		action	=>	'start_protocol',
 		handle	=>	$dhcp_servers,
@@ -360,8 +360,8 @@ sub main {
 	if ($command_status != $ixiangpf::SUCCESS) {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
-	}	
-	
+	}
+
 	$_result_ = ixiangpf::test_control({
 		action	=>	'start_protocol',
 		handle	=>	$dhcp_clients,
@@ -372,17 +372,17 @@ sub main {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
 	}
-	
+
 	print "\n\nSleeping for 30 seconds to allow the protocols to come up...";
-	
+
 	# Sleep for 10 seconds
 	sleep(30);
 
 	print "\nDONE waiting for protocol start.\n";
-	
+
 	# Get statistics
 	print "\n\nGetting statistics for DHCP stacks...\n";
-	
+
 	$_result_ = ixiangpf::emulation_dhcp_server_stats({
 		dhcp_handle			=>	$dhcp_servers,
 		action				=>	'collect',
@@ -394,7 +394,7 @@ sub main {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
 	}
-	
+
 	print "\nThe returned DHCPv4 server statistics are:\n";
 	my $server_stats = ixiangpf::get_result_hash();
 	ixiangpf::PrintHash($server_stats);
@@ -412,20 +412,20 @@ sub main {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
 	}
-	
+
 	print "\nThe aggragted DHCPv4 client statistics are:\n";
 	my $client_aggregate_stats = ixiangpf::get_result_hash();
 	ixiangpf::PrintHash($client_aggregate_stats);
 	print "\n";
-	
+
 	if ($client_aggregate_stats->{$client_dg_name}->{'aggregate'}->{'status'} ne 'started') {
 		return "FAILED - DHCP clients are not started.";
 	}
-	
+
 	if ($client_aggregate_stats->{$client_dg_name}->{'aggregate'}->{'currently_bound'} != $dhcp_clients_count ) {
 		return "FAILED - The numberof bound DHCP client sessions is incorrect. Expected $dhcp_clients_count ... got $client_aggregate_stats->{$client_dg_name}->{'aggregate'}->{'currently_bound'}";
 	}
-	
+
 	$_result_ = ixiangpf::emulation_dhcp_stats({
 		handle				=>	$dhcp_clients,
 		mode				=>	'session',
@@ -438,19 +438,19 @@ sub main {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
 	}
-	
+
 	print "\nThe per-session DHCPv4 client statistics are:\n";
 	my $client_session_stats = ixiangpf::get_result_hash();
 	ixiangpf::PrintHash($client_session_stats);
 	print "\n";
-	
+
 	my @client_session_keys = keys(%$client_session_stats);
 	my $expected_keys = $dhcp_clients_count + 1;
 	my $actual_key_count = scalar(@client_session_keys);
 	if ($actual_key_count != $expected_keys) {
 		return "FAILED - Per-session statistics were returned for an incorrect number of sessions. Expected $expected_keys ... got $actual_key_count";
 	}
-	
+
 	print "\nDONE getting DHCP statistics.\n";
 
 	# Stop all and clean up
@@ -466,7 +466,7 @@ sub main {
 	}
 
 	print "\n\nSleeping for 10 seconds to allow them to go down...";
-	
+
 	# Sleep for 10 seconds
 	sleep(10);
 
@@ -474,7 +474,7 @@ sub main {
 
 	# Remove all topologies
 	print "\n\nRemoving topologies...\n";
-	
+
 	$_result_ = ixiangpf::topology_config({
 		mode			=>	'destroy',
 		topology_handle	=>	$t_1_handle,
@@ -498,12 +498,12 @@ sub main {
 	}
 
 	print "\nDONE removing topologies.\n";
-	
+
 	# Clean up the session
 	print "\n\nPerforming final session cleanup...\n";
-	
+
 	$_result_ = ixiangpf::cleanup_session();
-	
+
 	print "\nSession cleanup completed.\n";
 
 	return "SUCCESS";
@@ -511,5 +511,3 @@ sub main {
 
 my $test_result = main(@ARGV);
 print "\nTest execution complete.\nStatus: $test_result\n";
-
-

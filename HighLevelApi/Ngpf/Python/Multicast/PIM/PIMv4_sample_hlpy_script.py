@@ -86,7 +86,7 @@ import time, re
 
 # Append paths to python APIs (Linux and Windows)
 
-# sys.path.append('/path/to/hltapi/library/common/ixiangpf/python') 
+# sys.path.append('/path/to/hltapi/library/common/ixiangpf/python')
 # sys.path.append('/path/to/ixnetwork/api/python')
 
 from ixiatcl import IxiaTcl
@@ -97,7 +97,7 @@ from ixiaerror import IxiaError
 ixiatcl = IxiaTcl()
 ixiahlt = IxiaHlt(ixiatcl)
 ixiangpf = IxiaNgpf(ixiahlt)
-    
+
 try:
 	ErrorHandler('', {})
 except (NameError,):
@@ -106,7 +106,7 @@ except (NameError,):
 	    err = ixiatcl.tcl_error_info()
 	    log = retval['log']
 	    additional_info = '> command: %s\n> tcl errorInfo: %s\n> log: %s' % (cmd, err, log)
-	    raise IxiaError(IxiaError.COMMAND_FAIL, additional_info)        
+	    raise IxiaError(IxiaError.COMMAND_FAIL, additional_info)
 
 # End Utilities ################################################################
 
@@ -137,7 +137,7 @@ connect_result = ixiangpf.connect(
 
 if connect_result['status'] != '1':
     ErrorHandler('connect', connect_result)
-    
+
 print " Printing connection result"
 pprint(connect_result)
 
@@ -150,18 +150,18 @@ ports = connect_result['vport_list'].split()
 ################################################################################
 
 # Creating a topology on first port
-print "Adding topology 1 on port 1" 
+print "Adding topology 1 on port 1"
 _result_ = ixiangpf.topology_config(
     topology_name      = """PIMv4 Topology 1""",
     port_handle        = ports[0],
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', _result_)
-    
+
 topology_1_handle = _result_['topology_handle']
 
-# Creating a device group in topology 
-print "Creating device group 1 in topology 1"    
+# Creating a device group in topology
+print "Creating device group 1 in topology 1"
 _result_ = ixiangpf.topology_config(
     topology_handle              = topology_1_handle,
     device_group_name            = """Device Group 1""",
@@ -170,7 +170,7 @@ _result_ = ixiangpf.topology_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', _result_)
-    
+
 deviceGroup_1_handle = _result_['device_group_handle']
 
 # Creating a topology on second port
@@ -201,7 +201,7 @@ deviceGroup_2_handle = _result_['device_group_handle']
 #  Configure protocol interfaces                                               #
 ################################################################################
 
-# Creating ethernet stack for the first Device Group 
+# Creating ethernet stack for the first Device Group
 print "Creating ethernet stack for the first Device Group"
 _result_ = ixiangpf.interface_config(
     protocol_name                = """Ethernet 1""",
@@ -212,7 +212,7 @@ _result_ = ixiangpf.interface_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', _result_)
-    
+
 ethernet_1_handle = _result_['ethernet_handle']
 
 # Creating ethernet stack for the second Device Group
@@ -229,7 +229,7 @@ if _result_['status'] != IxiaHlt.SUCCESS:
 
 ethernet_2_handle = _result_['ethernet_handle']
 
-# Creating IPv4 Stack on top of Ethernet Stack for the first Device Group                                 
+# Creating IPv4 Stack on top of Ethernet Stack for the first Device Group
 print "Creating IPv4 Stack on top of Ethernet Stack for the first Device Group"
 _result_ = ixiangpf.interface_config(
     protocol_name                     = """IPv4 1""",
@@ -245,10 +245,10 @@ _result_ = ixiangpf.interface_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', _result_)
-    
+
 ipv4_1_handle = _result_['ipv4_handle']
 
-# Creating IPv4 Stack on top of Ethernet Stack for the second Device Group 
+# Creating IPv4 Stack on top of Ethernet Stack for the second Device Group
 print "Creating IPv4 2 stack on ethernet 2 stack for the second Device Group"
 _result_ = ixiangpf.interface_config(
     protocol_name                     = """IPv4 1""",
@@ -269,7 +269,7 @@ ipv4_2_handle = _result_['ipv4_handle']
 
 
 ################################################################################
-# Other protocol configurations                                                # 
+# Other protocol configurations                                                #
 ################################################################################
 
 # This will Create PIMv4 Stack on top of IPv4 Stack of Topology1
@@ -280,10 +280,10 @@ _result_ = ixiangpf.emulation_pim_config(
 	handle                         = ipv4_1_handle,
 	ip_version                     = "4",
 	)
-		
+
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_pim_config', _result_)
-	
+
 pimV4Interface_1_handle = _result_['pim_v4_interface_handle']
 
 #Creating Multicast Group address
@@ -297,12 +297,12 @@ _result_ = ixiangpf.emulation_multicast_group_config(
 	)
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_multicast_group_config', _result_)
-	
+
 pimV4JoinPruneList_1_handle_group = _result_['multicast_group_handle']
-        
+
 #Creating Multicast Source address
 
-print "Creating Multicast Source address"	
+print "Creating Multicast Source address"
 _result_ = ixiangpf.emulation_multicast_source_config(
 	mode               = "create",
 	ip_addr_start      = "0.0.0.1",
@@ -310,11 +310,11 @@ _result_ = ixiangpf.emulation_multicast_source_config(
 	)
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_multicast_source_config', _result_)
-	
+
 pimV4JoinPruneList_1_handle_source = _result_['multicast_source_handle']
-	
+
 #Creating PIM Join-Prune List
-print "Creating Join Prune List"	
+print "Creating Join Prune List"
 _result_ = ixiangpf.emulation_pim_group_config(
 	mode                               = "create",
 	session_handle                     = pimV4Interface_1_handle,
@@ -337,12 +337,12 @@ _result_ = ixiangpf.emulation_pim_group_config(
 	)
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_pim_group_config', _result_)
-	
+
 pimV4JoinPruneList_1_handle = _result_['pim_v4_join_prune_handle']
- 
+
 #Creating Multicast Group address
 
-print "Creating Multicast Group address" 
+print "Creating Multicast Group address"
 _result_ = ixiangpf.emulation_multicast_group_config(
 	mode               = "create",
 	ip_addr_start      = "225.0.0.0",
@@ -350,12 +350,12 @@ _result_ = ixiangpf.emulation_multicast_group_config(
 	)
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_multicast_group_config', _result_)
-	
+
 pimV4SourcesList_1_handle_group = _result_['multicast_group_handle']
- 
+
 #Creating Multicast Source address
 
-print "Creating Multicast Source address" 
+print "Creating Multicast Source address"
 _result_ = ixiangpf.emulation_multicast_source_config(
 	mode               = "create",
 	ip_addr_start      = "0.0.0.1",
@@ -364,12 +364,12 @@ _result_ = ixiangpf.emulation_multicast_source_config(
 	)
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_multicast_source_config', _result_)
-	
+
 pimV4SourcesList_1_handle_source = _result_['multicast_source_handle']
-	
+
 #Creating PIM Source List
- 
-print "Creating PIM Source List"  
+
+print "Creating PIM Source List"
 _result_ = ixiangpf.emulation_pim_group_config(
 	mode                               = "create",
 	session_handle                     = pimV4Interface_1_handle,
@@ -389,12 +389,12 @@ _result_ = ixiangpf.emulation_pim_group_config(
 	)
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_pim_group_config', _result_)
-	
-pimV4SourcesList_1_handle = _result_['pim_v4_source_handle']
-  
-#Creating Group Address for Candidate RP 
 
-print "Creating Group Address for Candidate RP" 
+pimV4SourcesList_1_handle = _result_['pim_v4_source_handle']
+
+#Creating Group Address for Candidate RP
+
+print "Creating Group Address for Candidate RP"
 _result_ = ixiangpf.emulation_multicast_group_config(
 	mode               = "create",
 	ip_addr_start      = "225.0.0.0",
@@ -403,12 +403,12 @@ _result_ = ixiangpf.emulation_multicast_group_config(
 	)
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_multicast_group_config', _result_)
-	
+
 pimV4CandidateRPsList_1_handle = _result_['multicast_group_handle']
-	
+
 #Creating PIM Candidate RP List
-  
-print "Creating PIM Candidate RP List"  
+
+print "Creating PIM Candidate RP List"
 _result_ = ixiangpf.emulation_pim_group_config(
 	mode                       = "create",
 	session_handle             = pimV4Interface_1_handle,
@@ -428,9 +428,9 @@ _result_ = ixiangpf.emulation_pim_group_config(
 	)
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_pim_group_config', _result_)
-	
+
 pimV4CandidateRPsList_1_handle = _result_['pim_v4_candidate_rp_handle']
-	
+
 # Creating and Adding IPv4-prefix pool under Network Group1
 
 print "Creating ipv4 prefix network address"
@@ -445,10 +445,10 @@ _result_ = ixiangpf.multivalue_config(
 	)
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('multivalue_config', _result_)
-	
+
 multivalue_2_handle = _result_['multivalue_handle']
 
-print "Creating and Adding IPv4-prefix pool under Network Group1"	
+print "Creating and Adding IPv4-prefix pool under Network Group1"
 _result_ = ixiangpf.network_group_config(
 	protocol_handle                      = deviceGroup_1_handle,
 	protocol_name                        = """Network Group 1""",
@@ -462,13 +462,13 @@ _result_ = ixiangpf.network_group_config(
 	)
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('network_group_config', _result_)
-	
+
 networkGroup_1_handle = _result_['network_group_handle']
 ipv4PrefixPools_1_handle = _result_['ipv4_prefix_pools_handle']
-	                 
+
 # This will Create PIMv4 Stack on top of IPv4 Stack of Topology1
 
-print "Creating PIMv4 Stack on top of IPv4 Stack of Topology2"	 
+print "Creating PIMv4 Stack on top of IPv4 Stack of Topology2"
 _result_ = ixiangpf.emulation_pim_config(
 	mode                           = "create",
 	handle                         = ipv4_2_handle,
@@ -476,12 +476,12 @@ _result_ = ixiangpf.emulation_pim_config(
 	)
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_pim_config', _result_)
-	
+
 pimV4Interface_2_handle = _result_['pim_v4_interface_handle']
- 
+
 #Creating Multicast Group address
 
-print "Creating Multicast Group address" 
+print "Creating Multicast Group address"
 _result_ = ixiangpf.emulation_multicast_group_config(
 	mode               = "create",
 	ip_addr_start      = "226.0.0.0",
@@ -490,12 +490,12 @@ _result_ = ixiangpf.emulation_multicast_group_config(
 	)
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_multicast_group_config', _result_)
-	
+
 pimV4JoinPruneList_5_handle_group = _result_['multicast_group_handle']
-	
+
 #Creating Multicast Source address
 
-print "Creating Multicast Source address"       
+print "Creating Multicast Source address"
 _result_ = ixiangpf.emulation_multicast_source_config(
 	mode               = "create",
 	ip_addr_start      = "0.0.0.1",
@@ -503,12 +503,12 @@ _result_ = ixiangpf.emulation_multicast_source_config(
 	)
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_multicast_source_config', _result_)
-	
+
 pimV4JoinPruneList_5_handle_source = _result_['multicast_source_handle']
-	
+
 #Creating PIM Join Prune List
 
-print "Creating PIM Join Prune List"       
+print "Creating PIM Join Prune List"
 _result_ = ixiangpf.emulation_pim_group_config(
 	mode                               = "create",
 	session_handle                     = pimV4Interface_2_handle,
@@ -531,12 +531,12 @@ _result_ = ixiangpf.emulation_pim_group_config(
 	)
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_pim_group_config', _result_)
-	
+
 pimV4JoinPruneList_2_handle = _result_['pim_v4_join_prune_handle']
 
-#Creating Group address for Join-Prune list 
+#Creating Group address for Join-Prune list
 
-print "Creating Group address for Join-Prune list"       
+print "Creating Group address for Join-Prune list"
 _result_ = ixiangpf.emulation_multicast_group_config(
 	mode               = "create",
 	ip_addr_start      = "225.0.0.0",
@@ -544,12 +544,12 @@ _result_ = ixiangpf.emulation_multicast_group_config(
 	)
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_multicast_group_config', _result_)
-	
+
 pimV4SourcesList_5_handle_group = _result_['multicast_group_handle']
 
-#Creating Source address for Join-Prune list 
+#Creating Source address for Join-Prune list
 
-print "Creating Source address for Join-Prune list"         
+print "Creating Source address for Join-Prune list"
 _result_ = ixiangpf.emulation_multicast_source_config(
 	mode               = "create",
 	ip_addr_start      = "0.0.0.1",
@@ -558,12 +558,12 @@ _result_ = ixiangpf.emulation_multicast_source_config(
 	)
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_multicast_source_config', _result_)
-	
+
 pimV4SourcesList_5_handle_source = _result_['multicast_source_handle']
-	
+
 #Creating PIM Source List
- 
-print "Creating PIM Source List" 
+
+print "Creating PIM Source List"
 _result_ = ixiangpf.emulation_pim_group_config(
 	mode                               = "create",
 	session_handle                     = pimV4Interface_2_handle,
@@ -583,7 +583,7 @@ _result_ = ixiangpf.emulation_pim_group_config(
 	)
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_pim_group_config', _result_)
-	
+
 pimV4SourcesList_5_handle = _result_['pim_v4_source_handle']
 
 #Creating Group Address for Candidate RP
@@ -597,12 +597,12 @@ _result_ = ixiangpf.emulation_multicast_group_config(
 	)
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_multicast_group_config', _result_)
-	
+
 pimV4CandidateRPsList_3_handle = _result_['multicast_group_handle']
-	
-#Creating PIM Candidate RP List      
- 
-print "Creating PIM Candidate RP List" 
+
+#Creating PIM Candidate RP List
+
+print "Creating PIM Candidate RP List"
 _result_ = ixiangpf.emulation_pim_group_config(
 	mode                       = "create",
 	session_handle             = pimV4Interface_2_handle,
@@ -622,12 +622,12 @@ _result_ = ixiangpf.emulation_pim_group_config(
 	)
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_pim_group_config', _result_)
-	
+
 pimV4CandidateRPsList_3_handle = _result_['pim_v4_candidate_rp_handle']
-	
+
 # Creating and Adding IPv4-prefix pool under Network Group2
 
-print "Creating ipv4 prefix network address"	
+print "Creating ipv4 prefix network address"
 _result_ = ixiangpf.multivalue_config(
 	pattern                = "counter",
 	counter_start          = "201.1.0.0",
@@ -639,10 +639,10 @@ _result_ = ixiangpf.multivalue_config(
 	)
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('multivalue_config', _result_)
-	
+
 multivalue_4_handle = _result_['multivalue_handle']
 
-print "Creating and Adding IPv4-prefix pool under Network Group1"    
+print "Creating and Adding IPv4-prefix pool under Network Group1"
 _result_ = ixiangpf.network_group_config(
 	protocol_handle                      = deviceGroup_2_handle,
 	protocol_name                        = """Network Group 2""",
@@ -656,17 +656,17 @@ _result_ = ixiangpf.network_group_config(
 	)
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('network_group_config', _result_)
-	
+
 networkGroup_2_handle = _result_['network_group_handle']
 ipv4PrefixPools_2_handle = _result_['ipv4_prefix_pools_handle']
-	
+
 ############################################################################
 # Start PIM protocol                                                       #
 ############################################################################
-	
+
 print "Waiting 5 seconds before starting protocol(s) ..."
 time.sleep(5)
-	
+
 print "Starting all protocol(s) ..."
 
 _result_ = ixiahlt.test_control(action='start_all_protocols')
@@ -674,12 +674,12 @@ _result_ = ixiahlt.test_control(action='start_all_protocols')
 # Check status
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('test_control', _result_)
-	
+
 print "Waiting for 60 Seconds"
 time.sleep(60)
-	
+
 ############################################################################
-# Retrieve protocol statistics                                             # 
+# Retrieve protocol statistics                                             #
 ############################################################################
 print "fetching pimv4 aggregated statistics"
 protostats = ixiangpf.emulation_pim_info(\
@@ -689,79 +689,79 @@ protostats = ixiangpf.emulation_pim_info(\
 
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_pim_info', _result_)
-	
+
 pprint(protostats)
-    	
+
 ############################################################################
 # Retrieve protocol learned info                                           #
 ############################################################################
 print "Fetching pim learned info"
 protostats = ixiangpf.emulation_pim_info(\
-    handle = pimV4Interface_1_handle,                                               
+    handle = pimV4Interface_1_handle,
     mode   = 'learned_crp',
 	)
 
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_pim_info', _result_)
-  
+
 pprint(protostats)
-	
+
 ############################################################################
 # Modifying the GroupRange Type from *G to SG and Enabling Bootstrap       #
 ############################################################################
 
 #Modifying the GroupRange Type from *G to SG for Topology1
-print "Modifying the GroupRange Type from *G to SG for Topology1" 
+print "Modifying the GroupRange Type from *G to SG for Topology1"
 
-_result_ = ixiangpf.emulation_pim_group_config(                                     
-    handle            = pimV4JoinPruneList_1_handle,                                
-    mode              = 'modify',                                                     
+_result_ = ixiangpf.emulation_pim_group_config(
+    handle            = pimV4JoinPruneList_1_handle,
+    mode              = 'modify',
     group_range_type  = 'sourcetogroup',
 	)
-		
+
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_pim_group_config', _result_)
-	
+
 #Modifying the GroupRange Type from *G to SG for Topology2
 print "Modifying the GroupRange Type from *G to SG for Topology2"
- 
-_result_ = ixiangpf.emulation_pim_group_config(                                     
-    handle            = pimV4JoinPruneList_2_handle,                                
-    mode              = 'modify',                                                      
+
+_result_ = ixiangpf.emulation_pim_group_config(
+    handle            = pimV4JoinPruneList_2_handle,
+    mode              = 'modify',
     group_range_type  = 'sourcetogroup',
 	)
-	
+
 if _result_['status'] != IxiaHlt.SUCCESS:
 	ErrorHandler('emulation_pim_group_config', _result_)
 
-#Enabling Bootstrap for Topology1   	
+#Enabling Bootstrap for Topology1
 print "Enabling Bootstrap for Topology1"
 
 _result_ = ixiangpf.emulation_pim_config(
-    handle            = pimV4Interface_1_handle,                                    
+    handle            = pimV4Interface_1_handle,
     mode              = 'modify',
-    ip_version        = '6',                                                      
+    ip_version        = '6',
     bootstrap_enable  =  '1',
 	)
-		
+
 if _result_['status'] != IxiaHlt.SUCCESS:
 	ErrorHandler('emulation_pim_config', _result_)
-	
+
 #Enabling Bootstrap and Modifying Priority for Topology2
 print "Enabling Bootstrap and Modifying Priority for Topology2"
 
 _result_ = ixiangpf.emulation_pim_config(\
-    handle            = pimV4Interface_2_handle,                                    
+    handle            = pimV4Interface_2_handle,
     mode              = 'modify',
-    ip_version        = '6',                                                      
-    bootstrap_enable  = '1',                                              
+    ip_version        = '6',
+    bootstrap_enable  = '1',
 	bootstrap_priority = '74',
 	)
-		
+
 if _result_['status'] != IxiaHlt.SUCCESS:
 	ErrorHandler('emulation_pim_config', _result_)
 
-#Applying changes on the fly		
+#Applying changes on the fly
 print "Applying changes on the fly"
 
 applyChanges = ixiangpf.test_control(
@@ -782,32 +782,32 @@ time.sleep(5)
 if _result_['status'] != IxiaHlt.SUCCESS:
         ErrorHandler('test_control', _result_)
 
-    
+
 print "Waiting for 60 seconds"
 time.sleep(60)
-	
+
 ############################################################################
 # Retrieve protocol learned info again after RangeType modification        #
 ############################################################################
 print "Fetching pim learned info"
 protostats = ixiangpf.emulation_pim_info(\
-    handle = pimV4Interface_1_handle,                                               
+    handle = pimV4Interface_1_handle,
     mode   = 'learned_crp',
 	)
 
 if protostats['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_pim_info', protostats)
 
-pprint(protostats)  
-	
-############################################################################ 
+pprint(protostats)
+
+############################################################################
 # Configure L2-L3 traffic                                                  #
 # 1. Endpoints : Source->IPv4, Destination->Multicast group                #
 # 2. Type      : Multicast IPv4 traffic                                    #
 # 3. Flow Group: On IPv4 Destination Address                               #
 # 4. Rate      : 1000 packets per second                                   #
 # 5. Frame Size: 512 bytes                                                 #
-# 6. Tracking  : IPv4 Destination Address                                  #	
+# 6. Tracking  : IPv4 Destination Address                                  #
 ############################################################################
 
 print "Configuring L2-L3 traffic"
@@ -819,15 +819,15 @@ _result_ = ixiangpf.traffic_config(
     emulation_dst_handle                        = ipv4PrefixPools_2_handle,
     name                                        = 'Traffic_Item_1',
     circuit_endpoint_type                       = 'ipv4',
-    transmit_distribution                       = 'ipv4DestIp0',                             
-    rate_pps                                    = 1000,                                    
+    transmit_distribution                       = 'ipv4DestIp0',
+    rate_pps                                    = 1000,
     frame_size                                  = 512,
     track_by                                    = 'trackingenabled0 ipv4DestIp0'
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('traffic_config', _result_)
-	
-	
+
+
 ############################################################################
 #  Start L2-L3 traffic configured earlier                                  #
 ############################################################################
@@ -842,9 +842,9 @@ if _result_['status'] != IxiaHlt.SUCCESS:
 
 print "Let the traffic run for 20 seconds ..."
 time.sleep(20)
-	
-	   
-############################################################################                                 
+
+
+############################################################################
 # Retrieve L2-L3 traffic stats                                             #
 ############################################################################
 print "Retrieving L2-L3 traffic stats"
@@ -857,7 +857,7 @@ if trafficStats['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('traffic_stats', trafficStats)
 
 pprint(trafficStats)
-  
+
 ############################################################################
 # Stop L2-L3 traffic started earlier                                       #
 ############################################################################
@@ -872,17 +872,15 @@ if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('traffic_control', _result_)
 
 time.sleep(5)
-   
+
 ############################################################################
 # Stop all protocols                                                       #
 ############################################################################
 print "Stopping all protocol(s) ..."
 stop = ixiangpf.test_control(action='stop_all_protocols')
 if stop['status'] != IxiaHlt.SUCCESS:
-    ErrorHandler('test_control', stop)	
+    ErrorHandler('test_control', stop)
 
 time.sleep(2)
-       
+
 print "!!! Test Script Ends !!!"
-	
-	

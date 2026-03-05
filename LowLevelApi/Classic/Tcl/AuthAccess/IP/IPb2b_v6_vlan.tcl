@@ -52,36 +52,36 @@
 
 
 # Define the chassis, card and ports.
-set hostname xm12-automation														;# set the chassis name/ip													
-set card 1																			;# set card number																	
-set port1 1																			;# set port number (first port)																	
-set port2 2																			;# set port number (second port)																
+set hostname xm12-automation														;# set the chassis name/ip
+set card 1																			;# set card number
+set port1 1																			;# set port number (first port)
+set port2 2																			;# set port number (second port)
 
 # load the IxNetwork TCL files
-package require IxTclNetwork														;# access TCL Package													
+package require IxTclNetwork														;# access TCL Package
 
 # connect to the IxNetwork TCL Server running on a Windows PC
-ixNet connect localhost																;# connect ot IxNetwork															
+ixNet connect localhost																;# connect ot IxNetwork
 
 # create a new configuration file
-ixNet rollback																		;# abandon all changes since last commit command																						
+ixNet rollback																		;# abandon all changes since last commit command
 ixNet exec newConfig																;# load a new (empty) IxNetwork configuration
 
 # create the root object and add the chassis to it
-set root [ixNet getRoot] 															;# create root object												
-set chassisObject [ixNet add $root/availableHardware chassis] 						;# create a chassis object					
-ixNet setAttribute $chassisObject -hostname $hostname 								;# assign the name of the physical chassis								
-ixNet commit																		;# save the config and map them to local IDs													
-set chassisObject [ixNet remapIds $chassisObject]									;# replace local references with permanent IxNetwork server-based object references							
+set root [ixNet getRoot] 															;# create root object
+set chassisObject [ixNet add $root/availableHardware chassis] 						;# create a chassis object
+ixNet setAttribute $chassisObject -hostname $hostname 								;# assign the name of the physical chassis
+ixNet commit																		;# save the config and map them to local IDs
+set chassisObject [ixNet remapIds $chassisObject]									;# replace local references with permanent IxNetwork server-based object references
 
 # add virtual ports and map to real ports
-set vport1 [ixNet add $root vport]													;# create first virtual port												
-set vport2 [ixNet add $root vport]													;# create second virtual port												
-ixNet setAttribute $vport1 -connectedTo $chassisObject/card:${card}/port:${port1}	;# first physical port used in test	
+set vport1 [ixNet add $root vport]													;# create first virtual port
+set vport2 [ixNet add $root vport]													;# create second virtual port
+ixNet setAttribute $vport1 -connectedTo $chassisObject/card:${card}/port:${port1}	;# first physical port used in test
 ixNet setAttribute $vport2 -connectedTo $chassisObject/card:${card}/port:${port2}	;# second physical port used in test
-ixNet commit																		;# save the config and map them to local IDs						
+ixNet commit																		;# save the config and map them to local IDs
 set vport1 [ixNet remapIds $vport1]													;# replace local references with permanent IxNetwork server-based object references
-set vport2 [ixNet remapIds $vport2]													
+set vport2 [ixNet remapIds $vport2]
 
 # add ethernet layer
 set ethernet1 [ixNet add $vport1/protocolStack ethernet]							;# create ethernet layer for the first port

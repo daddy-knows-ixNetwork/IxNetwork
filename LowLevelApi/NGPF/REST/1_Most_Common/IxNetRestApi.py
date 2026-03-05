@@ -812,5 +812,3 @@ class Connect(object):
 
     def placeholder():
         pass
-
-

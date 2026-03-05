@@ -34,7 +34,7 @@ port_2 = '1/2/1'
 def VerifyProtocolSessionStatusUpNgpfHlPy(protocolHandle, totalTime=60):
     '''
     Pass in a protocol handle to verify for sessions status 'UP'.
-    
+
     '''
 
     for timer in range(0, totalTime):
@@ -52,7 +52,7 @@ def VerifyProtocolSessionStatusUpNgpfHlPy(protocolHandle, totalTime=60):
         if timer < totalTime and currentSessionUp != totalSessions:
             time.sleep(1)
             continue
-        
+
         if timer < totalTime and currentSessionUp == totalSessions:
             return 0
 
@@ -285,4 +285,3 @@ print_dict(traffic_stats)
 
 print '\n--- RX:', traffic_stats['flow']['1']['rx']['total_pkts']
 sys.exit()
-

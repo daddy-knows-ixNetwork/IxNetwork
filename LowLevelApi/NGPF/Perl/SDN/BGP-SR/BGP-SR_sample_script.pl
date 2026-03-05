@@ -62,7 +62,7 @@
 #    8. Retrieve L2-L3 traffic stats.                                          #
 #    9. Stop L2-L3 traffic.                                                    #
 #   10. Stop all protocols.                                                    #
-#                                                                              # 
+#                                                                              #
 # Ixia Software:                                                               #
 #    IxOS      8.10 EA                                                         #
 #    IxNetwork 8.10 EA                                                         #
@@ -88,13 +88,13 @@ sub assignPorts {
 	my $port2    = $my_resource[6];
 	my $vport1   = $my_resource[7];
 	my $vport2   = $my_resource[8];
-	
+
 	my $root = $ixNet->getRoot();
 	my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-	
+
 	my $chassisObj2 = '';
 	if ($chassis1 ne $chassis2) {
 	    $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -104,7 +104,7 @@ sub assignPorts {
 	} else {
 	    $chassisObj2 = $chassisObj1;
 	}
-	
+
 	my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -113,7 +113,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-		
+
     $ixNet->commit();
 }
 
@@ -124,7 +124,7 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.216.108.113';
 my $ixTclPort   = '5555';
 my @ports       = (('xg12-regr', '1', '5'), ('xg12-regr', '1', '6'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
@@ -288,13 +288,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -333,7 +333,7 @@ foreach $v (@values) {
 print("***************************************************\n");
 
 ################################################################################
-# Configure L2-L3 traffic                                                      #    
+# Configure L2-L3 traffic                                                      #
 ################################################################################
 print ("Congfigure L2-L3 Traffic Item\n");
 my $trafficItem1 = $ixNet->add(($ixNet->getRoot()).'/traffic', 'trafficItem');
@@ -367,7 +367,7 @@ $ixNet->setMultiAttribute($trafficItem1.'/tracking',
 $ixNet->commit();
 
 ###############################################################################
-# Apply and start L2/L3 traffic                                               #  
+# Apply and start L2/L3 traffic                                               #
 ###############################################################################
 print("Applying L2/L3 traffic\n");
 $ixNet->execute('apply', ($ixNet->getRoot()).'/traffic');
@@ -389,13 +389,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 #################################################################################

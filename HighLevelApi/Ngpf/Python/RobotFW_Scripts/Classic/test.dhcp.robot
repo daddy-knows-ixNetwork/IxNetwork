@@ -52,7 +52,7 @@ test
 	${dhcp_server_handle_new} =  Get From Dictionary  ${dhcp_server_handle}  dhcp_handle
 	${dhcp_server_status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${dhcp_server_status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
+
 ################################################################################
 # START DHCP
 ################################################################################
@@ -66,14 +66,14 @@ test
 	Run Keyword If  '${control_status0}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	Sleep  15s
 ################################################################################
-#             GET DHCP STATISTICS                
+#             GET DHCP STATISTICS
 ################################################################################
 	${result} =  Emulation Dhcp Stats  port_handle=@{portHandles}[0]  version=ixnetwork
 	${dhcp_stats_0_status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${dhcp_stats_0_status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${get_stats} =  Get Dictionary Values  ${result}
 	Log Many  ${get_stats}
-	
+
 	${result} =  Emulation Dhcp Server Stats  port_handle=@{portHandles}[1]  action=collect  ip_version=6
 	${dhcp_stats_1_status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${dhcp_stats_1_status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
@@ -102,7 +102,7 @@ test
 	Run Keyword If  '${control_status0}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	Sleep  15s
 ################################################################################
-#             GET DHCP STATISTICS                
+#             GET DHCP STATISTICS
 ################################################################################
 
 	${result} =  Emulation Dhcp Stats  port_handle=@{portHandles}[0]  version=ixnetwork
@@ -110,7 +110,7 @@ test
 	Run Keyword If  '${dhcp_stats_0_status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${get_stats} =  Get Dictionary Values  ${result}
 	Log Many  ${get_stats}
-	
+
 	${result} =  Emulation Dhcp Server Stats  port_handle=@{portHandles}[1]  action=collect  ip_version=6
 	${dhcp_stats_1_status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${dhcp_stats_1_status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"

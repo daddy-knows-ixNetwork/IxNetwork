@@ -58,9 +58,9 @@
 
 #    About Topology:                                                            #
 
-#       Within topology both Sender and Receiver PEs are configured, each behind# 
+#       Within topology both Sender and Receiver PEs are configured, each behind#
 
-#    Ingress and Egress P routers respectively. P2MP tunnels used in topology is# 
+#    Ingress and Egress P routers respectively. P2MP tunnels used in topology is#
 
 #	 RSVPTE-P2MP. Both I-PMSI and S-PMSI tunnels for IPv4 & Ipv6 multicast  #
 
@@ -94,7 +94,7 @@
 
 #         vii.    Adding mVRF Route Range(both IPv4 and v6) as Sender Site      #
 
-#                     behind Sender PE Router and as Receiver Site behind       # 
+#                     behind Sender PE Router and as Receiver Site behind       #
 
 #                     Receiver PE Router                                        #
 
@@ -1734,7 +1734,7 @@ ixNet setMultiAttribute $trafficItem1/tracking -trackBy \
 
     [list sourceDestEndpointPair0 mplsFlowDescriptor0 trackingenabled0 mplsMplsLabelValue0 ipv4DestIp0 ipv4SourceIp0]
 
-ixNet commit	
+ixNet commit
 
 
 
@@ -1881,4 +1881,3 @@ after 5000
 ixNet exec stopAllProtocols
 
 puts "!!! Test Script Ends !!!"
-

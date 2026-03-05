@@ -68,7 +68,7 @@
 #    5. Deactivate the NTP client and  apply change on the fly                 #
 #    6. Retrieve protocol protocol stat  again.                                #
 #    7. Stop all protocols.                                                    #
-#                                                                              #                                                                                
+#                                                                              #
 # Ixia Software:                                                               #
 #    IxOS      8.50 EB                                                         #
 #    IxNetwork 8.50 EB                                                         #
@@ -98,7 +98,7 @@ ixNet exec newConfig
 ################################################################################
 # 1. Protocol configuration section. Configure MPLSOAM as per the description
 #    give above
-################################################################################ 
+################################################################################
 puts "Adding 1 vport"
 ixNet add [ixNet getRoot] vport
 ixNet commit

@@ -5,7 +5,7 @@
 # 1> Load a config file
 # 2> Do a scriptgen on the config
 #       You could generate a tcl, perl or python file.
-# 
+#
 # The script of our entire configuration will be saved on the path
 # where you executed the script.  You could change the filename and path
 # as well.
@@ -44,10 +44,10 @@ ixNet setMultiAttribute /globals/scriptgen \
     -linePerAttribute       true           \
     -includeConnect         true           \
     -includeTestComposer    false
-#-connectHostname        
-#-connectPort            
-#-connectVersion  
-       
+#-connectHostname
+#-connectPort
+#-connectVersion
+
 ixNet setMultiAttribute /globals/scriptgen/ixNetCodeOptions \
     -includeTrafficStack       true                         \
     -includeTrafficFlowGroup   true                         \

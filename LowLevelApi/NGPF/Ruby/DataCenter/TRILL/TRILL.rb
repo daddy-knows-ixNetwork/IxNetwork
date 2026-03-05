@@ -96,7 +96,7 @@ def assignPorts (ixNet, realPort1, realPort2)
          @ixNet.setAttribute(chassisObj2, '-hostname', chassis2)
          @ixNet.commit()
          chassisObj2 = @ixNet.remapIds(chassisObj2)[0]
-     else 
+     else
          chassisObj2 = chassisObj1
      end
 
@@ -442,11 +442,11 @@ end
 sleep(5)
 
 ################################################################################
-# 5. Configure L2-L3 traffic 
+# 5. Configure L2-L3 traffic
 ################################################################################
 puts("Congfiguring L2-L3 Traffic Item")
 trafficItem1 = @ixNet.add(root + '/traffic', 'trafficItem')
-@ixNet.setMultiAttribute(trafficItem1, 
+@ixNet.setMultiAttribute(trafficItem1,
     '-name', 'Traffic Item 1',
     '-roundRobinPacketOrdering', 'false',
     '-trafficType', 'ethernetVlan',

@@ -102,18 +102,18 @@ try:
     protocolObj = Protocol(mainObj, portObj)
     topologyObj1 = protocolObj.createTopologyNgpf(portList=[portList[0]],
                                                   topologyName='Topo1')
-    
+
     deviceGroupObj1 = protocolObj.createDeviceGroupNgpf(topologyObj1,
                                                         multiplier=1,
                                                         deviceGroupName='DG1')
-    
+
     topologyObj2 = protocolObj.createTopologyNgpf(portList=[portList[1]],
                                                   topologyName='Topo2')
-    
+
     deviceGroupObj2 = protocolObj.createDeviceGroupNgpf(topologyObj2,
                                                         multiplier=1,
                                                         deviceGroupName='DG2')
-    
+
     ethernetObj1 = protocolObj.createEthernetNgpf(deviceGroupObj1,
                                                   ethernetName='MyEth1',
                                                   macAddress={'start': '00:01:01:00:00:01',
@@ -123,7 +123,7 @@ try:
                                                   vlanId={'start': 103,
                                                           'direction': 'increment',
                                                           'step':0})
-    
+
     ethernetObj2 = protocolObj.createEthernetNgpf(deviceGroupObj2,
                                                   ethernetName='MyEth2',
                                                   macAddress={'start': '00:01:02:00:00:01',
@@ -133,7 +133,7 @@ try:
                                                   vlanId={'start': 103,
                                                           'direction': 'increment',
                                                           'step':0})
-    
+
     ipv4Obj1 = protocolObj.createIpv4Ngpf(ethernetObj1,
                                           ipv4Address={'start': '1.1.1.1',
                                                        'direction': 'increment',
@@ -145,7 +145,7 @@ try:
                                           gatewayPortStep='disabled',
                                           prefix=24,
                                           resolveGateway=True)
-    
+
     ipv4Obj2 = protocolObj.createIpv4Ngpf(ethernetObj2,
                                           ipv4Address={'start': '1.1.1.2',
                                                        'direction': 'increment',
@@ -157,7 +157,7 @@ try:
                                           gatewayPortStep='disabled',
                                           prefix=24,
                                           resolveGateway=True)
-    
+
     # flap = true or false.
     #    If there is only one host IP interface, then single value = True or False.
     #    If there are multiple host IP interfaces, then single value = a list ['true', 'false']
@@ -176,7 +176,7 @@ try:
                                     enableBgpIdSameasRouterId = True,
                                     staleTime = 0,
                                     flap = False)
-    
+
     bgpObj2 = protocolObj.configBgp(ipv4Obj2,
                                     name = 'bgp_2',
                                     enableBgp = True,
@@ -191,7 +191,7 @@ try:
                                     enableBgpIdSameasRouterId = True,
                                     staleTime = 0,
                                     flap = False)
-    
+
     networkGroupObj1 = protocolObj.configNetworkGroup(create=deviceGroupObj1,
                                                       name='networkGroup1',
                                                       multiplier = 100,
@@ -199,7 +199,7 @@ try:
                                                                         'step': '0.0.0.1',
                                                                         'direction': 'increment'},
                                                       prefixLength = 32)
-    
+
     networkGroupObj2 = protocolObj.configNetworkGroup(create=deviceGroupObj2,
                                                   name='networkGroup2',
                                                   multiplier = 100,
@@ -231,7 +231,7 @@ try:
                       'destinations': [topologyObj2]
                       ]
                   }],
-        
+
         configElements = [{'transmissionType': 'fixedFrameCount',
                            'frameCount': 50000,
                            'frameRate': 88,

@@ -263,7 +263,7 @@ print ("Making the NetworkType to Point to Point in the first OSPF router")
 networkTypeMultiValue1 = ixNet.getAttribute(ospf1, '-networkType')
 ixNet.setMultiAttribute(networkTypeMultiValue1, '-clearOverlays', 'false', '-pattern', 'singleValue')
 ixNet.commit()
-networkType1 = ixNet.add(networkTypeMultiValue1, 'singleValue') 
+networkType1 = ixNet.add(networkTypeMultiValue1, 'singleValue')
 ixNet.setMultiAttribute(networkType1, '-value', 'pointtopoint')
 ixNet.commit()
 
@@ -271,7 +271,7 @@ print("Making the NetworkType to Point to Point in the second OSPF router")
 networkTypeMultiValue2 = ixNet.getAttribute(ospf2, '-networkType')
 ixNet.setMultiAttribute(networkTypeMultiValue2, '-clearOverlays', 'false', '-pattern', 'singleValue')
 ixNet.commit()
-networkType2 =ixNet.add(networkTypeMultiValue2, 'singleValue') 
+networkType2 =ixNet.add(networkTypeMultiValue2, 'singleValue')
 ixNet.setMultiAttribute(networkType2, '-value', 'pointtopoint')
 ixNet.commit()
 
@@ -290,7 +290,7 @@ ixNet.setAttribute(networkGroup2, '-multiplier', '10')
 ixNet.commit()
 
 
-#Change IP address and Prefix Of Network Group 
+#Change IP address and Prefix Of Network Group
 ipV4PrefixPools1  = ixNet.getList(networkGroup1, 'ipv4PrefixPools')[0]
 prefixLength1 = ixNet.getAttribute(ipV4PrefixPools1, '-prefixLength')
 ixNet.setMultiAttribute(prefixLength1, '-clearOverlays', 'false', '-pattern', 'singleValue')
@@ -317,7 +317,7 @@ addressSet1 = ixNet.add(addressSet1, 'counter')
 ixNet.setMultiAttribute(addressSet1, '-step', '0.0.0.1', '-start', '200.1.0.1', '-direction', 'increment')
 ixNet.commit()
 addressSet2 = ixNet.add(addressSet2, 'counter')
-ixNet.setMultiAttribute(addressSet2, '-step', '0.0.0.1', '-start', '201.1.0.1', '-direction', 'increment')	
+ixNet.setMultiAttribute(addressSet2, '-step', '0.0.0.1', '-start', '201.1.0.1', '-direction', 'increment')
 ixNet.commit()
 # Add ipv4 loopback1 for PE Router
 
@@ -424,7 +424,7 @@ peerId1 = ixNet.add(peerId1, 'counter')
 ixNet.setMultiAttribute(peerId1, '-step', '0.0.0.1',
     '-start', '201.1.0.1', '-direction', 'increment')
 ixNet.commit()
- 
+
 peerId2 = ixNet.getAttribute(ldppwvpls2, '-peerId')
 ixNet.setMultiAttribute(peerId2, '-clearOverlays', 'false',
     '-pattern', 'counter')
@@ -434,7 +434,7 @@ peerId2 = ixNet.add(peerId2, 'counter')
 ixNet.setMultiAttribute(peerId2, '-step', '0.0.0.1',
     '-start', '200.1.0.1', '-direction', 'increment')
 ixNet.commit()
- 
+
 ################################################################################
 # 3. Add MAC Cloud behind LDP PWs
 ################################################################################

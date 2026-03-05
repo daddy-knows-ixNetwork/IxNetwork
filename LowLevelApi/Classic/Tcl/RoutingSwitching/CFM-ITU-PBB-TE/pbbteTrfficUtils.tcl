@@ -302,5 +302,3 @@ proc checkConditionalTrafficStats {sortStatName needCols {maxResults 50} {perfor
     return $flag
 
 }
-
-

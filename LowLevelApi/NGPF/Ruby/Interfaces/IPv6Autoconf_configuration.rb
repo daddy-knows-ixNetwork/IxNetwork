@@ -47,7 +47,7 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#    This sample configures 10 IPv6 Autoconfiguration sessions the two ports,  # 
+#    This sample configures 10 IPv6 Autoconfiguration sessions the two ports,  #
 #                                                                              #
 ################################################################################
 
@@ -145,7 +145,7 @@ puts "Add IPv6 Autoconfiguration stacks to ethernets"
 @ixNet.commit()
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 vports = @ixNet.getList(@ixNet.getRoot(), 'vport')
 puts "Assigning ports to " + vports.to_s + " ..."

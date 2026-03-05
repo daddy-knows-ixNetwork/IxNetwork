@@ -354,18 +354,18 @@ def ConfigTrafficItemNgpfHlPy(**kwargs):
     '''
      status: 1
      stream_id: TI0-Traffic_Item_1
-     log: 
+     log:
      ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1:
-     
+
      headers: ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:"ethernet-1"
               ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:"ipv4-2"
               ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:"fcs-3"
      ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1:
-     
+
      headers: ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1/stack:"ethernet-1"
               ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1/stack:"ipv4-2"
               ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1/stack:"fcs-3"
-     
+
      encapsulation_name: Ethernet.IPv4
      endpoint_set_id: 1
      stream_ids: ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1
@@ -598,4 +598,3 @@ traffic_item_1 = ConfigTrafficItemNgpfHlPy(mode='create',
 StartTrafficNgpfHlPy()
 time.sleep(10)
 GetStatsNgpfHlPy()
-

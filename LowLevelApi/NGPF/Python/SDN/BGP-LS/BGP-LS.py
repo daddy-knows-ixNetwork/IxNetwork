@@ -127,7 +127,7 @@ ixNet.execute('newConfig')
 
 ################################################################################
 # protocol configuration section                                               #
-################################################################################ 
+################################################################################
 assignPorts(ixNet, ports[0], ports[1])
 time.sleep(5)
 
@@ -361,7 +361,7 @@ for statValList in ixNet.getAttribute(viewPage, '-rowValues') :
 print("***************************************************")
 
 ################################################################################
-# On the fly section                                                           #  
+# On the fly section                                                           #
 ################################################################################
 print("Changing the Ipv4 & Ipv6 PrefixPool Address")
 ixNet.setAttribute(ixNet.getAttribute(ip4pool, '-networkAddress') + '/singleValue', '-value', '90.90.90.1')
@@ -400,7 +400,7 @@ for table in linfoList :
                print(word)
           #end for
       # end for
-# end for 
+# end for
 
 time.sleep(15)
 

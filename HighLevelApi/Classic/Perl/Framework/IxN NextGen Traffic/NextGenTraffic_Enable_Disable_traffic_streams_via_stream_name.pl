@@ -339,14 +339,10 @@ $_result_ = ixiahlt::traffic_config ({
 # Enable Traffic Item -1 using the  stream name                                #
 ################################################################################
 $_result_ = ixiahlt::traffic_config ({
-    -mode                  => 'enable',    
-    -stream_id             => $traffic_item,    
+    -mode                  => 'enable',
+    -stream_id             => $traffic_item,
 });
 &catch_error();
 
 
 print ("\n\n$test_name : TEST COMPLETED SUCCESSFULLY!\n");
-
-
-
-

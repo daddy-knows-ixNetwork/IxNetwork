@@ -68,7 +68,7 @@
 #       when protocol is not started.                                          #
 #   13. Start protocol.                                                        #
 #   14. Retreive protocol statistics                                           #
-#   15. Stop all protocols.                                                    #                
+#   15. Stop all protocols.                                                    #
 #    Ixia Softwares:                                                           #
 #    IxOS      6.80 EB (6.80.1101.95)                                          #
 #    IxNetwork 7.40 EB (7.40.0.336)                                            #
@@ -76,7 +76,7 @@
 ################################################################################
 
 ################################################################################
-# Please ensure that PERL5LIB environment variable is set properly so that 
+# Please ensure that PERL5LIB environment variable is set properly so that
 # IxNetwork.pm module is available. IxNetwork.pm is generally available in
 # C:\<IxNetwork Install Path>\API\Perl
 ################################################################################
@@ -94,13 +94,13 @@ sub assignPorts {
 	my $port2    = $my_resource[6];
 	my $vport1   = $my_resource[7];
 	my $vport2   = $my_resource[8];
-	
+
 	my $root = $ixNet->getRoot();
 	my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-	
+
 	my $chassisObj2 = '';
 	if ($chassis1 ne $chassis2) {
 	    $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -110,7 +110,7 @@ sub assignPorts {
 	} else {
 	    $chassisObj2 = $chassisObj1;
 	}
-	
+
 	my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -119,7 +119,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-		
+
     $ixNet->commit();
 }
 
@@ -130,7 +130,7 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.205.25.83';
 my $ixTclPort   = '8009';
 my @ports       = (('10.205.25.83', '1', '1'), ('10.205.25.83', '1', '2'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
@@ -225,7 +225,7 @@ $ixNet->setMultiAttribute($ixNet->getAttribute($ip2, '-resolveGateway').'/single
 $ixNet->commit();
 ################################################################################
 # adding IGMP over ipv4 stack
-################################################################################ 
+################################################################################
 print("Adding IGMP over IP4 stack \n");
 $ixNet->add($ip1, 'igmpHost');
 $ixNet->add($ip2, 'igmpQuerier');
@@ -247,9 +247,9 @@ $ixNet->setMultiAttribute ($gqueryi,
 	  '-pattern', 'counter');
 $ixNet->commit();
 $ixNet->setMultiAttribute($ixNet->add($gqueryi, 'counter'),
-     '-step', '1', 
+     '-step', '1',
 	 '-start', '140',
-	 '-direction', 'increment');                   
+	 '-direction', 'increment');
 $ixNet->commit();
 
 ################################################################################
@@ -274,7 +274,7 @@ print("Changing version of IGMP HOST to v3 \n");
 my $igmpport1 = ($ixNet->getList($igmphost, 'port'))[0];
 my $vesriontypehost = $ixNet->getAttribute($igmpport1, '-versionType');
 my $versionvaluehost = ($ixNet->getList($vesriontypehost, 'singleValue'))[0];
-$ixNet->setAttribute($versionvaluehost, '-value', 'version3');                               
+$ixNet->setAttribute($versionvaluehost, '-value', 'version3');
 $ixNet->commit();
 
 ################################################################################
@@ -320,13 +320,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -360,7 +360,7 @@ foreach $v (@values) {
 print("***************************************************\n");
 
 ################################################################################
-# 7. Configure L2-L3 traffic 
+# 7. Configure L2-L3 traffic
 ################################################################################
 print ("Congfiguring L2-L3 Traffic Item\n");
 my $trafficItem1 = $ixNet->add(($ixNet->getRoot()).'/traffic', 'trafficItem');
@@ -414,13 +414,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -607,13 +607,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 

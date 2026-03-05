@@ -13,7 +13,7 @@ from ixnetwork_restpy import *
 
 # Disable SSL warnings
 requests.packages.urllib3.disable_warnings()
- 
+
 def readYaml(yamlFile):
     """
     Read YAML data
@@ -28,15 +28,15 @@ def readYaml(yamlFile):
         try:
             # For yaml version >5.1
             return yaml.load(yamlData, Loader=yaml.FullLoader)
-            
+
         except yaml.YAMLError as exception:
             # Show the Yaml syntax error
             raise exception
-        
+
         except:
             return yaml.safe_load(yamlData)
 
-                           
+
 class Middleware:
     """
     Share common variables across fixtures and across pytest modules
@@ -45,26 +45,26 @@ class Middleware:
     ixNetworkObj = None
     configFile = None
     params = None
-    
+
 
 def pytest_addoption(parser):
     """
     Parse CLI arg input
-    
+
     Usage:
        In sandboxConfigs fixture:
           configFile = request.config.getoption("--configFile")
     """
     parser.addoption("--configFile", action="store", default=None)
-    
+
 @pytest.fixture
 def connectIxNetwork(request):
     """
     Connect to an IxNetwork API server.
-    
+
     Return
         IxNetwork RestPy session Object
-    """    
+    """
     configFile = request.config.getoption("--configFile")
     Middleware.configFile = configFile
     params = readYaml(configFile)
@@ -73,13 +73,13 @@ def connectIxNetwork(request):
     print(f'\nconnectIxNetwork fixture: apiServer: {params["apiServerIp"]}')
     print(f'connectIxNetwork fixture: chassisList:{params["ixChassisIpList"]}   portList: {params["portList"]}')
 
-    session = SessionAssistant(IpAddress=params['apiServerIp'], RestPort=None, UserName=params['username'], Password=params['password'], 
+    session = SessionAssistant(IpAddress=params['apiServerIp'], RestPort=None, UserName=params['username'], Password=params['password'],
                                SessionName=None, SessionId=None, ApiKey=None,
                                ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
     # For each session's name, use the sandbox name and append the ID
     #session.Session.Name = f'{sessionName}-{session.Session.Id}'
-    
+
     # Store the session in Middleware so other fixtures could access IxNetwork
     Middleware.ixNetworkSession = session
 
@@ -101,6 +101,3 @@ def ixNetworkObj():
 @pytest.fixture
 def middleware():
     return Middleware
-    
-
-    

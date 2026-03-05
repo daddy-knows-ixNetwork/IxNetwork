@@ -210,7 +210,7 @@ print ('ixNet.help(\'::ixNet::OBJ-/topology/deviceGroup/ethernet/ipv4\')')
 print (ixNet.help('::ixNet::OBJ-/topology/deviceGroup/ethernet/ipv4'))
 
 ###########################################################################
-#Add and Configure VXLAN Interface 
+#Add and Configure VXLAN Interface
 ###########################################################################
 print("Adding BFDv4 and Configuring")
 ixNet.add(ip1, 'vxlan')
@@ -226,7 +226,7 @@ ixNet.setAttribute(ipv4_multicast + '/singleValue', '-value', '225.0.1.1')
 
 
 ###########################################################################
-#Add and Configure BFDv4 Interface 
+#Add and Configure BFDv4 Interface
 ###########################################################################
 print("Adding BFDv4 and Configuring")
 ixNet.add(vxlan1, 'bfdv4Interface')
@@ -336,7 +336,7 @@ except :
 time.sleep(10)
 
 ###############################################################################
-# Retrieve protocol learned info                                              # 
+# Retrieve protocol learned info                                              #
 ###############################################################################
 print("Fetching BFD learned info")
 ixNet.execute('getLearnedInfo', bfdv41, '1')

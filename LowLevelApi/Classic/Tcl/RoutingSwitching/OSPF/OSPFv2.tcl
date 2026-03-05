@@ -54,13 +54,13 @@
 #    3. Retrieve protocol statistics.                                          #
 #    4. Retrieve protocol learned info.                                        #
 #    5. Enable remaining route-ranges on each OSPFv2 router                    #
-#    6. Disable and enable router interfaces to reflect changes                # 
-#    7. Retrieve protocol learned info.                                        #                                     
+#    6. Disable and enable router interfaces to reflect changes                #
+#    7. Retrieve protocol learned info.                                        #
 #    8. Configure L2-L3 traffic.                                               #
 #    9. Start the L2-L3 traffic.                                               #
 #    10. Retrieve L2-L3 traffic stats.                                         #
 #    11. Stop L2-L3 traffic.                                                   #
-#    12. Stop all protocols.                                                   #          
+#    12. Stop all protocols.                                                   #
 ################################################################################
 
 # Script Starts
@@ -86,7 +86,7 @@ ixNet exec newConfig
 ################################################################################
 # 1. Protocol configuration section. Configure OSPFv2 as per the description
 #    give above
-################################################################################ 
+################################################################################
 puts "Add 2 virtual ports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -102,7 +102,7 @@ puts "Assign the real ports"
 ################################################################################
 # setting ipv4 interfaces
 ################################################################################
-puts "Set ipv4 interfaces" 
+puts "Set ipv4 interfaces"
 set interface1 [ixNet add $vPort1 interface]
 set ipv41 [ixNet add $interface1 ipv4]
 set interface2 [ixNet add $vPort2 interface]
@@ -155,7 +155,7 @@ ixNet setAttribute $router2 -discardLearnedLsa false
 ixNet commit
 
 ################################################################################
-# Configure interfaces on OSPFv2 routers 
+# Configure interfaces on OSPFv2 routers
 ################################################################################
 set router1Interface [ixNet add $router1 interface]
 ixNet setAttribute $router1Interface -connectedToDut true
@@ -389,7 +389,7 @@ foreach item $listLSA2 {
 puts "***************************************************"
 
 ###############################################################################
-# 8. Configure L2-L3 traffic 
+# 8. Configure L2-L3 traffic
 ###############################################################################
 puts "Congfiguring L2-L3 Traffic Item"
 set trafficItem1 [ixNet add [ixNet getRoot]/traffic "trafficItem"]
@@ -413,7 +413,7 @@ ixNet setMultiAttribute $endpointSet1\
     -ngpfFilters           [list]\
     -trafficGroups         [list]\
     -sources               $source\
-    -destinations          $destination\    
+    -destinations          $destination\
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\

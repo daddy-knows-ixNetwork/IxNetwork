@@ -82,7 +82,7 @@ def assignPorts (ixNet, realPort1, realPort2)
          @ixNet.setAttribute(chassisObj2, '-hostname', chassis2)
          @ixNet.commit()
          chassisObj2 = @ixNet.remapIds(chassisObj2)[0]
-     else 
+     else
          chassisObj2 = chassisObj1
      end
 
@@ -199,7 +199,7 @@ puts("configuring ipv6 addresses")
 
 ################################################################################
 # Adding MLD Host over ipv6 stack
-################################################################################ 
+################################################################################
 puts("Adding MLD Host over IPv6 stack")
 @ixNet.add(ip1, 'mldHost')
 @ixNet.commit()
@@ -212,7 +212,7 @@ puts("Renaming the topologies and the device groups")
 @ixNet.commit()
 
 ################################################################################
-# Enabling IPTV in MLD host 
+# Enabling IPTV in MLD host
 ################################################################################
 puts("Enabling IPTV")
 enableIptv = @ixNet.getAttribute(mldHost, '-enableIptv')
@@ -258,7 +258,7 @@ singleValue = @ixNet.getList(zapBehavior, 'singleValue')[0]
 @ixNet.commit()
 
 ################################################################################
-# Start protocol 
+# Start protocol
 ################################################################################
 puts("Starting protocols and waiting for 20 seconds for protocols to come up")
 @ixNet.execute('startAllProtocols')
@@ -405,9 +405,8 @@ puts("Stopping L2/L3 traffic")
 sleep(5)
 
 ################################################################################
-# Stop protocol 
+# Stop protocol
 ################################################################################
 puts("Stopping protocol")
 @ixNet.execute('stopAllProtocols')
 puts("!!! Test Script Ends !!!")
-

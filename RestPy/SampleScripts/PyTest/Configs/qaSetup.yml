@@ -12,6 +12,3 @@ debugMode: True
 
 # Forcefully take port ownership if the portList are owned by other users
 forceTakePortOwnership: True
-
-
-

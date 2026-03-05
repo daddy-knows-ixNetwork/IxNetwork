@@ -62,7 +62,7 @@ test
 ############################################################################
 # Configure BGP routes on the second Ixia port
 ############################################################################
-	
+
 	${result} =  Emulation BGP Route Config  mode=add   handle=${pe_bgp_neighbor_handle_list}  prefix=70.0.0.1  prefix_step=1  netmask=255.255.255.0  num_routes=1  ip_version=4  origin_route_enable=1  origin=igp
 	${bgp_route_config_status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${bgp_config_status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
@@ -81,8 +81,8 @@ test
 	Run Keyword If  '${bgp_config_status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 
 ###################################################################################
-#### Wait for the BGP sessions to establish on first port. 
-#### Any BGP peer handle configured for the port can be provided to -handle 
+#### Wait for the BGP sessions to establish on first port.
+#### Any BGP peer handle configured for the port can be provided to -handle
 #### parameter in order to retrive the BGP session' stats for the port.
 ###################################################################################
 	${bgp_sessions_established}=    Set Variable    0
@@ -99,7 +99,7 @@ test
 
 ###################################################################################
 #### Wait for the BGP sessions to establish on second port.
-#### Any BGP peer handle configured for the port can be provided to -handle 
+#### Any BGP peer handle configured for the port can be provided to -handle
 #### parameter in order to retrive the BGP session' stats for the port.
 ###################################################################################
 	${bgp_sessions_established}=    Set Variable    0
@@ -115,17 +115,17 @@ test
 	Log Many  There are ${bgp_sessions_established} BGP sessions established on @{portHandles}[1] ...
 
 ################################################################################
-# Use ixnetwork traffic generator to configure traffic from bgp routes on 
-# the first port to the bgp routes on the second port. 
+# Use ixnetwork traffic generator to configure traffic from bgp routes on
+# the first port to the bgp routes on the second port.
 # The traffic flow is tracked by source/destination endpoint pair.
 ################################################################################
 	${result} =  Traffic Config  mode=create  traffic_generator=ixnetwork_540  transmit_mode=continuous  name=IPv4_TRAFFIC  src_dest_mesh=one_to_one  route_mesh=one_to_one  circuit_type=none  circuit_endpoint_type=ipv4  emulation_src_handle=${ce_bgp_neighbor_handle_list}  emulation_dst_handle=${pe_bgp_neighbor_handle_list}  track_by=endpoint_pair  stream_packing=one_stream_per_endpoint_pair  rate_percent=10  tx_delay=10  length_mode=fixed  frame_size=512
 	${traffic_status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${traffic_status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	${trafficHandle} =  Get From Dictionary  ${result}  traffic_item  
+	${trafficHandle} =  Get From Dictionary  ${result}  traffic_item
 
 ################################################################################
-# Start the traffic 
+# Start the traffic
 ################################################################################
 
 	${result} =  Traffic Control  action=run  traffic_generator=ixnetwork_540
@@ -134,7 +134,7 @@ test
 	Sleep  5s
 
 ################################################################################
-# Stop the traffic 
+# Stop the traffic
 ################################################################################
 
 	${result} =  Traffic Control  action=stop  traffic_generator=ixnetwork_540
@@ -146,9 +146,9 @@ test
 # Gather and display aggregate statistics
 ################################################################################
 	# ##Set variable
-	@{aggregated_traffic_results_name}=    Create List    "Scheduled Frames Tx."  "Scheduled Frames Tx. Rate"  "Line Speed"  "Frames Tx."  "Total Frames Tx."  "Frames Tx. Rate"  "Frames Tx. Rate"  "Bytes Tx."  "Bytes Tx. Rate"  "Tx. Rate (bps)"  "Tx. Rate (Kbps)"  "Tx. Rate (Mbps)"  "Bytes Rx."  "Bytes Rx. Rate"  "Rx. Rate (bps)"  "Rx. Rate (Kbps)"  "Rx. Rate (Mbps)"  "Data Integrity Frames Rx."  "Data Integrity Errors"  "Valid Frames Rx."  "Valid Frames Rx. Rate"  
+	@{aggregated_traffic_results_name}=    Create List    "Scheduled Frames Tx."  "Scheduled Frames Tx. Rate"  "Line Speed"  "Frames Tx."  "Total Frames Tx."  "Frames Tx. Rate"  "Frames Tx. Rate"  "Bytes Tx."  "Bytes Tx. Rate"  "Tx. Rate (bps)"  "Tx. Rate (Kbps)"  "Tx. Rate (Mbps)"  "Bytes Rx."  "Bytes Rx. Rate"  "Rx. Rate (bps)"  "Rx. Rate (Kbps)"  "Rx. Rate (Mbps)"  "Data Integrity Frames Rx."  "Data Integrity Errors"  "Valid Frames Rx."  "Valid Frames Rx. Rate"
 	@{aggregated_traffic_results}=    Create List    ['aggregate']['tx']['scheduled_pkt_count']  ['aggregate']['tx']['scheduled_pkt_rate']  ['aggregate']['tx']['line_speed']  ['aggregate']['tx']['pkt_count']  ['aggregate']['tx']['total_pkts']  ['aggregate']['tx']['pkt_rate']  ['aggregate']['tx']['total_pkt_rate']  ['aggregate']['tx']['pkt_byte_count']  ['aggregate']['tx']['pkt_byte_rate']  ['aggregate']['tx']['pkt_bit_rate']  ['aggregate']['tx']['pkt_kbit_rate']  ['aggregate']['tx']['pkt_mbit_rate']  ['aggregate']['rx']['pkt_byte_count']  ['aggregate']['rx']['pkt_byte_rate']  ['aggregate']['rx']['pkt_bit_rate']  ['aggregate']['rx']['pkt_kbit_rate']  ['aggregate']['rx']['pkt_mbit_rate']  ['aggregate']['rx']['data_int_frames_count']  ['aggregate']['rx']['data_int_errors_count']  ['aggregate']['rx']['pkt_count']  ['aggregate']['rx']['pkt_rate']
-	
+
 	${result} =  Traffic Stats  mode=aggregate  traffic_generator=ixnetwork_540
 	:FOR	${port}	IN	@{portHandles}
 	\	Log	Stats on current port are: ${port}
@@ -156,5 +156,5 @@ test
 			\	Log  ${name}
 				:FOR    ${key}    IN    @{aggregated_traffic_results}
 			\	Log  Current ELEMENT IN List is: ${name} : ${result['${port}']${key}}
-	
+
 	Run Keyword If  ${result['@{portHandles}[0]']['aggregate']['tx']['pkt_count']} != ${result['@{portHandles}[1]']['aggregate']['rx']['pkt_count']}  FAIL  "Not all packets were received"  ELSE  Log  "All packets were received"

@@ -69,8 +69,8 @@
 #          connect a real server connected to emualted gRIBI cliente.           #
 #          We are running a demo server in the gRIBI server port using some     #
 #          cli commands. For example purpose the command to run demo server     #
-#          is provided in sample script, but it will not run the commands.      # 
-#          so gRIBI client sessions will not be up unless we connect it to      # 
+#          is provided in sample script, but it will not run the commands.      #
+#          so gRIBI client sessions will not be up unless we connect it to      #
 #          real server  session  with matching IP and port number.              #
 #                                                                               #
 #              The script flow only gives an example of how to configure gRIBI  #
@@ -87,7 +87,7 @@
 
 
 ################################################################################
-# Please ensure that PERL5LIB environment variable is set properly so that 
+# Please ensure that PERL5LIB environment variable is set properly so that
 # IxNetwork.pm module is available. IxNetwork.pm is generally available in
 # C:\<IxNetwork Install Path>\API\Perl
 ################################################################################
@@ -106,13 +106,13 @@ sub assignPorts {
 	my $port2    = $my_resource[6];
 	my $vport1   = $my_resource[7];
 	my $vport2   = $my_resource[8];
-	
+
 	my $root = $ixNet->getRoot();
 	my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-	
+
 	my $chassisObj2 = '';
 	if ($chassis1 ne $chassis2) {
 	    $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -122,7 +122,7 @@ sub assignPorts {
 	} else {
 	    $chassisObj2 = $chassisObj1;
 	}
-	
+
 	my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -131,7 +131,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-		
+
     $ixNet->commit();
 }
 # Script Starts
@@ -141,7 +141,7 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.66.47.72';
 my $ixTclPort   = '8961';
 my @ports       = (('10.39.50.126', '1', '1'), ('10.39.50.126', '1', '2'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
@@ -239,7 +239,7 @@ $ixNet->commit();
 # print("\$ixNet->help ::ixNet::OBJ-/topology/deviceGroup/ethernet/ipv4\n)"
 # print($ixNet->help ('::ixNet::OBJ-/topology/deviceGroup/ethernet/ipv4'))"
 
-#  Adding gRPC Client and configuring it in topology 1 
+#  Adding gRPC Client and configuring it in topology 1
 print("Adding gRPC Client and configuring it in topology\n");
 $ixNet->add($ip1, 'gRPCClient');
 $ixNet->commit();
@@ -252,7 +252,7 @@ my $remotePortMultiValue1 = ($ixNet->getAttribute($gRPCClient, '-remotePort'));
 $ixNet->setAttribute($remotePortMultiValue1.'/singleValue', '-value', "50001");
 $ixNet->commit();
 
-#  Adding gRIBI Client stack over gRPC Client in topology 1 
+#  Adding gRIBI Client stack over gRPC Client in topology 1
 print("Adding gRIBI Client stack over gRPC Client in topology 1\n");
 $ixNet->add($gRPCClient, 'gRIBIClient');
 $ixNet->commit();
@@ -271,7 +271,7 @@ my $electionIdLowMultiValue1 = ($ixNet->getAttribute($gRIBIClient, '-electionIdL
 $ixNet->setAttribute($electionIdLowMultiValue1.'/singleValue', '-value', "2001");
 $ixNet->commit();
 
-#  Adding gRIBI Next Hop Stack over gRIBI Client in topology 1 
+#  Adding gRIBI Next Hop Stack over gRIBI Client in topology 1
 print("Adding gRIBI Next Hop Stack over gRIBI Client in topology 1\n");
 $ixNet->add($gRIBIClient, 'gRIBINextHopGroup');
 $ixNet->commit();
@@ -347,13 +347,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -367,18 +367,18 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
 ################################################################################
-# 4. Change following parameters in Next Hop Group 1 
+# 4. Change following parameters in Next Hop Group 1
 #          Apply changes on the fly.
 ################################################################################
 #---------------------------------------------------------------------------
@@ -419,7 +419,7 @@ except :
 time.sleep(10);
 
 ################################################################################
-# 5. Retreive protocol stats again 
+# 5. Retreive protocol stats again
 ################################################################################
 #
 print("Fetching gRIBI Client Per Port Stats\n");
@@ -432,13 +432,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -447,4 +447,3 @@ print("***************************************************\n");
 ################################################################################
 $ixNet->execute('stopAllProtocols');
 print("!!! Test Script Ends !!!");
-

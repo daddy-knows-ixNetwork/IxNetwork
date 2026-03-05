@@ -31,7 +31,7 @@ class Ports(object):
         """
         Description
            Verify if ports are owned by another user.
-        
+
         Parameters
            portList: <list>: [[ixChassisIp, 1, 2], [ixChassisIp, 1, 3], ]
            raiseException: <bool>: Raise an exception if True.
@@ -75,7 +75,7 @@ class Ports(object):
     def releasePorts(self, ports='all'):
         """
         Release all ports or release specified ports in the param ports.
-        
+
         :param ports: <'all'|list>:
                          If ports == 'all', release all ports.
                          If ports = list: [[ixChassisIp, 1, 2], [ixChassisIp, 1, 3], ...],
@@ -113,7 +113,7 @@ class Ports(object):
 
         vports = [vport.href for vport in self.ixNetObj.Vport.find(AssignedTo=regexString)]
         return vports
- 
+
     def assignPorts(self, portList, takePortOwnership=False, getVportList=False):
         """
         Assign ports.
@@ -126,11 +126,11 @@ class Ports(object):
                                              has vports configured.
 
                                       This will get the configured vports
-                                      and assign physical ports to the already created vports. 
-        
+                                      and assign physical ports to the already created vports.
+
         Raise:
            If portList are owned by another user and if takePortOwnership
-           is False, then raise exception. 
+           is False, then raise exception.
         """
         vportList = []
         testPorts = []
@@ -160,7 +160,7 @@ class Ports(object):
 
     def verifyPortState(self):
         """
-        Verify all the vport port state for up to 90 seconds. 
+        Verify all the vport port state for up to 90 seconds.
         """
         for vport in self.ixNetObj.Vport.find():
             if vport.AssignedTo == '':

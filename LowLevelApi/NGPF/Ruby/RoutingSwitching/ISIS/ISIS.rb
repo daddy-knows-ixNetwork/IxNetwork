@@ -104,7 +104,7 @@ def assignPorts (ixNet, realPort1, realPort2)
          @ixNet.setAttribute(chassisObj2, '-hostname', chassis2)
          @ixNet.commit()
          chassisObj2 = @ixNet.remapIds(chassisObj2)[0]
-     else 
+     else
          chassisObj2 = chassisObj1
      end
 
@@ -208,7 +208,7 @@ puts("Configuring the mac addresses %s" % (mac1))
 puts('@ixNet.help(\'::ixNet::OBJ-/topology/deviceGroup/ethernet\')')
 puts(@ixNet.help('::ixNet::OBJ-/topology/deviceGroup/ethernet'))
 
-# Adding Ipv4 stack 
+# Adding Ipv4 stack
 puts("Add ipv4")
 @ixNet.add(mac1, 'ipv4')
 @ixNet.add(mac2, 'ipv4')
@@ -510,7 +510,7 @@ sleep(5)
 ipv6PseudoNodeRoutes2 = @ixNet.getList(isisL3PseudoRouter2, 'IPv6PseudoNodeRoutes')[0]
 ipv6PseudoNodeRouteMultivalue2 = @ixNet.getAttribute(ipv6PseudoNodeRoutes2, '-active')
 @ixNet.setAttribute(ipv6PseudoNodeRouteMultivalue2 + '/singleValue', '-value', 'true')
-@ixNet.commit() 
+@ixNet.commit()
 
 ################################################################################
 # Stop/Start ISIS Router on both ports and apply changes on-the-fly
@@ -589,7 +589,7 @@ sleep(5)
 linfo = @ixNet.getList(isisL3_1, 'learnedInfo')[0]
 ipv6table = @ixNet.getList(linfo, 'table')[1]
 values    = @ixNet.getAttribute(ipv6table, '-values')
-     
+
 
 puts("***************************************************\n")
 for v in values
@@ -670,7 +670,7 @@ puts"Configuring Applib traffic profile %s." % trafficType
 trafficItem2 = @ixNet.add(@ixNet.getRoot() + '/traffic', 'trafficItem')
 
 @ixNet.setMultiAttribute(trafficItem2,
-    '-name',                     'Traffic Item 3',             
+    '-name',                     'Traffic Item 3',
     '-trafficItemType',          'applicationLibrary',
     '-roundRobinPacketOrdering', 'false',
     '-trafficType',              trafficType)
@@ -690,7 +690,7 @@ destin_app   = [@ixNet.getList(t2dev1, 'networkGroup')[0]]
     '-ngpfFilters',           [],
     '-trafficGroups',         [],
     '-sources',               source_app,
-    '-destinations',          destin_app)    
+    '-destinations',          destin_app)
 @ixNet.commit()
 
 endpointSet2 = @ixNet.remapIds(endpointSet2)[0]

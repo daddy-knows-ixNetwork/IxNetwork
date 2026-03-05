@@ -43,31 +43,31 @@
 ################################################################################
 
 ################################################################################
-#                                                                             					
-# Description:                                                                 					
-#    This sample script configures a RFC2544 Throughput/Latency classic QT    					
-#                                                                              					
-# Steps:   1 -> Cleaning up IxNetwork                                          					
-#	   			2 -> Add ports                                                      			
-#	   			3 -> Creating QT                                                    			
-#	   			4 -> Set source and destination                                     			
-#	   			5 -> Create endpoint set                                            			
-#	   			6 -> Add o2o traffic map                                            			
-#	   			7 -> Set Ipv4 protocol                                              			
-#	   			8 -> Set Ipv4 addresses                                             			
-#	   			9 -> Set parameters to QT                                           			
-#	   			10 -> Assigning ports to virtual ports                              			
-#	   			11 -> Apply QT                                                      			
-#                                                                              					
+#
+# Description:
+#    This sample script configures a RFC2544 Throughput/Latency classic QT
+#
+# Steps:   1 -> Cleaning up IxNetwork
+#	   			2 -> Add ports
+#	   			3 -> Creating QT
+#	   			4 -> Set source and destination
+#	   			5 -> Create endpoint set
+#	   			6 -> Add o2o traffic map
+#	   			7 -> Set Ipv4 protocol
+#	   			8 -> Set Ipv4 addresses
+#	   			9 -> Set parameters to QT
+#	   			10 -> Assigning ports to virtual ports
+#	   			11 -> Apply QT
+#
 ################################################################################
 
 namespace eval ::py {
     #client domain name or ip address
-    set ixTclServer PC-name 
+    set ixTclServer PC-name
     #client Tcl port
-    set ixTclPort   8009    
-    #chassis ip address/domain name ; card number ; port number	
-    set ports       {{192.168.1.1 1 1} {192.168.1.1 1 2}} 
+    set ixTclPort   8009
+    #chassis ip address/domain name ; card number ; port number
+    set ports       {{192.168.1.1 1 1} {192.168.1.1 1 2}}
 }
 
 
@@ -137,7 +137,7 @@ ixNet setMultiAttribute $test/testConfig \-frameSizeMode custom \-framesizeList 
 ixNet commit
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 set vPorts [ixNet getList [ixNet getRoot] vport]
 puts "Step 10 -> Assigning ports to $vPorts"
@@ -150,7 +150,7 @@ after 2000
 ################################################################################
 puts "Step 11 -> Apply QT"
 ixNet execute apply $test
-    
+
 ################################################################################
 # TEST END
 ################################################################################

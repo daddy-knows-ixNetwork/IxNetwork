@@ -447,11 +447,11 @@ except :
 time.sleep(5)
 
 ################################################################################
-# 5. Configure L2-L3 traffic 
+# 5. Configure L2-L3 traffic
 ################################################################################
 print("Congfiguring L2-L3 Traffic Item")
 trafficItem1 = ixNet.add(root + '/traffic', 'trafficItem')
-ixNet.setMultiAttribute(trafficItem1, 
+ixNet.setMultiAttribute(trafficItem1,
     '-name', 'Traffic Item 1',
     '-roundRobinPacketOrdering', 'false',
     '-trafficType', 'ethernetVlan',

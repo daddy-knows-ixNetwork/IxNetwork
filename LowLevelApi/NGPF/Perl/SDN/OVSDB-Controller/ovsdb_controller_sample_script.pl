@@ -6,15 +6,15 @@
 #                                                                              #
 ################################################################################
 ################################################################################
-#                                                                              
-# Description:                                                                 
+#
+# Description:
 #    This script intends to demonstrate how to use OVSDB Protocol API#
 #    It will create following :
 #1.    Add topology for ovsdb controller
 #2.    Configure ipv4, ovsdb controller in TCP and cluster data.
 #3.    Add device group for hypervisor and VM.
 #4.    Associate connection between Hypervisor VxLAN and ovsdb controller.
-#5.    Add Replicator as another device group, configure its ip address, BFD 
+#5.    Add Replicator as another device group, configure its ip address, BFD
 #      interface.
 #6.    Associate replicator VXLAN and BFD interface to ovsdb controller.
 #7.    Start each device group separately.
@@ -33,7 +33,7 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.214.100.11';
 my $ixTclPort   = '8348';
 my @ports       = (('10.214.100.71', '8', '1'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 ###############################################################################
@@ -92,7 +92,7 @@ my $t1devices = ($ixNet->getList($topo1, 'deviceGroup'));
 my $ovsdb_controller = $t1devices[0];
 
 print("Configuring the multipliers (number of sessions)\n");
-$ixNet->setAttribute($ovsdb_controller, 
+$ixNet->setAttribute($ovsdb_controller,
                     '-multiplier', '1',
                     '-name', 'OVSDB Controller');
 $ixNet->commit();
@@ -108,7 +108,7 @@ my $t1devices = ($ixNet->getList($topo1, 'deviceGroup'));
 my $hypervisor_device_group = $t1devices[1];
 
 print("Configuring the multipliers (number of sessions)\n");
-$ixNet->setAttribute($hypervisor_device_group, 
+$ixNet->setAttribute($hypervisor_device_group,
                     '-multiplier', '1',
                     '-name', 'Hypervisor');
 $ixNet->commit();
@@ -156,30 +156,30 @@ $ixNet->commit();
 ###############################################################################
 print("Add ethernet to controller \n");
 my $controller_ethernet = $ixNet->add($ovsdb_controller, 'ethernet');
-$ixNet->setMultiAttribute($controller_ethernet, 
-    '-stackedLayers', [], 
+$ixNet->setMultiAttribute($controller_ethernet,
+    '-stackedLayers', [],
     '-name', 'Ethernet 1');
 $ixNet->commit();
 
 print("Add ipv4\n");
 my $controller_ipv4 = $ixNet->add($controller_ethernet, 'ipv4');;
-$ixNet->setMultiAttribute($controller_ipv4, 
-    '-stackedLayers', [], 
+$ixNet->setMultiAttribute($controller_ipv4,
+    '-stackedLayers', [],
     '-name', 'IPv4 1');
 $ixNet->commit();
 
 
 my $ipv4_gateway = $ixNet->getAttribute($controller_ipv4, '-gatewayIp');
 my $ipv4_gateway_value = $ixNet->add($ipv4_gateway, 'singleValue');;
-$ixNet->setMultiAttribute($ipv4_gateway_value, 
+$ixNet->setMultiAttribute($ipv4_gateway_value,
     '-value', '70.101.1.101');
-$ixNet->commit();    
+$ixNet->commit();
 
 
 my $ipv4_address = $ixNet->getAttribute($controller_ipv4, '-address');
 $ixNet->commit();
 my $ipv4_address_val = $ixNet->add($ipv4_address, 'singleValue');;
-$ixNet->setMultiAttribute($ipv4_address_val, 
+$ixNet->setMultiAttribute($ipv4_address_val,
     '-value', '70.101.1.1');
 $ixNet->commit();
 
@@ -198,8 +198,8 @@ print("Set vlan value for cluster data from range 1000-1009\n");
 my $ovsdb_vlan = $ixNet->getAttribute($ovsdb_controller.'/clusterData', '-vlan');
 my $ovsdb_vlan_counter = $ixNet->add($ovsdb_vlan, 'counter');
 $ixNet->setMultiAttribute($ovsdb_vlan_counter,
-		'-step', '1', 
-		'-start', '1000', 
+		'-step', '1',
+		'-start', '1000',
 		'-direction', 'increment');
 $ixNet->commit();
 
@@ -221,8 +221,8 @@ print "Set vni value for cluster data to 5000-5009\n";
 my $ovsdb_controller_vni = $ixNet->getAttribute($ovsdb_controller.'/clusterData', '-vni');
 my $ovsdb_controller_vni_counter = $ixNet->add($ovsdb_controller_vni, 'counter');
 $ixNet->setMultiAttribute($ovsdb_controller_vni_counter,
-		'-step', '1', 
-		'-start', '5000', 
+		'-step', '1',
+		'-start', '5000',
 		'-direction', 'increment');
 $ixNet->commit();
 
@@ -342,24 +342,24 @@ my $hypervisor = $ixNet->add($ipv4_hypervisor, 'vxlan');
 
 print "Connecting link of hypervisor to ovsdb controllert via pseudoConnectedTo\n ";
 $ixNet->setMultiAttribute($hypervisor,
-		'-externalLearning', 'true', 
-		'-runningMode', 'ovsdbStack', 
-		'-ovsdbConnectorMultiplier', '10', 
-		'-multiplier', '10', 
-		'-stackedLayers', [], 
+		'-externalLearning', 'true',
+		'-runningMode', 'ovsdbStack',
+		'-ovsdbConnectorMultiplier', '10',
+		'-multiplier', '10',
+		'-stackedLayers', [],
 		'-name', 'VXLAN 1');
 $ixNet->commit();
 $ixNet->setMultiAttribute($ovsdb_controller,
-    '-pseudoConnectedTo', $hypervisor); 
+    '-pseudoConnectedTo', $hypervisor);
 $ixNet->setMultiAttribute($ovsdb_controller,
-    '-vxlan', $hypervisor); 
+    '-vxlan', $hypervisor);
 $ixNet->setMultiAttribute($ethernet_hypervisor.'/vlan:1',
     '-name', 'VLAN 2');
-$ixNet->commit();    
+$ixNet->commit();
 print("Set hypervisor VNI to increment from 5000 to 5009\n");
 print $hypervisor;
 my $hypervisor_vni = $ixNet->getAttribute($hypervisor, '-vni');
-print $hypervisor_vni; 
+print $hypervisor_vni;
 my $hypervisor_vni_val = $ixNet->add($hypervisor_vni, 'counter');
 print $hypervisor_vni_val;
 $ixNet->setMultiAttribute($hypervisor_vni_val,
@@ -368,13 +368,13 @@ $ixNet->setMultiAttribute($hypervisor_vni_val,
      '-direction', 'increment');
 $ixNet->commit();
 
-    
+
 ################################################################################
 # Configure  VM                    #
-###############################################################################    
+###############################################################################
 print("configure VM\n");
 print $vm_dg;
-# print    
+# print
 my $ethernet_vm = $ixNet->add($vm_dg, 'ethernet');
 $ixNet->commit();
 $ixNet->setMultiAttribute($ethernet_vm,
@@ -390,27 +390,27 @@ $ixNet->commit();
 my $gateway_ip_vm = $ixNet->getAttribute($ipv4_vm, '-gatewayIp');
 my $gateway_ip_val = $ixNet->add($gateway_ip_vm, 'counter');
 $ixNet->setMultiAttribute($gateway_ip_val,
-		'-step', '0.0.1.0', 
-		'-start', '100.1.0.1', 
+		'-step', '0.0.1.0',
+		'-start', '100.1.0.1',
 		'-direction', 'increment');
 $ixNet->commit();
 
 my $ipv4_address_vm = $ixNet->getAttribute($ipv4_vm, '-address');
 my $ipv4_address_val = $ixNet->add($ipv4_address_vm, 'counter');
 $ixNet->setMultiAttribute($ipv4_address_val,
-		'-step', '0.0.1.0', 
-		'-start', '100.1.0.2', 
+		'-step', '0.0.1.0',
+		'-start', '100.1.0.2',
 		'-direction', 'increment');
-$ixNet->commit();        
-print "Connecting link of VM to hypervisor via ConnectedTo\n ";        
+$ixNet->commit();
+print "Connecting link of VM to hypervisor via ConnectedTo\n ";
 my $vm_dg_connector = $ixNet-> add($ethernet_vm, 'connector');
 $ixNet->setMultiAttribute($vm_dg_connector,
     '-connectedTo', $hypervisor);
 $ixNet->commit();
-   
+
 ################################################################################
 # Configure  Replicator                #
-###############################################################################  
+###############################################################################
 my $ethernet_replicator = $ixNet->add($replicator_device_group, 'ethernet');
 $ixNet->setMultiAttribute($ethernet_replicator,
     '-name', 'Ethernet 4');
@@ -434,11 +434,11 @@ $ixNet->setMultiAttribute($replicator_ipv4_address_val,
 $ixNet->commit();
 my $replicator_vxlan = $ixNet->add($ipv4_replicator, 'vxlan');
 $ixNet->setMultiAttribute($replicator_vxlan,
-		'-externalLearning', 'true', 
-		'-runningMode', 'ovsdbControllerBfdStack', 
-		'-ovsdbConnectorMultiplier', '55', 
-		'-multiplier', '11', 
-		'-stackedLayers', [], 
+		'-externalLearning', 'true',
+		'-runningMode', 'ovsdbControllerBfdStack',
+		'-ovsdbConnectorMultiplier', '55',
+		'-multiplier', '11',
+		'-stackedLayers', [],
 		'-name', 'VXLAN 2');
 $ixNet->commit();
 
@@ -460,19 +460,19 @@ my $replicator_vxlan_vni_val = $ixNet->add($replicator_vxlan_vni_custom, 'increm
 $ixNet->setMultiAttribute($replicator_vxlan_vni_val,
     '-count', '9',
     '-value', '1');
-$ixNet->commit();        
+$ixNet->commit();
 
-print "Set connector from controller to replicator\n";  
+print "Set connector from controller to replicator\n";
 $ixNet->setMultiAttribute($ovsdb_controller,
     '-pseudoConnectedToVxlanReplicator', $replicator_vxlan);
 $ixNet->setMultiAttribute($ovsdb_controller,
     '-vxlanReplicator', $replicator_vxlan);
-$ixNet->commit();        
+$ixNet->commit();
 print "setting BFD interface";
 my $replicator_bfd = $ixNet->add($replicator_vxlan, 'bfdv4Interface');
 $ixNet->setMultiAttribute($replicator_bfd,
-		'-noOfSessions', '1', 
-		'-stackedLayers', [], 
+		'-noOfSessions', '1',
+		'-stackedLayers', [],
 		'-name', 'BFDv4 IF 1');
 $ixNet->commit();
 $ixNet->setMultiAttribute($replicator_bfd.'/bfdv4Session',
@@ -507,7 +507,7 @@ $ixNet->commit();
 
 ################################################################################
 # Starting Protocols DG one by one as start all is not supported                                                     #
-############################################################################### 
+###############################################################################
 #$ixNet->execute(startAllProtocols);
 #sleep(45);
 print "Starting Replicator DG\n";
@@ -518,16 +518,16 @@ sleep(10);
 print "Starting VM DG\n";
 $ixNet->execute('start', $vm_dg);
 # $ixNet-> exec start $vm_dg
-sleep(10); 
+sleep(10);
 
 print "Starting Controller DG\n";
 $ixNet->execute('start', $ovsdb_controller);
 #$ixNet-> exec start $controller_device_group1
-sleep(30); 
+sleep(30);
 
 ################################################################################
 # Check Stats                                                  #
-############################################################################### 
+###############################################################################
 
 print("Fetching all Protocol Summary Stats\n");
 my $viewPage = '::ixNet::OBJ-/statistics/view:"Protocols Summary"/page';
@@ -539,13 +539,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-        my $statIndiv = ''; 
+        my $statIndiv = '';
         $index = 0;
         foreach $statIndiv (@$statVal) {
             printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
             $index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -559,44 +559,39 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-        my $statIndiv = ''; 
+        my $statIndiv = '';
         $index = 0;
         foreach $statIndiv (@$statVal) {
             printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
             $index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
 ################################################################################
 # Execute dump db                                                 #
-############################################################################### 
+###############################################################################
 print "Execute Dump DB\n";
 # $ixNet-> exec dumpDB $ovsdb_controller 1
 $ixNet->execute('dumpDB', $ovsdb_controller, '1');
 
 ################################################################################
 # Stopping Protocols DG one by one as start all is not supported                                                     #
-############################################################################### 
+###############################################################################
 print "Stopping Replicator DG\n";
 $ixNet->execute('stop', $replicator_device_group);
 # $ixNet-> exec stop $replicator_device_group
-sleep(10); 
+sleep(10);
 
 print "Stopping Hypervisor DG\n";
 $ixNet->execute('stop', $hypervisor_device_group);
 # $ixNet-> exec stop $hypervisor_device_group
-sleep(10); 
+sleep(10);
 
 print "Stopping Controller DG\n";
 $ixNet->execute('stop', $ovsdb_controller);
 # $ixNet-> exec stop $controller_device_group1
-sleep(10); 
+sleep(10);
 
 print "************TEST CASE ENDS HERE*********************"
-
-
-
-
-

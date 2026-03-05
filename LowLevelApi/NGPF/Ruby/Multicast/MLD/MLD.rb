@@ -65,7 +65,7 @@
 #       when protocol is not started.                                          #
 #   13. Start protocol.                                                        #
 #   14. Retrieve protocol statistics                                           #
-#   15. Stop all protocols.                                                    #                
+#   15. Stop all protocols.                                                    #
 ################################################################################
 
 
@@ -99,7 +99,7 @@ def assignPorts (ixNet, realPort1, realPort2)
          @ixNet.setAttribute(chassisObj2, '-hostname', chassis2)
          @ixNet.commit()
          chassisObj2 = @ixNet.remapIds(chassisObj2)[0]
-     else 
+     else
          chassisObj2 = chassisObj1
      end
 
@@ -223,7 +223,7 @@ puts("Configuring ipv4 addresses")
 
 ################################################################################
 # adding MLD over ipv6 stack
-################################################################################ 
+################################################################################
 puts("Adding MLD over IP6 stack")
 @ixNet.add(ip1, 'mldHost')
 @ixNet.add(ip2, 'mldQuerier')
@@ -245,9 +245,9 @@ gqueryi = @ixNet.getAttribute(mldQuerier, '-generalQueryInterval')
      '-pattern', 'counter')
 @ixNet.commit()
 @ixNet.setMultiAttribute(@ixNet.add(gqueryi, 'counter'),
-        '-step', '1', 
+        '-step', '1',
     '-start', '140',
-    '-direction', 'increment')                        
+    '-direction', 'increment')
 @ixNet.commit()
 
 ################################################################################
@@ -272,7 +272,7 @@ puts("Changing version of MLD HOST to v2")
 mldport1 = @ixNet.getList(mldHost, 'port')[0]
 vesriontypehost = @ixNet.getAttribute(mldport1, '-versionType')
 versionvaluehost = @ixNet.getList(vesriontypehost, 'singleValue')[0]
-@ixNet.setAttribute(versionvaluehost, '-value', 'version2')                                
+@ixNet.setAttribute(versionvaluehost, '-value', 'version2')
 @ixNet.commit()
 
 ################################################################################
@@ -455,7 +455,7 @@ sourcemode = (@ixNet.getAttribute(ipv6grouplist1, '-sourceMode'))
 puts("Changing number of source address count")
 ipv4sourcelist1 = @ixNet.getList(ipv6grouplist1, 'mldUcastIPv6SourceList')[0]
 ucastSrcAddrCnt = @ixNet.getAttribute(ipv4sourcelist1, '-ucastSrcAddrCnt')
-singleValue = @ixNet.getList(ucastSrcAddrCnt, 'singleValue')[0] 
+singleValue = @ixNet.getList(ucastSrcAddrCnt, 'singleValue')[0]
 @ixNet.setAttribute(singleValue,
         '-value', '2')
 @ixNet.commit()
@@ -595,4 +595,3 @@ puts('Stopping protocols')
 @ixNet.execute('stopAllProtocols')
 sleep(10)
 puts('!!! Test Script Ends !!!')
-

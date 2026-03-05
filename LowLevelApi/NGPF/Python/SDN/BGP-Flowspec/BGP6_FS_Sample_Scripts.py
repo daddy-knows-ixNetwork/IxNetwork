@@ -53,7 +53,7 @@
 ################################################################################
 
 ################################################################################
-# Utilities                                                                    #    
+# Utilities                                                                    #
 ################################################################################
 from pprint import pprint
 import sys, os
@@ -89,7 +89,7 @@ else:
 
 ixiahlt  = IxiaHlt(ixiatcl)
 ixiangpf = IxiaNgpf(ixiahlt)
-    
+
 try:
     ErrorHandler('', {})
 except (NameError,):
@@ -98,7 +98,7 @@ except (NameError,):
         err = ixiatcl.tcl_error_info()
         log = retval['log']
         additional_info = '> command: %s\n> tcl errorInfo: %s\n> log: %s' % (cmd, err, log)
-        raise IxiaError(IxiaError.COMMAND_FAIL, additional_info)        
+        raise IxiaError(IxiaError.COMMAND_FAIL, additional_info)
 
 ###############################################################################
 # Specify your chassis/card port and IxNetwork client here
@@ -121,7 +121,7 @@ connect_result = ixiangpf.connect(
 
 if connect_result['status'] != '1':
     ErrorHandler('connect', connect_result)
-    
+
 #Retrieving the port handles, in a list
 ports = connect_result['vport_list'].split()
 
@@ -136,11 +136,11 @@ topology_1_status = ixiangpf.topology_config(
 )
 if topology_1_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config',topology_1_status)
-    
+
 topology_1_handle = topology_1_status['topology_handle']
 
-# Creating a device group in BGP topology1 
-print("Creating device group 1 in topology 1") 
+# Creating a device group in BGP topology1
+print("Creating device group 1 in topology 1")
 device_group_1_status = ixiangpf.topology_config(
     topology_handle              = topology_1_handle,
     device_group_name            = """BGP6 Topology 1 Router""",
@@ -149,7 +149,7 @@ device_group_1_status = ixiangpf.topology_config(
 )
 if device_group_1_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', device_group_1_status)
-    
+
 deviceGroup_1_handle = device_group_1_status['device_group_handle']
 
 # Creating a topology on second port
@@ -160,7 +160,7 @@ topology_2_status = ixiangpf.topology_config(
 )
 if topology_2_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', topology_2_status)
-    
+
 topology_2_handle = topology_2_status['topology_handle']
 
 # Creating a device group in BGP topology2
@@ -173,13 +173,13 @@ device_group_2_status = ixiangpf.topology_config(
 )
 if device_group_2_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', device_group_2_status)
-    
+
 deviceGroup_2_handle = device_group_2_status['device_group_handle']
 
 ################################################################################
 #  Configure protocol interfaces                                               #
 ################################################################################
-# Creating Ethernet stack for the first Device Group 
+# Creating Ethernet stack for the first Device Group
 print("Creating Ethernet stack for the first Device Group")
 ethernet_1_status= ixiangpf.interface_config(
     protocol_name                = """Ethernet 1""",
@@ -194,11 +194,11 @@ ethernet_1_status= ixiangpf.interface_config(
 )
 if ethernet_1_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', ethernet_1_status)
-    
+
 ethernet_1_handle = ethernet_1_status['ethernet_handle']
 
 # Creating Ethernet stack for the second Device Group
-print("Creating Ethernet for the second Device Group")   
+print("Creating Ethernet for the second Device Group")
 ethernet_2_status = ixiangpf.interface_config(
     protocol_name                = """Ethernet 2""",
     protocol_handle              = deviceGroup_2_handle,
@@ -215,7 +215,7 @@ if ethernet_2_status['status'] != IxiaHlt.SUCCESS:
 
 ethernet_2_handle = ethernet_2_status['ethernet_handle']
 
-# Creating IPv6 Stack on top of Ethernet Stack for the first Device Group                                 
+# Creating IPv6 Stack on top of Ethernet Stack for the first Device Group
 print("Creating IPv6 Stack on top of Ethernet 1 Stack for the first Device Group")
 ipv6_1_status = ixiangpf.interface_config(
     protocol_name                     = """IPv6 1""",
@@ -232,10 +232,10 @@ ipv6_1_status = ixiangpf.interface_config(
 )
 if ipv6_1_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', ipv6_1_status)
-    
+
 ipv6_1_handle = ipv6_1_status['ipv6_handle']
 
-# Creating IPv6 Stack on top of Ethernet 1 Stack for the second Device Group 
+# Creating IPv6 Stack on top of Ethernet 1 Stack for the second Device Group
 print("Creating IPv6 2 stack on Ethernet 2 stack for the second Device Group")
 ipv6_2_status = ixiangpf.interface_config(
     protocol_name                     = """IPv6 2""",
@@ -252,14 +252,14 @@ ipv6_2_status = ixiangpf.interface_config(
 )
 if ipv6_2_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', ipv6_2_status)
-    
+
 ipv6_2_handle = ipv6_2_status['ipv6_handle']
 
 ################################################################################
-# BGP6 protocol configurations On Top Of IPv6 Stack at Peer1 side                                             # 
+# BGP6 protocol configurations On Top Of IPv6 Stack at Peer1 side                                             #
 ################################################################################
 # This will Create BGP6 Stack on top of IPv6 Stack of Topology1
-print("Creating BGP6 Stack on top of IPv6 1 stack on Topology 1")     
+print("Creating BGP6 Stack on top of IPv6 1 stack on Topology 1")
 
 bgp_v6_interface_1_status = ixiangpf.emulation_bgp_config(
     mode                                         = "enable",
@@ -371,16 +371,16 @@ bgp_v6_interface_1_status = ixiangpf.emulation_bgp_config(
     always_include_tunnel_enc_ext_community      = "false",
     ip_vrf_to_ip_vrf_type                        = "interfacefullWithUnnumberedCorefacingIRB",
     irb_interface_label                          = "16",
-    irb_ipv6_address                             = "10:0:0:0:0:0:0:1",                    
+    irb_ipv6_address                             = "10:0:0:0:0:0:0:1",
 )
 
 if bgp_v6_interface_1_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_bgp_config', bgp_v6_interface_1_status)
-    
+
 bgpInterface_1_handle = bgp_v6_interface_1_status['bgp_handle']
 
 ################################################################################
-# BGP FLOW SPEC configurations AT PEER1 Side on Top of BGP6 Stack                                               # 
+# BGP FLOW SPEC configurations AT PEER1 Side on Top of BGP6 Stack                                               #
 ################################################################################
 # This will Create BGP IPv6 Flow spec on top of BGP6 Stack of Topology1
 print("Creating BGP IPv6 Flow Spec on top of BGP6 stack on Topology 1")
@@ -483,7 +483,7 @@ if bgpFlowSpecRangeList_v6_interface_1_status['status'] != IxiaHlt.SUCCESS:
 bgpFlowSpecRangesListV6_1_handle = bgpFlowSpecRangeList_v6_interface_1_status['bgp_flowSpecV6_handle']
 
 ################################################################################
-# BGP protocol configurations On Top Of IPv6 Stack at Peer2 side                                             # 
+# BGP protocol configurations On Top Of IPv6 Stack at Peer2 side                                             #
 ################################################################################
 # This will Create BGP6 Stack on top of IPv6 Stack of Topology2
 print("Creating BGP6 Stack on top of IPv6 1 stack on Topology 2")
@@ -602,11 +602,11 @@ bgp_v6_interface_2_status = ixiangpf.emulation_bgp_config(
 
 if bgp_v6_interface_2_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_bgp_config', bgp_v6_interface_2_status)
-    
+
 bgpInterface_2_handle = bgp_v6_interface_2_status['bgp_handle']
 
 ################################################################################
-# BGP IPv6 FLOW SPEC configurations AT PEER1 Side on Top of BGP6 Stack                                               # 
+# BGP IPv6 FLOW SPEC configurations AT PEER1 Side on Top of BGP6 Stack                                               #
 ################################################################################
 # This will Create BGP IPv6 Flow spec on top of BGP6 Stack of Topology2
 print("Creating BGP IPv6 Flow Spec on top of BGP6 stack on Topology 2")
@@ -707,7 +707,7 @@ bgpFlowSpecRangeList_v6_interface_2_status = ixiangpf.emulation_bgp_flow_spec_co
 if bgpFlowSpecRangeList_v6_interface_2_status['status'] != IxiaHlt.SUCCESS:
     ixnHLT_errorHandler('emulation_bgp_flow_spec_config', bgpFlowSpecRangeList_v6_interface_2_status)
 
-bgpFlowSpecRangesListV6_2_handle = bgpFlowSpecRangeList_v6_interface_2_status['bgp_flowSpecV6_handle']  
+bgpFlowSpecRangesListV6_2_handle = bgpFlowSpecRangeList_v6_interface_2_status['bgp_flowSpecV6_handle']
 
 #####################################################################################
 #Modifying the value of Flow Spec Field of BGP6 PEER1 and PEER2
@@ -917,13 +917,13 @@ if bgpFlowSpecRangeList_v6_interface_2_status['status'] != IxiaHlt.SUCCESS:
     ixnHLT_errorHandler('emulation_bgp_flow_spec_config', bgpFlowSpecRangeList_v6_interface_2_status)
 ############################################################################
 # Start BGP6 protocol                                                       #
-############################################################################    
+############################################################################
 print("Waiting 5 seconds before starting protocol(s) ...")
 time.sleep(5)
 _result_ = ixiangpf.test_control(action='start_all_protocols')
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('test_control', _result_)
-     
+
 
 print("Waiting for 60 seconds")
 time.sleep(60)
@@ -931,7 +931,7 @@ time.sleep(60)
 ############################################################################
 # Retrieve protocol statistics                                             #
 ############################################################################
-print("Fetching BGP aggregated statistics")               
+print("Fetching BGP aggregated statistics")
 protostats = ixiangpf.emulation_bgp_info(\
     handle = bgpInterface_1_handle,
     mode   = 'stats_per_device_group')
@@ -951,7 +951,7 @@ learned_info = ixiangpf.emulation_bgp_info(\
 
 if learned_info['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_bgp_info', learned_info)
-    
+
 pprint(learned_info)
 
 ############################################################################
@@ -961,6 +961,6 @@ print("Stopping all protocols")
 _result_ = ixiangpf.test_control(action='stop_all_protocols')
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('test_control', _result_)
-    
-time.sleep(2)                  
+
+time.sleep(2)
 print("!!! Test Script Ends !!!")

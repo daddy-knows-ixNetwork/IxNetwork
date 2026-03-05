@@ -9,10 +9,10 @@ Author: Hubert Gee
  REQUIREMENTS
     - Python2.7.9+
     - Python modules: requests
-    - preference.py:  
+    - preference.py:
          - Make a copy of the preference.py template file and give it
            any name.
-    
+
     - All the IxNetwork ReST API modules:
          IxNetRestApi.py
          IxNetRestApiPortMgmt.py
@@ -106,13 +106,13 @@ try:
         print('        To connect to an existing session ID, enter: connecttolinux(resume=True, sessionId=<id>)')
         print()
         print('Step 3> Make your configuration:')
-        print("        Enter: config('l2l3Params.py')") 
+        print("        Enter: config('l2l3Params.py')")
         print("        Enter: loadsavedconfig('ConfigFiles/<saved config file>')")
         print("        To see all config files, enter: showconfigfiles()")
         print()
         print("See all options, enter: showcommands()")
         print()
-        
+
     def showcommands(command=None, showall=None):
         """Show all the API commands.
 
@@ -155,7 +155,7 @@ try:
             print('\n\t2> For Windows chassis connection, enter: connecttowindows()')
             print('\t   For Linux chassis connection, enter:   connecttolinux()')
             print('\t       To connect to an existing Linx session ID: connecttolinux(resume=True, sessionId=<id>)')
-            print()    
+            print()
             print('\t3> To load a saved config file and use the chassisIp/ports saved in the config file:')
             print('\t      Enter: loadsavedconfig("ConfigFiles/<config file>")')
             print()
@@ -210,7 +210,7 @@ try:
         allSessionId = middleware.ixn.getAllSessionId()
 
     def showsession():
-        """Show the current session ID.  If session is connected to 
+        """Show the current session ID.  If session is connected to
         a Linux API server, then the API-KEY will be included."""
         for property,value in middleware.__dict__.items():
             if property.startswith('_') and not callable(property): continue
@@ -297,7 +297,7 @@ try:
             if middleware.preference.apiServerType == 'linux':
                 if middleware.preference.apiKey == None and apiKey == None:
                     print('\nError: To resume on Linux API server, you must provide apiKey.\n')
-                    return 
+                    return
 
                 if sessionId == None:
                     print('\nError: To resume on Linux API server, you must provide a sessionId to connect to.\n')
@@ -337,8 +337,8 @@ try:
         if middleware.preference.apiServerType == 'linux':
             if resume == True and apiKey == None:
                 apiKey = middleware.preference.apiKey
-                
-            print('', middleware.preference.linuxApiServerIp, str(middleware.preference.linuxApiServerIpPort), 
+
+            print('', middleware.preference.linuxApiServerIp, str(middleware.preference.linuxApiServerIpPort),
                   middleware.preference.username, middleware.preference.password, str(sessionId))
 
             ixnObj = Connect(apiServerIp=middleware.preference.linuxApiServerIp,
@@ -354,7 +354,7 @@ try:
             # Record the current apiKey and sessionId
             middleware.apiKey = ixnObj.apiKey
             middleware.linuxServerSessionId = ixnObj.sessionId
-            
+
 
         middleware.connected = True
         middleware.sessionId = ixnObj.sessionId.split('/')[-1]
@@ -479,7 +479,7 @@ try:
 
         if 'ixncfg' not in ixncfgConfigFile:
             print('\nError: The .ixncfg config file doesn\'t have a .ixncfg extension. Please check your ixncfgConfigFile value: %s\n' % ixncfgConfigFile)
-            return 
+            return
 
         if ixncfgConfigFile == None:
             if middleware.preference.ixncfgConfigFile == None:
@@ -525,7 +525,7 @@ try:
         middleware.portMgmtObj.releaseAllPorts()
         middleware.ixn.configLicenseServerDetails([middleware.preference.licenseServerIp],
                                                   middleware.preference.licenseMode)
-             
+
         middleware.ixn.loadIxncfgConfig = True
         middleware.fileMgmtObj.loadConfigFile(ixncfgConfigFile)
         if portList != None:
@@ -970,7 +970,7 @@ try:
             endpointList.append(endpoints)
 
             trafficStatus = middleware.trafficObj.configTrafficItem(
-                mode='create',            
+                mode='create',
                 trafficItem = {
                     'name':          trafficItem['name'],
                     'trafficType':   trafficItem['trafficType'],
@@ -982,12 +982,12 @@ try:
             )
 
             configElementObj = trafficStatus[2][0]
-            
+
             # Configure packet headers for RAW Traffic Item
             for configElement in trafficItem['configElements']:
                 if 'packetHeaders' not in configElement:
                     continue
-                
+
                 stackNumber = 1
                 for packetHeader in configElement['packetHeaders']:
                     if packetHeader == 'mac':
@@ -1001,7 +1001,7 @@ try:
                             middleware.trafficObj.configPacketHeaderField(stackObj,
                                                                           fieldName='Source MAC Address',
                                                                           data=configElement['packetHeaders']['mac']['src'])
-                            
+
                     if packetHeader == 'mpls':
                         for mplsHeader in configElement['packetHeaders']['mpls']:
                             stackObj = middleware.trafficObj.addTrafficItemPacketStack(configElementObj,
@@ -1024,11 +1024,11 @@ try:
                         middleware.trafficObj.configPacketHeaderField(stackObj,
                                                                       fieldName='Destination Address',
                                                                       data=configElement['packetHeaders']['ipv4']['dest'])
- 
+
 
         if isAnyTrafficItemConfigured == 0:
             raise IxNetRestApiException('No Traffic Item was enabled for configuring')
-        
+
     def config(paramFile=None, chassisIp=None, portList=None):
         """Read a parameter file and onfigure NGPF and Traffic Item from scratch.
 
@@ -1045,7 +1045,7 @@ try:
             print('\nError: No config file found: {}'.format(paramFile))
             return
 
-        # Allow users to overwrite param file chassisIp and portList from cli 
+        # Allow users to overwrite param file chassisIp and portList from cli
         if chassisIp == None:
             chassisIp = middleware.params['ixChassisIp']
             middleware.preference.chassisIp = chassisIp
@@ -1073,7 +1073,7 @@ try:
         if middleware.connected == False:
             print('\nError: You must connect to an API server first.\n\tconnectowindows() or connecttolinux()\n')
             return
-            
+
         middleware.params = __import__(paramFile.split('.')[0]).params
 
         if middleware.preference.licenseServerIp == None:
@@ -1213,7 +1213,7 @@ try:
                               'startValue': trafficItem['configElement']['stack']['ipv4']['dst']['start'],
                               'stepValue':  trafficItem['configElement']['stack']['ipv4']['dst']['step'],
                               'countValue': trafficItem['configElement']['stack']['ipv4']['dst']['count']})
-                                
+
     def getInput(prompt):
         """Support Python 2 and 3 for input and raw_input.
 
@@ -1365,4 +1365,3 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
             middleware.protocolObj.releasePorts(portList)
         if middleware.apiServerType == 'windowsConnectionMgr':
             middleware.ixn.deleteSession()
-

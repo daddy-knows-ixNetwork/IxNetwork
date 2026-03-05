@@ -408,6 +408,3 @@ time.sleep(30)
 
 print ("\n\nCleaning up IxNetwork...")
 #ixNet.execute('newConfig')
-
-
-

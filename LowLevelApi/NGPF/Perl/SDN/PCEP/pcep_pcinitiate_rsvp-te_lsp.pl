@@ -59,7 +59,7 @@
 ################################################################################
 
 ################################################################################
-# Please ensure that PERL5LIB environment variable is set properly so that 
+# Please ensure that PERL5LIB environment variable is set properly so that
 # IxNetwork.pm module is available. IxNetwork.pm is generally available in
 # C:\<IxNetwork Install Path>\API\Perl
 ################################################################################
@@ -76,13 +76,13 @@ sub assignPorts {
     my $port2    = $my_resource[6];
     my $vport1   = $my_resource[7];
     my $vport2   = $my_resource[8];
-    
+
     my $root = $ixNet->getRoot();
     my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-    
+
     my $chassisObj2 = '';
     if ($chassis1 ne $chassis2) {
         $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -92,7 +92,7 @@ sub assignPorts {
     } else {
         $chassisObj2 = $chassisObj1;
     }
-    
+
     my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -101,7 +101,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-        
+
     $ixNet->commit();
 }
 
@@ -109,7 +109,7 @@ sub assignPorts {
 my @ports       = (('10.216.108.96', '2', '1'), ('10.216.108.96', '2', '2'));
 my $ixTclServer = '10.216.108.113';
 my $ixTclPort   = '8081';
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 ################################################################################
@@ -169,7 +169,7 @@ $ixNet->commit();
 $ethernet1 = ($ixNet->remapIds($ethernet1))[0];
 my $macMv = $ixNet->getAttribute($ethernet1, '-mac');
 $ixNet->add($macMv, 'counter');
-$ixNet->setMultiAttribute($macMv.'/counter',  
+$ixNet->setMultiAttribute($macMv.'/counter',
              '-direction', 'increment',
              '-start'    , '00:11:01:00:00:01',
              '-step'     , '00:00:00:00:00:01');
@@ -237,14 +237,14 @@ $ixNet->setMultiAttribute($pathSetupTypeMv.'/singleValue',
 $ixNet->commit();
 my $sourceIpv4AddressMv = $ixNet->getAttribute($pceInitiateLSPParameters1, '-srcEndPointIpv4');
 $ixNet->add($sourceIpv4AddressMv, 'counter');
-$ixNet->setMultiAttribute($sourceIpv4AddressMv.'/counter',  
+$ixNet->setMultiAttribute($sourceIpv4AddressMv.'/counter',
              '-direction', 'increment',
              '-start'    , '1.1.1.2');
 $ixNet->commit();
 
 my $destinationIpv4AddressMv = $ixNet->getAttribute($pceInitiateLSPParameters1, '-destEndPointIpv4');
 $ixNet->add($destinationIpv4AddressMv, 'counter');
-$ixNet->setMultiAttribute($destinationIpv4AddressMv.'/counter',  
+$ixNet->setMultiAttribute($destinationIpv4AddressMv.'/counter',
              '-direction', 'increment',
              '-start'    , '1.1.1.1');
 $ixNet->commit();
@@ -307,7 +307,7 @@ $ixNet->commit();
 $ethernet2 = ($ixNet->remapIds($ethernet2))[0];
 my $macMv = $ixNet->getAttribute($ethernet2, '-mac');
 $ixNet->add($macMv, 'counter');
-$ixNet->setMultiAttribute($macMv.'/counter',  
+$ixNet->setMultiAttribute($macMv.'/counter',
              '-direction', 'increment',
              '-start'    , '00:12:01:00:00:01',
              '-step'     , '00:00:00:00:00:01');
@@ -383,9 +383,9 @@ $ixNet->commit();
 # Assign ports
 ################################################################################
 print("Connect to IxNetwork Tcl server\n");
-$ixNet->connect($ixTclServer, 
-                '-port', $ixTclPort, 
-                '-version', '8.00', 
+$ixNet->connect($ixTclServer,
+                '-port', $ixTclPort,
+                '-version', '8.00',
                 '-setAttribute', 'strict');
 my @vPorts  = $ixNet->getList($ixNet->getRoot(), 'vport');
 my $vport1 = $vPorts[0];
@@ -451,7 +451,7 @@ print("***************************************************\n");
 my $includeBandwidth = $ixNet->getAttribute($pceInitiateLSPParameters1, '-includeBandwidth');
 $ixNet->add($includeBandwidth, 'singleValue');
 $ixNet->setMultiAttribute($includeBandwidth.'/singleValue',
-            '-value', 'true'); 
+            '-value', 'true');
 $ixNet->commit();
 my $globals = $root.'/globals';
 my $topology = $globals.'/topology';
@@ -476,13 +476,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-        my $statIndiv = ''; 
+        my $statIndiv = '';
         $index = 0;
         foreach $statIndiv (@$statVal) {
             printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
             $index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 

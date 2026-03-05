@@ -54,8 +54,8 @@ def ShowKwargs(**kwargs):
     print '\n'
 
 
-def ConnectHlPy(device='', reset=1, port_list='', 
-               ixnetwork_tcl_server='', tcl_server='', 
+def ConnectHlPy(device='', reset=1, port_list='',
+               ixnetwork_tcl_server='', tcl_server='',
                 username='unknown'):
 
     print 'ConnectHlPy: Chassis:%s IxNetTclServer=%s' % (device, ixnetwork_tcl_server)
@@ -67,9 +67,9 @@ def ConnectHlPy(device='', reset=1, port_list='',
         tcl_server = tcl_server,
         username = username
         )
-    
+
     PrintDict(connect_status)
-    
+
     if connect_status['status'] != '1':
         return 1
     else:
@@ -84,13 +84,13 @@ def ConnectAndResumeNgpfHlPy(ixNetworkTclServer, tclServer,
     This API will return all configuration handles.
     '''
 
-    connectStatus = ixia_ngpf.connect ( 
+    connectStatus = ixia_ngpf.connect (
         ixnetwork_tcl_server = ixNetworkTclServer,
         tcl_server = tclServer,
         username = userName,
         session_resume_keys = '1',
         break_locks = '1',
-        ) 
+        )
     if connectStatus['status'] != '1':
         return 1
     else:
@@ -106,7 +106,7 @@ def ConnectAndResumeReassignPortsNgpfHlPy(ixNetworkTclServer, tclServer,
     This API will return all session configuration handles.
     '''
 
-    connectStatus = ixia_ngpf.connect ( 
+    connectStatus = ixia_ngpf.connect (
         ixnetwork_tcl_server = ixNetworkTclServer,
         tcl_server = tclServer,
         username = userName,
@@ -114,7 +114,7 @@ def ConnectAndResumeReassignPortsNgpfHlPy(ixNetworkTclServer, tclServer,
         device = chassisIp,
         session_resume_keys = '1',
         break_locks = '1',
-        ) 
+        )
     if connectStatus['status'] != '1':
         return 1
     else:
@@ -128,7 +128,7 @@ def LoadConfigFileNgpfHlPy(configFile, ixNetworkTclServer,
     This will return all configuration handles.
     '''
 
-    connectStatus = ixia_ngpf.connect ( 
+    connectStatus = ixia_ngpf.connect (
         config_file = configFile,
         reset = '1',
         ixnetwork_tcl_server = ixNetworkTclServer,
@@ -136,26 +136,26 @@ def LoadConfigFileNgpfHlPy(configFile, ixNetworkTclServer,
         username = userName,
         session_resume_keys = '1',
         break_locks = '1',
-        ) 
+        )
     if connectStatus['status'] != '1':
         return 1
     else:
         return connectStatus
-    
+
 
 def LoadConfigFileReassignPortsNgpfHlPy(configFile, ixNetworkTclServer, tclServer,
                                 chassisIp, portList, userName
                                 ):
     '''
     Load a saved configuration file and reassign ports.
-    The benefit of this API is that you could apply the same configuration 
+    The benefit of this API is that you could apply the same configuration
     in any testbed, and use different Ixia ports.
-    
+
     configFile: The full path to the config file on your Linux network
     portList format:  1/3. Not 1/1/3
     '''
 
-    connectStatus = ixia_ngpf.connect ( 
+    connectStatus = ixia_ngpf.connect (
         config_file = configFile,
         ixnetwork_tcl_server = ixNetworkTclServer,
         tcl_server = tclServer,
@@ -163,7 +163,7 @@ def LoadConfigFileReassignPortsNgpfHlPy(configFile, ixNetworkTclServer, tclServe
         port_list = portList,
         username = userName,
         break_locks = '1',
-        ) 
+        )
     if connectStatus['status'] != '1':
         return 1
     else:
@@ -196,7 +196,7 @@ def VerifyPortState( stopTime = 40 ):
             if portState != 'up':
                 print 'VerifyPortState: %s is not up yet. Verifying %d/%d seconds' % (port, timer, stopTime)
                 time.sleep(1)
-            
+
             if timer == stopTime:
                 print 'Port can\'t come up.  Exiting test'
                 return 1
@@ -260,7 +260,7 @@ def CreateTopologyPy(topologyName, vPorts):
                         )
     ixNet.commit()
     return topologyObj
-    
+
 def CreateTopologyNgpfHlPy(topology_name='Topology', ports=''):
     ''' port_handle format = 12/1 '''
 
@@ -269,14 +269,14 @@ def CreateTopologyNgpfHlPy(topology_name='Topology', ports=''):
         topology_name = topology_name,
         port_handle = ports
         )
-    
+
     if status['status'] != '1':
         return 1
 
     # /topology:1
     topology_handle = status['topology_handle']
     return topology_handle
-        
+
 def CreateDeviceGroupPy(topologyObj, deviceGroupName, multiplier):
     print '\nCreateDeviceGroup: %s : %s' % (topologyObj, deviceGroupName)
     deviceGroupObj = ixNet.add(topologyObj, 'deviceGroup')
@@ -286,7 +286,7 @@ def CreateDeviceGroupPy(topologyObj, deviceGroupName, multiplier):
                         )
     ixNet.commit()
     return deviceGroupObj
-        
+
 def CreateDeviceGroupNgpfHlPy(topology_handle='',
                               device_group_name='',
                               multiplier=1,
@@ -300,23 +300,23 @@ def CreateDeviceGroupNgpfHlPy(topology_handle='',
         device_group_multiplier = multiplier,
         device_group_enabled = enabled
         )
-    
+
     if status['status'] != '1':
         return 1
-        
+
     # /topology:1/deviceGroup:1
     device_group_handle = status['device_group_handle']
     return device_group_handle
 
 
-def ConfigPortHlPy(mode='config', 
-                   port_handle='', 
-                   phy_mode='copper', 
+def ConfigPortHlPy(mode='config',
+                   port_handle='',
+                   phy_mode='copper',
                    speed='ether1000',
-                   autonegotiation='1', 
-                   duplex='full', 
+                   autonegotiation='1',
+                   duplex='full',
                    intf_mode='ethernet'):
-    
+
     print '\nConfigPortHlPy:', port_handle, phy_mode
     status = ixia_hlt.interface_config(mode=mode,
                                        port_handle=port_handle,
@@ -326,11 +326,11 @@ def ConfigPortHlPy(mode='config',
                                        duplex=duplex,
                                        intf_mode=intf_mode
                                        )
-    
+
     if status['status'] != '1':
         print '\nConfig_Port failed: %s\n' % status['log']
         sys.exit()
-        
+
 
 def ConfigProtocolInterfaceNgpfHlPy(**kwargs):
     """ Usage:
@@ -391,7 +391,7 @@ def CreateIpv4NgpfPy(ethernetObj, ipv4Name='',
                      ipv4PrefixStartValue=None, ipv4PrefixStep='0', ipv4PrefixDirection='incremnet',
                      gatewayIpStartValue=None, gatewayIpStep='0.0.0.1', gatewayIpDirection='increment'):
 
-    # Example: 
+    # Example:
     #     ipv4Obj = CreateIpv4NgpfPy(ethernet1, 'ipv4-1', ipv4StartValue='1.1.1.1', gatewayIpStartValue='1.1.1.2', ipv4PrefixStartValue='24')
 
     print '\nCreateIpv4StackNgpf: %s : %s' % (ethernetObj, ipv4Name)
@@ -444,12 +444,12 @@ def CreateIpv4NgpfPy(ethernetObj, ipv4Name='',
                                 '-step', gatewayIpStep,
                                 '-direction', gatewayIpDirection
         )
-    ixNet.commit()        
+    ixNet.commit()
     return ipv4Obj
 
 def ConfigTrafficItemNgpfHlPy(**kwargs):
     """ Usage:
-    
+
     CreateTrafficItem(
     mode = 'create',
     name = 'Traffic_Item_1',
@@ -470,43 +470,43 @@ def ConfigTrafficItemNgpfHlPy(**kwargs):
     """
     print '\nConfigTrafficItemNgpfHlPy:'
     ShowKwargs(**kwargs)
-    
+
     status = ixia_ngpf.traffic_config(**kwargs)
-     
+
     if status['status'] != '1':
         return 1
-         
+
     '''
     status: 1
     stream_id: TI0-Traffic_Item_1
-    log: 
+    log:
     ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1:
-    
+
     headers: ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:"ethernet-1"
              ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:"ipv4-2"
              ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:"fcs-3"
     ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1:
-    
+
     headers: ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1/stack:"ethernet-1"
              ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1/stack:"ipv4-2"
              ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1/stack:"fcs-3"
-    
+
     encapsulation_name: Ethernet.IPv4
     endpoint_set_id: 1
     stream_ids: ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1
     traffic_item: ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1
     '''
-    
+
     return status
 
 
-def ConfigIpv4SingleBurstTrafficNgpfHlPy(name='Traffic_Item_1', 
-                                     rate_percent='100', 
-                                     pkt_per_burst='100000', 
-                                     bidirectional='0', src_endpoint='', 
+def ConfigIpv4SingleBurstTrafficNgpfHlPy(name='Traffic_Item_1',
+                                     rate_percent='100',
+                                     pkt_per_burst='100000',
+                                     bidirectional='0', src_endpoint='',
                                      dst_endpoint='',
                                      track_by='sourceDestValuePair0'):
-    
+
     status = ixia_ngpf.traffic_config(mode = 'create',
                                       name = name,
                                       emulation_src_handle = src_endpoint,
@@ -522,14 +522,14 @@ def ConfigIpv4SingleBurstTrafficNgpfHlPy(name='Traffic_Item_1',
                                       circuit_endpoint_type = 'ipv4',
                                       track_by = track_by,
                                       l3_protocol = 'ipv4')
-    
+
     if status['status'] != '1':
         print '\nTraffic_Ipv4SingleBurst failed:', status['log']
         sys.exit()
-        
+
     print '\nTraffic_Ipv4SingleBurst: Successfully created.'
     PrintDict(status)
-        
+
 
 def EnableTrafficItemByName( trafficItemNameList, condition='True' ):
     # condition: True or False
@@ -552,12 +552,12 @@ def EnableTrafficItemByName( trafficItemNameList, condition='True' ):
             print '\nEnableTrafficItemByName Error: No Traffic Item name found on configuration:', trafficItemName
             sys.exit()
 
-    
+
 def ApplyTrafficPy():
     print "\nApplyTrafficPy ..."
     traffic = ixNet.getRoot()+'/traffic'
     status = ixNet.execute('apply', traffic)
-    
+
 def ApplyChangesOnTheFly(timeout=90):
     count = 0
     status = ixNet.getAttribute('/globals/topology', '-applyOnTheFlyState')
@@ -595,7 +595,7 @@ def StopAllProtocolsPy():
 
 def StartAllProtocolsNgpfHlPy():
     print '\nStartAllProtocolsNgpfHlPy'
-    status = ixia_ngpf.test_control(action = 'start_all_protocols')    
+    status = ixia_ngpf.test_control(action = 'start_all_protocols')
     if status['status'] != '1':
         print '\nStartAllProtocolsNgpfHlPy failed:', status['log']
         return 1
@@ -606,7 +606,7 @@ def StartAllProtocolsNgpfHlPy():
 
 def StopAllProtocolsNgpfHlPy():
     print '\nStopAllProtocolsNgpfHlPy'
-    status = ixia_ngpf.test_control(action = 'stop_all_protocols')    
+    status = ixia_ngpf.test_control(action = 'stop_all_protocols')
     if status['status'] != '1':
         print '\nStopAllProtocolsNgpfHlPy failed:', status['log']
         return 1
@@ -618,7 +618,7 @@ def VerifyProtocolSessionStatusUpNgpfHlPy(protocolHandleList, totalTime=60):
     '''
     protocolHandleList: One or more protocol handles in a list
                         to verify for sessions status 'UP'.
-    
+
     Protocol handle example:
                      /topology:1/deviceGroup:1/ethernet:1/ipv4:1
                      /topology:1/deviceGroup:1/ethernet:1/ipv4:1/ospfv2:1
@@ -654,7 +654,7 @@ def VerifyProtocolSessionStatusUpNgpfHlPy(protocolHandleList, totalTime=60):
 
 def StartTrafficNgpfHlPy():
     print '\nStartTrafficNgpfHlPy'
-    status = ixia_ngpf.traffic_control(action = 'run')    
+    status = ixia_ngpf.traffic_control(action = 'run')
     if status == 1:
         print '\nStartTrafficNgpfHlPy failed: ', status['log']
         return 1
@@ -740,19 +740,19 @@ def VerifyTrafficStatePy():
 def GetStatsPy( getStatsBy='Flow Statistics', csvFile=None, csvEnableFileTimestamp=False):
     '''
     Description:
-        This API will return you a Python Dict of all the stats 
-        based on your specified stats. The exact stat name could 
+        This API will return you a Python Dict of all the stats
+        based on your specified stats. The exact stat name could
         be found on your IxNetwork GUI statistic tablets.
 
     Parameters:
         getStatsBy = The exact name of the stat that could be found on the IxNetwork GUI.
         csvFile    = The name of the CSV file that you want to store stats in.
         csvEnableFileTimestamp = Append a timestamp to the CSV file so they don't get overwritten.
-                                 This should only be used for getting the final stat result such as 
+                                 This should only be used for getting the final stat result such as
                                  when the traffic has completely stopped.
-                            
+
     getStatsBy options (case sensitive):
-    
+
         "Port Statistics"
         "Tx-Rx Frame Rate Statistics"
         "Port CPU Statistics"
@@ -833,7 +833,7 @@ def GetStatsPy( getStatsBy='Flow Statistics', csvFile=None, csvEnableFileTimesta
             rowList = pageList[pageListIndex]
             if csvFile != None:
                 csvWriteObj.writerow(rowList[0])
-            
+
             for rowIndex in xrange(0, len(rowList)):
                 row += 1
                 cellList = rowList[rowIndex]
@@ -850,7 +850,7 @@ def GetStatsPy( getStatsBy='Flow Statistics', csvFile=None, csvEnableFileTimesta
 
 def GetStatsNgpfHlPy(type_of_stats='flow'):
     print '\nGetStatsNgpfHlPy:', type_of_stats
-    status = ixia_ngpf.traffic_stats(mode = type_of_stats)    
+    status = ixia_ngpf.traffic_stats(mode = type_of_stats)
     if status['status'] != '1':
         print '\nGetStatsNgpfHlPy failed: ', status['log']
         sys.exit()
@@ -862,7 +862,7 @@ def GetStatsNgpfHlPy(type_of_stats='flow'):
 def RegenerateAllTrafficItemsPy():
     for trafficItem in ixNet.getList(ixNet.getRoot()+'/traffic', 'trafficItem'):
         result = ixNet.execute('generate', trafficItem)
-        
+
         if result != '::ixNet::OK':
             print '\nRegenerate_All_TrafficItems failed: ', trafficItem
             ixNet.disconnect()
@@ -891,7 +891,7 @@ def GetDeviceGroupHandleNgpfPy( deviceGroupNumber='1' ):
 
 def ModifyTopologyNameNgpfPy( topologyHandle, topologyName ):
     # topologyHandle example:ixNet::OBJ-/topology:1
-    
+
     print '\nModifyTopologyName: %s : %s' % (topologyHandle, topologyName)
     ixNet.setAttribute(topologyHandle, '-name', topologyName)
     ixNet.commit()
@@ -973,22 +973,22 @@ def ConfigIgmpQuerierNgpfHlPy( **kwargs ):
 
     # igmpQuerierStatus:: status: 1
     # igmp_querier_handle: /topology:2/deviceGroup:1/ethernet:1/ipv4:1/igmpQuerier:1
-    # igmp_querier_handles: /topology:2/deviceGroup:1/ethernet:1/ipv4:1/igmpQuerier:1/item:1 
-    #                       /topology:2/deviceGroup:1/ethernet:1/ipv4:1/igmpQuerier:1/item:2 
+    # igmp_querier_handles: /topology:2/deviceGroup:1/ethernet:1/ipv4:1/igmpQuerier:1/item:1
+    #                       /topology:2/deviceGroup:1/ethernet:1/ipv4:1/igmpQuerier:1/item:2
     #                       /topology:2/deviceGroup:1/ethernet:1/ipv4:1/igmpQuerier:1/item:3
-        
+
     PrintDict(status)
     return status
 
 
 def ConfigVxlanEmulationNgpfHlPy(get_handle='yes', **kwargs):
     # get_handle = Defaults to yes.
-    # 
+    #
     # The reason there is get_handle is because this
     # API has two usage.
     #    1> VxLAN emulation
     #    2> VxLAN global settings.
-    # Configuring VxLAN global settings won't have a 
+    # Configuring VxLAN global settings won't have a
     # handle to return.
 
     print '\nConfigVxlanEmulationNgpfHlPy:'
@@ -1191,7 +1191,7 @@ def DisableSupressArpAllPortsPy(action='', ipType='ipv4'):
                 ixNet.commit()
                 ixNet.setAttribute(multiValue+'/counter', '-start', 'true')
                 ixNet.commit()
-                
+
                 print '\nEnableDisableSuppressArpAllPorts: Creating overlay: %s -index %s -value %s' % (
                     portName, portIndex, action)
                 # Create Overlays with proper index number based on the portIndex
@@ -1208,9 +1208,9 @@ def DisableSupressArpAllPortsPy(action='', ipType='ipv4'):
 
 def TakeSnapshotPy(copyToLocalPath=None, view='Flow Statistics', osPlatform='windows'):
     """
-    Take a snapshot of the selected stat view and transfer the file to 
+    Take a snapshot of the selected stat view and transfer the file to
     the local file system where the script was executed.
-        
+
     Parameters
        copyToLocalPath: The local path to save the CSV stat file.
        view: The stat view to take snapshot of.
@@ -1232,7 +1232,7 @@ def TakeSnapshotPy(copyToLocalPath=None, view='Flow Statistics', osPlatform='win
 
     filePathToChange = 'Snapshot.View.Csv.Location: '+ path
     print '\ntakeSnapshot src file path:%s' % (filePathToChange)
-    
+
     opts[1] = filePathToChange
     generatingModeToChange= 'Snapshot.View.Csv.GeneratingMode: "kOverwriteCSVFile"'
     opts[2] = generatingModeToChange
@@ -1247,7 +1247,7 @@ def TakeSnapshotPy(copyToLocalPath=None, view='Flow Statistics', osPlatform='win
     if osPlatform == 'windows':
         readPath = path + '\\' + csvFileName + '.csv'
         writePath = '%s/%s_%s.csv' % (copyToLocalPath, csvFileName, timestamp)
-        
+
     if osPlatform == 'linux':
         readPath = '%s/%s.csv' %s (path, csvFileName)
         writePath = '%s/%s_%s.csv' % (copyToLocalPath, csvFileName, timestamp)
@@ -1269,7 +1269,7 @@ def GetVportConnectedToPortPy(vport):
 
 def GetTopologyPortsNgpfPy(topologyName):
     # Gets all the ports associated with the Topology
-    
+
     for topology in ixNet.getList(ixNet.getRoot(), 'topology'):
         currentName = ixNet.getAttribute(topology, '-name')
         if currentName is topologyName:
@@ -1313,16 +1313,16 @@ def VerifyArpNgpfPy(ipType='ipv4'):
     #
     # ipType:  ipv4 or ipv6
     #
-    # This API will verify for ARP session resolvement on 
+    # This API will verify for ARP session resolvement on
     # every TopologyGroup/DeviceGroup and/or
     #       TopologyGroup/DeviceGroup/DeviceGroup that has protocol "enabled".
-    # 
+    #
     # How it works?
     #    Each device group has a list of $sessionStatus: up, down or notStarted.
     #    If the deviceGroup has sessionStatus as "up", then ARP will be verified.
     #    It also has a list of $resolvedGatewayMac: MacAddress or removePacket[Unresolved]
     #    These two lists are aligned.
-    #    If lindex 0 on $sessionSatus is up, then the API expects lindex 0 on $resolvedGatewayMac 
+    #    If lindex 0 on $sessionSatus is up, then the API expects lindex 0 on $resolvedGatewayMac
     #    to have a mac address.
     #    If not, then arp is not resolved.
     #    This script will wait up to the $maxRetry before it declares failed.
@@ -1343,7 +1343,7 @@ def VerifyArpNgpfPy(ipType='ipv4'):
                 arpResult = DeviceGroupProtocolStackNgpfPy(deviceGroup, ipType)
                 if arpResult != 0:
                     unresolvedArpList = unresolvedArpList + arpResult
-                
+
                 if ixNet.getList(deviceGroup, 'deviceGroup') != '':
                     for innerDeviceGroup in ixNet.getList(deviceGroup, 'deviceGroup'):
                         print '\n', innerDeviceGroup
@@ -1356,7 +1356,7 @@ def VerifyArpNgpfPy(ipType='ipv4'):
                 arpResult = DeviceGroupProtocolStackNgpf(deviceGroup, ipType)
                 if arpResult != 0:
                     unresolvedArpList = unresolvedArpList + arpResult
-                    
+
                 if ixNet.getList(deviceGroup, 'deviceGroup') != '':
                     for innerDeviceGroup in ixNet.getList(deviceGroup, 'deviceGroup'):
                         print '\n', innerDeviceGroup
@@ -1380,11 +1380,11 @@ def VerifyArpNgpfPy(ipType='ipv4'):
 def GetStatViewPy( getStatsBy='Flow Statistics' ):
     '''
     Description:
-        This API will return you a Python Dict of all the stats 
+        This API will return you a Python Dict of all the stats
         based on your specified stat name which are shown below.
 
     getStatsBy options (case sensitive):
-    
+
         "Port Statistics"
         "Tx-Rx Frame Rate Statistics"
         "Port CPU Statistics"
@@ -1411,7 +1411,7 @@ def GetStatViewPy( getStatsBy='Flow Statistics' ):
     ixNet.commit()
     columnList = ixNet.getAttribute(view+'/page', '-columnCaptions')
     print '\n', columnList
-    
+
     startTime = 1
     stopTime = 30
     for timer in xrange(startTime, stopTime + 1):
@@ -1445,7 +1445,7 @@ def GetStatViewPy( getStatsBy='Flow Statistics' ):
 
         for pageListIndex in xrange(0, totalFlowStatistics):
             rowList = pageList[pageListIndex]
-            
+
             for rowIndex in xrange(0, len(rowList)):
                 row += 1
                 cellList = rowList[rowIndex]
@@ -1460,7 +1460,7 @@ def GetStatViewPy( getStatsBy='Flow Statistics' ):
 def VerifyProtocolSessionsNgpfPy(protocol):
     # This API will return a list of protocol session status on the specified protocol
     # handle.  The protocol handle is provided when you create a new protocol.
-    # 
+    #
     # For example:
     #   ospf handle: ::ixNet::OBJ-/topology:1/deviceGroup:1/ethernet:1/ipv4:1/ospfv2:1
     #   bgp handle:  ::ixNet::OBJ-/topology:1/deviceGroup:1/ethernet:1/ipv4:1/bgpIpv4Peer:1
@@ -1469,7 +1469,7 @@ def VerifyProtocolSessionsNgpfPy(protocol):
 def VerifyAllProtocolSessionsNgpfPy():
     # This API will loop through each created Topology Group and verify
     # all the created protocols for session up for up to 90 seconds total.
-    # 
+    #
     # Returns 0 if all sessions are UP.
     # Returns 1 if any session remains DOWN after 90 seconds.
 
@@ -1512,7 +1512,7 @@ def VerifyAllProtocolSessionsNgpfPy():
         for topology in ixNet.getList(ixNet.getRoot(), 'topology'):
             for deviceGroup in ixNet.getList(topology, 'deviceGroup'):
                 for ethernet in ixNet.getList(deviceGroup, 'ethernet'):
-                    for ipv4 in ixNet.getList(ethernet, 'ipv4'):                        
+                    for ipv4 in ixNet.getList(ethernet, 'ipv4'):
                         for currentProtocol in ixNet.getList(ipv4, protocol):
                             for timer in range(startCounter, timeEnd+1):
                                 currentStatus = ixNet.getAttribute(currentProtocol, '-sessionStatus')
@@ -1616,7 +1616,7 @@ def GetLicenseServerTier( ixNet ):
     return ixNet.getAttribute(ixNet.getRoot()+'globals/licensing', '-tier')
 
 def IxVmConnectToVChassisPy(vChassisIp):
-    # Besides connecting to ixNet, you must also connect to the 
+    # Besides connecting to ixNet, you must also connect to the
     # virtual chassis to configure IxVM ports.
 
     ixvmChassisStatus = ixNet.execute('connectToChassis', vChassisIp)
@@ -1653,7 +1653,7 @@ def IxVmDiscoverAppliancesPy(ixNet):
     vChassisObj = ixNet.getList(availableHardwareObj, 'virtualChassis')[0]
 
     # Load Modules
-    # ['::ixNet::OBJ-/availableHardware/virtualChassis/discoveredAppliance:"192.168.70.130"', 
+    # ['::ixNet::OBJ-/availableHardware/virtualChassis/discoveredAppliance:"192.168.70.130"',
     #   '::ixNet::OBJ-/availableHardware/virtualChassis/discoveredAppliance:"192.168.70.131"']
     discoveredApplianceList = ixNet.getList(vChassisObj, 'discoveredAppliance')
     for eachDiscoveredAppliance in discoveredApplianceList:
@@ -1808,10 +1808,10 @@ def IxVmRebuildChassisTopologyPy(ixNet, ixNetworkVersion):
 
 def EnableFlowGroup(endpointSetName, mode=True):
     '''
-    endpointSetName: The name of the EndpointSetId (Flow Group) 
+    endpointSetName: The name of the EndpointSetId (Flow Group)
     mode: True|False
     '''
-    for trafficItem in ixNet.getList(ixNet.getRoot()+'traffic', 'trafficItem'):            
+    for trafficItem in ixNet.getList(ixNet.getRoot()+'traffic', 'trafficItem'):
         for endpointSetIdObj in ixNet.getList(trafficItem, 'endpointSet'):
             endpointSetIdName = ixNet.getAttribute(endpointSetIdObj, '-name')
             endpointSetId = endpointSetIdObj.split(':')[-1]
@@ -1819,10 +1819,9 @@ def EnableFlowGroup(endpointSetName, mode=True):
             if endpointSetName == endpointSetIdName:
                 for highLevelStream in ixNet.getList(trafficItem, 'highLevelStream'):
                     endpointId = ixNet.getAttribute(highLevelStream, '-endpointSetId')
-                    
+
                     if endpointId == endpointSetId:
                         print '\nEnableFlowGroup=%s: endpontSetName:%s' % (mode, endpointSetName)
                         print highLevelStream
                         ixNet.setAttribute(highLevelStream, '-enabled', mode)
                         ixNet.commit()
-

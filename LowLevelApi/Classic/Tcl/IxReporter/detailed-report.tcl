@@ -113,8 +113,8 @@ ixNet exec saveDetailedResults [ixNet getRoot]/reporter/saveResults
 while  {[ixNet getAttribute [ixNet getRoot]/reporter/saveResults -state] != "done"} {
     after  1000
 }
-    
-puts " generating report"    
+
+puts " generating report"
 ixNet exec generateReport [ixNet getRoot]/reporter/generate
 
 while  {[ixNet getAttribute [ixNet getRoot]/reporter/generate -state] != "done"} {
@@ -138,10 +138,3 @@ puts "[ixNet help [ixNet getRoot]/reporter/generate]"
 puts " "
 puts "ixNet help [ixNet getRoot]/reporter/saveResults"
 puts "[ixNet help [ixNet getRoot]/reporter/saveResults]"
-
-
-
-
-
-
-

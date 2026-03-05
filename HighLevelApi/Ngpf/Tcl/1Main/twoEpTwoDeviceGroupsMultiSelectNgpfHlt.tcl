@@ -42,7 +42,7 @@ set topology1(portHandle) [keylget topology1Keys topology_handle]
 set topology2(portHandle) [keylget topology2Keys topology_handle]
 
 # 2> Create Device Group(s) to a Topology Group
-#    
+#
 set deviceGroup1(topo1,-topology_handle) $topology1(portHandle)
 set deviceGroup1(topo1,-device_group_multiplier) 5
 set deviceGroup1(topo1,-device_group_name) "Ipv4 Tx-1"
@@ -96,7 +96,7 @@ set portConfig1(-vlan_id_step)            1
 set portConfig1(-vlan_user_priority_step) 0
 set portConfig1(-arp_send_req) 1
 
-set portConfig2(-mtu)                     1500 
+set portConfig2(-mtu)                     1500
 set portConfig2(-protocol_handle)         $deviceGroup2(topo2,groupHandle)
 set portConfig2(-ipv4_resolve_gateway)    1
 set portConfig2(-ipv4_manual_gateway_mac) 00.00.00.00.00.01
@@ -115,7 +115,7 @@ set portConfig2(-vlan_id_step)            1
 set portConfig2(-vlan_user_priority_step) 0
 set portConfig2(-arp_send_req) 1
 
-set portConfig3(-mtu)                     1500 
+set portConfig3(-mtu)                     1500
 set portConfig3(-protocol_handle)         $deviceGroup3(topo1,groupHandle)
 set portConfig3(-ipv4_resolve_gateway)    1
 set portConfig3(-ipv4_manual_gateway_mac) 00.00.00.00.00.01
@@ -134,7 +134,7 @@ set portConfig3(-vlan_id_step)            1
 set portConfig3(-vlan_user_priority_step) 0
 set portConfig3(-arp_send_req) 1
 
-set portConfig4(-mtu)                     1500 
+set portConfig4(-mtu)                     1500
 set portConfig4(-protocol_handle)         $deviceGroup4(topo2,groupHandle)
 set portConfig4(-ipv4_resolve_gateway)    1
 set portConfig4(-ipv4_manual_gateway_mac) 00.00.00.00.00.01
@@ -169,7 +169,7 @@ set deviceGroup4Topo2 [keylget deviceGroup4Topo2Keys ipv4_handle]
 #     -emulation_dst_handle [list [list]] or {{}}
 #   If there are three endpoints, then 3 [list[ inside a list.
 #     [list [list][list][list]] or { {} {} {} }
-# 
+#
 # As for the array keys. Each endpoint uses the same key name
 #
 
@@ -181,7 +181,7 @@ set srcIntStart(EndpointSet-1)   [list 1 3 5 1 2 3]
 set srcIntCount(EndpointSet-1)   [list 1 1 1 1 1 1]
 
 # /topology:2/deviceGroup:1/ethernet:1/ipv4:1
-set dstPortHandle(EndpointSet-1)  $deviceGroup2Topo2 
+set dstPortHandle(EndpointSet-1)  $deviceGroup2Topo2
 set dstPortStart(EndpointSet-1)   1
 set dstPortCount(EndpointSet-1)   1
 set dstIntStart(EndpointSet-1)    1
@@ -200,7 +200,7 @@ set dstPortCount(EndpointSet-2)  [list 1 1 1 1 1 1]
 set dstIntStart(EndpointSet-2)   [list 2 3 4 3 4 1]
 set dstIntCount(EndpointSet-2)   [list 1 1 1 1 1 1]
 
-set trafficItem1(-mode) create 
+set trafficItem1(-mode) create
 set trafficItem1(-endpointset_count) 2
 set trafficItem1(-emulation_src_handle) {  { {} {} }   }
 set trafficItem1(-emulation_dst_handle) {  { {} {} }   }

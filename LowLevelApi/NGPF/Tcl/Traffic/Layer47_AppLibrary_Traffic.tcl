@@ -46,16 +46,16 @@
 #                                                                              	#
 # Description:                                                                 	#
 #	The script below represents an end to end workflow for AppLibrary Traffic. 	#
-#	Steps:																	   	#			
-#	1. Chassis connection and TCL server connection							   	#	
-#	2. Scenario configuration at layer 2-3									   	#	
-#	3. Creation of Applibrary traffic										   	#	
-#	4. Per connection parameters configuration 								   	#	
+#	Steps:																	   	#
+#	1. Chassis connection and TCL server connection							   	#
+#	2. Scenario configuration at layer 2-3									   	#
+#	3. Creation of Applibrary traffic										   	#
+#	4. Per connection parameters configuration 								   	#
 #	5. Traffic apply and start 												   	#
-#	6. Statistics operations: drill down in a loop							   	#	
+#	6. Statistics operations: drill down in a loop							   	#
 #	7. Test criteria evaluation													#
 #	8. Stop traffic															   	#
-#													  	 						#		
+#													  	 						#
 #################################################################################
 
 puts "\n\n\n#######################################"
@@ -66,11 +66,11 @@ puts "#######################################\n\n\n"
 # Setting global variables for the sample run
 #---------------------------------------------------------
 
-set chassisIP 				{"10.205.23.34"}						;# chassis IP 
-set applicationVersion 		7.40									;# IxN version 
+set chassisIP 				{"10.205.23.34"}						;# chassis IP
+set applicationVersion 		7.40									;# IxN version
 set tclPort 				8549									;# the TCL port on which the IxTcl Server is listening
 set port1					{2 15} 									;# where values are: {<card> <port>}
-set port2 					{2 16} 									;# where values are: {<card> <port>}				
+set port2 					{2 16} 									;# where values are: {<card> <port>}
 set PFCriteria_Higher			{"Initiator Tx Rate (Mbps)" 40}		;# statistic from Application Traffic item Statistics view that has to be higher than given value
 set PFCriteria_Lower			{"Flows Failed" 40}					;# statistic from Application Traffic item Statistics view that has to be lower than given value
 #--------------------------------------------------------------------------------------
@@ -91,12 +91,12 @@ set root [ixNet getRoot]
 puts "Adding chassis to the configuration"
 set chassis1 [ixNet add $root/availableHardware chassis]
 	set chassis1ID [ixNet remapIDs $chassis1]
-	
+
 ixNet setAttribute $chassis1ID -hostname $chassisIP
 ixNet commit
 
 #------------------------------------
-# Adding 2 ports 
+# Adding 2 ports
 #------------------------------------
 
 puts "Adding offline ports to the configuration"
@@ -107,11 +107,11 @@ set vport1 [ixNet add $root vport]
 set vport2 [ixNet add $root vport]
 	ixNet commit
 	set vport2ID [ixNet remapIDs $vport2]
-	
+
 ixNet commit
 
 #-----------------------------------------
-# Mapping virtual ports to chassis ports 
+# Mapping virtual ports to chassis ports
 #-----------------------------------------
 
 puts "Mapping offline ports to actual ports in chassis\n"
@@ -121,7 +121,7 @@ ixNet setAttribute $root/vport:2 -connectedTo /availableHardware/chassis:$chassi
 ixNet commit
 
 #---------------------------------------------------
-# Adding 1st topology, Device Group, Ethernet, IPv4 
+# Adding 1st topology, Device Group, Ethernet, IPv4
 #---------------------------------------------------
 
 puts "Building first topology and building its stack"
@@ -132,7 +132,7 @@ set addedTopology_1 [ixNet add $root topology]
 set addedDG [ixNet add $addedTopology_1ID deviceGroup]
 	ixNet commit
 	set addedDGID [ixNet remapIDs $addedDG]
-	
+
 set addedPort [ixNet add $addedTopology_1ID port]
 	ixNet commit
 	set addedPortID [ixNet remapIDs $addedPort]
@@ -152,7 +152,7 @@ set addedIPv4 [ixNet add $addedEthernetID ipv4]
 puts "Addressing the first topology\n"
 ixNet setAttribute $addedTopology_1ID -vports $root/vport:1
 	ixNet commit
-	
+
 set addressMV [ixNet getA $addedIPv4 -address]
 ixNet setMultiAttribute $addressMV/counter \
 	-direction increment \
@@ -172,7 +172,7 @@ ixNet setMultiAttribute $gatewayMV/counter \
 ixNet commit
 
 #------------------------------------
-# Adding 2nd topology, DG, ethernet, IPv4 
+# Adding 2nd topology, DG, ethernet, IPv4
 #------------------------------------
 
 puts "Building second topology and building its stack"
@@ -184,7 +184,7 @@ set addedTopology_2 [ixNet add $root topology]
 set addedDG [ixNet add $addedTopology_2ID deviceGroup]
 	ixNet commit
 	set addedDGID [ixNet remapIDs $addedDG]
-	
+
 set addedPort [ixNet add $addedTopology_2ID port]
 	ixNet commit
 	set addedPortID [ixNet remapIDs $addedPort]
@@ -204,7 +204,7 @@ set addedIPv4 [ixNet add $addedEthernetID ipv4]
 puts "Addressing the second topology\n"
 ixNet setAttribute $addedTopology_2ID -vports $root/vport:2
 	ixNet commit
-	
+
 set addressMV [ixNet getA $addedIPv4 -address]
 ixNet setMultiAttribute $addressMV/counter \
 	-direction increment \
@@ -239,7 +239,7 @@ set addedProfileID [ixNet remapIDs $addedProfile]
 ixNet exec addAppLibraryFlow $addedProfileID {Bandwidth_HTTP Echo_UDP Yahoo_Mail Bandwidth_IMAPv4}
 ixNet commit
 
-ixNet exec removeAppLibraryFlow $addedProfileID Yahoo_Mail 
+ixNet exec removeAppLibraryFlow $addedProfileID Yahoo_Mail
 ixNet commit
 
 #-----------------------------------------------------
@@ -265,7 +265,7 @@ ixNet setMultiAttribute $addedProfileID \
 	-objectiveValue 133 \
 	-objectiveType throughputMbps \
 	-enablePerIPStats True \
-	-objectiveDistribution applyFullObjectiveToEachPort 
+	-objectiveDistribution applyFullObjectiveToEachPort
 ixNet commit
 
 #----------------------------------------------------------
@@ -317,7 +317,7 @@ ixNet exec clearAppLibraryStats
 puts "Statistics have been cleared"
 
 #----------------------------------------------------------
-# Drilling down per IP 
+# Drilling down per IP
 #----------------------------------------------------------
 
 after 10000
@@ -360,10 +360,10 @@ set targetColumnForHigh [lsearch [ixNet getA $targetView/page -columnCaptions] [
 set targetColumnForLow [lsearch [ixNet getA $targetView/page -columnCaptions] [lindex $PFCriteria_Lower 0]]
 
 # measuring the selected statistic
-set measuredHigher [lindex [lindex [lindex [ixNet getA $targetView/page -rowValues] 0] 0] $targetColumnForHigh] 
-set measuredLower [lindex [lindex [lindex [ixNet getA $targetView/page -rowValues] 0] 0] $targetColumnForLow] 
+set measuredHigher [lindex [lindex [lindex [ixNet getA $targetView/page -rowValues] 0] 0] $targetColumnForHigh]
+set measuredLower [lindex [lindex [lindex [ixNet getA $targetView/page -rowValues] 0] 0] $targetColumnForLow]
 
-# comparing with pass fail condition - second item in the PFCriteria list 
+# comparing with pass fail condition - second item in the PFCriteria list
 if {$measuredHigher > [lindex $PFCriteria_Higher 1] && $measuredLower < [lindex $PFCriteria_Lower 1]} {
 	set testResult "Test run is PASSED"
 } else {
@@ -371,7 +371,7 @@ if {$measuredHigher > [lindex $PFCriteria_Higher 1] && $measuredLower < [lindex 
 }
 
 #----------------------------------------------------------
-# Stop traffic 
+# Stop traffic
 #----------------------------------------------------------
 
 after 20000
@@ -386,16 +386,3 @@ ixNet exec stopApplicationTraffic $root/traffic
 puts "##################"
 puts $testResult
 puts "##################"
-
-
-
-
-
-
-
-
-
-
-
-
-

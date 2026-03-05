@@ -38,7 +38,7 @@ def ConnectToIxia( ixNetTclServer='', ixNetPort='8009', ixNetVersion='', usernam
 def CreateNewBlankConfig():
     print('\nCreating a blank configuration ...')
     ixNet.execute('newConfig')
-    
+
 
 def AddIxiaChassis( ixChassisIp ):
     print('\nAdding chassis: ', ixChassisIp)
@@ -58,7 +58,7 @@ def ClearPortOwnership( ixChassisObj, portList ):
         # port.split(' ') to convert string to list -> ['1', '2']
         cardNumber = port.split('/')[0]
         portNumber = port.split('/')[1]
-        
+
         # ::ixNet::OBJ-/availableHardware/chassis:"10.205.4.35"/card:1/port:2
         #print ('Clearing port'), 'card:'+cardNumber+'/port:'+portNumber
         print('Clearing port:', ixChassisObj+'/card:' + cardNumber + '/port:' + portNumber)
@@ -76,11 +76,11 @@ def ConfigLicenseServer(licenseServerIp=None, licenseMode=None, licenseTier=None
     if licenseServerIp != "None":
         print("\nConfiguring license server:", licenseServerIp)
         ixNet.setAttribute(ixNet.getRoot()+'globals/licensing', '-licenseingServer', licenseServerIp)
-        
+
     if licenseMode != "None":
         print("Configuring license mode:", licenseMode)
         ixNet.setAttribute(ixNet.getRoot()+'globals/licensing', '-tier', licenseTier)
-        
+
     if licenseTier != "None":
         print("Configuring license tier:", licenseTier)
         ixNet.setAttribute(ixNet.getRoot()+'globals/licensing', '-mode', licenseMode)
@@ -95,7 +95,7 @@ def CreateVPort( port ):
     ixNet.commit()
     vPortObj = ixNet.remapIds(vPortObj)[0]
     return vPortObj
-    
+
 
 def ConnectToPorts(vPortList, portList, ixChassisObj):
     print('\nConnectToPorts: vportList:', vPortList)
@@ -105,7 +105,7 @@ def ConnectToPorts(vPortList, portList, ixChassisObj):
     for vPort, port in zip(vPortList, portList):
         cardNumber = port.split('/')[0]
         portNumber = port.split('/')[1]
-        
+
         print('\nConnectToPort:', ixChassisObj + '/card:' + cardNumber + '/port:' + portNumber)
         print('\tvPort =', vPort)
 
@@ -119,7 +119,7 @@ def ConnectToPorts(vPortList, portList, ixChassisObj):
 
 def VerifyPortState( portList='', stopTime=120 ):
     for vPort in ixNet.getList(ixNet.getRoot(), 'vport'):
-        assignedPort = ixNet.getAttribute(vPort, '-assignedTo')        
+        assignedPort = ixNet.getAttribute(vPort, '-assignedTo')
         print('\nVerifying port state on port::', assignedPort)
 
         for timer in range(0, stopTime):
@@ -202,7 +202,7 @@ def ConfigIpv4GatewayNgpfPy(ipv4Obj, startValue, step='0.0.0.1', direction='incr
     ixNet.commit()
 
     # ipv4GatewayObj2 = ::ixNet::OBJ-/multivalue:112/counter
-    ipv4GatewayObj2 = ixNet.add(ipv4GatewayObj, 'counter')    
+    ipv4GatewayObj2 = ixNet.add(ipv4GatewayObj, 'counter')
     ixNet.setMultiAttribute(ipv4GatewayObj2,
                             '-start', startValue,
                             '-step', step,
@@ -246,16 +246,16 @@ def VerifyArpNgpfPy(ipType='ipv4'):
     #
     # ipType:  ipv4 or ipv6
     #
-    # This API will verify for ARP session resolvement on 
+    # This API will verify for ARP session resolvement on
     # every TopologyGroup/DeviceGroup and/or
     #       TopologyGroup/DeviceGroup/DeviceGroup that has protocol "enabled".
-    # 
+    #
     # How it works?
     #    Each device group has a list of $sessionStatus: up, down or notStarted.
     #    If the deviceGroup has sessionStatus as "up", then ARP will be verified.
     #    It also has a list of $resolvedGatewayMac: MacAddress or removePacket[Unresolved]
     #    These two lists are aligned.
-    #    If lindex 0 on $sessionSatus is up, then the API expects lindex 0 on $resolvedGatewayMac 
+    #    If lindex 0 on $sessionSatus is up, then the API expects lindex 0 on $resolvedGatewayMac
     #    to have a mac address.
     #    If not, then arp is not resolved.
     #    This script will wait up to the $maxRetry before it declares failed.
@@ -277,7 +277,7 @@ def VerifyArpNgpfPy(ipType='ipv4'):
                 arpResult = DeviceGroupProtocolStackNgpfPy(deviceGroup, ipType)
                 if arpResult != 0:
                     unresolvedArpList = unresolvedArpList + arpResult
-                
+
                 if ixNet.getList(deviceGroup, 'deviceGroup') != '':
                     for innerDeviceGroup in ixNet.getList(deviceGroup, 'deviceGroup'):
                         print('\n', innerDeviceGroup)
@@ -290,7 +290,7 @@ def VerifyArpNgpfPy(ipType='ipv4'):
                 arpResult = DeviceGroupProtocolStackNgpf(deviceGroup, ipType)
                 if arpResult != 0:
                     unresolvedArpList = unresolvedArpList + arpResult
-                    
+
                 if ixNet.getList(deviceGroup, 'deviceGroup') != '':
                     for innerDeviceGroup in ixNet.getList(deviceGroup, 'deviceGroup'):
                         print('\n', innerDeviceGroup)
@@ -311,17 +311,17 @@ def VerifyArpNgpfPy(ipType='ipv4'):
         print('\n')
         return unresolvedArpList
 
-def CreateTrafficItem(name=          'My Traffic Item', 
-                      trafficType=   'ipv4', 
-                      transmitMode=  'interleaved', 
-                      biDirectional= '1', 
-                      routeMesh=     'oneToOne', 
+def CreateTrafficItem(name=          'My Traffic Item',
+                      trafficType=   'ipv4',
+                      transmitMode=  'interleaved',
+                      biDirectional= '1',
+                      routeMesh=     'oneToOne',
                       srcDestMesh=   'oneToOne'
                       ):
-    
+
     print('\nCreating Traffic Item: %s ...' % name)
     trafficItemObj = ixNet.add(ixNet.getRoot() + '/traffic', 'trafficItem')
-    
+
     ixNet.setMultiAttribute(trafficItemObj,
                             '-enabled', 'True',
                             '-name', name,
@@ -342,16 +342,16 @@ def ConfigTracking( trafficItemObj, trackingList ):
                        '-trackBy', trackingList
                        )
     ixNet.commit()
-    
-def CreateEndPointSet(trafficItemObj='', 
-                      name='Flow_Group', 
-                      srcEndpoints='', 
+
+def CreateEndPointSet(trafficItemObj='',
+                      name='Flow_Group',
+                      srcEndpoints='',
                       destEndpoints=''
                       ):
     '''
     Each endpoint is a highlevelstream in a Traffic Item
     '''
-    
+
     print('\nCreating Endpoint: %s ...' % name)
     endpointObj = ixNet.add(trafficItemObj, 'endpointSet',
                             '-name', name,
@@ -367,12 +367,12 @@ def ConfigFlowGroup(flowGroupObj='', frameSize='128', frameRate='100'):
     print('\nConfiguring Flow Group:', flowGroupObj)
     print('\nConfiguring frame size:', frameSize)
     ixNet.setAttribute(flowGroupObj + '/frameSize', '-fixedSize', frameSize)
-    
+
     print('\nConfiguring line rate: %s%s' % (frameRate, '%'))
     ixNet.setAttribute(flowGroupObj + '/frameRate', '-rate', frameRate)
     ixNet.commit()
 
-        
+
 def ConfigFlowGroupFrameCount(flowGroupObj, frameCount):
     print('\nConfiguring frame count:', frameCount)
     result = ixNet.setMultiAttribute(flowGroupObj + '/transmissionControl',
@@ -380,7 +380,7 @@ def ConfigFlowGroupFrameCount(flowGroupObj, frameCount):
                                      '-type', 'fixedFrameCount'
                                      )
     ixNet.commit()
-    
+
 
 def ApplyTraffic():
     print('\nApplying Traffic to hardware ...')
@@ -562,7 +562,7 @@ def StartTraffic():
     for start in range(startCounter, stopCounter):
         start = start + 1
         trafficState = CheckTrafficState()
-        
+
         if trafficState == 'started':
             print('Traffic started')
             break
@@ -587,24 +587,24 @@ def StartTraffic():
                 print('\nFailed: Traffic failed to start')
                 ixNet.disconnect()
                 sys.exit()
-    
+
 
 def GetStatsPy( getStatsBy='Flow Statistics', csvFile=None, csvEnableFileTimestamp=False):
     '''
     Description:
-        This API will return you a Python Dict of all the stats 
-        based on your specified stats. The exact stat name could 
+        This API will return you a Python Dict of all the stats
+        based on your specified stats. The exact stat name could
         be found on your IxNetwork GUI statistic tablets.
 
     Parameters:
         getStatsBy = The exact name of the stat that could be found on the IxNetwork GUI.
         csvFile    = The name of the CSV file that you want to store stats in.
         csvEnableFileTimestamp = Append a timestamp to the CSV file so they don't get overwritten.
-                                 This should only be used for getting the final stat result such as 
+                                 This should only be used for getting the final stat result such as
                                  when the traffic has completely stopped.
-                            
+
     getStatsBy options (case sensitive):
-    
+
         "Port Statistics"
         "Tx-Rx Frame Rate Statistics"
         "Port CPU Statistics"
@@ -685,7 +685,7 @@ def GetStatsPy( getStatsBy='Flow Statistics', csvFile=None, csvEnableFileTimesta
             rowList = pageList[pageListIndex]
             if csvFile != None:
                 csvWriteObj.writerow(rowList[0])
-            
+
             for rowIndex in range(0, len(rowList)):
                 row += 1
                 cellList = rowList[rowIndex]
@@ -794,7 +794,7 @@ trafficItem1Obj = CreateTrafficItem(name='ipv4')
 
 # ::ixNet::OBJ-/traffic/trafficItem:1/endpointSet:1
 endpoint1Obj = CreateEndPointSet(trafficItemObj=trafficItem1Obj,
-                                 name='FlowGroup1', 
+                                 name='FlowGroup1',
                                  srcEndpoints=topology1,
                                  destEndpoints=topology2
                              )
@@ -813,4 +813,3 @@ stats = GetStatsPy()
 print('\n', stats)
 
 DisconnectIxNet()
-

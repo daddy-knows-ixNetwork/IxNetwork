@@ -135,11 +135,11 @@ if ($command_status != $ixiangpf::SUCCESS) {
  my @port_handles_list = split(/ /,$port_handles);
 
 ################################################################################
-# Creating topology and device group                                           # 
+# Creating topology and device group                                           #
 ################################################################################
 
 # Creating a topology in first port
-print "Adding topology:1 in port 1\n"; 
+print "Adding topology:1 in port 1\n";
 my $topology_1_status = ixiangpf::topology_config ({
     topology_name    =>  "{RSVP-TE P2P Topology 1}",
     port_handle      =>  $port_handles_list[0],
@@ -242,7 +242,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 my $ethernet_2_handle = $HashRef->{'ethernet_handle'};
 
 # Creating IPv4 Stack on top of Ethernet Stack
-print "Creating IPv4  stack on first ethernet stack\n"; 
+print "Creating IPv4  stack on first ethernet stack\n";
 my $ipv4_1_status = ixiangpf::interface_config ({
     protocol_name                     => "{IPv4 1}",
     protocol_handle                   => "$ethernet_1_handle",
@@ -264,7 +264,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 my $ipv4_1_handle = $HashRef->{'ipv4_handle'};
 
 # Creating IPv4 Stack on top of Ethernet Stack
-print "Creating IPv4 stack on second ethernet stack\n";   
+print "Creating IPv4 stack on second ethernet stack\n";
 my $ipv4_2_status = ixiangpf::interface_config ({
     protocol_name                     => "{IPv4 2}",
     protocol_handle                   => "$ethernet_2_handle",
@@ -288,7 +288,7 @@ my $ipv4_2_handle = $HashRef->{'ipv4_handle'};
 ################################################################################
 # Configure RSVP Topologies in both ports as described in Description Section  #
 #  above.                                                                      #
-################################################################################ 
+################################################################################
 
 #-------------------------------------------------------------------------------#
 # Configuring RSVPTE protocols in Topology 1                                    #
@@ -314,7 +314,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $rsvpteIf_1_handle = $HashRef->{'rsvpte_if_1_status'};
 
-#Adding Network Group behind first DG 
+#Adding Network Group behind first DG
 print "Adding Network Group behind first DG\n";
 my $network_group_1_status = ixiangpf::network_group_config ({
     protocol_handle                       => "$deviceGroup_1_handle",
@@ -355,7 +355,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 my $deviceGroup_20_handle = ixiangpf::status_item('device_group_handle');
 
 # Adding ipv4 loopback in Second Device Group
-print "Adding ipv4 loopback in Second Device Group\n"; 
+print "Adding ipv4 loopback in Second Device Group\n";
 my $ipv4_loopback_1_status = ixiangpf::interface_config ({
     protocol_name            => "{IPv4 Loopback 1}",
     protocol_handle          => "$deviceGroup_20_handle",
@@ -688,7 +688,7 @@ foreach (@status_keys) {
 }
 
 ############################################################################
-# On The Fly Deactivate/Activate LSPs 
+# On The Fly Deactivate/Activate LSPs
 ############################################################################
 print "On The Fly Deactivate Egress Lsps\n";
 my $deactivate_lsp = ixiangpf::emulation_rsvp_tunnel_config ({

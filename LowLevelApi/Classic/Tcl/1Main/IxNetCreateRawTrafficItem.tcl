@@ -2,7 +2,7 @@
 #!/usr/bin/tclsh
 
 # Description:
-# 
+#
 #    - Loads a preconfigured IxNetwork file.
 #
 #    - Create a Raw Traffic Item.
@@ -10,9 +10,9 @@
 #    - Includes an API to remove a Traffic Item by
 #      the name.
 #
-#    - Includes an API to return the Traffic Item 
+#    - Includes an API to return the Traffic Item
 #      by the Mac Address and VlanId.
-#    
+#
 
 package req Ixia
 
@@ -82,7 +82,7 @@ proc CreateTrafficItem { args } {
     set argIndex 0
     while {$argIndex < [llength $args]} {
 	set currentArg [lindex $args $argIndex]
-	switch -exact -- $currentArg { 
+	switch -exact -- $currentArg {
 	    -name {
 		set trafficItemName [lindex $args [expr $argIndex + 1]]
 		incr argIndex 2
@@ -94,61 +94,61 @@ proc CreateTrafficItem { args } {
 	    }
 	    -frameCount {
 		set totalFrames [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2		
+		incr argIndex 2
 	    }
 	    -frameSize {
 		# Options: random or the framesize value
 		set frameSize [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2		
+		incr argIndex 2
 	    }
 	    -lineRate {
 		set lineRatePercent [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2		
+		incr argIndex 2
 	    }
 	    -packetRate {
 		set packetRate [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2		
+		incr argIndex 2
 	    }
 	    -trafficTransmission {
 		# continuour or packetBurst
 		set trafficTransmission [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2		
+		incr argIndex 2
 	    }
 	    -trackBy {
 		set trackBy [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2		
+		incr argIndex 2
 	    }
 	    -srcPorts {
 		set srcPorts [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2		
+		incr argIndex 2
 	    }
 	    -dstPorts {
 		set dstPorts [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2		
+		incr argIndex 2
 	    }
 	    -vlanId {
 		set vlanId [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2		
+		incr argIndex 2
 	    }
 	    -vlanIdTotalIncr {
 		set vlanIdTotalIncr [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2		
+		incr argIndex 2
 	    }
 	    -vlanIdPriority {
 		set vlanIdPriority [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2		
+		incr argIndex 2
 	    }
 	    -vlanIdPriorityTotalIncr {
 		set vlanIdPriorityTotalIncr [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2		
+		incr argIndex 2
 	    }
 	    -srcMac {
 		set srcMac [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2		
+		incr argIndex 2
 	    }
 	    -dstMac {
 		set dstMac [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2		
+		incr argIndex 2
 	    }
 	    -srcMacTotalIncr {
 		set srcMacTotalIncr [lindex $args [expr $argIndex + 1]]
@@ -160,23 +160,23 @@ proc CreateTrafficItem { args } {
 	    }
 	    -srcIp {
 		set srcIp [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2		
+		incr argIndex 2
 	    }
 	    -dstIp {
 		set dstIp [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2		
+		incr argIndex 2
 	    }
 	    -srcIpTotalIncr {
 		set srcIpTotalIncr [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2		
+		incr argIndex 2
 	    }
 	    -dstIp {
 		set dstIp [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2		
+		incr argIndex 2
 	    }
 	    -dstIpTotalIncr {
 		set dstIpTotalIncr [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2		
+		incr argIndex 2
 	    }
 	    default {
 		puts "\nError: CreateTrafficItem: No such parameter: $currentArg"
@@ -192,20 +192,20 @@ proc CreateTrafficItem { args } {
 	    return
 	}
     }
-    
+
     # Set some defaults
     if {[info exists trafficTransmission] == 0} {
 	# continuous or packetBurst
 	set trafficTransmission packetBurst
     }
-    
+
     if {[info exists lineRatePercent] == 0 && [info exists packetRate] == 0} {
 	set lineRatePercent 100
     }
-    
+
     puts "\nCreating new Traffic Item ..."
     set trafficItemObj [ixNet add [ixNet getRoot]traffic trafficItem]
-    
+
     catch {ixNet setMultAttr $trafficItemObj \
 	       -enabled True \
 	       -trafficType raw \
@@ -215,47 +215,47 @@ proc CreateTrafficItem { args } {
 	       -transmitMode interleaved \
 	       -biDirectional $biDirection
     } errMsg
-    
+
     if {$errMsg != "::ixNet::OK"} {
 	puts "\nError: $errMsg"
     } else {
 	puts "\nCreateTrafficItem: Successfully created new Traffic Item"
     }
-    
+
     set trafficItemObj [lindex [ixNet remapIds $trafficItemObj] 0]
-     
+
     set endpoints [ixNet add $trafficItemObj endpointSet]
     puts "\nAdded endpoints: $endpoints"
-    
+
     set srcPortList {}
     foreach sourcePort $srcPorts {
-	# Like this:    /vport:1/protocols.  
+	# Like this:    /vport:1/protocols.
 	# Not like this ::ixNet::OBJ-/vport:1/protocols
 	set vport [GetVportMapping $sourcePort]
 	regexp "::ixNet::OBJ-(/vport:\[0-9]+)" $vport - vport
 	lappend srcPortList $vport/protocols
     }
-    
+
     set dstPortList {}
     foreach destPort $dstPorts {
 	set vport [GetVportMapping $destPort]
 	regexp "::ixNet::OBJ-(/vport:\[0-9]+)" $vport - vport
 	lappend dstPortList $vport/protocols
     }
-    
+
     puts "Src Endpoints: $srcPortList"
     puts "Dst Endpoints: $dstPortList"
     catch {ixNet setMultiAttr $endpoints \
 	       -sources [list $srcPortList]  \
 	       -destinations [list $dstPortList]
     } errMsg
-    
+
     if {$errMsg != "::ixNet::OK"} {
 	puts "\nError: CreateTrafficItem: Failed to create endpoints"
 	return 1
     }
     ixNet commit
-    
+
     # Fixed frame count Traffic Item
     if {$trafficTransmission == "packetBurst"} {
 	catch {ixNet setMultiAttr $trafficItemObj/configElement:1/transmissionControl \
@@ -263,12 +263,12 @@ proc CreateTrafficItem { args } {
 		   -burstPacketCount 1 \
 		   -frameCount $totalFrames
 	} errMsg
-	
+
 	if {$errMsg != "::ixNet::OK"} {
 	    puts "\nError:CreateTrafficItem: $errMsg"
 	}
     }
-    
+
     if {$trafficTransmission == "continuous"} {
 	catch {ixNet setMultiAttr $trafficItemObj/configElement:1/transmissionControl \
 		   -type continuous \
@@ -279,21 +279,21 @@ proc CreateTrafficItem { args } {
 	    puts "\nError:CreateTrafficItem: $errMsg"
 	}
     }
-    
+
     if {[info exists lineRatePercent]} {
 	catch {ixNet setAttr $trafficItemObj/configElement:1/frameRate -rate $lineRatePercent} errMsg
 	if {$errMsg != "::ixNet::OK"} {
 	    puts "\nError:CreateTrafficItem: $errMsg"
 	}
     }
-    
+
     if {[info exists packetRate]} {
 	catch {ixNet setAttr $trafficItemObj/configElement:1/frameRate -type framesPerSecond -rate $packetRate} errMsg
 	if {$errMsg != "::ixNet::OK"} {
 	    puts "\nError:CreateTrafficItem: $errMsg"
 	}
     }
-    
+
     if {$frameSize == "random"} {
 	catch {ixNet setMultiAttribute $trafficItemObj/configElement:1/frameSize \
 		   -weightedPairs [list ] \
@@ -321,7 +321,7 @@ proc CreateTrafficItem { args } {
     if {$errMsg != "::ixNet::OK"} {
 	puts "\nError:CreateTrafficItem: $errMsg"
     }
-    
+
     catch {ixNet setMultiAttr $trafficItemObj/configElement:1/stack:"ethernet-1"/field:"ethernet.header.destinationAddress-1" \
 	       -singleValue 00:00:00:00:00:00 \
 	       -seed 1 \
@@ -339,7 +339,7 @@ proc CreateTrafficItem { args } {
     if {$errMsg != "::ixNet::OK"} {
 	puts "\nError:CreateTrafficItem: $errMsg"
     }
-    
+
     catch {ixNet setMultiAttribute $trafficItemObj/configElement:1/stack:"ethernet-1"/field:"ethernet.header.sourceAddress-2" \
 	       -singleValue 00:00:00:00:00:00 \
 	       -seed 1 \
@@ -357,7 +357,7 @@ proc CreateTrafficItem { args } {
     if {$errMsg != "::ixNet::OK"} {
 	puts "\nError:CreateTrafficItem: $errMsg"
     }
-	
+
     if {[info exists vlanIdPriority]} {
 	catch {ixNet setMultiAttribute $trafficItemObj/configElement:1/stack:"vlan-2"/field:"vlan.header.vlanTag.vlanUserPriority-1" \
 		   -singleValue 0 \
@@ -372,7 +372,7 @@ proc CreateTrafficItem { args } {
 		   -startValue $vlanIdPriority \
 		   -countValue $vlanIdPriorityTotalIncr
 	} errMsg
-	
+
 	if {$errMsg != "::ixNet::OK"} {
 	    puts "\nError:CreateTrafficItem: $errMsg"
 	}
@@ -397,7 +397,7 @@ proc CreateTrafficItem { args } {
 	    puts "\nError:CreateTrafficItem: $errMsg"
 	}
     }
-    
+
     if {[info exists srcIp]} {
 	catch {ixNet setMultiAttribute $trafficItemObj/configElement:1/stack:"ipv4-3"/field:"ipv4.header.srcIp-27" \
 		   -singleValue 0.0.0.0 \
@@ -412,7 +412,7 @@ proc CreateTrafficItem { args } {
 		   -startValue $srcIp \
 		   -countValue $srcIpTotalIncr
 	} errMsg
-	
+
 	if {$errMsg != "::ixNet::OK"} {
 	    puts "\nError:CreateTrafficItem: $errMsg"
 	}
@@ -448,7 +448,7 @@ proc CreateTrafficItem { args } {
 }
 
 proc GetMacAndVlanTrafficItem { mac vlanId } {
-    # Based on the given mac address and vlanId, return the 
+    # Based on the given mac address and vlanId, return the
     # Traffic Item.
 
     set trafficItemList {}
@@ -459,9 +459,9 @@ proc GetMacAndVlanTrafficItem { mac vlanId } {
 
 	foreach highLevelStream [ixNet getList $trafficItem highLevelStream] {
 	    foreach stack [ixNet getList $highLevelStream stack] {
-		# ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1/stack:"ethernet-1" 
-		# ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1/stack:"vlan-2" 
-		# ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1/stack:"ipv4-3" 
+		# ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1/stack:"ethernet-1"
+		# ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1/stack:"vlan-2"
+		# ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1/stack:"ipv4-3"
 		# ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1/stack:"fcs-4"
 		if {[regexp "ethernet" $stack] == 1 || [regexp "vlan" $stack] == 1} {
 		    foreach field [ixNet getList $stack field] {
@@ -473,13 +473,13 @@ proc GetMacAndVlanTrafficItem { mac vlanId } {
 				set macFlag 1
 			    }
 			}
-			
+
 			if {[regexp -nocase "vlanTag\.vlanID-" $field]} {
 			    set currentVlanId [ixNet getAttribute $field -startValue]
 			    if {$currentVlanId == $vlanId} {
 				set vlanIdFlag 1
 			    }
-			}		    
+			}
 
 			if {$macFlag == 1 && $vlanIdFlag == 1} {
 			    set macFlag 0
@@ -517,7 +517,7 @@ proc VerifyPortState { {portList all} {expectedPortState up} } {
 	    set port [lindex [split [lindex $connectedTo 1] :] end]
 	    set port $card/$port
 
-	    if {[lsearch $portList $port] != -1} { 
+	    if {[lsearch $portList $port] != -1} {
 		lappend vPortList $vport
 	    }
 	}
@@ -533,7 +533,7 @@ proc VerifyPortState { {portList all} {expectedPortState up} } {
 	    set card [lindex [split [lindex $connectedTo 0] :] end]
 	    set port [lindex [split [lindex $connectedTo 1] :] end]
 	    set port $card/$port
-	    
+
 	    set portState [ixNet getAttribute $vport -state]
 
 	    # Expecting port state = UP
@@ -543,12 +543,12 @@ proc VerifyPortState { {portList all} {expectedPortState up} } {
 		    after 2000
 		    continue
 		}
-		
+
 		if {$portState != "up" && $timer == "60"} {
 		    puts "Failed: $port seem to be stuck on $portState state. Expecting port up."
 		    set portsAllUpFlag 1
 		}
-		
+
 		if {$portState == "up"} {
 		    puts "$port state is $portState"
 		    break
@@ -562,12 +562,12 @@ proc VerifyPortState { {portList all} {expectedPortState up} } {
 		    after 2000
 		    continue
 		}
-		
+
 		if {$portState == "up" && $timer == "60"} {
 		    puts "Error: $port seem to be stuck on the $portState state. Expecting port down."
 		    set portsAllUpFlag 1
 		}
-		
+
 		if {$portState == "down"} {
 		    puts "$port state is $portState"
 		    break
@@ -635,6 +635,3 @@ puts "\n--- got back: $trafficItemList ----"
 RemoveTrafficItem My_Traffic_Item
 
 ixNet disconnect
-
-
-

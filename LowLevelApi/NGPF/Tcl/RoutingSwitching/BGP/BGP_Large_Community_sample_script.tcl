@@ -47,8 +47,8 @@
 #                                                                              #
 # Description:                                                                 #
 #    This script intends to demonstrate how to use BGP Large Community         #
-#  (RFC8092).								                                   #	
-#    It will create 2 BGP topologies, add IPv4 prefix pools to them, enable    # 
+#  (RFC8092).								                                   #
+#    It will create 2 BGP topologies, add IPv4 prefix pools to them, enable    #
 #    Large Community in one of them,modify the Number of Large Communities,    #
 #    and  will start the emulation .It will then retrieve and display Learned  #
 #    info statistics.				                                           #
@@ -73,7 +73,7 @@ ixNet exec newConfig
 
 ################################################################################
 # protocol configuration section                                               #
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -246,8 +246,8 @@ ixNet commit
 after 5000;# Wait for the commit to take place.
 
 # ---------------------------------------------------------------------------
-# Starting Topology 
-# ---------------------------------------------------------------------------    
+# Starting Topology
+# ---------------------------------------------------------------------------
 ################################################################################
 # Start protocol and check statistics                                          #
 ################################################################################

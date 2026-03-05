@@ -26,7 +26,7 @@ test
 	@{portHandles} =  Split String  ${vport_list}
 	Log Many  @{portHandles}
 
-	
+
 ##################################################
 #  Configure interfaces and create IGMP sessions #
 ##################################################
@@ -36,48 +36,43 @@ test
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${session_handle_1} =  Get From Dictionary  ${result}  handle
-	
+
 	Log To Console  Configure IGMP on Port 2
 	${result} =  Emulation Igmp Config  port_handle=@{portHandles}[1]  mode=create  reset=1  msg_interval=167  igmp_version=v3  ip_router_alert=0  general_query=0  group_query=0  filter_mode=exclude  count=1  intf_ip_addr=100.0.1.1  neighbor_intf_ip_addr=100.0.1.2  intf_prefix_len=24  vlan_id_mode=increment  vlan_id=7  vlan_id_step=1  vlan_user_priority=7
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${session_handle_2} =  Get From Dictionary  ${result}  handle
-	
+
 ############################################################################
 # Create IGMP group member by asociating a multicast group pool to a session
 ############################################################################
-	
+
 	${result} =  Emulation Igmp Group Config  mode=create  session_handle=100.0.1.2  group_pool_handle=226.0.1.1/0.0.0.1/5 226.0.1.6/0.0.0.2/4  source_pool_handle=100.0.1.2/0.0.0.2/2,110.0.1.2/0.0.0.1/3 120.0.1.2/0.0.0.1/5,130.0.1.2/0.0.0.1/5,140.0.1.2/0.0.0.1/5
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${group_handle_0} =  Get From Dictionary  ${result}  group_pool_handle
-	
+
 	${result} =  Emulation Igmp Group Config  mode=create  session_handle=100.0.1.1  group_pool_handle=227.0.1.1/0.0.0.1/5 227.0.2.1/0.0.0.2/3 227.0.3.1/0.0.0.2/3  source_pool_handle=150.0.1.2/0.0.0.1/4,160.0.1.2/0.0.0.1/5 170.0.1.2/0.0.0.1/4 180.0.1.2/0.0.0.1/4,190.0.1.2/0.0.0.1/5,200.0.1.2/0.0.0.3/2
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${group_handle_1} =  Get From Dictionary  ${result}  group_pool_handle
-	
+
 # Delete the IGMP group members
-	
+
 	${result} =  Emulation Igmp Group Config  handle=226.0.1.1/0.0.0.1/5 227.0.2.1/0.0.0.2/3  mode=delete
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
+
 	${result} =  Emulation Igmp Group Config  handle=226.0.1.6/0.0.0.2/4 227.0.1.1/0.0.0.1/5  mode=delete
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
+
 # delete the hosts on each port
-	
+
 	${result} =  Emulation Igmp Group Config  session_handle=100.0.1.2  mode=clear_all
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
+
 	${result} =  Emulation Igmp Group Config  session_handle=100.0.1.1  mode=clear_all
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
-	
-	
-	
-	

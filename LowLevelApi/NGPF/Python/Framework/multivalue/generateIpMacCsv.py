@@ -59,7 +59,7 @@ class MultivalueCsv () :
     def __init__ (self, csvFileName, scale) :
         self.csvFileName = csvFileName
         self.scale       = scale
-    # end def  
+    # end def
 
     def generate (self) :
         # Provide a scale value incremented by 1 to pass to range function
@@ -72,16 +72,16 @@ class MultivalueCsv () :
 
                 # Use the scale value in range
                 for count in range(1,scale):
-                    # Step 1: Create random values from 0 to 255 in hex and repeat that 
+                    # Step 1: Create random values from 0 to 255 in hex and repeat that
                     #         for all 6 octets to create Mac
                     # Step 2: Now map all these values using lambda and join them using
                     #         ":" to obtain Mac address
                     # Step 3: Generate vlan ids with random.randint to range from 1 to 4094
                     # Step 4: Repeat Step 1 and 2 in decimal for Ip and gateway address
-                    # Step 5: Once ready write all values to csvFile  
+                    # Step 5: Once ready write all values to csvFile
 
-                    srcMac = ":".join(map(lambda i: "%02x" %i, (random.randint(0x00, 0xFF) for k in range(0,6)))) 
-                    dstMac = ":".join(map(lambda j: "%02x" %j, (random.randint(0x00, 0xFF) for l in range(0,6)))) 
+                    srcMac = ":".join(map(lambda i: "%02x" %i, (random.randint(0x00, 0xFF) for k in range(0,6))))
+                    dstMac = ":".join(map(lambda j: "%02x" %j, (random.randint(0x00, 0xFF) for l in range(0,6))))
                     vlan1  = random.randint(1, 4094)
                     vlan2  = random.randint(1, 4094)
                     ip     = ".".join(map (lambda x: "%03d" %x, (random.randint(1, 254) for m in range(0,4))))
@@ -102,4 +102,3 @@ class MultivalueCsv () :
 ###############################################################################
 myMultiValueCsv = MultivalueCsv("testMultivalue.csv", 2500)
 myMultiValueCsv.generate()
-    

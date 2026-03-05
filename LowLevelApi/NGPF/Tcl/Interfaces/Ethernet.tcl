@@ -118,7 +118,7 @@ set mac1 [ixNet getList $dg1 ethernet]
 set mac2 [ixNet getList $dg2 ethernet]
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 set vPorts [ixNet getList [ixNet getRoot] vport]
 puts "Assigning ports to $vPorts"

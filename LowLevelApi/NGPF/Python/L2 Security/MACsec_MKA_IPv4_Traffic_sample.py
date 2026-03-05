@@ -43,7 +43,7 @@
 ################################################################################
 
 ################################################################################
-# Description: 
+# Description:
 # 1. Configuring MKA and MACSec (HW based)
 # 2. Create traffic Item
 # 3. Assign ports
@@ -133,7 +133,7 @@ ixNet.commit()
 ethernet1 = ixNet.remapIds(ethernet1)[0]
 macMv = ixNet.getAttribute(ethernet1, '-mac')
 ixNet.add(macMv, 'counter')
-ixNet.setMultiAttribute(macMv + '/counter',  
+ixNet.setMultiAttribute(macMv + '/counter',
              '-direction', 'increment',
              '-start'    , '00:11:01:00:00:01',
              '-step'     , '00:00:00:00:00:01')
@@ -169,9 +169,9 @@ while loop1 <= 10:
     ixNet.commit()
     time.sleep(1)
     loop1 = loop1 + 1
-	
+
 ################################################################################
-# Add Topology 
+# Add Topology
 ################################################################################
 print("Add Topology 2")
 topology2 = ixNet.add(root, 'topology')
@@ -199,7 +199,7 @@ ixNet.commit()
 ethernet2 = ixNet.remapIds(ethernet2)[0]
 macMv = ixNet.getAttribute(ethernet2, '-mac')
 ixNet.add(macMv, 'counter')
-ixNet.setMultiAttribute(macMv + '/counter',  
+ixNet.setMultiAttribute(macMv + '/counter',
              '-direction', 'increment',
              '-start'    , '00:12:01:00:00:01',
              '-step'     , '00:00:00:00:00:01')
@@ -274,7 +274,7 @@ ixNet.setMultiAttribute(mvGw2 + '/counter',
              '-direction', 'increment',
              '-start',     '20.20.1.1',
              '-step',      '0.0.1.0')
-			 
+
 ixNet.setAttribute(ixNet.getAttribute(ip1, '-prefix') + '/singleValue', '-value', '24')
 ixNet.setAttribute(ixNet.getAttribute(ip2, '-prefix') + '/singleValue', '-value', '24')
 
@@ -318,10 +318,10 @@ ixNet.setMultiAttribute(trafficItem1 + "/configElement:1/frameSize",
 		'-incrementTo', '1518')
 ################################################################################
 # set frame rate in Traffic Item
-################################################################################		
+################################################################################
 ixNet.setMultiAttribute(trafficItem1 + "/configElement:1/frameRate",
 		'-rate',        100)
-		
+
 ixNet.setMultiAttribute(trafficItem1 + "/configElement:1/transmissionControl",
         '-duration'               ,1,
         '-iterationCount'         ,1,
@@ -403,7 +403,7 @@ print ("Run traffic for 30 secs")
 time.sleep(30)
 
 ################################################################################
-# Retrieve Traffic Item Flow Statistics 
+# Retrieve Traffic Item Flow Statistics
 ################################################################################
 print ("Retrieve Flow Statistics\n")
 viewPage = '::ixNet::OBJ-/statistics/view:"Flow Statistics"/page'
@@ -419,7 +419,7 @@ for statValList in ixNet.getAttribute(viewPage, '-rowValues') :
     # end for
 # end for
 print("***************************************************")
-		
+
 ################################################################################
 # 7. Stop traffic
 ################################################################################

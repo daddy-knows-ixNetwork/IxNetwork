@@ -75,7 +75,7 @@
 #   11. Retrieve L2-L3 traffic stats.                                          #
 #   12. Stop L2-L3 traffic.                                                    #
 #   13. Stopallprotocols.                                                      #
-#                                                                              #                                                                                
+#                                                                              #
 # Ixia Software:                                                               #
 #    IxOS      6.90 EA                                                         #
 #    IxNetwork 7.50 EA                                                         #
@@ -115,7 +115,7 @@ ixNet exec newConfig
 ################################################################################
 # Protocol configuration section                                               #
 # Configure LDPv6 as per the description given above                           #
-################################################################################ 
+################################################################################
 puts "Adding two virtual ports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -377,7 +377,7 @@ puts "All configuration is completed..Wait for 5 seconds..."
 after 5000
 
 ################################################################################
-# Start LDPv6 protocol and wait for 60 seconds                                 #  
+# Start LDPv6 protocol and wait for 60 seconds                                 #
 ################################################################################
 puts "Starting protocols and waiting for 60 seconds for protocols to come up"
 ixNet exec startAllProtocols
@@ -488,7 +488,7 @@ ixNet setMultiAttribute $endpointSet1\
     -ngpfFilters           [list]\
     -trafficGroups         [list]\
     -sources               $source\
-    -destinations          $destination    
+    -destinations          $destination
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\

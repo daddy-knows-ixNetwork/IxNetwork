@@ -257,8 +257,8 @@ ixNet.setAttribute(ixNet.getAttribute(ldpPrefixPool1, '-prefixLength') + '/singl
 ixNet.setAttribute(ixNet.getAttribute(ldpPrefixPool2, '-prefixLength') + '/singleValue', '-value', '32')
 ixNet.commit()
 
-# Add ipv4 loopback1 
-print("Adding ipv4 loopback1") 
+# Add ipv4 loopback1
+print("Adding ipv4 loopback1")
 chainedDg1 = ixNet.add(networkGroup1, 'deviceGroup')
 ixNet.setMultiAttribute(chainedDg1, '-multiplier', '1', '-name', 'Device Group 3')
 ixNet.commit()

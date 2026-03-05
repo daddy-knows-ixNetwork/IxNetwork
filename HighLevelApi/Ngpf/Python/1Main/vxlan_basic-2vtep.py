@@ -4,10 +4,10 @@
 #
 #   VxLAN script with two Ixia ports connected back-2-back
 #   as VTEP peers.  Behind each VTEP are VM hosts.
-#  
+#
 #   The current configuration includes vlan on the VM hosts,
 #   but not enabled. To enabled vlan, set parameter 'vlan= '1'
-# 
+#
 #
 
 import sys
@@ -257,7 +257,7 @@ multivalue = Create_Multivalue(pattern            = "counter",
                                nest_step          = "00.00.01.00.00.00",
                                nest_owner         = topology_handle_1,
                                nest_enabled       = "1")
-                               
+
 
 ethernet_vxlan_handle_1 = Config_Protocol_Interface(protocol_name   = "{Ethernet 1}",
                                                     protocol_handle = device_group_handle_1,
@@ -287,14 +287,14 @@ multivalue_gateway = Create_Multivalue(pattern           = "counter",
                                        nest_step         = "0.1.0.0",
                                        nest_owner        = topology_handle_1,
                                        nest_enabled      = "0")
-                                       
+
 ipv4_vxlan_handle_1 = Config_Protocol_Interface(protocol_name                 = "{IPv4 1}",
                                                 protocol_handle               = ethernet_vxlan_handle_1,
                                                 ipv4_resolve_gateway          = "1",
                                                 gateway                       = multivalue_gateway,
                                                 intf_ip_addr                  = multivalue_ip,
                                                 netmask                       = "255.255.255.0")
-                                          
+
 
 ipv4_vxlan_handle_1 = ipv4_vxlan_handle_1['ipv4_handle']
 print '\nipv4_vxlan_handle_1:', ipv4_vxlan_handle_1
@@ -314,7 +314,7 @@ multivalue_multicast = Create_Multivalue(pattern            = "counter",
                                          nest_step          = "0.0.0.1",
                                          nest_owner         = topology_handle_1,
                                          nest_enabled       = "0")
-                                         
+
 
 multivalue_static_mac = Create_Multivalue(pattern           = "counter",
                                          counter_start      = "00:00:00:00:00:00",
@@ -324,7 +324,7 @@ multivalue_static_mac = Create_Multivalue(pattern           = "counter",
                                          nest_owner         = topology_handle_1,
                                          nest_enabled       = "1")
 
-    
+
 vxlan_handle_1 = ConfigVxlanEmulation(handle                  = ipv4_vxlan_handle_1,
                                       protocol_name           = "{VXLAN 1}",
                                       vni                     = multivalue_vni,
@@ -351,7 +351,7 @@ multivalue_mac = Create_Multivalue(pattern           = "counter",
                                    nest_step         = "00.00.00.00.00.01,00.00.01.00.00.00",
                                    nest_owner        = '%s,%s' % (device_group_handle_1, topology_handle_1),
                                    nest_enabled      = "0,1")
-                                                
+
 
 ethernet_handle_1 = Config_Protocol_Interface(protocol_name           = "{Vlan}",
                                               protocol_handle         = device_group_handle_vxlan,
@@ -387,7 +387,7 @@ multivalue_gateway = Create_Multivalue(pattern           = "counter",
                                        nest_step         = "0.0.0.1,0.1.0.0",
                                        nest_owner        = '%s,%s' % (device_group_handle_1, topology_handle_1),
                                        nest_enabled      = "0,1")
-                                       
+
 ipv4_handle_1 = Config_Protocol_Interface(protocol_name        = "{IPv4 2}",
                                           protocol_handle      = ethernet_handle_1,
                                           ipv4_resolve_gateway = "1",
@@ -414,7 +414,7 @@ multivalue = Create_Multivalue(pattern            = "counter",
                                nest_step          = "00.00.01.00.00.00",
                                nest_owner         = topology_handle_2,
                                nest_enabled       = "0")
-                               
+
 
 ethernet_vxlan_handle_2 = Config_Protocol_Interface(protocol_name   = "{Ethernet 1}",
                                                     protocol_handle = device_group_handle_2,
@@ -444,7 +444,7 @@ multivalue_gateway = Create_Multivalue(pattern           = "counter",
                                        nest_step         = "0.1.0.0",
                                        nest_owner        = topology_handle_2,
                                        nest_enabled      = "0")
-                                       
+
 ipv4_vxlan_handle_2 = Config_Protocol_Interface(protocol_name                = "{IPv4 2}",
                                                 protocol_handle               = ethernet_vxlan_handle_2,
                                                 ipv4_resolve_gateway          = "1",
@@ -472,7 +472,7 @@ multivalue_multicast = Create_Multivalue(pattern            = "counter",
                                          nest_step          = "0.0.0.1",
                                          nest_owner         = topology_handle_2,
                                          nest_enabled       = "0")
-                                         
+
 
 multivalue_static_mac = Create_Multivalue(pattern           = "counter",
                                          counter_start      = "00:00:00:00:00:00",
@@ -482,7 +482,7 @@ multivalue_static_mac = Create_Multivalue(pattern           = "counter",
                                          nest_owner         = topology_handle_2,
                                          nest_enabled       = "0")
 
-    
+
 vxlan_handle_2 = ConfigVxlanEmulation(handle                  = ipv4_vxlan_handle_2,
                                       protocol_name           = "{VXLAN 1}",
                                       vni                     = multivalue_vni,
@@ -508,7 +508,7 @@ multivalue_mac = Create_Multivalue(pattern           = "counter",
                                    nest_step         = "00.00.00.00.00.01,00.00.01.00.00.00",
                                    nest_owner        = '%s,%s' % (device_group_handle_2, topology_handle_2),
                                    nest_enabled      = "0,1")
-                                                
+
 
 ethernet_handle_2 = Config_Protocol_Interface(protocol_name           = "{Vlan}",
                                               protocol_handle         = device_group_vxlan_handle_2,
@@ -544,7 +544,7 @@ multivalue_gateway = Create_Multivalue(pattern           = "counter",
                                        nest_owner        = '%s,%s' % (device_group_handle_2, topology_handle_2),
                                        nest_enabled      = "0,1")
 
-# /topology:2/deviceGroup:1/deviceGroup:1/ethernet:1  
+# /topology:2/deviceGroup:1/deviceGroup:1/ethernet:1
 ipv4_handle_2 = Config_Protocol_Interface(protocol_name        = "{IPv4 2}",
                                           protocol_handle      = ethernet_handle_2,
                                           ipv4_resolve_gateway = "1",
@@ -570,7 +570,7 @@ global_status = ixia_ngpf.emulation_vxlan_config(get_handle                 = 'n
                                                  udp_dest                   = "4789",
                                                  igmp_mode                  = "igmpv3",
                                                  outer_ip_dest_mode         = "unicast")
-    
+
 Start_All_Protocols_Ngpf_Hlt()
 time.sleep(10)
 
@@ -591,7 +591,7 @@ traffic_item = Config_Traffic_Item(mode='create',
                                    rate_percent='100',
                                    track_by='sourceDestValuePair0',
                                    allow_self_destined='0')
-                                   
+
 
 Start_Traffic_Ngpf_Hlt()
 

@@ -54,7 +54,7 @@
 
 #######################################################
 #                                                     #
-# Description:                                        #                         
+# Description:                                        #
 #    This sample creates two OSPFv2 routers           #
 #    on two different ports. Then on                  #
 #    the first router it configures a pool of         #
@@ -68,7 +68,7 @@ use Carp;
 
 # use lib where the HLPAPI files are located
 # This can be moved to .pl files in the JT framework
-# It is typically: 
+# It is typically:
 # "/volume/labtools/ixia/<version_number>/lib/library/common/ixia_hl_lib-<version>"
 # For Ex:
 # use lib "/volume/labtools/ixia/6.30.850.7/lib";
@@ -85,8 +85,8 @@ my @port_list      = ("1/9", "1/10");
 my $ixNetTclServer = "10.64.99.7";
 my $user           = "ixiaHlpapiUser";
 my $speed           = "auto";
-my $autonegotiation = 1;           
-my $duplex          = "auto";         
+my $autonegotiation = 1;
+my $duplex          = "auto";
 my $phy_mode        = "copper";
 
 # Initialize values for HLPAPI scripts
@@ -166,29 +166,29 @@ $_result_ = ixiahlt::interface_config ({
 #  Configure n OSPFv2 neighbors                       #
 #######################################################
 $_result_ = ixiahlt::emulation_ospf_config ({
-	port_handle                => $portHandleList[0],         
-	reset                      => 1,                 
-	session_type               => 'ospfv2',         
-	mode                       => 'create',           
-	count                      => 1,               
-	mac_address_init           => '1000.0000.0001',   
-	intf_ip_addr               => '100.1.1.1',        
-	intf_ip_addr_step          => '0.0.1.0',          
-	router_id                  => '1.1.1.1',          
-	router_id_step             => '0.0.1.0',          
-	neighbor_intf_ip_addr      => '100.1.1.2',        
-	neighbor_intf_ip_addr_step => '0.0.1.0',          
-	vlan_id_step               => 5,                
-	area_id                    => '0.0.0.1',          
-	area_id_step               => '0.0.0.1',          
-	area_type                  => 'external-capable', 
-	authentication_mode        => 'null',             
-	dead_interval              => 222,              
-	hello_interval             => 333,              
-	interface_cost             => 55,               
-	lsa_discard_mode           => 1,                
-	mtu                        => 670,              
-	network_type               => 'ptop',             
+	port_handle                => $portHandleList[0],
+	reset                      => 1,
+	session_type               => 'ospfv2',
+	mode                       => 'create',
+	count                      => 1,
+	mac_address_init           => '1000.0000.0001',
+	intf_ip_addr               => '100.1.1.1',
+	intf_ip_addr_step          => '0.0.1.0',
+	router_id                  => '1.1.1.1',
+	router_id_step             => '0.0.1.0',
+	neighbor_intf_ip_addr      => '100.1.1.2',
+	neighbor_intf_ip_addr_step => '0.0.1.0',
+	vlan_id_step               => 5,
+	area_id                    => '0.0.0.1',
+	area_id_step               => '0.0.0.1',
+	area_type                  => 'external-capable',
+	authentication_mode        => 'null',
+	dead_interval              => 222,
+	hello_interval             => 333,
+	interface_cost             => 55,
+	lsa_discard_mode           => 1,
+	mtu                        => 670,
+	network_type               => 'ptop',
 	demand_circuit             => 1,
 });
 &catch_error();
@@ -200,12 +200,12 @@ my $session_handle = ixiahlt::status_item('handle');
 #  Configure a single router behind a session router  #
 #######################################################
 $_result_ = ixiahlt::emulation_ospf_topology_route_config ({
-	mode                      => 'create',                  
-	handle                    => $session_handle,        
-	type                      => 'summary_routes',          
-	summary_number_of_prefix  => 10,           
-	summary_prefix_start      => '55.0.0.1',     
-	summary_prefix_length     => 24,           
+	mode                      => 'create',
+	handle                    => $session_handle,
+	type                      => 'summary_routes',
+	summary_number_of_prefix  => 10,
+	summary_prefix_start      => '55.0.0.1',
+	summary_prefix_length     => 24,
 	summary_prefix_metric     => 5,
 });
 &catch_error();
@@ -214,29 +214,29 @@ $_result_ = ixiahlt::emulation_ospf_topology_route_config ({
 #  Configure OSPF on second port                      #
 #######################################################
 $_result_ = ixiahlt::emulation_ospf_config ({
-	port_handle                => $portHandleList[1],        
-	reset                      => 1,                
-	session_type               => 'ospfv2',           
-	mode                       => 'create',           
-	count                      => 1,               
-	mac_address_init           => '1000.0000.0002',   
-	intf_ip_addr               => '100.1.1.2',        
-	intf_ip_addr_step          => '0.0.1.0',          
-	router_id                  => '7.7.7.7',          
-	router_id_step             => '0.0.1.0',          
-	neighbor_intf_ip_addr      => '100.1.1.1',        
-	neighbor_intf_ip_addr_step => '0.0.1.0',          
-	vlan_id_step               => '5',                
-	area_id                    => '0.0.0.1',          
-	area_id_step               => '0.0.0.1',          
-	area_type                  => 'external-capable', 
-	authentication_mode        => 'null',             
-	dead_interval              => 222,              
-	hello_interval             => 333,              
-	interface_cost             => 55,               
-	lsa_discard_mode           => 0,                
-	mtu                        => 670,               
-	network_type               => 'ptop',              
+	port_handle                => $portHandleList[1],
+	reset                      => 1,
+	session_type               => 'ospfv2',
+	mode                       => 'create',
+	count                      => 1,
+	mac_address_init           => '1000.0000.0002',
+	intf_ip_addr               => '100.1.1.2',
+	intf_ip_addr_step          => '0.0.1.0',
+	router_id                  => '7.7.7.7',
+	router_id_step             => '0.0.1.0',
+	neighbor_intf_ip_addr      => '100.1.1.1',
+	neighbor_intf_ip_addr_step => '0.0.1.0',
+	vlan_id_step               => '5',
+	area_id                    => '0.0.0.1',
+	area_id_step               => '0.0.0.1',
+	area_type                  => 'external-capable',
+	authentication_mode        => 'null',
+	dead_interval              => 222,
+	hello_interval             => 333,
+	interface_cost             => 55,
+	lsa_discard_mode           => 0,
+	mtu                        => 670,
+	network_type               => 'ptop',
 	demand_circuit             => 1,
 });
 &catch_error();

@@ -10,4 +10,3 @@ If you need to test bgp, make a copy of bgpParams_template.py to bgpParams.py an
 change all the IP addresses, chassisIp and portList to your devices.
 
 So in the future when you do a git pull to get updates, your param files won't get overwritten.
- 

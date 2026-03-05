@@ -12,7 +12,7 @@
 
 set ixNetworkPort 8008
 set ixNetworkTclServerIp 172.27.143.178
-set ixiaChassisIp [list 172.27.143.172] 
+set ixiaChassisIp [list 172.27.143.172]
 
 # Set the value to {} if you want to use the existing configuration's port.
 # Otherwise, if you provide a list of ports, they will be used.
@@ -62,7 +62,7 @@ proc GetTime {} {
 }
 
 proc Connect { {type reassignPorts} } {
-    # Connect options are only: 
+    # Connect options are only:
     #    - Resume to existing config.
     #    - Load a saved config and optionally, you could reassign ports also
     #
@@ -85,7 +85,7 @@ proc Connect { {type reassignPorts} } {
 			    -break_locks 1 \
 			    -session_resume_keys 1
 	}
-	
+
 	# Include loading a config file if the variable is set with a config file.
 	if {$::ixncfgFile != ""} {
 	    if {[file exists $::ixncfgFile] == 0} {
@@ -109,7 +109,7 @@ proc Connect { {type reassignPorts} } {
 			    -session_resume_keys 1
 	}
     }
-    
+
     set connectStatus [eval ::ixia::connect $hltParams]
     if {[keylget connectStatus status] != $::SUCCESS} {
 	puts "Connecting to IxNetwork Tcl server failed\n\n$connectStatus\n"
@@ -118,7 +118,7 @@ proc Connect { {type reassignPorts} } {
     } else {
 	puts "Successfully connected to IxNetwork Tcl server"
     }
-    
+
     puts "\n[KeylPrint connectStatus]\n"
     return $connectStatus
 }
@@ -144,7 +144,7 @@ proc VerifyPortState { {portList all} {expectedPortState up} } {
 	    set port [lindex [split [lindex $connectedTo 1] :] end]
 	    set port $card/$port
 
-	    if {[lsearch $portList $port] != -1} { 
+	    if {[lsearch $portList $port] != -1} {
 		lappend vPortList $vport
 	    }
 	}
@@ -160,7 +160,7 @@ proc VerifyPortState { {portList all} {expectedPortState up} } {
 	    set card [lindex [split [lindex $connectedTo 0] :] end]
 	    set port [lindex [split [lindex $connectedTo 1] :] end]
 	    set port $card/$port
-	    
+
 	    set portState [ixNet getAttribute $vport -state]
 
 	    # Expecting port state = UP
@@ -170,12 +170,12 @@ proc VerifyPortState { {portList all} {expectedPortState up} } {
 		    after 2000
 		    continue
 		}
-		
+
 		if {$portState != "up" && $timer == "60"} {
 		    puts "\nError VerifyPortState: $port seem to be stuck on $portState state. Expecting port up.\n"
 		    set portsAllUpFlag 1
 		}
-		
+
 		if {$portState == "up"} {
 		    puts "\nVerifyPortState: $port state is $portState"
 		    break
@@ -189,12 +189,12 @@ proc VerifyPortState { {portList all} {expectedPortState up} } {
 		    after 2000
 		    continue
 		}
-		
+
 		if {$portState == "up" && $timer == "60"} {
 		    puts "\nError VerifyPortState: $port seem to be stuck on the $portState state. Expecting port down."
 		    set portsAllUpFlag 1
 		}
-		
+
 		if {$portState == "down"} {
 		    puts "\nVerifyPortState: $port state is $portState as expected"
 		    break
@@ -231,7 +231,7 @@ proc GetAllQuickTestHandlesHlt {} {
     set testControlStatus [::ixia::test_control \
 			       -action get_all_qt_handles \
 			      ]
-    
+
     if {[keylget testControlStatus status] != $::SUCCESS} {
 	puts "GetAllQuickTestHandlesHlt Error: [keylget testControlStatus log]"
 	return 0
@@ -251,9 +251,9 @@ proc ApplyQuickTestHandleHlt { quickTestHandle } {
 	puts "ApplyQuickTestHandleHlt: [keylget testControlStatus log]"
 	return 1
     }
- 
+
     # ::ixNet::RESULT-3
-    set resultHandle [keylget testControlStatus $quickTestHandle.result_handle]    
+    set resultHandle [keylget testControlStatus $quickTestHandle.result_handle]
     #return $resultHandle
 }
 
@@ -286,22 +286,22 @@ proc VerifyQuickTestApply { quickTestHandle } {
 	}
 
 	# Version < 8, status = Trial when transmitting frames
-	# Verrsion >= 8, status = TransmittingFrames 
+	# Verrsion >= 8, status = TransmittingFrames
 
 	puts "VerifyQuickTestApply: $currentAction : Waiting $counter/$applyQuickTestCounter seconds"
 
-	if {$ixNetworkVersionNumber >= 8} { 
+	if {$ixNetworkVersionNumber >= 8} {
 	    if {$counter < $applyQuickTestCounter && $currentAction != "TransmittingFrames"} {
 		after 1000
 		continue
 	    }
 	}
-	if {$ixNetworkVersionNumber < 8} { 
+	if {$ixNetworkVersionNumber < 8} {
 	    if {$counter < $applyQuickTestCounter && $currentAction == "ApplyingAndInitializing"} {
 		continue
 	    }
 	}
-	
+
 	if {$ixNetworkVersionNumber >= 8} {
 	    if {$counter < $applyQuickTestCounter && $currentAction == "TransmittingFrames"} {
 		puts "\nVerifyQuickTestApply is done applying configuration and has started transmitting frames"
@@ -329,7 +329,7 @@ proc VerifyQuickTestApply { quickTestHandle } {
 	    }
 	}
     }
-    
+
     return 0
 }
 
@@ -404,7 +404,7 @@ proc VerifyAllQuickTestNames { quickTestNameList } {
 
 proc GetQuickTestHandleByName { quickTestName } {
     foreach quickTestHandle [GetAllQuickTestHandlesHlt] {
-	set currentQtName [ixNet getAttribute $quickTestHandle -name] 
+	set currentQtName [ixNet getAttribute $quickTestHandle -name]
 	if {[regexp -nocase $quickTestName $currentQtName]} {
 	    return $quickTestHandle
 	}
@@ -422,7 +422,7 @@ proc GetQuickTestTotalFrameSizesToTest { quickTestHandle } {
 
 proc GetQuickTestCurrentAction { quickTestHandle } {
     # NOTE:
-    #   IxNetwork version 7.30 doesn't have the -currentAction support. This feature 
+    #   IxNetwork version 7.30 doesn't have the -currentAction support. This feature
     #   is supported starting with 8.0 I believe.
 
     # IxNetwork 8.00.1027.17 EA
@@ -460,7 +460,7 @@ proc MonitorQuickTestRunProgress { quickTestHandle } {
 	} else {
 	    break
 	}
-    }	
+    }
 
     after 2000
 }
@@ -473,7 +473,7 @@ proc GetVportMapping { Port } {
     if {$vportList == ""} {
 	return 0
     }
-    
+
     foreach vport $vportList {
 	set connectedTo [ixNet getAttribute $vport -connectedTo]
 	set card [lindex [split [lindex [split $connectedTo /] 3] :] end]
@@ -489,7 +489,7 @@ proc GetVportMapping { Port } {
 set argIndex 0
 while {$argIndex < [llength $argv]} {
     set currentArg [lindex $argv $argIndex]
-    switch -exact -- $currentArg { 
+    switch -exact -- $currentArg {
 	-ixiaChassisIp {
 	    set ixiaChassisIp [lindex $argv [expr $argIndex + 1]]
 	    incr argIndex 2
@@ -549,7 +549,7 @@ if {$userSelectQuickTestList == "all"} {
 	exit
     }
 } else {
-    # Verify user selected Quick Test to run. 
+    # Verify user selected Quick Test to run.
     if {[VerifyAllQuickTestNames $userSelectQuickTestList] == 1} {
 	exit
     }
@@ -570,7 +570,7 @@ foreach quickTestName $quickTestNameList {
     set quickTestHandle [GetQuickTestHandleByName $quickTestName]
     set currentQuickTestName [ixNet getAttribute $quickTestHandle -name]
 
-    puts "\nStarting QuickTest name: $currentQuickTestName" 
+    puts "\nStarting QuickTest name: $currentQuickTestName"
 
     # Get test duration
     set testDuration [GetQuickTestDuration $quickTestHandle]
@@ -604,7 +604,7 @@ foreach quickTestName $quickTestNameList {
     # Replace all blank spaces with an underscore for the result filename
     set currentQuickTestName [string map {" " _} $currentQuickTestName]
 
-    # Result files to get options: iteration.csv, AggregateResults.csv, logfile.txt, results.csv 
-    # The final result file name is: /path/AggregateResults_<quick test name>.csv    
+    # Result files to get options: iteration.csv, AggregateResults.csv, logfile.txt, results.csv
+    # The final result file name is: /path/AggregateResults_<quick test name>.csv
     CopyFileWindowsToLocalLinux $resultPath $copyResultFileToLocalLinuxPath\/[lindex [split $quickTestCsvResultFile .] 0]\_$currentQuickTestName\_[GetTime]\.csv
 }

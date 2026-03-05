@@ -49,8 +49,8 @@
 #    This script intends to demonstrate how to use NGPF OSPFv3 PYTHON APIs.    #
 #                                                                              #
 #    1. It will create 2 OSPFv3 topologies, each having an ipv6 network        #
-#       topology and loopback device group behind the network group(NG) with   # 
-#       loopback interface on it. A loopback device group(DG) behind network   # 
+#       topology and loopback device group behind the network group(NG) with   #
+#       loopback interface on it. A loopback device group(DG) behind network   #
 #       group is needed to support applib traffic.                             #
 #    2. Start the ospfv3 protocol.                                             #
 #    3. Retrieve protocol statistics.                                          #
@@ -453,7 +453,7 @@ print("Configuring Applib traffic")
 trafficItem2 = ixNet.add(ixNet.getRoot() + '/traffic', 'trafficItem')
 
 ixNet.setMultiAttribute(trafficItem2,
-    '-name',                     'Traffic Item 2',             
+    '-name',                     'Traffic Item 2',
     '-trafficItemType',          'applicationLibrary',
     '-roundRobinPacketOrdering', 'false',
     '-trafficType',              'ipv6ApplicationTraffic')
@@ -473,7 +473,7 @@ ixNet.setMultiAttribute(endpointSet2,
     '-ngpfFilters',           [],
     '-trafficGroups',         [],
     '-sources',               source_app,
-    '-destinations',          destin_app)    
+    '-destinations',          destin_app)
 ixNet.commit()
 
 endpointSet2 = ixNet.remapIds(endpointSet2)[0]

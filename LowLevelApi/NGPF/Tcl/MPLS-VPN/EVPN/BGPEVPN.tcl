@@ -51,7 +51,7 @@
 #                                                                              #
 #    1. It will create 2 BGP EVPN topologies, each having LDP configured in    #
 #        connected Device Group .BGP EVPN configured in chained device group   #
-#        along with Mac pools connected behind the chained Device Group.       # 
+#        along with Mac pools connected behind the chained Device Group.       #
 #    2. Start all protocol.                                                    #
 #    3. Retrieve protocol statistics.                                          #
 #    4. Retrieve protocol learned info.                                        #
@@ -59,7 +59,7 @@
 #    6. Start the L2-L3 traffic.                                               #
 #    7. Retrieve L2-L3 traffic stats.                                          #
 #    8. Stop L2-L3 traffic.                                                    #
-#    9. Stopallprotocols.                                                      #                                                                                
+#    9. Stopallprotocols.                                                      #
 ################################################################################
 
 # Script Starts
@@ -85,7 +85,7 @@ ixNet exec newConfig
 ################################################################################
 # 1. Protocol configuration section. Configure LDP as per the description
 #    give above
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -384,15 +384,15 @@ puts "***************************************************"
 ###############################################################################
 
 puts "Fetching EVPN  Learned Info"
-ixNet exec getEVPNLearnedInfo $bgp1 
+ixNet exec getEVPNLearnedInfo $bgp1
 
 after 5000
 set learnedInfoList [ixNet getList $bgp1 learnedInfo]
 set linfoList [ixNet getList $learnedInfoList table]
-set EvpnMacLInfo [lindex $linfoList 0] 
-set EvpnMulticastLInfo [lindex $linfoList 1] 
-set EvpnESLInfo [lindex $linfoList 2] 
-set EvpnEthernetADLInfo [lindex $linfoList 3] 
+set EvpnMacLInfo [lindex $linfoList 0]
+set EvpnMulticastLInfo [lindex $linfoList 1]
+set EvpnESLInfo [lindex $linfoList 2]
+set EvpnEthernetADLInfo [lindex $linfoList 3]
 
 puts "EVPN learned info"
 puts "***************************************************"
@@ -409,7 +409,7 @@ foreach table $linfoList {
 puts "***************************************************"
 
 ################################################################################
-# 5. Configure L2-L3 traffic 
+# 5. Configure L2-L3 traffic
 ################################################################################
 puts "Congfiguring L2-L3 Traffic Item"
 set trafficItem1 [ixNet add [ixNet getRoot]/traffic "trafficItem"]
@@ -433,7 +433,7 @@ ixNet setMultiAttribute $endpointSet1\
     -ngpfFilters           [list]\
     -trafficGroups         [list]\
     -sources               $source\
-    -destinations          $destination    
+    -destinations          $destination
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\

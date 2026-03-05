@@ -1,9 +1,9 @@
 #!/usr/local/python2.7.6/bin/python2.7
 
 # 2 Conditions in this script:
-#   
+#
 # 1: Load a saved config file.
-# 2: Load a config file and use the specified Ixia chassis 
+# 2: Load a config file and use the specified Ixia chassis
 #    and Ixia ports.
 
 import sys, os
@@ -48,7 +48,7 @@ def VerifyPortState( stopTime = 40 ):
             if portState != 'up':
                 print 'VerifyPortState: %s is not up yet. Verifying %d/%d seconds' % (port, timer, stopTime)
                 time.sleep(1)
-            
+
             if timer == stopTime:
                 print 'Port can\'t come up.  Exiting test'
                 return 1
@@ -59,7 +59,7 @@ def VerifyPortState( stopTime = 40 ):
 def VerifyAllProtocolSessionsNgpfPy():
     # This API will loop through each created Topology Group and verify
     # all the created protocols for session up for up to 90 seconds total.
-    # 
+    #
     # Returns 0 if all sessions are UP.
     # Returns 1 if any session remains DOWN after 90 seconds.
 
@@ -102,7 +102,7 @@ def VerifyAllProtocolSessionsNgpfPy():
         for topology in ixNet.getList(ixNet.getRoot(), 'topology'):
             for deviceGroup in ixNet.getList(topology, 'deviceGroup'):
                 for ethernet in ixNet.getList(deviceGroup, 'ethernet'):
-                    for ipv4 in ixNet.getList(ethernet, 'ipv4'):                        
+                    for ipv4 in ixNet.getList(ethernet, 'ipv4'):
                         for currentProtocol in ixNet.getList(ipv4, protocol):
                             for timer in range(startCounter, timeEnd+1):
                                 currentStatus = ixNet.getAttribute(currentProtocol, '-sessionStatus')
@@ -146,7 +146,7 @@ def VerifyArpNgpfPy(ipType='ipv4', maxRetry=3):
                         # Only care for unresolved ARPs
                         for index in xrange(0, len(resolvedGatewayMac)):
                             for timer in xrange(1, maxRetry+1):
-                                if (re.match('.*Unresolved', resolvedGatewayMac[index]) and 
+                                if (re.match('.*Unresolved', resolvedGatewayMac[index]) and
                                     sessionStatus[index] != 'notStarted' and
                                     timer <= maxRetry
                                     ):
@@ -155,7 +155,7 @@ def VerifyArpNgpfPy(ipType='ipv4', maxRetry=3):
                                     ipAddrNotResolved = ixNet.getAttribute(ixNet.getRoot()+multiValueNumber, '-values')[index]
                                     # /topology:2/deviceGroup:1/ethernet:1/ipv4:1 -address
                                     topologyDeviceGroupSource = ixNet.getAttribute(ixNet.getRoot()+multiValueNumber, '-source')
-                                    
+
                                     match = re.match('.*(topology:[0-9]+)/deviceGroup:([0-9]+).*', topologyDeviceGroupSource)
                                     if match:
                                         topologyNum = match.group(1)
@@ -168,7 +168,7 @@ def VerifyArpNgpfPy(ipType='ipv4', maxRetry=3):
                                             )
                                         time.sleep(1)
 
-                                if (re.match('.*Unresolved', resolvedGatewayMac[index]) and 
+                                if (re.match('.*Unresolved', resolvedGatewayMac[index]) and
                                     sessionStatus[index] != 'notStarted' and
                                     timer == maxRetry
                                     ):
@@ -198,7 +198,7 @@ def VerifyArpNgpfPy(ipType='ipv4', maxRetry=3):
 def VerifyProtocolSessionStatusUpNgpfHlPy(protocolHandle, totalTime=60):
     '''
     Pass in a protocol handle to verify for sessions status 'UP'.
-    
+
     '''
 
     for timer in range(0, totalTime):
@@ -216,7 +216,7 @@ def VerifyProtocolSessionStatusUpNgpfHlPy(protocolHandle, totalTime=60):
         if timer < totalTime and currentSessionUp != totalSessions:
             time.sleep(1)
             continue
-        
+
         if timer < totalTime and currentSessionUp == totalSessions:
             return 0
 
@@ -259,18 +259,18 @@ if os.path.isfile(configFile) == False:
 
 # Load Config File
 '''
-connect_result = ixia_ngpf.connect ( 
+connect_result = ixia_ngpf.connect (
     reset = '1',
     ixnetwork_tcl_server = ixnetwork_tcl_server,
     tcl_server = tcl_server,
     username = user_name,
     break_locks = 1,
     configFile = configFile,
-    ) 
+    )
 '''
 
 # Load config file and specifying which Ixia chassis and ports to use.
-connect_result = ixia_ngpf.connect ( 
+connect_result = ixia_ngpf.connect (
     ixnetwork_tcl_server = ixnetwork_tcl_server,
     tcl_server = tcl_server,
     device = chassis_ip,
@@ -278,7 +278,7 @@ connect_result = ixia_ngpf.connect (
     username = user_name,
     break_locks = 1,
     config_file = configFile,
-    ) 
+    )
 
 PrintDict(connect_result)
 

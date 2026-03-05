@@ -436,4 +436,3 @@ class PortMgmt(object):
                 if counter == timeout and response.json()['state'] == 'down':
                     # Failed
                     raise IxNetRestApiException('Port failed to come up')
-

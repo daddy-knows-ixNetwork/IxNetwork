@@ -86,7 +86,7 @@
 ######################################################################################
 
 ################################################################################
-# Please ensure that PERL5LIB environment variable is set properly so that 
+# Please ensure that PERL5LIB environment variable is set properly so that
 # IxNetwork.pm module is available. IxNetwork.pm is generally available in
 # C:\<IxNetwork Install Path>\API\Perl
 ################################################################################
@@ -105,13 +105,13 @@ sub assignPorts {
 	my $port2    = $my_resource[6];
 	my $vport1   = $my_resource[7];
 	my $vport2   = $my_resource[8];
-	
+
 	my $root = $ixNet->getRoot();
 	my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-	
+
 	my $chassisObj2 = '';
 	if ($chassis1 ne $chassis2) {
 	    $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -121,7 +121,7 @@ sub assignPorts {
 	} else {
 	    $chassisObj2 = $chassisObj1;
 	}
-	
+
 	my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -130,7 +130,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-		
+
     $ixNet->commit();
 }
 # Script Starts
@@ -140,7 +140,7 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.216.108.49';
 my $ixTclPort   = '8999';
 my @ports       = (('10.216.102.209', '1', '3'), ('10.216.102.209', '1', '4'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
@@ -272,7 +272,7 @@ print ("Making the NetworkType to Point to Point in the second OSPF router\n");
 my $networkTypeMultiValue2 = $ixNet->getAttribute($ospf2, '-networkType');
 $ixNet->setAttribute($networkTypeMultiValue2, '-clearOverlays', 'false', '-pattern', 'singleValue');
 $ixNet->commit();
-my $networkType2 =$ixNet->add($networkTypeMultiValue2, 'singleValue'); 
+my $networkType2 =$ixNet->add($networkTypeMultiValue2, 'singleValue');
 $ixNet->setMultiAttribute($networkType2, '-value', 'pointtopoint');
 $ixNet->commit();
 
@@ -290,7 +290,7 @@ $ixNet->setAttribute($networkGroup1, '-multiplier', '10');
 $ixNet->setAttribute($networkGroup2, '-multiplier', '10');
 $ixNet->commit();
 
-#Change IP address and Prefix Of Network Group 
+#Change IP address and Prefix Of Network Group
 my $ipV4PrefixPools1  = ($ixNet->getList($networkGroup1, 'ipv4PrefixPools'))[0];
 my $prefixLength1 = $ixNet->getAttribute($ipV4PrefixPools1, '-prefixLength');
 $ixNet->setMultiAttribute($prefixLength1, '-clearOverlays', 'false', '-pattern', 'singleValue');
@@ -427,7 +427,7 @@ my $peerId2 = $ixNet->add($peerId2, 'counter');
 $ixNet->setMultiAttribute($peerId2, '-step', '0.0.0.1',
     '-start', '200.1.0.1', '-direction', 'increment');
 $ixNet->commit();
- 
+
 ################################################################################
 # 3. Add MAC Cloud behind LDP PWs
 ################################################################################
@@ -461,13 +461,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-34s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -525,7 +525,7 @@ sleep(15);
 
 ###############################################################################
 # 8. Retrieve protocol learned info again and compare with
-#    previously retrieved learned info.  
+#    previously retrieved learned info.
 ###############################################################################
 print("Fetching LDP Learned Info after changing Labels\n");
 $ixNet->execute('getIPv4FECLearnedInfo', $ldp1, '1');
@@ -545,7 +545,7 @@ print("***************************************************\n");
 
 
 ################################################################################
-# 9. Configure L2-L3 traffic 
+# 9. Configure L2-L3 traffic
 ################################################################################
 print ("Congfiguring L2-L3 Traffic Item\n");
 my $trafficItem1 = $ixNet->add(($ixNet->getRoot()).'/traffic', 'trafficItem');
@@ -605,13 +605,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-34s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -627,4 +627,3 @@ sleep(5);
 ################################################################################
 $ixNet->execute('stopAllProtocols');
 print("!!! Test Script Ends !!!");
-

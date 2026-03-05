@@ -47,8 +47,8 @@
 #                                                                              #
 # Description:                                                                 #
 #    This script intends to demonstrate how to use NGPF OpenFlow Controller API#
-#    It will create 1 topology of OpenFlow Controller, it will start the 
-#    emulation and then it will retrieve and display few statistics 
+#    It will create 1 topology of OpenFlow Controller, it will start the
+#    emulation and then it will retrieve and display few statistics
 #    It will also check detailed learned info and learned info after sending on#
 #    demand message                                                            #
 #                                                                              #
@@ -63,12 +63,12 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.214.101.141';
 my $ixTclPort   = '8558';
 my @ports       = (('12.0.1.253', '5', '10'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 ################################################################################
 # Connecting to IxTclNetwork Server and adding ports                           #
-################################################################################ 
+################################################################################
 
 print("Connect to IxNetwork Tcl server\n");
 $ixNet->connect($ixTclServer, '-port', $ixTclPort, '-version', '8.20',
@@ -104,7 +104,7 @@ $ixNet->commit();
 
 ################################################################################
 # protocol configuration section                                               #
-################################################################################ 
+################################################################################
 
 print("Adding 2 topologies\n");
 $ixNet->add($ixNet->getRoot(), 'topology', '-vports', $vportTx);
@@ -200,13 +200,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-        my $statIndiv = ''; 
+        my $statIndiv = '';
         $index = 0;
         foreach $statIndiv (@$statVal) {
             printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
             $index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -220,19 +220,19 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-        my $statIndiv = ''; 
+        my $statIndiv = '';
         $index = 0;
         foreach $statIndiv (@$statVal) {
             printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
             $index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
 
 ################################################################################
-# On the fly section                                                           #  
+# On the fly section                                                           #
 ################################################################################
 my $swPortActive = ($ixNet->getList($openFlowSwitch1, 'ofSwitchPorts'))[0];
 print "$swPortActive\n";
@@ -240,13 +240,13 @@ print "Disabling switch on the fly\n";
 my $ofSwitchActive = ($ixNet->getAttribute($swPortActive, '-active'));
 my $swActive = ($ixNet->add($ofSwitchActive, 'overlay'));
 $ixNet->setMultiAttribute($swActive, '-value', 'false');
-$ixNet->commit();   
+$ixNet->commit();
 sleep(5);
 print "Enabling switch o the fly\n";
 my $ofSwitchActive = ($ixNet->getAttribute($swPortActive, '-active'));
 my $swActive = ($ixNet->add($ofSwitchActive, 'overlay'));
 $ixNet->setMultiAttribute($swActive, '-value', 'true');
-$ixNet->commit();  
+$ixNet->commit();
 sleep(5);
 my $globals   = ($ixNet->getRoot()).'/globals';
 my $topology  = $globals.'/topology';
@@ -259,7 +259,7 @@ print "$EthernetDestVal\n";
 my $val = ($ixNet->getAttribute($EthernetDestVal, '-values'))[0];
 print "$val\n";
 $ixNet->setMultiAttribute($EthernetDestVal, '-clearOverlays', 'false');
-$ixNet->commit();  
+$ixNet->commit();
 my $EthernetDestValues = ($ixNet->add($EthernetDestVal, 'singleValue'));
 $ixNet->setMultiAttribute($EthernetDestValues, '-value', '56:00:00:00:00:1');
 $ixNet->commit();
@@ -271,10 +271,10 @@ $ixNet->execute('applyOnTheFly', $topology);
 sleep(5);
 my $PortVal =($ixNet->getAttribute($swPortActive, '-portNumber'));
 $ixNet->setMultiAttribute($PortVal, '-clearOverlays', 'false');
-$ixNet->commit(); 
+$ixNet->commit();
 my $PortSetValues = ($ixNet->add($PortVal, 'singleValue'));
 $ixNet->setMultiAttribute($PortSetValues, '-value', '5677888');
-$ixNet->commit(); 
+$ixNet->commit();
 
 my $globals   = ($ixNet->getRoot()).'/globals';
 my $topology  = $globals.'/topology';
@@ -336,8 +336,3 @@ print("***************************************************\n");
 ################################################################################
 $ixNet->execute('stopAllProtocols');
 print("!!! Test Script Ends !!!\n");
-
-
-
-
-

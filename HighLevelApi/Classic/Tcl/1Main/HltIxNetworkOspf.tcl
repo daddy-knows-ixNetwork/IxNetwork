@@ -9,7 +9,7 @@
 #                   ---------------------------
 #   Advertising Route:
 #     10.10.10.0
-# 
+#
 #  Sending traffic from 10.10.10.0 to 2.2.2.1
 #
 
@@ -102,11 +102,11 @@ proc StartAllProtocolsHlt { {platform legacy} } {
 
     if {$platform == "legacy"} {
 	set params "::ixia::test_control -action start_all_protocols"
-    } 
+    }
 
     if {$platform == "ngpf"} {
 	set params "::ixiangpf::test_control -action start_all_protocols"
-    } 
+    }
 
     puts "\nStartAllProtocolsHlt: $platform"
     set startProtocolStatus [eval $params]
@@ -126,7 +126,7 @@ proc StartTrafficHlt {} {
     if {[keylget startTrafficStatus status] != $::SUCCESS} {
 	puts "\nError StartTrafficHlt: $startTrafficStatus\n"
 	return 1
-    } 
+    }
 
     # By including VerifyTrafficState, it will wait up to 15 seconds until
     # traffic is started before returning.
@@ -148,7 +148,7 @@ proc VerifyTrafficState {} {
 		return 1
 	    }
 	}
-	
+
 	if {$trafficState == "started"} {
 	    puts "VerifyTrafficState: Traffic Started"
 	    break
@@ -231,7 +231,7 @@ set portConfig(1/1/1,-port_handle) $port1
 set portConfig(1/1/1,-mode) config
 set portConfig(1/1/1,-intf_ip_addr) 1.1.1.1
 set portConfig(1/1/1,-intf_ip_addr_step) 0.0.0.1
-set portConfig(1/1/1,-connected_count) 10 
+set portConfig(1/1/1,-connected_count) 10
 set portConfig(1/1/1,-netmask) 255.255.255.0
 set portConfig(1/1/1,-gateway) 1.1.1.11
 set portConfig(1/1/1,-gateway_step) 0.0.0.1
@@ -250,7 +250,7 @@ set portConfig(1/1/2,-port_handle) $port2
 set portConfig(1/1/2,-mode) config
 set portConfig(1/1/2,-intf_ip_addr) 1.1.1.11
 set portConfig(1/1/2,-intf_ip_addr_step) 0.0.0.1
-set portConfig(1/1/2,-connected_count) 10 
+set portConfig(1/1/2,-connected_count) 10
 set portConfig(1/1/2,-netmask) 255.255.255.0
 set portConfig(1/1/2,-gateway) 1.1.1.1
 set portConfig(1/1/2,-gateway_step) 0.0.0.1
@@ -428,7 +428,7 @@ StartAllProtocolsHlt
 # ----->  At this point, you must verify on the DUT
 #         for ospf neighbors and advertised routes
 #         before starting traffic
-# REMOVE THIS hardcoded timeout 
+# REMOVE THIS hardcoded timeout
 puts "\nWaiting for 45 seconds for ospf routes to converge on the DUT"
 after 45000
 

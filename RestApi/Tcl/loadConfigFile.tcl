@@ -2,7 +2,7 @@
 
 # This is a sample script to show how to use the TCL rest.tcl package to execute ReST APIs.
 # This script will connect to an IxNetwork API server and perform the followings:
-# 
+#
 #    - Connect to an IxNetwork API server
 #    - Load a saved JSON config file
 #    - Reassign ports
@@ -10,7 +10,7 @@
 #    - Start traffic
 #    - Stop traffic
 #    - Get stats
-# 
+#
 # Requirements
 #    - rest.tcl
 #    - json.tcl

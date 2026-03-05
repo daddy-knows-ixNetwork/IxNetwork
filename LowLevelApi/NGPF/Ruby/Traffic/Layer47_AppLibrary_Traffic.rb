@@ -46,16 +46,16 @@
 #                                                                               #
 # Description:                                                                  #
 #    The script below represents an end to end workflow for AppLibrary Traffic. #
-#    Steps:                                                                     #            
-#    1. Chassis connection and API server connection                            #    
-#    2. Scenario configuration at layer 2-3                                     #    
-#    3. Creation of Applibrary traffic                                          #    
-#    4. Per connection parameters configuration                                 #    
+#    Steps:                                                                     #
+#    1. Chassis connection and API server connection                            #
+#    2. Scenario configuration at layer 2-3                                     #
+#    3. Creation of Applibrary traffic                                          #
+#    4. Per connection parameters configuration                                 #
 #    5. Traffic apply and start                                                 #
-#    6. Statistics operations: drill down in a loop                             #    
+#    6. Statistics operations: drill down in a loop                             #
 #    7. Test criteria evaluation                                                #
 #    8. Stop traffic                                                            #
-#                                                                               #        
+#                                                                               #
 #################################################################################
 
 ################################################################################
@@ -386,4 +386,3 @@ puts testResult
 puts "##################"
 puts "Test run is PASSED"
 puts "##################"
-

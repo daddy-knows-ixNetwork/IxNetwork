@@ -99,7 +99,7 @@ my @query_handle_List       = ();
 my @host_handle_List       = ();
 
 # Connect to the chassis, reset to factory defaults and take ownership
-# When using P2NO HLTSET, for loading the IxTclNetwork package please 
+# When using P2NO HLTSET, for loading the IxTclNetwork package please
 # provide –ixnetwork_tcl_server parameter to ::ixia::connect
 $_result_ = ixiahlt::connect( {
     reset                => 1,
@@ -121,7 +121,7 @@ my $port_1 = $portHandleList[0];
 my $port_2 = $portHandleList[1];
 
 #################################################################################
-#  Configure interfaces and create IGMP sessions                                # 
+#  Configure interfaces and create IGMP sessions                                #
 #################################################################################
 print ("Configure IGMP v2 hosts\n");
 
@@ -488,5 +488,3 @@ $_result_ = ixiahlt::emulation_igmp_control ( {
 &catch_error();
 
 print ("\n\n$test_name : TEST COMPLETED SUCCESSFULLY!\n");
-
-

@@ -52,8 +52,8 @@
 #                                                                              #
 # Description:                                                                 #
 #    This script intends to demonstrate how to use NGPF OpenFlow Controller API#
-#    It will create 1 topology of OpenFlow Controller, it will start the 
-#    emulation and then it will retrieve and display few statistics 
+#    It will create 1 topology of OpenFlow Controller, it will start the
+#    emulation and then it will retrieve and display few statistics
 #    It will also check detailed learned info and learned info after sending on#
 #    demand message                                                            #
 # Ixia Software:                                                               #
@@ -405,4 +405,3 @@ if __name__ == "__main__":
     version = '8.10'
     controller = NgpfOpenFlowController(ixTclServer, ixTclPort, version)
     controller.main()
-

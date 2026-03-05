@@ -70,7 +70,7 @@ ixNet exec newConfig
 
 ################################################################################
 # protocol configuration section                                               #
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -150,7 +150,7 @@ ixNet setAttr [ixNet getAttr $ip2 -prefix]/singleValue -value 64
 ixNet commit
 
 #######################################################################
-#Adding and Configuring ISIS L3 Router                                
+#Adding and Configuring ISIS L3 Router
 #######################################################################
 puts "Adding and Configuring ISIS-L3"
 ixNet add $mac1 isisL3
@@ -172,7 +172,7 @@ ixNet setAttr $enableBFD2/singleValue -value true
 ixNet commit
 
 ###########################################################################
-#Add and Configure BFDv6 Interface 
+#Add and Configure BFDv6 Interface
 ###########################################################################
 puts "Add BFDv6 Interface"
 ixNet add $ip1 bfdv6Interface

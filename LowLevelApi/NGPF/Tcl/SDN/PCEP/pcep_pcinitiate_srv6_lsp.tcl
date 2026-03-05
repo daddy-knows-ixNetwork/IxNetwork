@@ -53,7 +53,7 @@
 #      3. Verify statistics from "Protocols Summary" view                        #
 #      4. Fetch PCC learned information                                          #
 #      5. Fetch PCCGroup learned information                                     #
-#      6. Stop all protocols.                                                    # 
+#      6. Stop all protocols.                                                    #
 ##################################################################################
 
 # Script Starts
@@ -78,8 +78,8 @@ ixNet exec newConfig
 
 ################################################################################
 # 1. Protocol configuration section. Configure PCEP as per the description     #
-#    give above                                                                # 
-################################################################################ 
+#    give above                                                                #
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -175,7 +175,7 @@ set pcc [ixNet add $ip2 pcc]
 ixNet commit
 set pcc [lindex [ixNet remapIds $pcc] 0]
 
-# configured expectedInitiatedLspsForTraffic 
+# configured expectedInitiatedLspsForTraffic
 ixNet setAttr $pcc -expectedInitiatedLspsForTraffic 1
 ixNet commit
 
@@ -211,7 +211,7 @@ ixNet setAttr $ipVerisionMv/singleValue ipv4
 ixNet commit
 
 set Ipv4SrcEndpointsMv [ixNet getAttr $pccGroup/pceInitiateLSPParameters\
-    -srcEndPointIpv4] 
+    -srcEndPointIpv4]
 ixNet setAttr $Ipv4SrcEndpointsMv/singleValue -value 2.0.0.1
 
 set Ipv4DestEndpointsMv [ixNet getAttr $pccGroup/pceInitiateLSPParameters\
@@ -239,8 +239,8 @@ ixNet setAttr $includeLspMv/singleValue -value True
 
 set includeSymbolicPathMv [ixNet getAttr $pccGroup/pceInitiateLSPParameters\
     -includeSymbolicPathNameTlv]
-ixNet setAttr $includeSymbolicPathMv/singleValue True    
-    
+ixNet setAttr $includeSymbolicPathMv/singleValue True
+
 set symbolicPathNameMv [ixNet getAttr $pccGroup/pceInitiateLSPParameters\
     -symbolicPathName]
 ixNet setAttr $symbolicPathNameMv/singleValue -value "IXIA_SAMPLE_LSP_1"
@@ -265,7 +265,7 @@ ixNet commit
 
 ################################################################################
 # Set the properties of ERO1                                                   #
-# a. Active                                                                    # 
+# a. Active                                                                    #
 # b. SRv6 NAI Type                                                             #
 # c. T Bit                                                                     #
 # d. Endpoint Behaviour                                                        #
@@ -349,7 +349,7 @@ ixNet setMultiAttribute $pcc/expectedInitiatedLspList \
     -maxExpectedSegmentCount  1                       \
     -name {Expected PCE Initiated LSP 1}
 ixNet commit
-      
+
 ################################################################################
 # 2. Start PCC and PCE and wait for 60 seconds                                 #
 ################################################################################
@@ -394,7 +394,7 @@ foreach learnedInfo $learnedInfoList {
         set colList [ixNet getAttr $t -columns]
         set rowList [ixNet getAttr $t -values]
         foreach valList $rowList {
-            set ndx 0  
+            set ndx 0
             foreach val $valList {
                 set name  [lindex $colList $ndx]
                 set value $val
@@ -425,7 +425,7 @@ foreach learnedInfo $learnedInfoList {
         set colList [ixNet getAttr $t -columns]
         set rowList [ixNet getAttr $t -values]
         foreach valList $rowList {
-            set ndx 0  
+            set ndx 0
             foreach val $valList {
                 set name  [lindex $colList $ndx]
                 set value $val
@@ -443,4 +443,3 @@ foreach learnedInfo $learnedInfoList {
 ################################################################################
 ixNet exec stopAllProtocols
 puts "!!! Test Script Ends !!!"
-

@@ -87,7 +87,7 @@ ixNet add [ixNet getRoot] topology -name testTpg1
 ixNet add [ixNet getRoot] topology -name testTpg2
 ixNet commit
 
-set topologies [ixNet getList [ixNet getRoot] topology] 
+set topologies [ixNet getList [ixNet getRoot] topology]
 set topo1 [lindex $topologies 0]
 set topo2 [lindex $topologies 1]
 
@@ -130,25 +130,25 @@ ixNet setMultiAttr $ip1MultivalueAddr/counter       \
     -direction      increment                       \
     -start          22.1.1.1                        \
     -step           0.0.0.2
-    
-set ip2MultivalueAddr [ixNet getAttr $ip2 -address]    
+
+set ip2MultivalueAddr [ixNet getAttr $ip2 -address]
 ixNet setMultiAttr $ip2MultivalueAddr/counter       \
     -direction      increment                       \
     -start          22.1.1.2                        \
     -step           0.0.0.2
-    
+
 set ip1MultivalueGw [ixNet getAttr $ip1 -gatewayIp]
 ixNet setMultiAttr $ip1MultivalueGw/counter         \
     -direction      increment                       \
     -start          22.1.1.2                        \
     -step           0.0.0.2
-    
+
 set ip2MultivalueGw [ixNet getAttr $ip2 -gatewayIp]
 ixNet setMultiAttr $ip2MultivalueGw/counter         \
     -direction      increment                       \
     -start          22.1.1.1                        \
-    -step           0.0.0.2 
-    
+    -step           0.0.0.2
+
 ixNet setAttr [ixNet getAttr $ip1 -resolveGateway]/singleValue -value true
 ixNet setAttr [ixNet getAttr $ip2 -resolveGateway]/singleValue -value true
 ixNet commit
@@ -185,7 +185,3 @@ puts "For more info please refer to the user manual or the built-in help"
 puts " "
 puts "ixNet help ::ixNet::OBJ-/topology/deviceGroup/ethernet/ipv4"
 puts "[ixNet help ::ixNet::OBJ-/topology/deviceGroup/ethernet/ipv4]"
-
-
-
-

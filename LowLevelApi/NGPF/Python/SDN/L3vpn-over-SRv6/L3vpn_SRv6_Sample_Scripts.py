@@ -50,16 +50,16 @@
 #    This script intends to demonstrate how to use L3vpn Over SRv6 TCL APIs.   #
 #                                                                              #
 #    1. It will create 2 ISISL3 topologies, each having an ipv6 network        #
-#       topology and loopback device group behind the network group(NG) with   # 
+#       topology and loopback device group behind the network group(NG) with   #
 #       loopback interface on it. L3vpn configure behind IPv6 Loopback.        #
-#       IPv4 NG  configured begind L3vpn DG which is used to generate traffic. # 
+#       IPv4 NG  configured begind L3vpn DG which is used to generate traffic. #
 #    2. Start the ISISL3 protocol.                                             #
 #    3. Retrieve protocol statistics.                                          #
 #    4. Retrieve protocol learned info.                                        #
 #    5. Start the L2-L3 traffic.                                               #
 #    6. Retrieve L2-L3 traffic stats.                                          #
 #    7. Stop L2-L3 traffic.                                                    #
-#    8. Stop all protocols.                                                    #                                                                                          
+#    8. Stop all protocols.                                                    #
 ################################################################################
 
 # Script Starts
@@ -139,7 +139,7 @@ ixNet.execute('newConfig')
 ################################################################################
 # 1. Protocol configuration section. Configure OSPFv3 as per the description
 #    give above
-################################################################################ 
+################################################################################
 root = ixNet.getRoot()
 assignPorts(ixNet, ports[0], ports[1])
 time.sleep(5)
@@ -632,7 +632,7 @@ netTopologyCustom = ixNet.add(Network_Topology, 'netTopologyCustom')
 ixNet.commit()
 netTopologyCustom = ixNet.remapIds(netTopologyCustom)[0]
 ixNet.setMultiAttribute(netTopologyCustom + '/linkTable',
-	'-fromNodeIndex', ['5','5','1','1','6','6','2','2','9','9','9','9'], 
+	'-fromNodeIndex', ['5','5','1','1','6','6','2','2','9','9','9','9'],
     '-toNodeIndex', ['3','7','0','3','4','8','0','4','1','5','2','6'])
 ixNet.setMultiAttribute(Network_Topology + '/simInterface:1',
 	'-name', 'Simulated Interfaces 1')
@@ -767,7 +767,7 @@ ixNet.commit()
 Single_Value = ixNet.add(prefix, 'singleValue')
 ixNet.setMultiAttribute(Single_Value,
 	'-value', ' 128')
-ixNet.commit()        
+ixNet.commit()
 address = ixNet.getAttribute(ipv6Loopback, '-address')
 ixNet.setMultiAttribute(address,
 	'-clearOverlays', 'false')
@@ -1253,7 +1253,7 @@ for statValList in ixNet.getAttribute(viewPage, '-rowValues') :
 print("***************************************************")
 
 ################################################################################
-# 4. Configure L2-L3 traffic 
+# 4. Configure L2-L3 traffic
 ################################################################################
 print "Congfiguring L2-L3 Traffic Item"
 Root = ixNet.getRoot()
@@ -1385,7 +1385,7 @@ for statValList in ixNet.getAttribute(viewPage, '-rowValues') :
             index = index + 1
         # end for
     # end for
-# end for    
+# end for
 print("***************************************************")
 
 #################################################################################
@@ -1401,4 +1401,3 @@ time.sleep(5)
 print ('Stopping protocols')
 ixNet.execute('stopAllProtocols')
 print ('!!! Test Script Ends !!!')
-

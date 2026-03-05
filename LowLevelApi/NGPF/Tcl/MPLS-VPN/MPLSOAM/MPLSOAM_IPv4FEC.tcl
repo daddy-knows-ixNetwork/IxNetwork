@@ -49,10 +49,10 @@
 # Description:                                                                 #
 #    This script intends to demonstrate how to use NGPF LDP API.               #
 #                                                                              #
-#    1. It will create 2 MPLSOAM topologies with singalling protocol ldp,      # 
+#    1. It will create 2 MPLSOAM topologies with singalling protocol ldp,      #
 #        each having an ipv4 prefixpools   				                       #
-#        and loopback device group behind the network group(NG) with           # 
-#       loopback interface on it. A loopback device group(DG) behind network   # 
+#        and loopback device group behind the network group(NG) with           #
+#       loopback interface on it. A loopback device group(DG) behind network   #
 #       group is needed to support applib traffic.                             #
 #    2. Start the ldp protocol.                                                #
 #    3. Retrieve protocol statistics.                                          #
@@ -68,7 +68,7 @@
 #   12. Retrieve L2-L3 traffic stats.                                          #
 #   13. Stop L2-L3 traffic.                                                    #
 #   14. Stop Application traffic.                                              #
-#   15. Stop all protocols.                                                    #                                                                                
+#   15. Stop all protocols.                                                    #
 ################################################################################
 
 # Script Starts
@@ -94,7 +94,7 @@ ixNet exec newConfig
 ################################################################################
 # 1. Protocol configuration section. Configure MPLSOAM as per the description
 #    give above
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -351,7 +351,7 @@ puts "***************************************************"
 # 4. Retrieve protocol learned info
 ###############################################################################
 puts "Fetching MPLSOAM Basic Learned Info"
-ixNet exec getAllLearnedInfo $mplsOam1 1 
+ixNet exec getAllLearnedInfo $mplsOam1 1
 after 5000
 set linfo [ixNet getList $mplsOam1 learnedInfo]
 ixNet getAttr $linfo -columns
@@ -397,7 +397,7 @@ ixNet commit
 ixNet setAttribute $activeMultivalue2/singleValue -value true
 ixNet commit
 
-ixNet setAttribute $ipV4PrefixPools2 -numberOfAddresses 3 
+ixNet setAttribute $ipV4PrefixPools2 -numberOfAddresses 3
 puts "Changing Label increment mode"
 set labelModeMultiValue [ixNet getAttribute $ldpFEC2 -labelIncrementMode]
 ixNet setAttribute $labelModeMultiValue/singleValue -value increment
@@ -413,10 +413,10 @@ after 5000
 
 ###############################################################################
 # 6. Retrieve protocol learned info again and compare with
-#    previouly retrieved learned info.  
+#    previouly retrieved learned info.
 ###############################################################################
 puts "Fetching MPLSOAM Basic Learned Info"
-ixNet exec getAllLearnedInfo $mplsOam1 1 
+ixNet exec getAllLearnedInfo $mplsOam1 1
 after 5000
 set linfo [ixNet getList $mplsOam1 learnedInfo]
 ixNet getAttr $linfo -columns
@@ -429,7 +429,7 @@ foreach v $values {
 puts "***************************************************"
 
 ################################################################################
-# 7. Configure L2-L3 traffic 
+# 7. Configure L2-L3 traffic
 ################################################################################
 puts "Congfiguring L2-L3 Traffic Item"
 set trafficItem1 [ixNet add [ixNet getRoot]/traffic "trafficItem"]
@@ -454,7 +454,7 @@ ixNet setMultiAttribute $endpointSet1\
     -ngpfFilters           [list]\
     -trafficGroups         [list]\
     -sources               $source\
-    -destinations          $destination    
+    -destinations          $destination
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\
@@ -490,7 +490,7 @@ ixNet setMultiAttribute $endpointSet2\
     -ngpfFilters           [list]     \
     -trafficGroups         [list]     \
     -sources               $source_app\
-    -destinations          $destin_app\    
+    -destinations          $destin_app\
 ixNet commit
 set endpointSet2 [lindex [ixNet remapIds $endpointSet2] 0]
 

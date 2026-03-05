@@ -13,10 +13,10 @@ SUPPORTS
 
 DESCRIPTION
      Capturing packets.
- 
+
      This script assumes that a configuration exist already.
      For Linux API server connection, provide the sessionID and apiKey.
-    
+
      Enable data plane and/or control plane capturing.
      Saved the .cap files (dataPlane and/or controlPlane) to local filesystem.
      Save packet capturing in wireshark style with header details.
@@ -31,7 +31,7 @@ SYNTAXES
 
      PATCH: /api/v1/sessions/5/ixnetwork/vport/2/capture
      DATA: {'softwareEnabled': False, 'hardwareEnabled': True}
- 
+
      # Set traffic item to send continuous packets
      PATCH: /api/v1/sessions/5/ixnetwork/traffic/trafficItem/1/configElement/1/transmissionControl
      DATA: {'type': 'continuous'}
@@ -63,7 +63,7 @@ SYNTAXES
          POST: /ixnetwork/operations/copyfile
          DATA: {"arg1": "captures/packetCaptureFolder/port2_HW.cap", "arg2": "/api/v1/sessions/<id>/ixnetwork/files/port2_HW.cap"}
          GET: /ixnetwork/files?filename=captures/packetCaptureFolder/port2_HW.cap
- 
+
 USAGE
     python <script>.py windows|linux
 """
@@ -114,7 +114,7 @@ try:
                           sessionId=10,
                           apiKey='e5d16d3258014241872990301c40bdbf'
                       )
-        
+
     #---------- Preference Settings End --------------
 
     trafficObj = Traffic(mainObj)

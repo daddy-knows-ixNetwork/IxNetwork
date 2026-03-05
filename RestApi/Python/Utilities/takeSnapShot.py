@@ -44,14 +44,14 @@ try:
                           verifySslCert=False,
                           serverOs=connectToApiServer
         )
-        
+
     if connectToApiServer == 'windows':
         mainObj = Connect(apiServerIp='192.168.70.3', serverIpPort='11009')
 
     statObj = Statistics(mainObj)
     # mode: append|overwrite
     statObj.takeSnapshot(viewName='Traffic Item Statistics', windowsPath='c:\\Results', mode='append')
-    
+
     #statObj.takeSnapshot(viewName='Flow Statistics', windowsPath='c:\\Results', mode='append')
 
 

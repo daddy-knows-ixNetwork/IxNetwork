@@ -1323,4 +1323,3 @@ proc getNextMacAddress {lastMacAddressUsed {incrStep 1} {maxBytePosToIncrement 1
     lappend macAddr $MacDigit1:$MacDigit2:$MacDigit3:$MacDigit4:$MacDigit5:$MacDigit6
     return $macAddr
 }
-

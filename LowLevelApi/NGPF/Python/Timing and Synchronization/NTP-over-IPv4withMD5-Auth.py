@@ -68,7 +68,7 @@
 #    5. Deactivate the NTP cleint and  apply change on the fly                 #
 #    6. Retrieve protocol protocol stat  again.                                #
 #    7. Stop all protocols.                                                    #
-#                                                                              #                                                                                
+#                                                                              #
 # Ixia Software:                                                               #
 #    IxOS      8.50 EB                                                         #
 #    IxNetwork 8.50 EB                                                         #

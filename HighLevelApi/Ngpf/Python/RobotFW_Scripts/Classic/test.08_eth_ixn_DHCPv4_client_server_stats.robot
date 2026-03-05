@@ -41,7 +41,7 @@ test
 ################################################################################
 # End DHCP Server Call
 ################################################################################
-	
+
 ################################################################################
 # Configure DHCP client session
 ################################################################################
@@ -61,7 +61,7 @@ test
 	${dhcp_group_status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${dhcp_group_status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${dhcp_client_group_handle} =  Get From Dictionary  ${result}  handle
-	
+
 ################################################################################
 # Modify DHCP client group
 ################################################################################
@@ -71,22 +71,22 @@ test
 	${dhcp_group_status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${dhcp_group_status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${dhcp_client_group_handle} =  Get From Dictionary  ${result}  handle
-	
+
 ################################################################################
 # Create another DHCP client group
 ################################################################################
-	
+
 	${result} =  Emulation Dhcp Group Config  version=ixnetwork  mode=create  handle=${dhcp_client_session_handle}  mac_addr=00.00.02.00.00.01  mac_addr_step=00.00.00.00.00.01  num_sessions=10  encap=ethernet_ii_qinq  vlan_id_outer=100  vlan_id_outer_count=1  vlan_id=10  vlan_id_count=1  qinq_incr_mode=inner
 	${dhcp_handle} =  Get From Dictionary  ${result}  handle
 	${dhcp_group_status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${dhcp_group_status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${dhcp_client_group_handle2} =  Get From Dictionary  ${result}  handle
-	
+
 ################################################################################
 # END - DHCP Client configuration
 ################################################################################
-	
-	
+
+
 ################################################################################
 # START DHCP
 ################################################################################
@@ -95,7 +95,7 @@ test
 	${control_status1} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${control_status1}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	Sleep  5s
-	
+
 ################################################################################
 # Abort Sync DHCP SERVER
 ################################################################################
@@ -115,14 +115,14 @@ test
 
 ################################################################################
 # BIND DHCP
-################################################################################  
+################################################################################
 
 	${result} =  Emulation Dhcp Control  port_handle=@{portHandles}[0]  action=bind
 	${control_status1} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${control_status1}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	Sleep  5s
 
-	
+
 ################################################################################
 # ABORT ASYNC DHCP
 ################################################################################
@@ -140,12 +140,12 @@ test
 	${control_status1} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${control_status1}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	Sleep  5s
-	
+
 ################################################################################
-#             GET DHCP STATISTICS                
+#             GET DHCP STATISTICS
 ################################################################################
 
-	
+
 	${result} =  Emulation Dhcp Server Stats  port_handle=@{portHandles}[1]  action=collect
 	${dhcp_stats_1_status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${dhcp_stats_1_status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
@@ -157,11 +157,11 @@ test
 	Run Keyword If  '${dhcp_stats_1_status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${get_stats} =  Get Dictionary Values  ${result}
 	Log Many  ${get_stats}
-	
+
 ################################################################################
 # Retrieve aggregate stats
 ################################################################################
-	
+
 	${result} =  Emulation Dhcp Stats  port_handle=@{portHandles}[0]  version=ixnetwork
 	${dhcp_stats_0_status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${dhcp_stats_0_status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"

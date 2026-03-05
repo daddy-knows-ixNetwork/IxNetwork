@@ -43,7 +43,7 @@ debugMode = False
 
 try:
     # LogLevel: none, info, warning, request, request_response, all
-    session = SessionAssistant(IpAddress='192.168.70.12', RestPort=None, UserName='admin', Password='admin', 
+    session = SessionAssistant(IpAddress='192.168.70.12', RestPort=None, UserName='admin', Password='admin',
                                SessionName=None, SessionId=None, ApiKey=None,
                                ClearConfig=True, LogLevel='info', LogFilename='restpy.log')
 
@@ -172,8 +172,3 @@ except Exception as errMsg:
     print('\n%s' % traceback.format_exc(None, errMsg))
     if debugMode == False and 'session' in locals():
         session.Session.remove()
-
-
-
-
-

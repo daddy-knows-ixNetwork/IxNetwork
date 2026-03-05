@@ -62,7 +62,7 @@
 #    5. Configure L2-L3 traffic (IPv4 & IPv6).                                 #
 #    6. Configure application traffic for IPv4/IPv6 Profile. [global variable  #
 #       "traffic_mode" selects the profile to be configured.                   #
-#       Options are: 1(for IPv4) & 2(for IPv6)                                 # 
+#       Options are: 1(for IPv4) & 2(for IPv6)                                 #
 #       Note: IPv4 & IPv6 both could not be configured in same endpoint set.   #
 #    7. Start L2-L3 traffic.                                                   #
 #    8. Start application traffic.                                             #
@@ -145,7 +145,7 @@ my $port_handles = ixiangpf::status_item('vport_list');
 my @port_handles_list = split(/ /,$port_handles);
 
 ################################################################################
-# Configure Topology, Device Group                                             # 
+# Configure Topology, Device Group                                             #
 ################################################################################
 # Creating a topology in first port
 print "Adding topology 1 in port 1\n";
@@ -162,7 +162,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $topology_1_handle = $HashRef->{'topology_handle'};
 # Creating a device group in topology
-print "Creating device group 1 in topology 1\n";    
+print "Creating device group 1 in topology 1\n";
 my $device_group_1_status = ixiangpf::topology_config ({
         topology_handle              => "$topology_1_handle",
         device_group_name            => "{Device Group 1}",
@@ -177,7 +177,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
         return "FAILED - $error";
 }
 my $deviceGroup_1_handle = $HashRef->{'device_group_handle'};
-    
+
 # Creating a topology in second port
 print "Adding topology 2 in port 2\n";
 my $topology_2_status = ixiangpf::topology_config ({
@@ -192,9 +192,9 @@ if ($command_status != $ixiangpf::SUCCESS) {
         return "FAILED - $error";
 }
 my $topology_2_handle = $HashRef->{'topology_handle'};
-    
+
 # Creating a device group in topology
-print "Creating device group 2 in topology 2\n";    
+print "Creating device group 2 in topology 2\n";
 my $device_group_4_status = ixiangpf::topology_config ({
         topology_handle              => "$topology_2_handle",
         device_group_name            => "{Device Group 2}",
@@ -231,7 +231,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 
 my $ethernet_1_handle = $HashRef->{'ethernet_handle'};
-    
+
 # Creating ethernet stack in device group
 print "Creating ethernet stack in second device group\n";
 my $ethernet_2_status = ixiangpf::interface_config ({
@@ -269,7 +269,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 
 my $ipv4_1_handle = $HashRef->{'ipv4_handle'};
-    
+
 # Creating IPv4 Stack on top of Ethernet Stack
 print "Creating IPv4  stack on second ethernet stack\n";
 my $ipv4_2_status = ixiangpf::interface_config ({
@@ -292,13 +292,13 @@ my $ipv4_2_handle = $HashRef->{'ipv4_handle'};
 
 ################################################################################
 # Other protocol configurations                                                #
-################################################################################    
+################################################################################
 ################################################################################
 # Creating  ISIS Stack on top of ethernet stack                                #
 # Descrtiption of protocol arguments : discard_lsp: enables learning LSPs      #
 #                                      intf_type: sets interface type          #
-#                                      system_id: sets system id               #   
-#                                      protocol_name: sets prtoocol name       # 
+#                                      system_id: sets system id               #
+#                                      protocol_name: sets prtoocol name       #
 #                                      active: activates ISIS router           #
 #                                      if_active: activates router interface   #
 ################################################################################
@@ -324,9 +324,9 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 
 my $isisL3_1_handle = $HashRef->{'isis_l3_handle'};
-    
+
 # Creating ISIS Network Group in port 1
-print "Creating ISIS IPv4 Network group in port 1\n"; 
+print "Creating ISIS IPv4 Network group in port 1\n";
 my $network_group_1_status = ixiangpf::network_group_config ({
         protocol_handle                      => "$deviceGroup_1_handle",
         protocol_name                        => "{ISIS Network Group 1}",
@@ -343,7 +343,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $networkGroup_1_handle = $HashRef->{'network_group_handle'};
 my $ipv4PrefixPools_1_handle = $HashRef->{'ipv4_prefix_pools_handle'};
-    
+
 my $network_group_2_status = ixiangpf::emulation_isis_network_group_config ({
         handle                  => "$networkGroup_1_handle",
         mode                    => "modify",
@@ -355,7 +355,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
         my $error = ixiangpf::status_item('log');
         print "Error: $error";
         return "FAILED - $error";
-}    
+}
 my $device_group_2_status = ixiangpf::topology_config ({
         device_group_name            => "{Device Group 3}",
         device_group_multiplier      => "1",
@@ -371,9 +371,9 @@ if ($command_status != $ixiangpf::SUCCESS) {
         return "FAILED - $error";
 }
 my $deviceGroup_2_handle = $HashRef->{'device_group_handle'};
-    
+
 # Creating ipv4 Loopback interface for applib traffic
-print "Adding ipv4 loopback1 for applib traffic\n"; 
+print "Adding ipv4 loopback1 for applib traffic\n";
 my $ipv4_loopback_1_status = ixiangpf::interface_config ({
         protocol_name            => "{IPv4 Loopback 1}",
         protocol_handle          => "$deviceGroup_2_handle",
@@ -391,7 +391,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 my $ipv4Loopback_1_handle = $HashRef->{'ipv4_loopback_handle'};
 
 # Creating ISIS Network group 3 for ipv6 ranges
-print "Creating ISIS Network group 3 for ipv6 ranges\n";    
+print "Creating ISIS Network group 3 for ipv6 ranges\n";
 my $network_group_3_status = ixiangpf::network_group_config ({
         protocol_handle                      => "$deviceGroup_1_handle",
         protocol_name                        => "{ISIS Network Group 3}",
@@ -407,7 +407,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $networkGroup_3_handle = $HashRef->{'network_group_handle'};
 my $ipv6PrefixPools_1_handle = $HashRef->{'ipv6_prefix_pools_handle'};
-    
+
 my $network_group_4_status = ixiangpf::emulation_isis_network_group_config ({
         handle                      => "$networkGroup_3_handle",
         mode                        => "modify",
@@ -419,7 +419,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
         my $error = ixiangpf::status_item('log');
         print "Error: $error";
         return "FAILED - $error";
-}    
+}
 my $device_group_3_status = ixiangpf::topology_config ({
         device_group_name            => "{Device Group 6}",
         device_group_multiplier      => "1",
@@ -434,9 +434,9 @@ if ($command_status != $ixiangpf::SUCCESS) {
         return "FAILED - $error";
 }
 my $deviceGroup_3_handle = $HashRef->{'device_group_handle'};
-    
+
 #Creating ipv6 loopback 1 interface for applib traffic
-print "Adding ipv6 loopback1 for applib traffic\n";    
+print "Adding ipv6 loopback1 for applib traffic\n";
 my $ipv6_loopback_1_status = ixiangpf::interface_config ({
         protocol_name            => "{IPv6 Loopback 2}",
         protocol_handle          => "$deviceGroup_3_handle",
@@ -457,12 +457,12 @@ my $ipv6Loopback_1_handle = $HashRef->{'ipv6_loopback_handle'};
 # Descrtiption of protocol arguments : discard_lsp: enables learning LSPs      #
 #                                      intf_type: sets interface type          #
 #                                      routing_level: sets routing level       #
-#                                      system_id: sets system id               #   
-#                                      protocol_name: sets prtoocol name       # 
+#                                      system_id: sets system id               #
+#                                      protocol_name: sets prtoocol name       #
 #                                      active: activates ISIS router           #
 #                                      if_active: activates router interface   #
-################################################################################    
-print "Creating ISIS Stack on top of Ethernet 2 stack\n";    
+################################################################################
+print "Creating ISIS Stack on top of Ethernet 2 stack\n";
 
 my $isis_l3_2_status = ixiangpf::emulation_isis_config ({
         mode                                 => "create",
@@ -483,9 +483,9 @@ if ($command_status != $ixiangpf::SUCCESS) {
         return "FAILED - $error";
 }
 my $isisL3_2_handle = $HashRef->{'isis_l3_handle'};
-    
+
 # Creating IPv4 Prefix Ranges
-print "Creating ISIS IPv4 Prefix Ranges\n";    
+print "Creating ISIS IPv4 Prefix Ranges\n";
 my $network_group_5_status = ixiangpf::network_group_config ({
         protocol_handle                      => "$deviceGroup_4_handle",
         protocol_name                        => "{ISIS Network Group 2}",
@@ -503,7 +503,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $networkGroup_5_handle = $HashRef->{'network_group_handle'};
 my $ipv4PrefixPools_3_handle = $HashRef->{'ipv4_prefix_pools_handle'};
-    
+
 my $network_group_6_status = ixiangpf::emulation_isis_network_group_config ({
         handle                  => "$networkGroup_5_handle",
         mode                    => "modify",
@@ -516,7 +516,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
         my $error = ixiangpf::status_item('log');
         print "Error: $error";
         return "FAILED - $error";
-}    
+}
 
 # Creating a device group in topology for loopback interface
 print "Creating device group 2 in topology 2 for loopback interface\n";
@@ -534,9 +534,9 @@ if ($command_status != $ixiangpf::SUCCESS) {
         return "FAILED - $error";
 }
 my $deviceGroup_5_handle = $HashRef->{'device_group_handle'};
-    
+
 #Creating ipv4 loopback 2 for applib traffic
-print "Adding ipv4 loopback2 for applib traffic\n";    
+print "Adding ipv4 loopback2 for applib traffic\n";
 my $ipv4_loopback_2_status = ixiangpf::interface_config ({
         protocol_name            => "{IPv4 Loopback 2}",
         protocol_handle          => "$deviceGroup_5_handle",
@@ -552,9 +552,9 @@ if ($command_status != $ixiangpf::SUCCESS) {
         return "FAILED - $error";
 }
 my $ipv4Loopback_2_handle = $HashRef->{'ipv4_loopback_handle'};
-    
+
 # Creating ISIS Prefix ranges
-print "Creating ISIS IPv6 Prefix ranges\n"; 
+print "Creating ISIS IPv6 Prefix ranges\n";
 my $network_group_7_status = ixiangpf::network_group_config ({
         protocol_handle                      => "$deviceGroup_4_handle",
         protocol_name                        => "{ISIS Network Group 4}",
@@ -570,7 +570,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $networkGroup_7_handle = $HashRef->{'network_group_handle'};
 my $ipv6PrefixPools_3_handle = $HashRef->{'ipv6_prefix_pools_handle'};
-    
+
 my $network_group_8_status = ixiangpf::emulation_isis_network_group_config ({
         handle                      => "$networkGroup_7_handle",
         mode                        => "modify",
@@ -582,10 +582,10 @@ if ($command_status != $ixiangpf::SUCCESS) {
         my $error = ixiangpf::status_item('log');
         print "Error: $error";
         return "FAILED - $error";
-}    
+}
 
 # Creating a device group in topology for loopback interface
-print "Creating device group 2 in topology 2 for loopback interface\n";   
+print "Creating device group 2 in topology 2 for loopback interface\n";
 my $device_group_6_status = ixiangpf::topology_config ({
         device_group_name            => "{Device Group 5}",
         device_group_multiplier      => "1",
@@ -600,8 +600,8 @@ if ($command_status != $ixiangpf::SUCCESS) {
         return "FAILED - $error";
 }
 my $deviceGroup_6_handle = $HashRef->{'device_group_handle'};
-   
- 
+
+
 my $ipv6_loopback_2_status = ixiangpf::interface_config ({
         protocol_name            => "{IPv6 Loopback 1}",
         protocol_handle          => "$deviceGroup_6_handle",
@@ -638,12 +638,12 @@ print "Waiting for 30 seconds\n";
 sleep(30);
 
 ############################################################################
-# Retrieve protocol statistics                                             # 
+# Retrieve protocol statistics                                             #
 ############################################################################
 print "Fetching ISISL3 aggregated statistics\n";
 my $protostats = ixiangpf::emulation_isis_info({
         handle => $isisL3_1_handle,
-        mode   => 'stats'}); 
+        mode   => 'stats'});
     @status_keys = ixiangpf::status_item_keys();
     foreach (@status_keys) {
         my $my_key = $_;
@@ -652,7 +652,7 @@ my $protostats = ixiangpf::emulation_isis_info({
         print "\n$my_key: $allStats\n\n";
         print "==================================================================\n";
     }
-    
+
 ################################################################################
 # Configure_L2_L3_IPv4                                                         #
 ################################################################################
@@ -676,10 +676,10 @@ if ($command_status != $ixiangpf::SUCCESS) {
     print "Error: $error";
     return "FAILED - $error";
 }
-    
+
 my @current_config_elements1 = ixiangpf::status_item('traffic_item');
 my $current_config_element1 = $current_config_elements1[0];
-    
+
 
 ################################################################################
 # Configure_L2_L3_IPv6                                                         #
@@ -697,10 +697,10 @@ $_result_ = ixiangpf::traffic_config({
         frame_size                  => '512',
         track_by                    => 'trackingenabled0 ipv6DestIp0',
 });
-    
+
 my @current_config_elements = ixiangpf::status_item('traffic_item');
 my $current_config_element = $current_config_elements[0];
-    
+
 ################################################################################
 # Configure_L4_L7 traffic                                                      #
 ################################################################################
@@ -826,7 +826,7 @@ foreach (@status_keys) {
     print "\n$my_key: $allStats\n\n";
     print "==================================================================\n";
 }
-    
+
 ############################################################################
 # Stop L2-L3 traffic started earlier                                       #
 ############################################################################
@@ -843,7 +843,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     print "Error: $error";
     return "FAILED - $error";
 }
-    
+
 ############################################################################
 # Stop L4-L7 traffic started earlier                                       #
 ############################################################################
@@ -860,7 +860,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     print "Error: $error";
     return "FAILED - $error";
 }
-sleep(5);    
+sleep(5);
 
 ############################################################################
 # Stop all protocols                                                       #
@@ -880,4 +880,3 @@ sleep(2);
 
 print "!!! Test Script Ends !!!\n";
 print "SUCCESS - $0\n";
-

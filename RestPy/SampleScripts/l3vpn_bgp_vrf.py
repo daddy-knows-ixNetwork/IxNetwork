@@ -15,7 +15,7 @@ Tested with two back-2-back IxNetwork ports.
    - Get/Show Traffic Item
    - Get/Show Flow Statistics stats
    - Verify traffic Item pass when TX == 1000 and RX traffic > 980,000
-   
+
 Supports IxNetwork API servers:
    - Windows, Windows Connection Mgr and Linux
 Requirements:
@@ -59,7 +59,7 @@ try:
     igp ='ospf'
 
     ixNetwork = session.Ixnetwork
-    
+
     ixNetwork.info('Assign test ports into IxNetwork')
 
     portMap = session.PortMapAssistant()
@@ -237,4 +237,3 @@ except Exception as errMsg:
     print(traceback.print_exception())
     if 'session' in locals():
         session.Session.remove()
-

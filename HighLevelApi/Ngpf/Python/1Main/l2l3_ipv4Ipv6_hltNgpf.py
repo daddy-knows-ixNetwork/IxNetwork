@@ -1,7 +1,7 @@
 #!/usr/local/python2.7.6/bin/python2.7
 
 # By: Hubert Gee
-# 
+#
 # Create IPv4 and IPv6 dual stack port interfaces
 # Create IPv4 Traffic Item
 # Create IPv6 Traffic Item

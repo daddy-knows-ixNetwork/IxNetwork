@@ -63,7 +63,7 @@
 ################################################################################
 
 ################################################################################
-# Please ensure that PERL5LIB environment variable is set properly so that 
+# Please ensure that PERL5LIB environment variable is set properly so that
 # IxNetwork.pm module is available. IxNetwork.pm is generally available in
 # C:\<IxNetwork Install Path>\API\Perl
 ################################################################################
@@ -82,13 +82,13 @@ sub assignPorts {
 	my $port2    = $my_resource[6];
 	my $vport1   = $my_resource[7];
 	my $vport2   = $my_resource[8];
-	
+
 	my $root = $ixNet->getRoot();
 	my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-	
+
 	my $chassisObj2 = '';
 	if ($chassis1 ne $chassis2) {
 	    $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -98,7 +98,7 @@ sub assignPorts {
 	} else {
 	    $chassisObj2 = $chassisObj1;
 	}
-	
+
 	my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -107,7 +107,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-		
+
     $ixNet->commit();
 }
 # Script Starts
@@ -117,7 +117,7 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.205.28.122';
 my $ixTclPort   = '8557';
 my @ports       = (('xm12-3', '6', '7'), ('xm12-3', '6', '8'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
@@ -236,7 +236,7 @@ $ixNet->commit();
 # Generate IPv4 Statistical Routes in Topology2                                #
 ################################################################################
 print("Importing BGP Routes in Ixia Format\n");
-my $networkGroup = ($ixNet->add($t2dev1, 'networkGroup')); 
+my $networkGroup = ($ixNet->add($t2dev1, 'networkGroup'));
 $ixNet->commit();
 my $networkGroup= ($ixNet->remapIds($networkGroup))[0];
 my $ipv4PrefixPools = ($ixNet->add($networkGroup, 'ipv4PrefixPools'));
@@ -274,18 +274,18 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-34s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
 ################################################################################
-# On the fly section                                                           #  
+# On the fly section                                                           #
 ################################################################################
 print("Enabling IPv4 Unicast Learned Information for BGP Router");
 $ixNet->setAttribute($ixNet->getAttribute($bgp1, '-filterIpV4Unicast').'/singleValue', '-value', 'true');
@@ -320,20 +320,3 @@ print("***************************************************\n");
 ################################################################################
 $ixNet->execute('stopAllProtocols');
 print("!!! Test Script Ends !!!");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

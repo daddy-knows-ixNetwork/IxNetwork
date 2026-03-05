@@ -139,7 +139,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
   my @port_handles_list = split(/ /,$port_handles);
 
 ################################################################################
-# Creating topology and device group                                           # 
+# Creating topology and device group                                           #
 ################################################################################
 
 # Creating a topology in first port
@@ -245,7 +245,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 my $ethernet_2_handle = ixiangpf::status_item('ethernet_handle');
 
 # Creating IPv4 Stack on top of Ethernet Stack
-print "Creating IPv4  stack on first ethernet stack\n"; 
+print "Creating IPv4  stack on first ethernet stack\n";
 my $ipv4_1_status = ixiangpf::interface_config ({
         protocol_name                     => "{IPv4 1}",
         protocol_handle                   => "$ethernet_1_handle",
@@ -264,7 +264,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 my $ipv4_1_handle = ixiangpf::status_item('ipv4_handle');
 
 # Creating IPv4 Stack on top of Ethernet Stack
-print "Creating IPv4 stack on second ethernet stack\n"; 
+print "Creating IPv4 stack on second ethernet stack\n";
 my $ipv4_2_status = ixiangpf::interface_config ({
         protocol_name                     => "{IPv4 2}",
         protocol_handle                   => "$ethernet_2_handle",
@@ -285,7 +285,7 @@ my $ipv4_2_handle = ixiangpf::status_item('ipv4_handle');
 ################################################################################
 # Configure BGP EVPN Topologies in both ports as described in Description Sec- #
 #  tion above.                                                                 #
-################################################################################ 
+################################################################################
 
 #Creating OSPF Stack on top of ipv4 1 stack
 print "Creating OSPF Stack on top of ipv4 1 stack\n";
@@ -305,7 +305,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $ospfv2_1_handle = ixiangpf::status_item('ospfv2_handle');
- 
+
 #Adding IPv4 Prefix Pools behind first DG
 print "Adding IPv4 Prefix Pools behind first DG\n";
 my $network_group_1_status = ixiangpf::network_group_config ({
@@ -330,7 +330,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 my $ipv4PrefixPools_1_handle = ixiangpf::status_item('ipv4_prefix_pools_handle');
 my $networkGroup_1_handle = ixiangpf::status_item('network_group_handle');
 
-# Configuring OSPF Prefix Pool Parameters   
+# Configuring OSPF Prefix Pool Parameters
 print "Configuring OSPF Prefix Pool Parameters\n";
 my $network_group_2_status = ixiangpf::emulation_ospf_network_group_config ({
     handle                           => "$networkGroup_1_handle",
@@ -474,7 +474,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $bgpIPv4EvpnVXLAN_1_handle = ixiangpf::status_item('evpn_evi');
 
-# Configure BGP Ethernet Segment stack 
+# Configure BGP Ethernet Segment stack
 print "Configure BGP Ethernet Segment stack\n";
 my $bgpEthernetSegmentV4_1_status = ixiangpf::emulation_bgp_config ({
     mode                                      => "modify",
@@ -1040,7 +1040,7 @@ foreach (@status_keys) {
 }
 
 ############################################################################
-# On The Fly disable/enable C-MAC 
+# On The Fly disable/enable C-MAC
 ############################################################################
 print "On The Fly disable C-MAC\n";
 #(handle : user needs to create and provide handle for cMacProperties, as scriptgen does not return this handle by default)

@@ -54,7 +54,7 @@
 #        Router.                                                               #
 #    2. In Provider Edge Router configuration 2 BGP Peer are configured.       #
 #       - iBGP Peer                                                            #
-#       - eBGP Peer to configure Multi Hop BGP session.                        # 
+#       - eBGP Peer to configure Multi Hop BGP session.                        #
 #    3. Only one side configuration is provided.                               #
 #    4. Traffic configuration will be similar to L3VPN scenario.               #
 ################################################################################
@@ -81,7 +81,7 @@ ixNet exec newConfig
 
 ################################################################################
 # 1. Configure L3VPN Inter AS Option C per the description give above
-################################################################################ 
+################################################################################
 puts "Adding vport"
 ixNet add [ixNet getRoot] vport
 ixNet commit
@@ -190,7 +190,7 @@ ixNet setMultiAttribute $chainedDg1\
 ixNet commit
 set chainedDg1 [lindex [ixNet remapIds $chainedDg1] 0]
 
-# Add ipv4 loopback in Chained DG 
+# Add ipv4 loopback in Chained DG
 puts "Adding ipv4 loopback in Chained DG"
 set loopback1 [ixNet add $chainedDg1 "ipv4Loopback"]
 ixNet setMultiAttribute $loopback1\

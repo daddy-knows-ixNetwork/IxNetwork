@@ -52,7 +52,7 @@
 #    This script intends to demonstrate how to use NGPF BFD API.               #
 #                                                                              #
 #    1. It will create 2 BFD topologies, each having an ipv4 network           #
-#       topology. A loopback device group(DG) behind network   				   # 
+#       topology. A loopback device group(DG) behind network   				   #
 #       group is needed to support applib traffic.                             #
 #    2. Start BFD protocol.                                                    #
 #    3. Retrieve protocol statistics.                                          #
@@ -68,7 +68,7 @@
 ################################################################################
 
 ################################################################################
-# Utils                                                                        #	
+# Utils                                                                        #
 ################################################################################
 
 # Libraries to be included
@@ -81,7 +81,7 @@ import time, re
 
 # Append paths to python APIs (Linux and Windows)
 
-# sys.path.append('/path/to/hltapi/library/common/ixiangpf/python') 
+# sys.path.append('/path/to/hltapi/library/common/ixiangpf/python')
 # sys.path.append('/path/to/ixnetwork/api/python')
 
 from ixiatcl import IxiaTcl
@@ -93,7 +93,7 @@ import IxNetwork
 ixiatcl = IxiaTcl()
 ixiahlt = IxiaHlt(ixiatcl)
 ixiangpf = IxiaNgpf(ixiahlt)
-    
+
 try:
 	ErrorHandler('', {})
 except (NameError,):
@@ -102,7 +102,7 @@ except (NameError,):
 		err = ixiatcl.tcl_error_info()
 		log = retval['log']
 		additional_info = '> command: %s\n> tcl errorInfo: %s\n> log: %s' % (cmd, err, log)
-		raise IxiaError(IxiaError.COMMAND_FAIL, additional_info)        
+		raise IxiaError(IxiaError.COMMAND_FAIL, additional_info)
 
 ################################################################################
 # Connection to the chassis, IxNetwork Tcl Server                              #
@@ -132,7 +132,7 @@ connect_result = ixiangpf.connect(
 
 if connect_result['status'] != '1':
     ErrorHandler('connect', connect_result)
-    
+
 print " Printing connection result"
 pprint(connect_result)
 
@@ -141,9 +141,9 @@ ports = connect_result['vport_list'].split()
 ixNet = IxNetwork.IxNet()
 ixNet.connect(ixnetwork_tcl_ip, '-port', ixTclPort, '-version', '8.01' )
 ################################################################################
-# Configure Topology, Device Group                                             # 
+# Configure Topology, Device Group                                             #
 ################################################################################if 'py' not in dir():
-	
+
 status = ixiangpf.topology_config(
 	topology_name      = """Topology 1""",
 	port_handle        = ports[0],
@@ -737,7 +737,7 @@ status = ixiahlt.test_control(action='start_all_protocols')
 if status['status'] != IxiaHlt.SUCCESS:
 	ErrorHandler('ixiahlt::traffic_control', status)
 	print('Test case FAILED')
-		
+
 print("Waiting for 90 seconds")
 time.sleep(60)
 
@@ -761,7 +761,7 @@ status = ixiangpf.emulation_bfd_info(
 	mode   = 'aggregate',
 	)
 
-print status 
+print status
 if status['status'] != IxiaHlt.SUCCESS:
 	ErrorHandler('multivalue_config', status)
 	print('Test case FAILED')
@@ -832,7 +832,7 @@ status = ixiangpf.emulation_bfd_control (
 if status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('ixiahlt::traffic_control', status)
     print('Test case FAILED')
-	
+
 status = ixiangpf.emulation_bfd_control (
 	handle = handle_bfd_topology1,
 	mode = 'start'
@@ -841,12 +841,12 @@ status = ixiangpf.emulation_bfd_control (
 if status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('ixiahlt::traffic_control', status)
     print('Test case FAILED')
-	
+
 ###############################################################################
 #Changing bfd configuration using emulation_bfd_config and -mode as modify
 ###############################################################################
 print('Changing Session discriminator and remote discriminator OTF, and verifing in Learned Info')
-	
+
 status = ixiangpf.emulation_bfd_config (
 	handle = handle_bfd_topology1,
 	mode = 'modify',
@@ -874,6 +874,3 @@ if status['status'] != IxiaHlt.SUCCESS:
 	print('Test case FAILED')
 
 print 'TEST COMPLETED'
-
-
-

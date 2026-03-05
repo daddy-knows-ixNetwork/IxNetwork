@@ -59,7 +59,7 @@ forceTakePortOwnership = True
 
 try:
     # LogLevel: none, info, warning, request, request_response, all
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin', 
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin',
                                SessionName=None, SessionId=None, ApiKey=None,
                                ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
@@ -183,7 +183,7 @@ try:
 
     flowStatistics = session.StatViewAssistant('Flow Statistics')
 
-    # StatViewAssistant could also filter by regex, LESS_THAN, GREATER_THAN, EQUAL. 
+    # StatViewAssistant could also filter by regex, LESS_THAN, GREATER_THAN, EQUAL.
     # Examples:
     #    flowStatistics.AddRowFilter('Port Name', flowStatistics.REGEX, '^Port 1$')
     #    flowStatistics.AddRowFilter('Tx Frames', flowStatistics.LESS_THAN, "50000")
@@ -204,6 +204,3 @@ except Exception as errMsg:
     print('\n%s' % traceback.format_exc())
     if debugMode == False and 'session' in locals():
         session.Session.remove()
-
-
-

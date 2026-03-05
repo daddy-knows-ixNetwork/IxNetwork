@@ -3,7 +3,7 @@ loadQuickTest.py:
 
    Tested with two back-2-back Ixia ports
 
-   RestPy has a limitation on running Quick Test.  It could not modify Quick Test parameters on a 
+   RestPy has a limitation on running Quick Test.  It could not modify Quick Test parameters on a
    Windows API server.
    If you want to be able to modify the traffic configuration, create your Quick Test using
    NGPF and create a traffic item.  So instead of modifying Quick Test parameters, you modify
@@ -19,11 +19,11 @@ loadQuickTest.py:
    - Optional: Assign ports or use the ports that are in the saved config file.
    - Start all protocols
    - Verify all protocols
-   - Start traffic 
-   - Monitor Quick Test 
+   - Start traffic
+   - Monitor Quick Test
    - Copy Quick Test CSV result files
-   - Copy PDF test result. This only for Windows. 
- 
+   - Copy PDF test result. This only for Windows.
+
 
 Supports IxNetwork API servers:
    - Windows, Windows Connection Mgr and Linux
@@ -71,12 +71,12 @@ licenseMode = 'subscription'
 # tier1, tier2, tier3, tier3-10g
 licenseTier = 'tier3'
 
-# Defaults to ixnrest for windows and linux api server.  
+# Defaults to ixnrest for windows and linux api server.
 # Web Quick Test is a new web edition in the Linux API server.
-# The type for the web QT is 'quicktest'.  
+# The type for the web QT is 'quicktest'.
 applicationType = 'ixnrest'
 
-# Set to True to leave the session opened for debugging. For linux and connection_manager only. 
+# Set to True to leave the session opened for debugging. For linux and connection_manager only.
 debugMode = False
 
 # Forcefully take port ownership if the portList are owned by other users.
@@ -87,7 +87,7 @@ configFile = 'ngpfQuickTest2ports_8.50.ixncfg'
 
 # Where to copy the csv and pdf result files in Windows.
 # If using Windows API server and if you want to copy result files into same windows filesystem
-windowsDestinationFolder = 'c:\\Results' 
+windowsDestinationFolder = 'c:\\Results'
 
 # If running this script on a Linux, where do you want to put the csv and pdf result files
 linuxDestinationFolder = os.getcwd()
@@ -220,7 +220,7 @@ def verifyQuickTestInitialization(quickTestHandle):
     for counter in range(1,applyQuickTestCounter+1):
         currentAction = getQuickTestCurrentAction(quickTestHandle)
         ixNetwork.info('\n\nverifyQuickTestInitialization: CurrentState: %s  Expecting: TransmittingFrames\n\tWaiting %s/%s seconds\n' % (currentAction, counter, applyQuickTestCounter))
-     
+
         if currentAction == 'TestEnded':
             raise Exception('\n\nVerifyQuickTestInitialization: QuickTest failed!!: {}'.format(quickTestHandle.Results.Status))
 
@@ -273,7 +273,7 @@ def monitorQuickTestRunningProgress(quickTestHandle, getProgressInterval=10):
     maxRetries = 10
 
     while True:
-        # This while loop was implemented because sometimes there could be failure to connect to the 
+        # This while loop was implemented because sometimes there could be failure to connect to the
         # API server.  It could be caused by many various issues not related to IxNetwork.
         # Going to retry doing GETs up to 10 times.
         connectedToApiServerFlag = False
@@ -452,7 +452,7 @@ def verifyNgpfIsLayer3(topologyName):
     try:
         print('\n\nTopology isLayer3: {}\n'.format(result.href))
         isLayer3 = True
-    except: 
+    except:
         result = ixNetwork.Topology.find(topologyName).DeviceGroup.find().Ethernet.find().Ipv6.find()
         try:
             print('\n\nTopology isLayer3: {}\n'.format(result.href))
@@ -466,7 +466,7 @@ def verifyNgpfIsLayer3(topologyName):
 
 try:
     # LogLevel: none, info, warning, request, request_response, all
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin', 
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin',
                                SessionName=None, SessionId=None, ApiKey=None, ApplicationType=applicationType,
                                ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
@@ -481,7 +481,7 @@ try:
         # For the port name, get the loaded configuration's port name
         portName = ixNetwork.Vport.find()[index].Name
         portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name=portName)
-        
+
     portMap.Connect(forceTakePortOwnership)
 
     for vport in ixNetwork.Vport.find():
@@ -519,7 +519,7 @@ try:
         if not rfcTest:
             # If the loaded QT config file doesn't have rfcTest created, then skip it.
             continue
-       
+
         for quickTestHandle in rfcTest:
             quickTestName = quickTestHandle.Name
             ixNetwork.info('\n\nQuickTestHandle: {}\n'.format(quickTestHandle))
@@ -576,8 +576,3 @@ except Exception as errMsg:
     print('\n%s' % traceback.format_exc())
     if debugMode == False and 'session' in locals():
         session.Session.remove()
-
-
-
-
-

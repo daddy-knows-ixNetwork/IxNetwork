@@ -72,7 +72,7 @@ def main():
         testPlatform.Authenticate(module.params['username'], module.params['password'])
         session = testPlatform.Sessions.add()
         ixNetwork = session.Ixnetwork
-    
+
         ixNetwork.NewConfig()
 
         ixNetwork.Globals.Licensing.LicensingServers = module.params['licenseServerIp']
@@ -88,7 +88,7 @@ def main():
         vportList = [vport.href for vport in ixNetwork.Vport.find()]
         for port in module.params['portList']:
             testPorts.append(dict(Arg1=port[0], Arg2=port[1], Arg3=port[2]))
-            
+
         ixNetwork.AssignPorts(testPorts, [], vportList, module.params['forceTakePortOwnership'])
 
         ixNetwork.info('Creating Topology Group 1')
@@ -97,68 +97,68 @@ def main():
         ethernet1 = deviceGroup1.Ethernet.add(Name='Eth1')
         ethernet1.Mac.Increment(start_value='00:01:01:01:00:01', step_value='00:00:00:00:00:01')
         ethernet1.EnableVlans.Single(True)
-        
+
         ixNetwork.info('Configuring vlanID')
         vlanObj = ethernet1.Vlan.find()[0].VlanId.Increment(start_value=103, step_value=0)
-        
+
         ixNetwork.info('Configuring IPv4')
         ipv4 = ethernet1.Ipv4.add(Name='Ipv4')
         ipv4.Address.Increment(start_value='1.1.1.1', step_value='0.0.0.1')
         ipv4.GatewayIp.Increment(start_value='1.1.1.2', step_value='0.0.0.0')
-        
+
         ixNetwork.info('Configuring BgpIpv4Peer 1')
         bgp1 = ipv4.BgpIpv4Peer.add(Name='Bgp1')
         bgp1.DutIp.Increment(start_value='1.1.1.2', step_value='0.0.0.0')
         bgp1.Type.Single('internal')
         bgp1.LocalAs2Bytes.Increment(start_value=101, step_value=0)
-        
+
         ixNetwork.info('Configuring Network Group 1')
         networkGroup1 = deviceGroup1.NetworkGroup.add(Name='BGP-Routes1', Multiplier='100')
         ipv4PrefixPool = networkGroup1.Ipv4PrefixPools.add(NumberOfAddresses='1')
         ipv4PrefixPool.NetworkAddress.Increment(start_value='10.10.0.1', step_value='0.0.0.1')
-        ipv4PrefixPool.PrefixLength.Single(32)        
-        
+        ipv4PrefixPool.PrefixLength.Single(32)
+
         topology2 = ixNetwork.Topology.add(Name='Topology 2', Ports=vport2)
         deviceGroup2 = topology2.DeviceGroup.add(Name='DG2', Multiplier='1')
-        
+
         ethernet2 = deviceGroup2.Ethernet.add(Name='Eth2')
         ethernet2.Mac.Increment(start_value='00:01:01:02:00:01', step_value='00:00:00:00:00:01')
         ethernet2.EnableVlans.Single(True)
-        
+
         ixNetwork.info('Configuring vlanID')
         vlanObj = ethernet2.Vlan.find()[0].VlanId.Increment(start_value=103, step_value=0)
-        
+
         ixNetwork.info('Configuring IPv4 2')
         ipv4 = ethernet2.Ipv4.add(Name='Ipv4-2')
         ipv4.Address.Increment(start_value='1.1.1.2', step_value='0.0.0.1')
         ipv4.GatewayIp.Increment(start_value='1.1.1.1', step_value='0.0.0.0')
-        
+
         ixNetwork.info('Configuring BgpIpv4Peer 2')
         bgp2 = ipv4.BgpIpv4Peer.add(Name='Bgp2')
         bgp2.DutIp.Increment(start_value='1.1.1.1', step_value='0.0.0.0')
         bgp2.Type.Single('internal')
         bgp2.LocalAs2Bytes.Increment(start_value=101, step_value=0)
-        
+
         ixNetwork.info('Configuring Network Group 2')
         networkGroup2 = deviceGroup2.NetworkGroup.add(Name='BGP-Routes2', Multiplier='100')
         ipv4PrefixPool = networkGroup2.Ipv4PrefixPools.add(NumberOfAddresses='1')
         ipv4PrefixPool.NetworkAddress.Increment(start_value='20.20.0.1', step_value='0.0.0.1')
         ipv4PrefixPool.PrefixLength.Single(32)
-        
+
         ixNetwork.StartAllProtocols(Arg1='sync')
-        
+
         ixNetwork.info('Verify protocol sessions\n')
         protocolsSummary = StatViewAssistant(ixNetwork, 'Protocols Summary')
         protocolsSummary.CheckCondition('Sessions Not Started', StatViewAssistant.EQUAL, 0)
         protocolsSummary.CheckCondition('Sessions Down', StatViewAssistant.EQUAL, 0)
         ixNetwork.info(protocolsSummary)
-        
+
         ixNetwork.info('Create Traffic Item')
         trafficItem = ixNetwork.Traffic.TrafficItem.add(Name='BGP Traffic', BiDirectional=False, TrafficType='ipv4')
-        
+
         ixNetwork.info('Add endpoint flow group')
         trafficItem.EndpointSet.add(Sources=topology1, Destinations=topology2)
-        
+
         # Note: A Traffic Item could have multiple EndpointSets (Flow groups).
         #       Therefore, ConfigElement is a list.
         ixNetwork.info('Configuring config elements')
@@ -170,19 +170,19 @@ def main():
         configElement.FrameRateDistribution.PortDistribution = 'splitRateEvenly'
         configElement.FrameSize.FixedSize = 128
         trafficItem.Tracking.find()[0].TrackBy = ['flowGroup0']
-        
+
         trafficItem.Generate()
         ixNetwork.Traffic.Apply()
         ixNetwork.Traffic.Start()
 
-        # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL. 
+        # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL.
         # Examples:
         #    flowStatistics.AddRowFilter('Port Name', StatViewAssistant.REGEX, '^Port 1$')
         #    flowStatistics.AddRowFilter('Tx Frames', StatViewAssistant.LESS_THAN, 50000)
-        
+
         flowStatistics = StatViewAssistant(ixNetwork, 'Flow Statistics')
         ixNetwork.info('{}\n'.format(flowStatistics))
-        
+
         for rowNumber,flowStat in enumerate(flowStatistics.Rows):
             ixNetwork.info('\n\nSTATS: {}\n\n'.format(flowStat))
             ixNetwork.info('\nRow:{}  TxPort:{}  RxPort:{}  TxFrames:{}  RxFrames:{}\n'.format(
@@ -207,5 +207,3 @@ def main():
 
 if __name__ == '__main__':
    main()
- 
-

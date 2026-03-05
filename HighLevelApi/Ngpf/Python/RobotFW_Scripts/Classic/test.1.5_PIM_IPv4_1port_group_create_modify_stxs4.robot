@@ -59,7 +59,7 @@ test
 ################################################################################
 # END - Multicast Group Configuration - 1
 ################################################################################
-	
+
 	Log To Console  Start Multicast group configuration ...
 	${result} =  Emulation Multicast Group Config  mode=create  num_groups=3  ip_addr_start=238.0.0.101  ip_addr_step=0.0.0.1
 	${status} =  Get From Dictionary  ${result}  status
@@ -81,11 +81,11 @@ test
 ################################################################################
 # END - Multicast Source Configuration - 1
 ################################################################################
-	
+
 ################################################################################
 # START - Multicast Source Configuration - 2
 ################################################################################
-	
+
 	${result} =  Emulation Multicast Source Config  mode=create  num_sources=5  ip_addr_start=111.0.0.101  ip_addr_step=0.0.0.1
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
@@ -94,26 +94,26 @@ test
 ################################################################################
 # END - Multicast Source Configuration - 2
 ################################################################################
-	
+
 ################################################################################
 # START - PIM Join/Prune Configuration
 ################################################################################
-	
+
 	${result} =  Emulation Pim Group Config  mode=create  session_handle=@{pim_cfg_router_handles}[0]  group_pool_handle=@{mcast_cfg_group_handles}[0]  source_pool_handle=@{mcast_cfg_source_handles}[0]  group_pool_mode=send  interval=50  join_prune_aggregation_factor=10  join_prune_per_interval=10  rate_control=0  register_per_interval=10  register_stop_per_interval=10  register_tx_iteration_gap=100  register_stop_trigger_count=1  register_udp_destination_port=10  register_udp_source_port=10  register_triggered_sg=0  rp_ip_addr=21.21.25.1  rp_ip_addr_step=0.0.1.0  send_null_register=0  source_group_mapping=one_to_one  spt_switchover=0  switch_over_interval=1  s_g_rpt_group=0  wildcard_group=0
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	@{pim_cfg_group_handles}=    Create List
 	${pim_group_handles} =  Get From Dictionary  ${result}  handle
 	Append To List  ${pim_cfg_group_handles}  ${pim_group_handles}
-	
+
 ########################################
 # End emulation_pim_group_config       #
 ########################################
-	
+
 ################################################################################
 # START - PIM Source Configuration
 ################################################################################
-	
+
 	${result} =  Emulation Pim Group Config  mode=create  session_handle=@{pim_cfg_router_handles}[0]  group_pool_handle=@{mcast_cfg_group_handles}[1]  source_pool_handle=@{mcast_cfg_source_handles}[1]  interval=50  join_prune_aggregation_factor=10  rate_control=0  register_per_interval=10  register_stop_per_interval=10  register_tx_iteration_gap=100  register_stop_trigger_count=1  register_udp_destination_port=10  register_udp_source_port=10  register_triggered_sg=0  rp_ip_addr=21.21.25.1  rp_ip_addr_step=0.0.1.0  send_null_register=0  source_group_mapping=one_to_one  spt_switchover=0  switch_over_interval=1  s_g_rpt_group=0  wildcard_group=0
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
@@ -123,54 +123,38 @@ test
 ################################################################################
 # START - PIM Join/Prune Modification
 ################################################################################
-	
+
 	${result} =  Emulation Pim Group Config  mode=modify  handle=@{pim_cfg_group_handles}[0]  flap_interval=10  rp_ip_addr=114.0.0.101  source_group_mapping=fully_meshed  spt_switchover=1
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${pim_group_handles} =  Get From Dictionary  ${result}  handle
 	Append To List  ${pim_cfg_group_handles}  ${pim_group_handles}
-	
+
 ########################################
 # Start emulation_pim_group_config     #
 ########################################
-	
+
 	${result} =  Emulation Pim Group Config  mode=modify  handle=@{pim_cfg_source_handles}  register_udp_destination_port=3001  register_udp_source_port=3001  spt_switchover=1
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${pim_group_handles} =  Get From Dictionary  ${result}  handle
 	Append To List  ${pim_cfg_source_handles}  ${pim_group_handles}
-	
+
 ########################################
 # Start PIM                            #
 ########################################
-	
+
 	${result} =  Emulation Pim Control  port_handle=@{portHandles}  mode=start
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
+
 	Sleep  20s
 ########################################
 # Check PIM routers configured         #
 ########################################
-	
+
 	${result} =  Emulation Pim Info  handle=@{pim_cfg_router_handles}
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
+
 	${stats} =  Set Variable  ${result['@{portHandles}[0]']['aggregate']['num_routers_configured']}
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

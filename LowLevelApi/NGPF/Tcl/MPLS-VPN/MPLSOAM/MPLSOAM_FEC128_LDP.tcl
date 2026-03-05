@@ -72,7 +72,7 @@
 #   11. Retrieve L2-L3 traffic stats.                                          #
 #   12. Stop L2-L3 traffic.                                                    #
 #   13. Stopallprotocols.                                                      #
-#                                                                              #                                                                                
+#                                                                              #
 ################################################################################
 
 # Script Starts
@@ -108,7 +108,7 @@ ixNet exec newConfig
 ################################################################################
 # Protocol configuration section                                               #
 # Configure LDPv4 as per the description given above                           #
-################################################################################ 
+################################################################################
 puts "Adding two virtual ports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -490,7 +490,7 @@ puts "All configuration is completed..Wait for 5 seconds..."
 after 5000
 
 ################################################################################
-# Start MPLSOAM protocol and wait for 60 seconds                                 #  
+# Start MPLSOAM protocol and wait for 60 seconds                                 #
 ################################################################################
 puts "Starting protocols and waiting for 60 seconds for protocols to come up"
 ixNet exec startAllProtocols
@@ -519,7 +519,7 @@ puts "***************************************************"
 # Retrieve protocol learned info                                                #
 #################################################################################
 puts "Fetching MPLSOAM Basic Learned Info"
-ixNet exec getAllLearnedInfo $mplsOam1 1 
+ixNet exec getAllLearnedInfo $mplsOam1 1
 after 5000
 set linfo [ixNet getList $mplsOam1 learnedInfo]
 ixNet getAttr $linfo -columns
@@ -561,7 +561,7 @@ after 10000
 # Retrieve protocol learned info again                                          #
 #################################################################################
 puts "Fetching MPLSOAM Basic Learned Info"
-ixNet exec getAllLearnedInfo $mplsOam1 1 
+ixNet exec getAllLearnedInfo $mplsOam1 1
 after 5000
 set linfo [ixNet getList $mplsOam1 learnedInfo]
 ixNet getAttr $linfo -columns
@@ -599,7 +599,7 @@ ixNet setMultiAttribute $endpointSet1\
     -ngpfFilters           [list]\
     -trafficGroups         [list]\
     -sources               $source\
-    -destinations          $destination    
+    -destinations          $destination
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\

@@ -71,7 +71,7 @@
 #   11. Retrieve L2-L3 traffic stats.                                          #
 #   12. Stop L2-L3 traffic.                                                    #
 #   13. Stopallprotocols.                                                      #
-#                                                                              #                                                                                
+#                                                                              #
 ################################################################################
 import os
 import sys
@@ -475,7 +475,7 @@ globalsV = ixNet.getList(root, 'globals')[0]
 globalTopo = ixNet.getList(globalsV, 'topology')[0]
 globalLdp = ixNet.getList(globalTopo, 'ldpBasicRouter')[0]
 ixNet.setMultiAttribute(ixNet.getAttribute(globalLdp, '-transportLabels') + '/singleValue', '-value', 'true')
-ixNet.commit() 
+ixNet.commit()
 
 
 ################################################################################

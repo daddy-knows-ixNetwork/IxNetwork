@@ -183,7 +183,7 @@ puts "Printing learned info for DHCPv6 Client"
 foreach add [ixNet getA $dhcpv6C -discoveredAddresses] {
 	puts $add
 }
-	
+
 
 puts "Stopping the clients"
 ixNet exec stop $t2dev1

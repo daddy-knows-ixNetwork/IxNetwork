@@ -11,7 +11,7 @@ Documentation  sample demonstrating traffic creation using ixnetwork_restpy and 
 ...   - Configure two IPv4 BGP in NGPF with network advertisements
 ...   - Start all protocols
 ...   - Verify all protocols
-...   - Start traffic 
+...   - Start traffic
 ...   - Get Traffic Item
 ...   - Get Flow Statistics stats
 
@@ -19,7 +19,7 @@ Documentation  sample demonstrating traffic creation using ixnetwork_restpy and 
 ...   - Windows, Windows Connection Mgr and Linux
 
 ...  Requirements
-...   - RestPy 1.0.33   
+...   - RestPy 1.0.33
 ...   - IxNetwork 8.50
 ...   - Python 2.7 and 3+
 ...   - pip install requests
@@ -44,7 +44,7 @@ ${forceTakePortOwnership} =  True
 
 @{licenseServerIp} =  192.168.70.3
 ${licenseMode} =  subscription
-${licenseTier} =  tier3  
+${licenseTier} =  tier3
 
 # For linux and connection_manager only. Set to True to leave the session alive for debugging.
 ${debugMode} =  False
@@ -55,8 +55,8 @@ ${ixChassisIp} =  192.168.70.128
 @{port_2_1} =  ${ixChassisIp}  2  1
 @{portList} =  ${port_1_1}  ${port_2_1}
 
-@{trackBy} =  flowGroup0  
-@{EMPTYLIST} =  
+@{trackBy} =  flowGroup0
+@{EMPTYLIST} =
 
 *** Test Cases ***
 Configure BGP in NGPF
@@ -65,7 +65,7 @@ Configure BGP in NGPF
 
 	# If you are using RestPy version < 1.0.33, uncomment this.  Backward compatibility still works, but
 	# the parameters rest_port and platform are deprecated.
-	#Import Library  ixnetwork_restpy.testplatform.testplatform.TestPlatform  
+	#Import Library  ixnetwork_restpy.testplatform.testplatform.TestPlatform
 	#...  ${apiServerIp}  rest_port=11009  platform=winodws  log_file_name=restpy.log  WITH NAME  testPlatformObj
 
 	# For RestPy version >= 1.0.33
@@ -100,8 +100,8 @@ Configure BGP in NGPF
 	:FOR  ${vport}  IN  @{ixNetwork.Vport.find()}
 	\    Append To List  ${vportList}  ${vport.href}
 
-	Call Method  ${ixNetwork}  AssignPorts  ${testPorts}  ${EMPTYLIST}  ${vportList}  ${forceTakePortOwnership} 
-	
+	Call Method  ${ixNetwork}  AssignPorts  ${testPorts}  ${EMPTYLIST}  ${vportList}  ${forceTakePortOwnership}
+
 	Log To Console  Create Topology 1
 	${topology1} =  Set Variable  ${ixNetwork.Topology.add(Name='Topo1')}
 	${topology1.Ports} =  Set Variable  ${vport1}
@@ -216,6 +216,4 @@ Configure BGP in NGPF
 	Log To Console  RxFrames: ${flowStatistics.Rows[0]['Rx Frames']}
 
         # Note: Using Call Method to remove the session doesn't work.
-	${status} =  Run Keyword If  "${debugMode}"=="False"   Set Variable  ${session.remove()}  
-
-
+	${status} =  Run Keyword If  "${debugMode}"=="False"   Set Variable  ${session.remove()}

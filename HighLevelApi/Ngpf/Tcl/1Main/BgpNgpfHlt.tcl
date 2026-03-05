@@ -33,7 +33,7 @@ proc create_topology {portList name} {
     if {[keylget topology_1_status status] != $::SUCCESS} {
         error $topology_1_status
     }
-    return [keylget topology_1_status topology_handle]    
+    return [keylget topology_1_status topology_handle]
 }
 proc create_devicegroup {topology name} {
     set device_group_status [::ixiangpf::topology_config \
@@ -45,7 +45,7 @@ proc create_devicegroup {topology name} {
     if {[keylget device_group_status status] != $::SUCCESS} {
         puts "\nError: $device_group_status"
     }
-    return [keylget device_group_status device_group_handle]    
+    return [keylget device_group_status device_group_handle]
 }
 proc create_ethernet {topology devicegroup name} {
     set mv_src_mac_addr_status [::ixiangpf::multivalue_config \
@@ -306,7 +306,7 @@ proc VerifyProtocolSessionStatusUpNgpfHlt { protocolHandle {totalTime 60}} {
     # protocolHandle: Ethernet handle, IPv4 handle, OSPF handle, etc
     #    IPv4 handle sample: /topology:1/deviceGroup:1/ethernet:1/ipv4:1
     #    OSPF handle sample: /topology:1/deviceGroup:1/ethernet:1/ipv4:1/ospfv2:1
-   
+
     for {set timer 1} {$timer <= $totalTime} {incr timer} {
 	set sessionStatus [ixiangpf::protocol_info \
 			              -handle $protocolHandle \
@@ -314,10 +314,10 @@ proc VerifyProtocolSessionStatusUpNgpfHlt { protocolHandle {totalTime 60}} {
 			       ]
 	set currentSessionUp [keylget sessionStatus $protocolHandle.aggregate.sessions_up]
 	set totalSessions    [keylget sessionStatus $protocolHandle.aggregate.sessions_total]
-	
+
 	puts "\n$protocolHandle"
 	puts "\t$timer/$totalTime\secs: CurrentSessionUp:$currentSessionUp   TotalSessions:$totalSessions"
-	
+
 	if {$timer < $totalTime && $currentSessionUp != $totalSessions} {
 	        after 1000
 	        continue
@@ -341,7 +341,7 @@ proc CreateTrafficItemHlt { trafficItemParams } {
     # For single burst traffic: -transmit single_burst -number_of_packets-per_stream 50000
 
     # How to use this from a script:
-    #     set trafficItem1(-mode) create 
+    #     set trafficItem1(-mode) create
     #     set trafficItem1(-endpointset_count) 1
     #     set trafficItem1(-emulation_src_handle) $topology1(portHandle)
     #     set trafficItem1(-emulation_dst_handle) $topology2(portHandle)
@@ -380,7 +380,7 @@ proc StartTrafficHlt {} {
     if {[keylget startTrafficStatus status] != $::SUCCESS} {
 	puts "\nError StartTrafficHlt: $startTrafficStatus\n"
 	return 1
-    } 
+    }
 
     # By including VerifyTrafficState, it will wait up to 15 seconds until
     # traffic is started before returning.
@@ -396,7 +396,7 @@ proc StopTrafficHlt {} {
     if {[keylget stopTrafficStatus status] != $::SUCCESS} {
 	puts "\nError StopTrafficHlt: $stopTrafficStatus\n"
 	return 1
-    } 
+    }
     after 5000
     return 0
 }
@@ -456,7 +456,7 @@ proc VerifyTrafficState {} {
 		return 1
 	    }
 	}
-	
+
 	if {$trafficState == "started"} {
 	    puts "VerifyTrafficState: Traffic Started"
 	    break
@@ -508,7 +508,7 @@ proc GetStats {{viewName "Flow Statistics"}} {
     #    'PIMv6 IF Per Port'
 
     set root [ixNet getRoot]
-    set viewList [ixNet getList $root/statistics view]    
+    set viewList [ixNet getList $root/statistics view]
     set statViewIndex [lsearch -nocase -regexp $viewList $viewName]
     set view [lindex $viewList $statViewIndex]
     puts "\nview: $view"
@@ -520,7 +520,7 @@ proc GetStats {{viewName "Flow Statistics"}} {
 
     set columnList [ixNet getAttribute ${view}/page -columnCaptions]
     puts "\n$columnList\n"
-    
+
     set startTime 1
     set stopTime 30
     while {$startTime < $stopTime} {
@@ -534,7 +534,7 @@ proc GetStats {{viewName "Flow Statistics"}} {
     }
     puts "\ntotal Pages: $totalPages"
 
-    # Iterrate through each page 
+    # Iterrate through each page
     set row 0
     for {set currentPage 1} {$currentPage <= $totalPages} {incr currentPage} {
 	puts "\nGetStatView: Getting statistics on page: $currentPage/$totalPages. Please wait ..."
@@ -545,7 +545,7 @@ proc GetStats {{viewName "Flow Statistics"}} {
 	        return 1
 	}
 	ixNet commit
-	
+
 	# Wait for statistics to populate on current page
 	set whileLoopStopCounter 0
 	while {[ixNet getAttribute $view/page -isReady] != "true"} {
@@ -559,7 +559,7 @@ proc GetStats {{viewName "Flow Statistics"}} {
 	    }
 	        incr whileLoopStopCounter
 	}
-	
+
 	set pageList [ixNet getAttribute $view/page -rowValues] ;# first list of all rows in the page
 	set totalFlowStatistics [llength $pageList]
 
@@ -573,16 +573,16 @@ proc GetStats {{viewName "Flow Statistics"}} {
 
 		# cellList: 1/1/1 1/1/2 TI0-Flow_1 1.1.1.1-1.1.2.1 4000 4000 0 0 0 0 256000 0 0 0 0 0 0 0 0 0 0 0 00:00:00.684 00:00:00.700
 		set cellList [lindex $rowList $rowIndex] ;# third list of cell values
-		
+
 		#puts "\n--- cellList $pageListIndex: $cellList ---\n"
 		puts "  $row:"
 		for {set index 0} {$index <[llength $cellList]} {incr index} {
-		    keylset getStats flow.$row.[join [lindex $columnList $index] _] [lindex $cellList $index] 
+		    keylset getStats flow.$row.[join [lindex $columnList $index] _] [lindex $cellList $index]
 		    puts "\t[lindex $columnList $index]: [lindex $cellList $index]"
 		}
 	    }
 	}
-    }  
+    }
     ixNet setAttribute $view -enabled false
     ixNet commit
 
@@ -675,7 +675,7 @@ if {[VerifyProtocolSessionStatusUpNgpfHlt $bgpIpv4Peer_1_handle] == 1} {
     exit
 }
 
-set trafficItem1(-mode) create 
+set trafficItem1(-mode) create
 set trafficItem1(-name) Traffic_Item_1
 set trafficItem1(-endpointset_count) 1
 set trafficItem1(-emulation_src_handle) $topology_1_handle
@@ -698,5 +698,3 @@ StartTrafficHlt
 set stats [GetStats]
 puts "[KeylPrint stats]"
 puts "\n--- [keylget stats flow.1.Tx_Frames] ---"
-
-

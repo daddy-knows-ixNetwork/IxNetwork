@@ -48,16 +48,16 @@
 #                                                                              	#
 # Description:                                                                 	#
 #	The script below represents an end to end workflow for AppLibrary Traffic. 	#
-#	Steps:																	   	#			
-#	1. Chassis connection and TCL server connection							   	#	
-#	2. Scenario configuration at layer 2-3									   	#	
-#	3. Creation of Applibrary traffic										   	#	
-#	4. Per connection parameters configuration 								   	#	
+#	Steps:																	   	#
+#	1. Chassis connection and TCL server connection							   	#
+#	2. Scenario configuration at layer 2-3									   	#
+#	3. Creation of Applibrary traffic										   	#
+#	4. Per connection parameters configuration 								   	#
 #	5. Traffic apply and start 												   	#
-#	6. Statistics operations: drill down in a loop							   	#	
+#	6. Statistics operations: drill down in a loop							   	#
 #	7. Test criteria evaluation													#
 #	8. Stop traffic															   	#
-#													  	 						#		
+#													  	 						#
 #################################################################################
 
 if 'py' not in dir():                       # define stuff if we don't run from harness
@@ -108,7 +108,7 @@ ixNet.commit()
 # Mapping ports to real ports
 #------------------------------------
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 vports = ixNet.getList(ixNet.getRoot(), 'vport')
 print "Assigning ports to " + str(vports) + " ..."

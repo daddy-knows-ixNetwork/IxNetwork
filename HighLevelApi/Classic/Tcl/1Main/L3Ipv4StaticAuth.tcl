@@ -1,15 +1,15 @@
 #!/opt/ActiveTcl-8.5/bin/tclsh
 
 # Example script by Hubert Gee
-#  
+#
 # Insieme wants a way to scale 1000 hosts.
 #    Incrementing srcIp, vlanId, srcMac.
-# 
+#
 # This script will use Static IP w/Auth instead of Protocol Interface
 # because this script doesn't involve protocols and scaling host
 # through Protocol Interface takes a lot of resource.
 #
-# 
+#
 #
 package req Ixia
 
@@ -24,45 +24,45 @@ set ::ixia::logHltapiCommandsFileName ixiaHltDebug.txt
 
 # -vlan_id outter,inner
 set port1Config {
-    -port_handle 1/1/1 
-    -mode config -connected_count 10 
-    -intf_ip_addr 1.1.1.1 
-    -intf_ip_addr_step 0.0.0.1 
-    -gateway 1.1.1.11 
-    -gateway_step 0.0.0.0 
-    -netmask 255.255.255.0 
-    -l23_config_type static_endpoint 
-    -qinq_incr_mode both 
-    -vlan_id 301,101 
-    -vlan_id_step 1,1 
-    -vlan_id_count 10,10 
-    -addresses_per_vlan 1,1 
-    -vlan_user_priority 1,1 
-    -vlan 1 -mtu 1500 
-    -src_mac_addr 0001.0101.0001 
+    -port_handle 1/1/1
+    -mode config -connected_count 10
+    -intf_ip_addr 1.1.1.1
+    -intf_ip_addr_step 0.0.0.1
+    -gateway 1.1.1.11
+    -gateway_step 0.0.0.0
+    -netmask 255.255.255.0
+    -l23_config_type static_endpoint
+    -qinq_incr_mode both
+    -vlan_id 301,101
+    -vlan_id_step 1,1
+    -vlan_id_count 10,10
+    -addresses_per_vlan 1,1
+    -vlan_user_priority 1,1
+    -vlan 1 -mtu 1500
+    -src_mac_addr 0001.0101.0001
     -src_mac_addr_step 0000.0000.0001
 }
 
 set port2Config {
-    -port_handle 1/1/2 
-    -mode config 
-    -connected_count 10 
-    -intf_ip_addr 1.1.1.11 
-    -intf_ip_addr_step 0.0.0.1 
-    -gateway 1.1.1.1 
-    -gateway_step 0.0.0.0 
-    -netmask 255.255.255.0 
-    -l23_config_type 
-    static_endpoint 
-    -qinq_incr_mode both 
-    -vlan_id 301,101 
-    -vlan_id_step 1,1 
-    -vlan_id_count 10,10 
-    -addresses_per_vlan 1,1 
-    -vlan_user_priority 1,1 
-    -vlan 1 
-    -mtu 1500 
-    -src_mac_addr 0001.0102.0001 
+    -port_handle 1/1/2
+    -mode config
+    -connected_count 10
+    -intf_ip_addr 1.1.1.11
+    -intf_ip_addr_step 0.0.0.1
+    -gateway 1.1.1.1
+    -gateway_step 0.0.0.0
+    -netmask 255.255.255.0
+    -l23_config_type
+    static_endpoint
+    -qinq_incr_mode both
+    -vlan_id 301,101
+    -vlan_id_step 1,1
+    -vlan_id_count 10,10
+    -addresses_per_vlan 1,1
+    -vlan_user_priority 1,1
+    -vlan 1
+    -mtu 1500
+    -src_mac_addr 0001.0102.0001
     -src_mac_addr_step 0000.0000.0001
 }
 
@@ -82,7 +82,7 @@ proc ConfigInterfaceConfig { portConfigParams } {
     global portConfig
 
     set interfaceConfigStatus [eval ::ixia::interface_config $portConfigParams]
-    
+
     if {[keylget interfaceConfigStatus status] != $::SUCCESS} {
 	puts "\nError: interfaceConfigStatus failed:\n$interfaceConfigStatus\n"
     }
@@ -156,8 +156,8 @@ proc GetStatView { {getStatsBy trafficItem} } {
 	    break
 	}
     }
-    
-    # Iterrate through each page 
+
+    # Iterrate through each page
     for {set currPage 1} {$currPage <= $totalPages} {incr currPage} {
 	catch {ixNet setAttribute $view/page -currentPage $currPage} errMsg
 	if {$errMsg != "::ixNet::OK"} {
@@ -165,7 +165,7 @@ proc GetStatView { {getStatsBy trafficItem} } {
 	    exit
 	}
 	ixNet commit
-	
+
 	# Wait for statistics to populate on current page
 	set whileLoopStopCounter 0
 	while {[ixNet getAttribute $view/page -isReady] != "true"} {
@@ -179,7 +179,7 @@ proc GetStatView { {getStatsBy trafficItem} } {
 	    }
 	    incr whileLoopStopCounter
 	}
-	
+
 	set pageList [ixNet getAttribute $view/page -rowValues] ;# first list of all rows in the page
 	set totalFlowStatistics [llength $pageList]
 
@@ -190,7 +190,7 @@ proc GetStatView { {getStatsBy trafficItem} } {
 	    for {set rowIndex 0} {$rowIndex < [llength $rowList]} {incr rowIndex} {
 		# cellList: 1/1/1 1/1/2 TI0-Flow_1 1.1.1.1-1.1.2.1 4000 4000 0 0 0 0 256000 0 0 0 0 0 0 0 0 0 0 0 00:00:00.684 00:00:00.700
 		set cellList [lindex $rowList $rowIndex] ;# third list of cell values
-		
+
 		#puts "\n--- cellList $pageListIndex: $cellList ---\n"
 
 		# Get the Traffic Item name
@@ -203,7 +203,7 @@ proc GetStatView { {getStatsBy trafficItem} } {
 
 		set rxPortIndex [lsearch $columnList "Rx Port"]
 		set rxPort [lindex $cellList $rxPortIndex]
-		
+
 		foreach column $columnList item $cellList {
 		    if {[regexp "VLAN:VLAN Priority" $column]} {
 			set column "Vlan_Priority"
@@ -271,7 +271,7 @@ set configElement [keylget trafficItem1 traffic_item]
 set packetStack [keylget trafficItem1 $configElement.headers]
 foreach stack $packetStack {
     if {[regexp "vlan" $stack]} {
-	puts "\nEnabling vlan packet stack for tracking:\n$stack" 
+	puts "\nEnabling vlan packet stack for tracking:\n$stack"
 	set streamResult [::ixia::traffic_config  \
 			  -mode modify \
 			  -stream_id $stack \

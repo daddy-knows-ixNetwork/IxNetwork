@@ -42,30 +42,30 @@ proc CreateTopologyNgpf { topologyParams } {
 	puts "\nError CreateTopologyNgpf: $topologyStatus"
 	return 1
     }
-    
+
     return [keylget topologyStatus topology_handle]
 }
 
-proc CreateDeviceGroupNgpf { deviceGroupParams } { 
+proc CreateDeviceGroupNgpf { deviceGroupParams } {
     upvar $deviceGroupParams params
 
     puts "\nCreateDeviceGroupNgpf"
     foreach {properties values} [array get params *] {
 	set property [lindex [split $properties ,] end]
-	
-	# Using regexp to parse out $property with a dash because only dashes 
+
+	# Using regexp to parse out $property with a dash because only dashes
 	# in front of a parameter is a hlt parameter.
 	if {[regexp -- "-" $property]} {
 	    append paramList "$property $values "
 	}
     }
-    
+
     set topoDeviceGroupStatus [eval ::ixiangpf::topology_config $paramList]
 
     if {[keylget topoDeviceGroupStatus status] != $::SUCCESS} {
 	puts "\nError CreateDeviceGroupNgpf: $topoDeviceGroupStatus"
 	return 1
-    } 
+    }
 
     return [keylget topoDeviceGroupStatus device_group_handle]
 }
@@ -80,7 +80,7 @@ proc PortConfigProtocolIntNgpf { portConfigParams } {
     }
 
     set interfaceConfigStatus [eval ::ixiangpf::interface_config $paramList]
-    
+
     if {[keylget interfaceConfigStatus status] != $::SUCCESS} {
 	puts "\nError PortConfigProtocolIntNgpf:\n$interfaceConfigStatus\n"
 	return 1
@@ -105,7 +105,7 @@ proc ConfigVxlanEmulationNgpfHlt { configParams {returnHandle returnHandle} } {
 
     puts "\nConfigVxlanEmulationNgpfHlt: $paramList ..."
     set status [eval ::ixiangpf::emulation_vxlan_config $paramList]
-    
+
     if {[keylget status status] != $::SUCCESS} {
 	puts "\nError ConfigVxlanEmulationNgpfHlt:\n$status\n"
 	return 1
@@ -129,7 +129,7 @@ proc ConfigMultiValueNgpfHlt { multiValueParams } {
 	set property [lindex [split $properties ,] end]
 	append paramList "$property $values "
     }
-    
+
     puts "\nConfigMultiValueNgpfHlt"
     set multiValueStatus [eval ::ixiangpf::multivalue_config $paramList]
 
@@ -146,11 +146,11 @@ proc StartAllProtocolsHlt { {platform legacy} } {
 
     if {$platform == "legacy"} {
 	set params "::ixia::test_control -action start_all_protocols"
-    } 
+    }
 
     if {$platform == "ngpf"} {
 	set params "::ixiangpf::test_control -action start_all_protocols"
-    } 
+    }
 
     puts "\nStartAllProtocolsHlt: $platform"
     set startProtocolStatus [eval $params]
@@ -194,7 +194,7 @@ proc StartTrafficHlt {} {
     if {[keylget startTrafficStatus status] != $::SUCCESS} {
 	puts "\nError StartTrafficHlt: $startTrafficStatus\n"
 	return 1
-    } 
+    }
 
     after 10000
     # By including VerifyTrafficState, it will wait up to 15 seconds until
@@ -242,7 +242,7 @@ set deviceGroupHandle(topo2,dg1) [CreateDeviceGroupNgpf ::deviceGroup2]
 
 set ethernet_1(-mode)                    config
 set ethernet_1(-protocol_handle)         $deviceGroupHandle(topo1,dg1)
-set ethernet_1(-mtu)                     1500 
+set ethernet_1(-mtu)                     1500
 set ethernet_1(-src_mac_addr)            00:01:01:01:00:01
 set ethernet_1(-src_mac_addr_step)       00:00:00:00:00:01
 set ethernet_1(-vlan)                    0 ;# To enable vlan, use 1
@@ -287,8 +287,8 @@ set status [PortConfigProtocolIntNgpf ::ipv4_1]
 set ipv4Handle(topo1,dg1) [keylget status ipv4_handle]
 
 set ethernet_2(-mode)                    config
-set ethernet_2(-protocol_handle)         $deviceGroupHandle(topo2,dg1)       
-set ethernet_2(-mtu)                     1500 
+set ethernet_2(-protocol_handle)         $deviceGroupHandle(topo2,dg1)
+set ethernet_2(-mtu)                     1500
 set ethernet_2(-src_mac_addr)            00:01:01:02:00:01
 set ethernet_2(-src_mac_addr_step)       00:00:00:00:00:01
 set ethernet_2(-vlan)                    0 ;# To enable vlan, use 1
@@ -374,7 +374,7 @@ set vxlan1(-remote_vtep_ipv4)     0.0.0.0
 set vxlan1(-ip_to_vxlan_multiplier) 1
 
 set vxlanHandle(topo1,dg1) [ConfigVxlanEmulationNgpfHlt vxlan1]
- 
+
 
 # VNI - topology 2
 set multivalue7(-pattern) counter
@@ -437,8 +437,8 @@ set deviceGroup4(-device_group_enabled) 1
 set deviceGroupHandle(topo1,dg3,vxlan) [CreateDeviceGroupNgpf ::deviceGroup3]
 set deviceGroupHandle(topo2,dg4,vxlan) [CreateDeviceGroupNgpf ::deviceGroup4]
 
-puts "\ndeviceGroupHandle(topo1,dg3,vxlan): $deviceGroupHandle(topo1,dg3,vxlan)" 
-puts "\ndeviceGroupHandle(topo2,dg4,vxlan): $deviceGroupHandle(topo2,dg4,vxlan)\n" 
+puts "\ndeviceGroupHandle(topo1,dg3,vxlan): $deviceGroupHandle(topo1,dg3,vxlan)"
+puts "\ndeviceGroupHandle(topo2,dg4,vxlan): $deviceGroupHandle(topo2,dg4,vxlan)\n"
 
 
 # VM Host1 - Src Mac
@@ -457,8 +457,8 @@ puts "\n----- deviceGroupHandle(topo1,dg3,vxlan): $deviceGroupHandle(topo1,dg3,v
 
 set ethernet_3(-mode)                    config
 set ethernet_3(-protocol_handle)         $deviceGroupHandle(topo1,dg3,vxlan)
-set ethernet_3(-connected_to_handle)     $vxlanHandle(topo1,dg1)     
-set ethernet_3(-mtu)                     1500 
+set ethernet_3(-connected_to_handle)     $vxlanHandle(topo1,dg1)
+set ethernet_3(-mtu)                     1500
 set ethernet_3(-src_mac_addr)            $multivalue(topo1,dg3,vxlan,srcMac)
 set ethernet_3(-vlan)                    0 ;# To enable vlan, use 1
 set ethernet_3(-vlan_id)                 100
@@ -526,7 +526,7 @@ set multivalue(topo2,dg4,vxlan,srcMac) [ConfigMultiValueNgpfHlt multivalue14]
 set ethernet_4(-mode)                    config
 set ethernet_4(-protocol_handle)         $deviceGroupHandle(topo2,dg4,vxlan)
 set ethernet_4(-connected_to_handle)     $vxlanHandle(topo2,dg1)
-set ethernet_4(-mtu)                     1500 
+set ethernet_4(-mtu)                     1500
 set ethernet_4(-src_mac_addr)            $multivalue(topo2,dg4,vxlan,srcMac)
 set ethernet_4(-vlan)                    0 ;# To enable vlan, use 1
 set ethernet_4(-vlan_id)                 100
@@ -578,7 +578,7 @@ StartAllProtocolsHlt ngpf
 after 10000
 
 
-set trafficItem1(-mode) create 
+set trafficItem1(-mode) create
 set trafficItem1(-endpointset_count) 1
 set trafficItem1(-emulation_src_handle) $ipv4VxlanHandle(topo1,dg3)
 set trafficItem1(-emulation_dst_handle) $ipv4VxlanHandle(topo2,dg4)
@@ -599,5 +599,3 @@ StartTrafficHlt
 set stats [::ixiangpf::traffic_stats -mode flow]
 
 puts "\n[KeylPrint stats]\n"
-
-

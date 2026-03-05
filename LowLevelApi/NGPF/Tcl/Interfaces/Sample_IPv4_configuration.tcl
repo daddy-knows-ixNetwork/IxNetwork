@@ -47,7 +47,7 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#    This sample configures 10 IPv4 sessions on each of the two ports          # 
+#    This sample configures 10 IPv4 sessions on each of the two ports          #
 #                                                                              #
 ################################################################################
 
@@ -136,7 +136,7 @@ ixNet setMultiAttribute [ixNet getAttribute $ipv4_2 -resolveGateway]/singleValue
 ixNet commit
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 set vPorts [ixNet getList [ixNet getRoot] vport]
 puts "Assigning ports to $vPorts"

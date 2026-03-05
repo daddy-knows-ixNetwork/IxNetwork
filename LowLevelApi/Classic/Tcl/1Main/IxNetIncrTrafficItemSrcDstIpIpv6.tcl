@@ -117,14 +117,14 @@ foreach trafficItem [ixNet getList $root/traffic trafficItem] {
 
 	# Parsing out the IPv6 header from the current Flow
 	set ipv6Index [lsearch -regexp [ixNet getList $configElement stack] ipv6]
-	
+
 	# ipv6Stack: ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:"ipv6-2"
 	set ipv6Stack [lindex [ixNet getList $configElement stack] $ipv6Index]
-	
+
 	# ipHeader == dstIP or srcIP
 	# ipv6StackFieldIndex: 7
 	set ipv6StackFieldIndex [lsearch -regexp [ixNet getList $ipv6Stack field] dstIP]
-	
+
 	# This is the complete API object to configure this current Flow
 	# ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:"ipv6-2"/field:"ipv6.header.dstIP-8"
 	set ipv6StackIpField [lindex [ixNet getList $ipv6Stack field] $ipv6StackFieldIndex]
@@ -141,7 +141,7 @@ foreach trafficItem [ixNet getList $root/traffic trafficItem] {
 	    -stepValue 0::0 \
 	    -valueList $ipList \
 	    -valueType valueList
-	
+
 	# Write the configuration to hardware
 	ixNet commit
 
@@ -150,4 +150,3 @@ foreach trafficItem [ixNet getList $root/traffic trafficItem] {
 	}
     }
 }
-

@@ -1,7 +1,7 @@
 #!/usr/local/python2.7.6/bin/python2.7
 
 # Written by: Hubert Gee
-# 
+#
 # This is a sample IxNetwork REST API script written in a human friendly readable
 # way to show how the REST APIs are done.
 #
@@ -62,7 +62,7 @@ httpHeader = 'http://%s:%s' % (restServerIp, restServerPort)
 root = '%s/api/v1/sessions/1/ixnetwork' % httpHeader
 urlHeadersJson = {'content-type': 'application/json'}
 urlHeadersData = {'content-type': 'application/octet-stream'}
-    
+
 def JsonPrintPretty( jsonContents ):
     contents = json.loads(jsonContents)
     print json.dumps(contents, indent=4, sort_keys=True)
@@ -89,12 +89,12 @@ print '\nvport2:%s' % JsonPrintPretty(vport2.text)
 vportList = requests.get('%s/%s' % (root, 'vport'), data=json.dumps([{}]), headers=urlHeadersJson)
 print '\nvportList:', JsonPrintPretty(vportList.text)
 
-data = {'arg1': [{'arg1': ixChassisIp, 'arg2': port1.split('/')[0], 'arg3': port1.split('/')[1]}, 
-                 {'arg1': ixChassisIp, 'arg2': port2.split('/')[0], 'arg3': port2.split('/')[1]}], 
+data = {'arg1': [{'arg1': ixChassisIp, 'arg2': port1.split('/')[0], 'arg3': port1.split('/')[1]},
+                 {'arg1': ixChassisIp, 'arg2': port2.split('/')[0], 'arg3': port2.split('/')[1]}],
         'arg2': [],
-        'arg3': ['%s/vport/1' % root, 
-                 '%s/vport/2' % root 
-                 ], 
+        'arg3': ['%s/vport/1' % root,
+                 '%s/vport/2' % root
+                 ],
         'arg4': True
         }
 assignPorts = requests.post(url='%s/operations/assignports' % root, data=json.dumps(data), headers=urlHeadersJson)
@@ -105,7 +105,7 @@ print '\nWait 25 seconds for ports to come up', time.sleep(25)
 vportGetList = requests.get('%s/%s' % (root, 'vport'), headers=urlHeadersJson)
 print '\nvportGetList:', JsonPrintPretty(vportGetList.text)
 
-# ['http://10.219.117.103:11009/api/v1/sessions/1/ixnetwork/vport/1', 
+# ['http://10.219.117.103:11009/api/v1/sessions/1/ixnetwork/vport/1',
 # 'http://10.219.117.103:11009/api/v1/sessions/1/ixnetwork/vport/2']
 vportList = ["%s/%s%s" % (root, 'vport/',str(i['id'])) for i in vportGetList.json()]
 
@@ -119,7 +119,7 @@ vportRx = vportList[1]
 requests.post('%s/%s' % (root, 'topology'), data=json.dumps([{}]), headers=urlHeadersJson)
 requests.post('%s/%s' % (root, 'topology'), data=json.dumps([{}]), headers=urlHeadersJson)
 
-#['http://10.219.117.103:11009/api/v1/sessions/1/ixnetwork/topology1', 
+#['http://10.219.117.103:11009/api/v1/sessions/1/ixnetwork/topology1',
 # 'http://10.219.117.103:11009/api/v1/sessions/1/ixnetwork/topology2']
 topologyList = requests.get('%s/%s' % (root, 'topology'), headers=urlHeadersJson)
 topologies = ["%s/%s/%s" % (root, 'topology', str(i['id'])) for i in topologyList.json()]
@@ -176,7 +176,7 @@ requests.patch(url=httpHeader + mac1Attrib + '/counter',
                data=json.dumps({'direction': 'increment',
                                 'start': '00:01:01:01:00:01',
                                 'step': '00:00:00:00:00:01'
-                                }), 
+                                }),
                headers=urlHeadersJson)
 
 response = requests.get(mac2)
@@ -184,7 +184,7 @@ mac2Attrib = response.json()['mac']
 
 # SetAttribute
 requests.patch(url=httpHeader + mac2Attrib + '/singleValue',
-               data=json.dumps({'value': '00:01:01:02:00:01'}), 
+               data=json.dumps({'value': '00:01:01:02:00:01'}),
                headers=urlHeadersJson)
 
 # Add IPv4
@@ -210,19 +210,19 @@ multivalueGateway2 = response.json()['gatewayIp']
 
 # SetAttribute
 requests.patch(url=httpHeader + multivalueIp1 + '/singleValue',
-               data=json.dumps({'value': '10.10.10.1'}), 
+               data=json.dumps({'value': '10.10.10.1'}),
                headers=urlHeadersJson)
 
 requests.patch(url=httpHeader + multivalueIp2 + '/singleValue',
-               data=json.dumps({'value': '10.10.10.2'}), 
+               data=json.dumps({'value': '10.10.10.2'}),
                headers=urlHeadersJson)
 
 requests.patch(url=httpHeader + multivalueGateway1 + '/singleValue',
-               data=json.dumps({'value': '10.10.10.2'}), 
+               data=json.dumps({'value': '10.10.10.2'}),
                headers=urlHeadersJson)
 
 requests.patch(url=httpHeader + multivalueGateway2 + '/singleValue',
-               data=json.dumps({'value': '10.10.10.1'}), 
+               data=json.dumps({'value': '10.10.10.1'}),
                headers=urlHeadersJson)
 
 # GetAttribute
@@ -233,12 +233,12 @@ ip2Prefix = response.json()['prefix']
 
 # SetAttribute
 requests.patch(url=httpHeader + ip1Prefix + '/singleValue',
-               data=json.dumps({'value': '24'}), 
+               data=json.dumps({'value': '24'}),
                headers=urlHeadersJson)
 
 # SetAttribute
 requests.patch(url=httpHeader + ip2Prefix + '/singleValue',
-               data=json.dumps({'value': '24'}), 
+               data=json.dumps({'value': '24'}),
                headers=urlHeadersJson)
 
 # GetAttribute
@@ -249,11 +249,11 @@ ip2ResolveGw = response.json()['resolveGateway']
 
 # SetMultiAttribute
 requests.patch(url=httpHeader + ip1ResolveGw + '/singleValue',
-               data=json.dumps({'value': 'true'}), 
+               data=json.dumps({'value': 'true'}),
                headers=urlHeadersJson)
 
 requests.patch(url=httpHeader + ip2ResolveGw + '/singleValue',
-               data=json.dumps({'value': 'true'}), 
+               data=json.dumps({'value': 'true'}),
                headers=urlHeadersJson)
 
 requests.delete(root)
@@ -271,11 +271,11 @@ bgp2 = ["%s/%s/%s" % (ip2, 'bgpIpv4Peer', str(i['id'])) for i in bgp2List.json()
 
 # SetAttribute
 requests.patch(url=topo1DeviceGroup1,
-               data=json.dumps({'name': 'BGP DG1'}), 
+               data=json.dumps({'name': 'BGP DG1'}),
                headers=urlHeadersJson)
 
 requests.patch(url=topo2DeviceGroup1,
-               data=json.dumps({'name': 'BGP DG2'}), 
+               data=json.dumps({'name': 'BGP DG2'}),
                headers=urlHeadersJson)
 
 # GetAttribute
@@ -286,11 +286,11 @@ bgp2DutIp = response.json()['dutIp']
 
 # SetAttribute
 requests.patch(url=httpHeader + bgp1DutIp + '/singleValue',
-               data=json.dumps({'value': '10.10.10.2'}), 
+               data=json.dumps({'value': '10.10.10.2'}),
                headers=urlHeadersJson)
 
 requests.patch(url=httpHeader + bgp2DutIp + '/singleValue',
-               data=json.dumps({'value': '10.10.10.1'}), 
+               data=json.dumps({'value': '10.10.10.1'}),
                headers=urlHeadersJson)
 
 # Add Network Group
@@ -306,14 +306,14 @@ networkGroup2 = ["%s/%s/%s" % (topo2DeviceGroup1, 'networkGroup', str(i['id'])) 
 
 # SetAttribute
 requests.patch(url=networkGroup1,
-               data=json.dumps({'name': 'NetworkGroup1'}), 
+               data=json.dumps({'name': 'NetworkGroup1'}),
                headers=urlHeadersJson)
 
 requests.patch(url=networkGroup2,
-               data=json.dumps({'name': 'NetworkGroup2'}), 
+               data=json.dumps({'name': 'NetworkGroup2'}),
                headers=urlHeadersJson)
 
-# Add 
+# Add
 #    Network Group Prefix Pools
 print '\nAdd Network Group Prefix Pools'
 requests.post('%s/%s' % (networkGroup1, 'ipv4PrefixPools'), data=json.dumps([{}]), headers=urlHeadersJson)
@@ -321,7 +321,7 @@ requests.post('%s/%s' % (networkGroup2, 'ipv4PrefixPools'), data=json.dumps([{}]
 
 # Execute
 print '\nStarting all protocols'
-print '\nWaiting 30 seconds for BGP to come up', 
+print '\nWaiting 30 seconds for BGP to come up',
 requests.post('%s/operations/startAllProtocols' % root, data=json.dumps({}), headers=urlHeadersJson)
 time.sleep(30)
 
@@ -342,7 +342,7 @@ trafficItem1 = ["%s/traffic/%s/%s" % (root, 'trafficItem', str(i['id'])) for i i
 # SetMultiAttribute
 requests.patch(url=trafficItem1,
                data=json.dumps({'name': 'Traffic Item 1',
-                                'trafficType': 'ipv4'}), 
+                                'trafficType': 'ipv4'}),
                headers=urlHeadersJson)
 
 endpointSet1 = requests.post('%s/%s' % (trafficItem1, 'endpointSet'), data=json.dumps([{}]), headers=urlHeadersJson)
@@ -360,12 +360,12 @@ response = requests.patch(url=endpointSet,
                           data=json.dumps({'name': 'EndpointSet-1',
                                            'sources': [source],
                                            'destinations': [destination]
-                                           }), 
+                                           }),
                           headers=urlHeadersJson)
 
 requests.patch(url=trafficItem1 + '/tracking',
                data=json.dumps({'trackBy': ['sourceDestEndpointPair0', 'trackingenabled0']
-                                }), 
+                                }),
                headers=urlHeadersJson)
 
 # Execute

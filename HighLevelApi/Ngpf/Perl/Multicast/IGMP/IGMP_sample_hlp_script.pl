@@ -72,8 +72,8 @@
 ################################################################################
 
 ################################################################################
-# Utils                                                                        #	
-################################################################################       
+# Utils                                                                        #
+################################################################################
 # Running from Linux:
 
 	# use lib ".";
@@ -86,7 +86,7 @@
        # use ixiahlt {IXIA_VERSION => $ENV{'IXIA_VERSION'}, TclAutoPath  => [$ENV{'PERL_IXOS_LIB_PATH'}, $ENV{'PERL_IXNET_LIB_PATH'}]};
 
 
-# Running from Windows: 
+# Running from Windows:
 
 	# use lib "C:/Program Files (x86)/Ixia/hltapi/4.95.117.44/TclScripts/lib/hltapi/library/common/ixia_hl_lib-7.40";
 	# use lib "C:/Program Files (x86)/Ixia/hltapi/4.95.117.44/TclScripts/lib/hltapi/library/common/ixiangpf/perl";
@@ -143,7 +143,7 @@ my @port_handles_list = split(/ /,$port_handles);
 ################################################################################
 
 # Creating a topology on first port
-print "Adding topology 1 on port 1\n";     
+print "Adding topology 1 on port 1\n";
 my $topology_1_status = ixiangpf::topology_config ({
     topology_name      => "{IGMP Host Topology}",
     port_handle        => $port_handles_list[0],
@@ -157,8 +157,8 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $topology_1_handle = $HashRef->{'topology_handle'};
 
-# Creating a device group in topology 
-print "Creating device group 1 in topology 1\n";      
+# Creating a device group in topology
+print "Creating device group 1 in topology 1\n";
 my $device_group_1_status = ixiangpf::topology_config ({
     topology_handle              => "$topology_1_handle",
     device_group_name            => "{IGMP Host Device Group}",
@@ -173,7 +173,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $deviceGroup_1_handle = $HashRef->{'device_group_handle'};
-    
+
 
 # Creating a topology on second port
 print "Adding topology 2 on port 2\n";
@@ -231,14 +231,14 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $multivalue_1_handle = $HashRef->{'multivalue_handle'};
 
-# Creating ethernet stack for the first Device Group 
+# Creating ethernet stack for the first Device Group
 print "Creating ethernet stack for the first Device Group\n";
 my $ethernet_1_status = ixiangpf::interface_config ({
     protocol_name                => "{Ethernet 1}",
     protocol_handle              => "$deviceGroup_1_handle",
     mtu                          => "1500",
     src_mac_addr                 => "$multivalue_1_handle",
-    src_mac_addr_step            => "00.00.00.00.00.00",    
+    src_mac_addr_step            => "00.00.00.00.00.00",
 });
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
@@ -267,7 +267,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $ethernet_2_handle = $HashRef->{'ethernet_handle'};
 
-# Creating multivalue for IPv4                                 
+# Creating multivalue for IPv4
 print "Creating multivalue pattern for IPv4\n";
 my $multivalue_2_status = ixiangpf::multivalue_config ({
     pattern                => "counter",
@@ -287,8 +287,8 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $multivalue_2_handle = $HashRef->{'multivalue_handle'};
 
-# Creating IPv4 Stack on top of Ethernet Stack for the first Device Group                                 
-print "Creating IPv4 Stack on top of Ethernet Stack for the first Device Group\n";    
+# Creating IPv4 Stack on top of Ethernet Stack for the first Device Group
+print "Creating IPv4 Stack on top of Ethernet Stack for the first Device Group\n";
 my $ipv4_1_status = ixiangpf::interface_config ({
     protocol_name                     => "{IPv4 1}",
     protocol_handle                   => "$ethernet_1_handle",
@@ -309,7 +309,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $ipv4_1_handle = $HashRef->{'ipv4_handle'};
 
-# Creating IPv4 Stack on top of Ethernet Stack for the second Device Group 
+# Creating IPv4 Stack on top of Ethernet Stack for the second Device Group
 print "Creating IPv4 2 stack on ethernet 2 stack for the second Device Group\n";
 my $ipv4_2_status = ixiangpf::interface_config ({
     protocol_name                     => "{IPv4 2}",
@@ -333,13 +333,13 @@ if ($command_status != $ixiangpf::SUCCESS) {
 my $ipv4_2_handle = $HashRef->{'ipv4_handle'};
 
 ################################################################################
-# Other protocol configurations                                                # 
+# Other protocol configurations                                                #
 ################################################################################
 
 # This will create IGMP v3 Host Stack with IPTV disabled on top of IPv4 stack
 
 # Creating IGMP Host Stack on top of IPv4 stack
-print "Creating IGMP Host Stack on top of IPv4 stack in first topology\n";    
+print "Creating IGMP Host Stack on top of IPv4 stack in first topology\n";
 my $igmp_host_1_status = ixiangpf::emulation_igmp_config ({
     handle                               => "$ipv4_1_handle",
     protocol_name                        => "{IGMP Host}",
@@ -376,8 +376,8 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $multivalue_3_handle = $HashRef->{'multivalue_handle'};
 
-# Creating IGMP Group Ranges 
-print "Creating IGMP Group Ranges\n"; 
+# Creating IGMP Group Ranges
+print "Creating IGMP Group Ranges\n";
 my $igmp_mcast_i_pv4_group_list_1_status = ixiangpf::emulation_multicast_group_config ({
     mode               => "create",
     ip_addr_start      => "$multivalue_3_handle",
@@ -395,7 +395,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 my $igmpMcastIPv4GroupList_1_handle = $HashRef->{'multicast_group_handle'};
 
 # Creating IGMP Source Ranges
-print "Creating IGMP Source Ranges\n";      
+print "Creating IGMP Source Ranges\n";
 my $igmp_ucast_i_pv4_source_list_1_status = ixiangpf::emulation_multicast_source_config ({
     mode               => "create",
     ip_addr_start      => "20.20.20.1",
@@ -411,9 +411,9 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $igmpUcastIPv4SourceList_1_handle = $HashRef->{'multicast_source_handle'};
- 
+
 # Creating IGMP Group and Source Ranges in IGMP Host stack
-print "Creating IGMP Group and Source Ranges in IGMP Host stack\n";   
+print "Creating IGMP Group and Source Ranges in IGMP Host stack\n";
 $igmp_host_1_status = ixiangpf::emulation_igmp_group_config ({
     mode                    => "create",
     g_filter_mode           => "include",
@@ -423,7 +423,7 @@ $igmp_host_1_status = ixiangpf::emulation_igmp_group_config ({
     session_handle          => "$igmpHost_1_handle",
     source_pool_handle      => "$igmpUcastIPv4SourceList_1_handle",
 });
-    
+
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
 if ($command_status != $ixiangpf::SUCCESS) {
@@ -436,7 +436,7 @@ my $igmpGroup_1_handle = $HashRef->{'igmp_group_handle'};
 # This will create IGMP v3 Querier Stack on top of IPv6 stack
 
 # Creating IGMP Querier Stack on top of IPv4 stack
-print "Creating IGMP Querier Stack on top of IPv4 stack in second topology\n";    
+print "Creating IGMP Querier Stack on top of IPv4 stack in second topology\n";
 my $igmp_querier_1_status = ixiangpf::emulation_igmp_querier_config ({
     mode                                   => "create",
     discard_learned_info                   => "0",
@@ -458,7 +458,7 @@ my $igmpQuerier_1_handle = $HashRef->{'igmp_querier_handle'};
 
 print "Waiting 05 seconds before starting protocol(s) ...\n";
 sleep(5);
-    
+
 ############################################################################
 # Start IGMP protocol                                                      #
 ############################################################################
@@ -475,7 +475,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 
-print "Starting IGMP Querier on topology2\n"; 
+print "Starting IGMP Querier on topology2\n";
 $run_status = ixiangpf::emulation_igmp_control({
    handle => $igmpQuerier_1_handle,
    mode   => 'start',
@@ -499,7 +499,7 @@ my $protostats = ixiangpf::emulation_igmp_info({
     handle => $deviceGroup_1_handle,
     type   => 'host',
     mode   => 'aggregate',
-}); 
+});
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
 if ($command_status != $ixiangpf::SUCCESS) {
@@ -562,14 +562,14 @@ foreach (@status_keys) {
     print "==================================================================\n";
 }
 
-############################################################################ 
+############################################################################
 # Configure L2-L3 traffic                                                  #
 # 1. Endpoints : Source->IPv4, Destination->Multicast group                #
 # 2. Type      : Multicast IPv4 traffic                                    #
 # 3. Flow Group: Source Destination Endpoint Pair                          #
 # 4. Rate      : 1000 packets per second                                   #
 # 5. Frame Size: 512 bytes                                                 #
-# 6. Tracking  : Source Destination Endpoint Pair                          #	
+# 6. Tracking  : Source Destination Endpoint Pair                          #
 ############################################################################
 print "Configuring L2-L3 traffic\n";
 $_result_ = ixiangpf::traffic_config({
@@ -586,8 +586,8 @@ $_result_ = ixiangpf::traffic_config({
     emulation_multicast_rcvr_mcast_index=> [0, 0],
     name                                => 'TI0-Traffic_Item_1',
     circuit_endpoint_type               => 'ipv4',
-    transmit_distribution               => 'srcDestEndpointPair0',                             
-    rate_pps                            => 1000,                                    
+    transmit_distribution               => 'srcDestEndpointPair0',
+    rate_pps                            => 1000,
     frame_size                          => 512,
     track_by                            => 'trackingenabled0 sourceDestEndpointPair0'
 });
@@ -617,7 +617,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 print "Let the traffic run for 20 seconds ...\n";
 sleep(20);
-    
+
 ############################################################################
 # Retrieve L2-L3 traffic stats                                             #
 ############################################################################
@@ -641,7 +641,7 @@ foreach (@status_keys) {
     print "\n$my_key: $allStats\n\n";
     print "==================================================================\n";
 }
-    
+
 ############################################################################
 # Sending leave using IGMP host group handle                               #
 ############################################################################
@@ -730,7 +730,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 sleep(5);
- 
+
 ################################################################################
 # Making on the fly changes for IGMP Querier                                   #
 ################################################################################
@@ -756,7 +756,7 @@ sleep(2);
 ############################################################################
 # Applying changes one the fly                                             #
 ############################################################################
-print "Applying changes on the fly\n";    
+print "Applying changes on the fly\n";
 my $applyChanges = ixiangpf::test_control({
    handle => "$ipv4_1_handle",
    action => 'apply_on_the_fly_changes',});
@@ -849,6 +849,6 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 sleep(2);
-                    
+
 print "!!! Test Script Ends !!!\n";
-print "SUCCESS - $0\n"; 
+print "SUCCESS - $0\n";

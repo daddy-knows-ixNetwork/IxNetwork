@@ -31,7 +31,7 @@ proc VerifyPortState { {portList all} {expectedPortState up} } {
 	    set port [lindex [split [lindex $connectedTo 1] :] end]
 	    set port $card/$port
 
-	    if {[lsearch $portList $port] != -1} { 
+	    if {[lsearch $portList $port] != -1} {
 		lappend vPortList $vport
 	    }
 	}
@@ -47,7 +47,7 @@ proc VerifyPortState { {portList all} {expectedPortState up} } {
 	    set card [lindex [split [lindex $connectedTo 0] :] end]
 	    set port [lindex [split [lindex $connectedTo 1] :] end]
 	    set port $card/$port
-	    
+
 	    set portState [ixNet getAttribute $vport -state]
 
 	    # Expecting port state = UP
@@ -57,12 +57,12 @@ proc VerifyPortState { {portList all} {expectedPortState up} } {
 		    after 2000
 		    continue
 		}
-		
+
 		if {$portState != "up" && $timer == "60"} {
 		    puts "\nError VerifyPortState: $port seem to be stuck on $portState state. Expecting port up.\n"
 		    set portsAllUpFlag 1
 		}
-		
+
 		if {$portState == "up"} {
 		    puts "\nVerifyPortState: $port state is $portState"
 		    break
@@ -76,12 +76,12 @@ proc VerifyPortState { {portList all} {expectedPortState up} } {
 		    after 2000
 		    continue
 		}
-		
+
 		if {$portState == "up" && $timer == "60"} {
 		    puts "\nError VerifyPortState: $port seem to be stuck on the $portState state. Expecting port down."
 		    set portsAllUpFlag 1
 		}
-		
+
 		if {$portState == "down"} {
 		    puts "\nVerifyPortState: $port state is $portState as expected"
 		    break
@@ -128,7 +128,7 @@ set connectStatus [::ixia::connect \
 if {[keylget connectStatus status] != $::SUCCESS} {
     puts "Connecting to ixNetwork Tcl server failed\n\n$connectStatus\n"
     exit
-} 
+}
 
 # This is just another way to build a list of IP addresses.
 # Uncomment to demo. Otherwise, leave it commented out.
@@ -136,21 +136,21 @@ if 0 {
     set ip 0
     set totalInterface 1
     set startingVlandId 0
-    
+
     for {set interface 1} {$interface <= $totalInterface} {incr interface} {
 	lappend int1PortList $port1
 	lappend int1IpAddressList 1.1.1.[incr ip]
 	lappend int1GatewayList 1.1.1.254
 	lappend int1NetMaskList 255.255.255.0
-	
+
 	set macLast2Bytes [format %04x $interface]
 	set original [string index $macLast2Bytes 2]
 	set macLast2Bytes [string replace $macLast2Bytes 2 2 :$original]
-	
+
 	lappend int1SrcMacList 00:01:01:01:$macLast2Bytes
 	lappend int1VlanIdList [incr startingVlanId]
     }
-    
+
     set port1Status [::ixia::interface_config \
 			 -mode config \
 			 -port_handle [list $int1PortList] \
@@ -200,7 +200,7 @@ set port2Status [::ixia::interface_config \
 set port2Interface [keylget port2Status interface_handle]
 
 # port1Interface = ::ixNet::OBJ-/vport:1/interface:1
-# port2Interfaces = ::ixNet::OBJ-/vport:2/interface:1 
+# port2Interfaces = ::ixNet::OBJ-/vport:2/interface:1
 
 puts "\nSending ARP ..."
 set port1ArpStatus [::ixia::interface_config -port_handle $port1 -arp_send_req 1 -arp_req_retries 3]
@@ -261,10 +261,10 @@ for {set flowNumber 1} {$flowNumber <= [llength [keylget flowStats flow]]} {incr
     set rxPort [keylget flowStats flow.$flowNumber.rx.port]
     set txFrames [keylget flowStats flow.$flowNumber.tx.total_pkts]
     set rxFrames [keylget flowStats flow.$flowNumber.rx.total_pkts]
-    
+
     # flow_name: 1/1/2 TI0-TrafficItem_1 1.1.1.6 TI0-TrafficItem_1-EndpointSet-1 - Flow Group 0001
     set flowName [keylget flowStats flow.$flowNumber.flow_name]
-  
+
     puts "[format %5s $flowNumber][format %15s $txPort][format %10s $rxPort][format %14s $txFrames][format %14s $rxFrames]"
 }
 

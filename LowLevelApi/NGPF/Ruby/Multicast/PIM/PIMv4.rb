@@ -53,8 +53,8 @@
 #    This script intends to demonstrate how to use NGPF PIM API.               #
 #                                                                              #
 #    1. It will create 2 PIM topologies, each having an ipv4 network           #
-#       topology and loopback device group behind the network group(NG) with   # 
-#       loopback interface on it. A loopback device group(DG) behind network   # 
+#       topology and loopback device group behind the network group(NG) with   #
+#       loopback interface on it. A loopback device group(DG) behind network   #
 #       group is needed to support applib traffic.                             #
 #    2. Start the pim protocol.                                                #
 #    3. Retrieve protocol statistics.                                          #
@@ -71,7 +71,7 @@
 #   12. Retrieve L2-L3 traffic stats.                                          #
 #   13. Stop L2-L3 traffic.                                                    #
 #   14. Stop Application traffic.                                              #
-#   15. Stop all protocols.                                                    #                                                                                          
+#   15. Stop all protocols.                                                    #
 ################################################################################
 
 
@@ -104,7 +104,7 @@ def assignPorts (ixNet, realPort1, realPort2)
          @ixNet.setAttribute(chassisObj2, '-hostname', chassis2)
          @ixNet.commit()
          chassisObj2 = @ixNet.remapIds(chassisObj2)[0]
-     else 
+     else
          chassisObj2 = chassisObj1
      end
 
@@ -515,7 +515,7 @@ puts("Configuring Applib traffic")
 trafficItem2 = @ixNet.add(@ixNet.getRoot() + '/traffic', 'trafficItem')
 
 @ixNet.setMultiAttribute(trafficItem2,
-    '-name',                     'Traffic Item 2',             
+    '-name',                     'Traffic Item 2',
     '-trafficItemType',          'applicationLibrary',
     '-roundRobinPacketOrdering', 'false',
     '-trafficType',              'ipv4ApplicationTraffic')
@@ -535,7 +535,7 @@ destin_app   = [@ixNet.getList(t2dev1, 'networkGroup')[0]]
     '-ngpfFilters',           [],
     '-trafficGroups',         [],
     '-sources',               source_app,
-    '-destinations',          destin_app)    
+    '-destinations',          destin_app)
 @ixNet.commit()
 
 endpointSet2 = @ixNet.remapIds(endpointSet2)[0]

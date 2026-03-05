@@ -1,6 +1,6 @@
 """
 Description
-   This is a sample custom module to show how to create your own Ansible 
+   This is a sample custom module to show how to create your own Ansible
    module.
 """
 
@@ -93,7 +93,7 @@ def main():
 
     if module.params['osPlatform'] not in ['windows', 'windowsConnectionMgr', 'linux']:
         raise IxNetRestApiException("\nError: %s is not a known option. Choices are 'windows' or 'linux'." % module.params['osPlatform'])
-    
+
     try:
         #---------- Preference Settings --------------
 

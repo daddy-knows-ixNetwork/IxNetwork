@@ -237,7 +237,7 @@ ixNet.execute('import', mvGwAddValuelist2, ixNet.readFrom(csvPath1), "csv", '4')
 ixNet.commit()
 
 #################################################################################
-# Adding OSPFv2 
+# Adding OSPFv2
 #################################################################################
 print("Adding OSPFv2")
 ixNet.add(ip1, 'ospfv2')
@@ -256,7 +256,7 @@ ixNet.setAttribute(networkTypeMv2 + '/singleValue', '-value', 'pointtopoint')
 ixNet.commit()
 
 #################################################################################
-# Generate boolean valuelist 
+# Generate boolean valuelist
 #################################################################################
 myOneBitValue = overLay1Bit.OneBitValue(csvPath2, 10, 10)
 myOneBitValue.generate()

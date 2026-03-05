@@ -252,7 +252,7 @@ ixNet.commit()
 
 ################################################################################
 # Set  pceInitiateLSPParameters                                                #
-# 1. IP version                -- ipv4                                         # 
+# 1. IP version                -- ipv4                                         #
 # 2. IPv4 source endpoint      -- 2.0.0.1                                      #
 # 3. IPv4 destination endpoint -- 3.0.0.1                                      #
 ################################################################################
@@ -291,8 +291,8 @@ ixNet.setAttribute(includeLspMv + '/singleValue', '-value', 'True')
 
 includeSymbolicPathMv = ixNet.getAttribute(pccGroup + '/pceInitiateLSPParameters',
     '-includeSymbolicPathNameTlv')
-ixNet.setAttribute(includeSymbolicPathMv + '/singleValue', '-value', 'True')    
-    
+ixNet.setAttribute(includeSymbolicPathMv + '/singleValue', '-value', 'True')
+
 symbolicPathNameMv = ixNet.getAttribute(pccGroup + '/pceInitiateLSPParameters',
     '-symbolicPathName')
 ixNet.setAttribute(symbolicPathNameMv + '/singleValue', '-value',
@@ -319,7 +319,7 @@ ixNet.setMultiAttribute(PCCinitiatePSTChange + '/singleValue',
 ixNet.commit()
 
 ################################################################################
-# Set the properties of ERO1                                                   # 
+# Set the properties of ERO1                                                   #
 # a. Active                                                                    #
 # b. SRv6 NAI Type                                                             #
 # c. T bit                                                                     #
@@ -440,7 +440,7 @@ for learnedInfo in learnedInfoList :
         colList = ixNet.getAttribute(t, '-columns')
         rowList = ixNet.getAttribute(t, '-values')
         for valList in rowList :
-            ndx = 0  
+            ndx = 0
             for val in valList :
                 name  = colList[ndx]
                 value = val
@@ -488,4 +488,3 @@ for learnedInfo in learnedInfoList :
 print ('Stopping protocols')
 ixNet.execute('stopAllProtocols')
 print ('!!! Test Script Ends !!!')
-

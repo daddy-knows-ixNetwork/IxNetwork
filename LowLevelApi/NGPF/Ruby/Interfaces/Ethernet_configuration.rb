@@ -139,7 +139,7 @@ mac1 = @ixNet.getList(dg1, 'ethernet')[0]
 mac2 = @ixNet.getList(dg2, 'ethernet')[0]
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 vports = @ixNet.getList(@ixNet.getRoot(), 'vport')
 puts "Assigning ports to " + vports.to_s + " ..."

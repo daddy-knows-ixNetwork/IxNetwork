@@ -6,12 +6,12 @@
 #   A sample script using Tkinter to call TCL APIs.
 #   This script sources an API file and the APIs are a combination
 #   of low level and high level APIs.
-#   
+#
 #   This script can load a saved config file or resume from an existing
 #   configuration.
-#   
+#
 #   This script was created to test ModifyProtocolInterfaces and IGMP host
-#   and Source Mode filtering. 
+#   and Source Mode filtering.
 
 import Tkinter
 import sys
@@ -44,7 +44,7 @@ tcl.eval('set ixncfgFile "/home/hgee/Dropbox/MyIxiaWork/Temp/l2l3_8.10.ixncfg"')
 status = tcl.eval('ResumeHlt ::connect')
 
 # --------------- IGMP Configurations with Source Mode Filtering ---------------#
-# Step 1/3: Create new IGMP Host 
+# Step 1/3: Create new IGMP Host
 tcl.eval('set igmpHost($port1,-mode) create')
 tcl.eval('set igmpHost($port1,-port_handle) $port1')
 tcl.eval('set igmpHost($port1,-reset) 1')
@@ -122,7 +122,7 @@ tcl.eval('set igmpSourceHandle2($port1) [ConfigIgmpSourceHlt ::igmpSource2]')
 tcl.eval('set igmpSourceInclude(-mode) create')
 tcl.eval('set igmpSourceInclude(-session_handle) $igmpHostHandle1($port1)')
 tcl.eval('set igmpSourceInclude(-group_pool_handle) $igmpGroupHandle3($port1)')
-tcl.eval('set igmpSourceInclude(-source_pool_handle) [list $igmpSourceHandle1($port1) $igmpSourceHandle2($port1)]') 
+tcl.eval('set igmpSourceInclude(-source_pool_handle) [list $igmpSourceHandle1($port1) $igmpSourceHandle2($port1)]')
 tcl.eval('set igmpSourceHandle($port1) [ConfigIgmpGroupHlt ::igmpSourceInclude]')
 
 

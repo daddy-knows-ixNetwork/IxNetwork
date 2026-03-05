@@ -9,7 +9,7 @@ params = {
 	    "ports": [["192.168.70.128", "1", "1"]],
 	    "deviceGroup": [
 		{
-		    "name": "DG-1",		
+		    "name": "DG-1",
 		    "multiplier": 1,
 		    "ethernet": [
 			{
@@ -58,13 +58,13 @@ params = {
 		    ]
 		}
 	    ]
-	},	
+	},
         {
 	    "name": "Topology-2",
 	    "ports": [["192.168.70.128", "1", "2"]],
 	    "deviceGroup": [
 		{
-		    "name": "DG-2",		
+		    "name": "DG-2",
 		    "multiplier": 1,
 		    "ethernet": [
 			{
@@ -111,7 +111,7 @@ params = {
                                            "step": "0.0.0.1"}
 			}
 		    ]
-		}	
+		}
 	    ]
 	}
     ],
@@ -138,4 +138,3 @@ params = {
         }
     ]
 }
-

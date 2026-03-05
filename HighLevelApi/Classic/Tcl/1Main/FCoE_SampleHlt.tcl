@@ -11,7 +11,7 @@
 #
 # For traffic_config emulation src/dst handles, must be in this format:
 #     ::ixNet::OBJ-/vport:1/protocolStack
-# 
+#
 
 package require Ixia
 source /home/hgee/Dropbox/MyIxiaWork/IxNet_tclApi.tcl
@@ -37,7 +37,7 @@ proc KeylPrint {keylist {space ""}} {
     return $result
 }
 
-# When using P2NO HLTSET, for loading the IxTclNetwork package please 
+# When using P2NO HLTSET, for loading the IxTclNetwork package please
 # provide ixnetwork_tcl_server parameter to ::ixia::connect
 set connect_status [::ixia::connect             \
 			-reset                                  \

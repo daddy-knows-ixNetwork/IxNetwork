@@ -83,7 +83,7 @@ vports.append(ixNet.add(root, 'vport'))
 vports.append(ixNet.add(root, 'vport'))
 ixNet.commit()
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 # get virtual ports
 vports = ixNet.getList(ixNet.getRoot(), 'vport')

@@ -1,7 +1,7 @@
 #!/opt/ActiveTcl-8.5/bin/tclsh
 
 # Description
-#  
+#
 #    - This script will load a saved config file.
 #
 #    - To modify the Traffic Item, call the following APIs and provide the
@@ -9,10 +9,10 @@
 #          - ModifyStreamFrameSizeHlt ospf-1 256
 #          - ModifyStreamLineRateHlt  ospf-2 18
 #          - ModifyStreamIpPrecedenceHlt ospf-2 4
-# 
+#
 #    - Saving stats into csv file: Use the variable csvStatisticFile to state
 #      the path and filename.
-# 
+#
 
 package req Ixia
 
@@ -27,7 +27,7 @@ set params {
 	{trafficItemName ospf frameSize 128 ipPrecedence 1 lineRate 10}
 	{trafficItemName bgp  frameSize 256 ipPrecedence 3 lineRate 20}
     }
-    
+
     {
 	{trafficItemName ospf frameSize 128 ipPrecedence 5 lineRate 30}
 	{trafficItemName bgp  frameSize 256 ipPrecedence 7 lineRate 40}
@@ -62,16 +62,16 @@ proc Connect {} {
 			   -tcl_server $::ixiaChassisIp \
 			   -session_resume_keys 1 \
 			   -connect_timeout 120 \
-			   -break_locks 1 
+			   -break_locks 1
 		      ]
-    
+
     if {[keylget connectStatus status] != $::SUCCESS} {
 	puts "Connecting to IxNetwork Tcl server failed\n\n$connectStatus\n"
 	exit
     } else {
 	puts "Successfully connected to IxNetwork Tcl server"
     }
-    
+
     puts "\n[KeylPrint connectStatus]\n"
     return $connectStatus
 }
@@ -202,7 +202,7 @@ proc GetVportConnectedToPort { vport } {
     set connectedTo [lrange [split $connectedTo /] 3 4]
     set card [lindex [split [lindex $connectedTo 0] :] end]
     set port [lindex [split [lindex $connectedTo 1] :] end]
-    return $card/$port    
+    return $card/$port
 }
 
 proc StartAllProtocolsHlt {} {
@@ -220,7 +220,7 @@ proc StartAllProtocolsHlt {} {
 proc StartTrafficHlt {} {
     puts "\nStarting IxNetwork traffic ..."
     set status [ixia::traffic_control -action run]
-    
+
     set flag 0
     if {[keylget status status] != $::SUCCESS} {
 	puts "\nIxia traffic failed to start: $status"
@@ -236,7 +236,7 @@ proc StartTrafficHlt {} {
 proc GetStatsHlt { {type flow} } {
     puts "\nGetStatsHlt"
     set flowStats [::ixia::traffic_stats -mode $type]
-    
+
     if {[keylget flowStats status] != $::SUCCESS} {
 	puts "GetStatsHlt failed: $status"
 	return 0
@@ -247,7 +247,7 @@ proc GetStatsHlt { {type flow} } {
 proc GetStatViewOnCsv { csvFileName {typeOfStats "Flow Statistics"}} {
     # This API will create and overwrite the existing
     # $csvFileName.
-    # 
+    #
     # All Statistics will be written to $csvFileName
     # in csv format.
     #
@@ -262,7 +262,7 @@ proc GetStatViewOnCsv { csvFileName {typeOfStats "Flow Statistics"}} {
     #    "Data Plane Port Statistics"
     #    "User Defined Statistics"
     #    "Traffic Item Statistics"
-    # 
+    #
 
     exec echo "" > $csvFileName
 
@@ -311,8 +311,8 @@ proc GetStatViewOnCsv { csvFileName {typeOfStats "Flow Statistics"}} {
 	    break
 	}
     }
-    
-    # Iterrate through each page 
+
+    # Iterrate through each page
     for {set currPage 1} {$currPage <= $totalPages} {incr currPage} {
 	puts "\nGetStatViewOnCsv: Getting statistics on page: $currPage/$totalPages"
 
@@ -322,7 +322,7 @@ proc GetStatViewOnCsv { csvFileName {typeOfStats "Flow Statistics"}} {
 	    return 1
 	}
 	ixNet commit
-	
+
 	# Wait for statistics to populate on current page
 	set whileLoopStopCounter 0
 	while {[ixNet getAttribute $view/page -isReady] != "true"} {
@@ -336,17 +336,17 @@ proc GetStatViewOnCsv { csvFileName {typeOfStats "Flow Statistics"}} {
 	    }
 	    incr whileLoopStopCounter
 	}
-	
+
 	set pageList [ixNet getAttribute $view/page -rowValues] ;# first list of all rows in the page
 	set totalFlowStatistics [llength $pageList]
-	
+
 	# totalPageList == The total amount of flow statistics
 	for {set pageListIndex 0} {$pageListIndex <= $totalFlowStatistics} {incr pageListIndex} {
 	    set rowList [lindex $pageList $pageListIndex] ;# second list of 1 ingress and x egress rows
 	    for {set rowIndex 0} {$rowIndex < [llength $rowList]} {incr rowIndex} {
 		# cellList: 1/1/1 1/1/2 TI0-Flow_1 1.1.1.1-1.1.2.1 4000 4000 0 0 0 0 256000 0 0 0 0 0 0 0 0 0 0 0 00:00:00.684 00:00:00.700
 		set cellList [lindex $rowList $rowIndex]
-		
+
 		regsub -all " " $cellList "," newCellList
 		exec echo $newCellList >> $csvFileName
 	    }
@@ -364,7 +364,7 @@ if {[StartAllProtocolsHlt]} {
     exit
 }
 
-# User should remove this hard coded value and verify on the DUT 
+# User should remove this hard coded value and verify on the DUT
 # for all protocols establishment in a loop.
 puts "\nSleeping 30 seconds for protocols to establish ..."
 after 30000
@@ -376,7 +376,7 @@ for {set iteration 1} {$iteration <= $totalIterations} {incr iteration} {
 	    set frameSize        [lindex $trafficItem 3]
 	    set ipPrecedence     [lindex $trafficItem 5]
 	    set lineRate         [lindex $trafficItem 7]
-	    
+
 	    ModifyStreamFrameSizeHlt $trafficItemName $frameSize
 	    ModifyStreamLineRateHlt $trafficItemName $lineRate
 	    ModifyStreamIpPrecedenceHlt $trafficItemName $ipPrecedence
@@ -385,7 +385,7 @@ for {set iteration 1} {$iteration <= $totalIterations} {incr iteration} {
 	if {[StartTrafficHlt]} {
 	    exit
 	}
-	
+
 	GetStatViewOnCsv $csvStatisticFile\_$iteration "Traffic Item Statistics"
     }
 }

@@ -43,9 +43,9 @@
 ################################################################################
 
 ################################################################################
-# Description: 
-# 1. Pre - Established SR LSPs are statically configured in PCC, 
-#	 with initial delegation TRUE. When PCC starts, it synchronizes 
+# Description:
+# 1. Pre - Established SR LSPs are statically configured in PCC,
+#	 with initial delegation TRUE. When PCC starts, it synchronizes
 #	 these LSPs with PCE.
 # 2. Assign ports
 # 3. Start all protocols

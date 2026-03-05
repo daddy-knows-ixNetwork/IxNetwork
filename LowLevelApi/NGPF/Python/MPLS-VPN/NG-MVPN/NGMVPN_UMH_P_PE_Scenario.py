@@ -48,8 +48,8 @@
 # Description:                                                                  #
 #    This script intends to demonstrate how to use NGPF RSVPTE P2MP API         #
 #    About Topology:                                                            #
-#    Within topology both Sender and Receiver PEs are configured, each behind   # 
-#    Ingress and Egress P routers respectively. P2MP tunnels used in topology is# 
+#    Within topology both Sender and Receiver PEs are configured, each behind   #
+#    Ingress and Egress P routers respectively. P2MP tunnels used in topology is#
 #	 RSVPTE-P2MP. Both I-PMSI and S-PMSI tunnels for IPv4 & Ipv6 multicast      #
 #    streams are configured using RSVPTE-P2MP. Multicast traffic source address #
 #    are distributed by BGP as UMH routes(AFI:1,SAFI:129). Multicast L2-L3      #
@@ -66,7 +66,7 @@
 #                     BGP within chain DG                                       #
 #         vi.     Configuring Parameters in mVRF at sender PE Router            #
 #         vii.    Adding mVRF Route Range(both IPv4 and v6) as Sender Site      #
-#                     behind Sender PE Router and as Receiver Site behind       # 
+#                     behind Sender PE Router and as Receiver Site behind       #
 #                     Receiver PE Router                                        #
 #         viii.   Configuring S-PMSI Tunnel in Sender Site (both IPv4/v6 range) #
 #        Step 2. Start of protocol                                              #

@@ -17,7 +17,7 @@ Description
         4> Export the loaded configuration to a JSON config file.
 
 Variables
-    
+
     destinationPath: The location to store all the converted .json config files
 
     ixncfgFolder: Provide a list of all the folders with .ixncfg config files.
@@ -140,4 +140,3 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
         if connectToApiServer == 'windowsConnectionMgr':
             if deleteSessionAfterTest:
                 mainObj.deleteSession()
-

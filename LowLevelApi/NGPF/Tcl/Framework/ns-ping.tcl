@@ -87,7 +87,7 @@ ixNet add [ixNet getRoot] topology -name testTpg1
 ixNet add [ixNet getRoot] topology -name testTpg2
 ixNet commit
 
-set topologies [ixNet getList [ixNet getRoot] topology] 
+set topologies [ixNet getList [ixNet getRoot] topology]
 set topo1 [lindex $topologies 0]
 set topo2 [lindex $topologies 1]
 

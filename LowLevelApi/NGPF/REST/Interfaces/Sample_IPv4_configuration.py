@@ -50,7 +50,7 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#    This sample configures 10 IPv4 sessions on each of the two ports          # 
+#    This sample configures 10 IPv4 sessions on each of the two ports          #
 #                                                                              #
 ################################################################################
 
@@ -86,18 +86,18 @@ class returnItem():
 
 class requests():
     def __init__(self,):pass
-    
+
     def get(self,sessionsUrl):
         request = urllib2.Request(sessionsUrl)
         request.get_method = lambda: 'GET'
         return returnItem(urllib2.urlopen(request).read())
-	
+
     def post(self,sessionsUrl,data=None):
         request = urllib2.Request(sessionsUrl)
         request.get_method = lambda: 'POST'
         if data==None:return urllib2.urlopen(request).read()
         else:return returnItem(urllib2.urlopen(request,data).read())
-	
+
     def patch(self,sessionsUrl,data):
         request = urllib2.Request(sessionsUrl)
         request.get_method = lambda: 'PATCH'
@@ -107,12 +107,12 @@ class requests():
         request = urllib2.Request(sessionsUrl)
         request.get_method = lambda: 'OPTIONS'
         return returnItem(urllib2.urlopen(request).read())
-		
+
     def delete(self,sessionsUrl):
         request = urllib2.Request(sessionsUrl)
         request.get_method = lambda: 'DELETE'
         return returnItem(urllib2.urlopen(request).read())
-	
+
 class IxNet:
 	def __init__(self,server,port,version='v1'):
 		self.urlHeadersJson = {'content-type': 'application/json'}
@@ -151,7 +151,7 @@ class IxNet:
 	def remapIds(self, localIdList):
 		if type(localIdList)==list:return localIdList
 		else:return [localIdList]
-	
+
 	def checkError(self):
 		if 'error' in str(self.response):TestFailedError(self.response)
 	def getList(self, objRef, child):
@@ -164,12 +164,12 @@ class IxNet:
 		objs = ["%s/%s/%s" % (objRef,child,str(i['id'])) for i in self.response.json()]
 		return objs
 
-		
-		
+
+
 	def getIxNetSessions(self):
 		if debug:print self.baseUrl +"/sessions"
 		try:self.response = requests().get(self.baseUrl +"/sessions")
-		except Exception, e:raise Exception('Got an error code: ', e)  
+		except Exception, e:raise Exception('Got an error code: ', e)
 		self.checkError()
 		sessions = [i for i in self.response.json() if i['state']=='ACTIVE']
 		return sessions
@@ -179,22 +179,22 @@ class IxNet:
 		except:data=[{}]
 		if debug:print "ADD:","%s/%s/" % (objRef,child),data
 		try:self.response = requests().post("%s/%s/" % (objRef,child), json.dumps(data))
-		except Exception, e:raise Exception('Got an error code: ', e)  
+		except Exception, e:raise Exception('Got an error code: ', e)
 		self.checkError()
 		return ["http://%s:%s%s" % (self.server,self.port,i['href']) for i in self.response.json()['links']]
 
 	def remove(self, objRef):
 		try:self.response = requests().delete(objRef)
-		except Exception, e:raise Exception('Got an error code: ', e)  
+		except Exception, e:raise Exception('Got an error code: ', e)
 		self.checkError()
 		return self.response.json()
 
 	def help(self, urlObj):
 		try:self.response = requests().options(urlObj)
-		except Exception, e:raise Exception('Got an error code: ', e)  
+		except Exception, e:raise Exception('Got an error code: ', e)
 		self.checkError()
 		return self.response.json()
-	
+
 	def getHelpUrl(self,items):
 		tmp={}
 		import re
@@ -205,7 +205,7 @@ class IxNet:
 		if len(tmp.keys())>1:raise Exception("Two different nodes given")
 		retr = "http://%s:%s%s" % (self.server,self.port,tmp.keys()[0])
 		return retr
-		
+
 	def execute(self, *args):
 		args=list(args)
 		if debug:print "EXECUTE ARGS:",args
@@ -223,17 +223,17 @@ class IxNet:
 			self.waitForComplete(posturl)
 			self.checkError()
 			return self.response.json()
-			
+
 		elif execName=="importBgpRoutes":
 			argx = ['arg%d' % (i+1,) for i in range(len(args[1:]))]
 			tmp =[]
 			for i in args[1:]:
 				try:tmp.append(i.replace(self.srvUrl,""))
 				except:tmp.append(i)
-				
+
 			data = dict(zip(argx,tmp))
 			posturl = self.srvUrl+data['arg1']
-			
+
 		else:
 			argx = ['arg%d' % (i+1,) for i in range(len(args[1:]))]
 			argsv = args[1:]
@@ -260,12 +260,12 @@ class IxNet:
 					obj = data['arg1'][0].replace(self.srvUrl,"")
 					posturl = self.srvUrl+obj + "/operations/"+execName
 			else:
-				obj=data['arg1'].replace(self.srvUrl,"") 
+				obj=data['arg1'].replace(self.srvUrl,"")
 				posturl = self.srvUrl+obj + "/operations/"+execName
 		print "POST:->",posturl
 		print "DATA:->",data
-		
-		
+
+
 		#self.response = requests().post(posturl, json.dumps(data))
 		try:self.response = requests().post(posturl, json.dumps(data))
 		except Exception, e:raise Exception('Got an error code: ', e)
@@ -279,23 +279,23 @@ class IxNet:
 		name=name.lstrip("-")
 		if debug:print "SET ATTRIBUTE DATA",{name:value}
 		try:self.response = requests().patch(objRef, json.dumps({name:value}))
-		except Exception, e:raise Exception('Got an error code: ', e)  
+		except Exception, e:raise Exception('Got an error code: ', e)
 		self.checkError()
 
 	def getNode(self,objRef,deepchild="*",skip=0,take=30,filter=None):
 		tmpurl = objRef+"?deepchild=%s&skip=%d&take=%d" % (deepchild,skip,take)
 		try:self.response = requests().get(tmpurl)
-		except Exception, e:raise Exception('Got an error code: ', e)  
+		except Exception, e:raise Exception('Got an error code: ', e)
 		self.checkError()
 		nodes = [node['links'][0]['href'] for node in self.response.json()['data']]
 		return nodes
-	
+
 	def getOptions(self,objRef,nodetype="attributes",editable=True):
-		
+
 		if self.srvUrl not in objRef:
 			objRef = self.srvUrl + objRef
 		try:self.response = requests().options(objRef)
-		except Exception, e:raise Exception('Got an error code: ', e)  
+		except Exception, e:raise Exception('Got an error code: ', e)
 		self.checkError()
 		#if debug:pprint.pprint(self.response.json())
 		childrenList       = self.response.json()['custom']['children']
@@ -306,8 +306,8 @@ class IxNet:
 			if attr['type']['name']=="href":attributesList.append(attr)
 			elif attr['readOnly']==False:attributesList.append(attr)
 			if editable:attributesList.append(attr)
-			
-				
+
+
 		operationsDict = {}
 		for attr in operationsList:operationsDict[attr['operation']] = attr['href']
 		if nodetype=="children":returnvalues = childrenList
@@ -325,7 +325,7 @@ class IxNet:
 			print "setMultiAttribute:url",objRef
 			pprint.pprint(data)
 		try:self.response = requests().patch(objRef, json.dumps(data))
-		except Exception, e:raise Exception('Got an error code: ', e)  
+		except Exception, e:raise Exception('Got an error code: ', e)
 		self.checkError()
 
 	def getAttribute(self, objRef, name):
@@ -333,14 +333,14 @@ class IxNet:
 			objRef = self.srvUrl + objRef
 		name=name.lstrip("-")
 		try:self.response = requests().get(objRef)
-		except Exception, e:raise Exception('Got an error code: ', e)  
+		except Exception, e:raise Exception('Got an error code: ', e)
 		self.checkError()
 		if name=="all":return self.response.json()
 		else:return self.response.json()[name]
 
-		
+
 	def getIxNetSessionUrl(self, sessionId=None):
-		if sessionId:return 
+		if sessionId:return
 		else:return "/%s/sessions/%s/ixnetwork" % (self.baseUrl,str(self.sessionId))
 
 	def readFrom(self,filename, *args):
@@ -366,13 +366,13 @@ class IxNet:
 		if debug:print "getFilteredList:",objRef,child
 		#objRef = self._convert2Url(objRef)
 		try:self.response = requests().get("%s/%s/" % (objRef,child))
-		except Exception, e:raise Exception('Got an error code: ', e)  
+		except Exception, e:raise Exception('Got an error code: ', e)
 		self.checkError()
 		#HACK Need to return the URL , we need to make it.
 		objs = ["%s/%s/%s" % (objRef,child,str(i['id'])) for i in self.response.json() if str(i[name])==str(value)]
 		if debug:print "\t",objs
 		return objs
-	
+
 
 
 	def _loadConfig(self,binaryconfig):
@@ -392,7 +392,7 @@ class IxNet:
 			print "\t\t\tError while setting %s node attribute %s value %s" %(node,attr,value)
 			print str(ex)
 			return isError
-		
+
 		retAttrVal = self.getAttribute(node,"-%s" %(attr))
 		if retVal!=retAttrVal:
 			print "\t\t\tgetAttribute value (%s) doesnt match with expected value (%s)" % (retAttrVal,retVal)
@@ -427,7 +427,7 @@ class IxNet:
 		retViewObj = self.getFilteredList(self.getRoot()+'/statistics', 'view', '-caption', view)[0]
 		if not refresh:
 			self.waitForThreeTimeStampPeriods(self.getFilteredList(self.getRoot()+'/statistics', 'view', '-caption', view)[0])
-			
+
 		return retViewObj
 
 	def waitForTrafficState(self,state,timeout=90):
@@ -444,10 +444,10 @@ class IxNet:
 						print "%s traffic type detected waiting a predefined 90 sec for traffic to start" % (trType,)
 						time.sleep(90)
 						return 0
-				
+
 
 		print "\tChecking Traffic State: %s for: %s sec" %(state,str(timeout))
-		
+
 		while self.getAttribute(traffic,"-state")!=state:
 			print "\t\t\t%d: Traffic state --> %s" % (count,self.getAttribute(traffic,"-state"))
 			time.sleep(1)
@@ -490,7 +490,7 @@ class IxNet:
 		viewObj = self.isViewReady(view,timeOut,refresh)
 		if not viewObj:raise Exception("View is not Ready")
 		print viewObj
-		
+
 		statUrl = self.getFilteredList(self.getRoot()+'/statistics', 'view', '-caption', view)
 		if statUrl==[]:raise Exception("FAIL - need to exit the caption ",view," does not exists ")
 		stats=statUrl[0]+'/page'
@@ -509,7 +509,7 @@ class IxNet:
 				if type(retType)==list:retList.append(a[:])
 				else:retList.append(dict(a))
 			return retList[:]
-		
+
 		if nRandomPages and total>nRandomPages:
 			for pageNumber in sample(set(range(1,total)), nRandomPages):
 				self.setAndCheckAttributeValue(stats,'currentPage', pageNumber)
@@ -524,7 +524,7 @@ class IxNet:
 				i+=1
 				rows = self.getAttribute(stats, '-rowValues')
 				retList+= getRowData(cols,rows)
-		
+
 		return retList
 ################################################################################
 # Connect to IxNet client
@@ -603,7 +603,7 @@ ixNet.setMultiAttribute(ixNet.getAttribute(ipv4_2, '-resolveGateway') + '/single
 ixNet.commit()
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 vports = ixNet.getList(ixNet.getRoot(), 'vport')
 print "Assigning ports to " + str(vports) + " ..."

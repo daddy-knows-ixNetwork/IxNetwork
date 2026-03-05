@@ -23,7 +23,7 @@ else:
 
 ixiahlt = IxiaHlt(ixiatcl)
 ixiangpf = IxiaNgpf(ixiahlt)
-			
+
 def ixnHLT_endpointMatch(ixnHLT, ixnpattern_list, handle_type='HANDLE'):
 	traffic_ep_ignore_list = [
 		'^::ixNet::OBJ-/vport:\d+/protocols/mld/host:\d+$',
@@ -49,7 +49,7 @@ def ixnHLT_endpointMatch(ixnHLT, ixnpattern_list, handle_type='HANDLE'):
 					rval.append(ixnHLT[path])
 
 	return rval
-			
+
 # ----------------------------------------------------------------
 # Configuration procedure
 
@@ -68,7 +68,7 @@ except (NameError,):
 		log = retval['log']
 		additional_info = '> command: %s\n> tcl errorInfo: %s\n> log: %s' % (cmd, err, log)
 		raise IxiaError(IxiaError.COMMAND_FAIL, additional_info)
-			
+
 def ixnHLT_Scriptgen_Configure(ixiahlt, ixnHLT):
 	ixiatcl = ixiahlt.ixiatcl
 	# //vport
@@ -95,7 +95,7 @@ def ixnHLT_Scriptgen_Configure(ixiahlt, ixnHLT):
 		auto_detect_instrumentation_type='floating',
 		phy_mode='copper',
 		master_slave_mode='auto',
-		arp_refresh_interval='60'	
+		arp_refresh_interval='60'
 	)
 	# Check status
 	if _result_['status'] != IxiaHlt.SUCCESS:
@@ -121,7 +121,7 @@ def ixnHLT_Scriptgen_Configure(ixiahlt, ixnHLT):
 	# n kString -ixnChassisVersion '8.10.1046.6'
 	# n kBool -isMapped 'True'
 	# n kString -name '1/1/1'
-	
+
 	try:
 		ixnHLT['HANDLE,//vport:<1>'] = _result_['interface_handle']
 		config_handles = ixnHLT.setdefault('VPORT-CONFIG-HANDLES,//vport:<1>,interface_config', [])
@@ -129,7 +129,7 @@ def ixnHLT_Scriptgen_Configure(ixiahlt, ixnHLT):
 	except:
 		pass
 	ixnHLT_logger('COMPLETED: interface_config')
-	
+
 	# //vport
 	ixnHLT_logger('interface_config://vport:<2>...')
 	_result_ = ixiahlt.interface_config(
@@ -154,7 +154,7 @@ def ixnHLT_Scriptgen_Configure(ixiahlt, ixnHLT):
 		auto_detect_instrumentation_type='floating',
 		phy_mode='copper',
 		master_slave_mode='auto',
-		arp_refresh_interval='60'	
+		arp_refresh_interval='60'
 	)
 	# Check status
 	if _result_['status'] != IxiaHlt.SUCCESS:
@@ -180,7 +180,7 @@ def ixnHLT_Scriptgen_Configure(ixiahlt, ixnHLT):
 	# n kString -ixnChassisVersion '8.10.1046.6'
 	# n kBool -isMapped 'True'
 	# n kString -name '1/1/2'
-	
+
 	try:
 		ixnHLT['HANDLE,//vport:<2>'] = _result_['interface_handle']
 		config_handles = ixnHLT.setdefault('VPORT-CONFIG-HANDLES,//vport:<2>,interface_config', [])
@@ -188,7 +188,7 @@ def ixnHLT_Scriptgen_Configure(ixiahlt, ixnHLT):
 	except:
 		pass
 	ixnHLT_logger('COMPLETED: interface_config')
-	
+
 	# //vport/l1Config/rxFilters/filterPalette
 	ixnHLT_logger('uds_config://vport:<1>/l1Config/rxFilters/filterPalette...')
 	_result_ = ixiahlt.uds_config(
@@ -240,7 +240,7 @@ def ixnHLT_Scriptgen_Configure(ixiahlt, ixnHLT):
 		uds6_framesize='any',
 		uds6_framesize_from='0',
 		uds6_framesize_to='0',
-		uds6_pattern='any'	
+		uds6_pattern='any'
 	)
 	# Check status
 	if _result_['status'] != IxiaHlt.SUCCESS:
@@ -263,9 +263,9 @@ def ixnHLT_Scriptgen_Configure(ixiahlt, ixnHLT):
 	# n kString -pattern2Mask '00'
 	# n kEnumValue -pattern1OffsetType 'fromStartOfFrame'
 	# n kString -pattern1Mask '00'
-	
+
 	ixnHLT_logger('COMPLETED: uds_config')
-	
+
 	# //vport/l1Config/rxFilters/filterPalette
 	ixnHLT_logger('uds_config://vport:<2>/l1Config/rxFilters/filterPalette...')
 	_result_ = ixiahlt.uds_config(
@@ -317,7 +317,7 @@ def ixnHLT_Scriptgen_Configure(ixiahlt, ixnHLT):
 		uds6_framesize='any',
 		uds6_framesize_from='0',
 		uds6_framesize_to='0',
-		uds6_pattern='any'	
+		uds6_pattern='any'
 	)
 	# Check status
 	if _result_['status'] != IxiaHlt.SUCCESS:
@@ -340,9 +340,9 @@ def ixnHLT_Scriptgen_Configure(ixiahlt, ixnHLT):
 	# n kString -pattern2Mask '00'
 	# n kEnumValue -pattern1OffsetType 'fromStartOfFrame'
 	# n kString -pattern1Mask '00'
-	
+
 	ixnHLT_logger('COMPLETED: uds_config')
-	
+
 	# //vport/l1Config/rxFilters/filterPalette
 	ixnHLT_logger('uds_filter_pallette_config://vport:<1>/l1Config/rxFilters/filterPalette...')
 	_result_ = ixiahlt.uds_filter_pallette_config(
@@ -362,14 +362,14 @@ def ixnHLT_Scriptgen_Configure(ixiahlt, ixnHLT):
 		SA_mask1='00:00:00:00:00:00',
 		SA_mask2='00:00:00:00:00:00',
 		pattern_offset_type1='startOfFrame',
-		pattern_offset_type2='startOfFrame'	
+		pattern_offset_type2='startOfFrame'
 	)
 	# Check status
 	if _result_['status'] != IxiaHlt.SUCCESS:
 		ixnHLT_errorHandler('uds_filter_pallette_config', _result_)
-	
+
 	ixnHLT_logger('COMPLETED: uds_filter_pallette_config')
-	
+
 	# //vport/l1Config/rxFilters/filterPalette
 	ixnHLT_logger('uds_filter_pallette_config://vport:<2>/l1Config/rxFilters/filterPalette...')
 	_result_ = ixiahlt.uds_filter_pallette_config(
@@ -389,14 +389,14 @@ def ixnHLT_Scriptgen_Configure(ixiahlt, ixnHLT):
 		SA_mask1='00:00:00:00:00:00',
 		SA_mask2='00:00:00:00:00:00',
 		pattern_offset_type1='startOfFrame',
-		pattern_offset_type2='startOfFrame'	
+		pattern_offset_type2='startOfFrame'
 	)
 	# Check status
 	if _result_['status'] != IxiaHlt.SUCCESS:
 		ixnHLT_errorHandler('uds_filter_pallette_config', _result_)
-	
+
 	ixnHLT_logger('COMPLETED: uds_filter_pallette_config')
-	
+
 	# The following objects had no attributes that were scriptgenned:
 	# n //globals/interfaces
 	# n //statistics/measurementMode
@@ -463,20 +463,20 @@ def ixnHLT_Scriptgen_Configure(ixiahlt, ixnHLT):
 	# n {//statistics/rawData/statistic:"Reordered Packets"}
 	# n {//statistics/rawData/statistic:"Lost Packets"}
 	# end of list
-	
+
 def ixnCPF_Scriptgen_Configure(ixiangpf, ixnHLT):
 	ixiatcl = ixiangpf.ixiahlt.ixiatcl
-	
+
 	_result_ = ixiangpf.topology_config(
 		topology_name      = """Topology 1""",
 		port_handle        = [ixnHLT['PORT-HANDLE,//vport:<1>']],
 	)
 	if _result_['status'] != IxiaHlt.SUCCESS:
 		ixnHLT_errorHandler('topology_config', _result_)
-	
+
 	topology_1_handle = _result_['topology_handle']
 	ixnHLT['HANDLE,//topology:<1>'] = topology_1_handle
-	
+
 	_result_ = ixiangpf.topology_config(
 		topology_handle              = topology_1_handle,
 		device_group_name            = """Basic L3-1""",
@@ -485,10 +485,10 @@ def ixnCPF_Scriptgen_Configure(ixiangpf, ixnHLT):
 	)
 	if _result_['status'] != IxiaHlt.SUCCESS:
 		ixnHLT_errorHandler('topology_config', _result_)
-	
+
 	deviceGroup_1_handle = _result_['device_group_handle']
 	ixnHLT['HANDLE,//topology:<1>/deviceGroup:<1>'] = deviceGroup_1_handle
-	
+
 	_result_ = ixiangpf.interface_config(
 		protocol_name                = """Ethernet 1""",
 		protocol_handle              = deviceGroup_1_handle,
@@ -507,14 +507,14 @@ def ixnCPF_Scriptgen_Configure(ixiangpf, ixnHLT):
 	)
 	if _result_['status'] != IxiaHlt.SUCCESS:
 		ixnHLT_errorHandler('interface_config', _result_)
-	
+
 	# n The attribute: useVlans with the value: False is not supported by scriptgen.
 	# n The attribute: stackedLayers with the value: {} is not supported by scriptgen.
 	# n The attribute: connectedVia with the value: {} is not supported by scriptgen.
 	# n Node: pbbEVpnParameter is not supported for scriptgen.
 	ethernet_1_handle = _result_['ethernet_handle']
 	ixnHLT['HANDLE,//topology:<1>/deviceGroup:<1>/ethernet:<1>'] = ethernet_1_handle
-	
+
 	_result_ = ixiangpf.interface_config(
 		protocol_name                     = """IPv4 1""",
 		protocol_handle                   = ethernet_1_handle,
@@ -529,22 +529,22 @@ def ixnCPF_Scriptgen_Configure(ixiangpf, ixnHLT):
 	)
 	if _result_['status'] != IxiaHlt.SUCCESS:
 		ixnHLT_errorHandler('interface_config', _result_)
-	
+
 	# n The attribute: stackedLayers with the value: {} is not supported by scriptgen.
 	# n The attribute: connectedVia with the value: {} is not supported by scriptgen.
 	ipv4_1_handle = _result_['ipv4_handle']
 	ixnHLT['HANDLE,//topology:<1>/deviceGroup:<1>/ethernet:<1>/ipv4:<1>'] = ipv4_1_handle
-	
+
 	_result_ = ixiangpf.topology_config(
 		topology_name      = """Topology 2""",
 		port_handle        = [ixnHLT['PORT-HANDLE,//vport:<2>']],
 	)
 	if _result_['status'] != IxiaHlt.SUCCESS:
 		ixnHLT_errorHandler('topology_config', _result_)
-	
+
 	topology_2_handle = _result_['topology_handle']
 	ixnHLT['HANDLE,//topology:<2>'] = topology_2_handle
-	
+
 	_result_ = ixiangpf.topology_config(
 		topology_handle              = topology_2_handle,
 		device_group_name            = """Basic L3-2""",
@@ -553,10 +553,10 @@ def ixnCPF_Scriptgen_Configure(ixiangpf, ixnHLT):
 	)
 	if _result_['status'] != IxiaHlt.SUCCESS:
 		ixnHLT_errorHandler('topology_config', _result_)
-	
+
 	deviceGroup_2_handle = _result_['device_group_handle']
 	ixnHLT['HANDLE,//topology:<2>/deviceGroup:<1>'] = deviceGroup_2_handle
-	
+
 	_result_ = ixiangpf.interface_config(
 		protocol_name                = """Ethernet 2""",
 		protocol_handle              = deviceGroup_2_handle,
@@ -575,14 +575,14 @@ def ixnCPF_Scriptgen_Configure(ixiangpf, ixnHLT):
 	)
 	if _result_['status'] != IxiaHlt.SUCCESS:
 		ixnHLT_errorHandler('interface_config', _result_)
-	
+
 	# n The attribute: useVlans with the value: False is not supported by scriptgen.
 	# n The attribute: stackedLayers with the value: {} is not supported by scriptgen.
 	# n The attribute: connectedVia with the value: {} is not supported by scriptgen.
 	# n Node: pbbEVpnParameter is not supported for scriptgen.
 	ethernet_2_handle = _result_['ethernet_handle']
 	ixnHLT['HANDLE,//topology:<2>/deviceGroup:<1>/ethernet:<1>'] = ethernet_2_handle
-	
+
 	_result_ = ixiangpf.interface_config(
 		protocol_name                     = """IPv4 2""",
 		protocol_handle                   = ethernet_2_handle,
@@ -597,12 +597,12 @@ def ixnCPF_Scriptgen_Configure(ixiangpf, ixnHLT):
 	)
 	if _result_['status'] != IxiaHlt.SUCCESS:
 		ixnHLT_errorHandler('interface_config', _result_)
-	
+
 	# n The attribute: stackedLayers with the value: {} is not supported by scriptgen.
 	# n The attribute: connectedVia with the value: {} is not supported by scriptgen.
 	ipv4_2_handle = _result_['ipv4_handle']
 	ixnHLT['HANDLE,//topology:<2>/deviceGroup:<1>/ethernet:<1>/ipv4:<1>'] = ipv4_2_handle
-	
+
 	# n Node: /globals/topology/ipv6Autoconfiguration does not have global settings.
 	# n Node: /globals/topology/ipv6 does not have global settings.
 	# n Node: /globals/topology/bfdRouter does not have global settings.
@@ -648,7 +648,7 @@ def ixnCPF_Scriptgen_Configure(ixiangpf, ixnHLT):
 	# n Node: /globals/topology/openFlowChannel does not have global settings.
 	# n Node: /globals/topology/openFlowController does not have global settings.
 	# n Node: /globals/topology/ovsdbserver does not have global settings.
-	
+
 	_result_ = ixiangpf.interface_config(
 		protocol_handle                    = "/globals",
 		arp_on_linkup                      = "0",
@@ -669,8 +669,8 @@ def ixnCPF_Scriptgen_Configure(ixiangpf, ixnHLT):
 	)
 	if _result_['status'] != IxiaHlt.SUCCESS:
 		ixnHLT_errorHandler('interface_config', _result_)
-	
-	
+
+
 	_result_ = ixiangpf.interface_config(
 		protocol_handle                     = "/globals",
 		ethernet_attempt_enabled            = "0",
@@ -684,8 +684,8 @@ def ixnCPF_Scriptgen_Configure(ixiangpf, ixnHLT):
 	)
 	if _result_['status'] != IxiaHlt.SUCCESS:
 		ixnHLT_errorHandler('interface_config', _result_)
-	
-	
+
+
 	# n Node: /globals/topology/ipv6Autoconfiguration does not have global settings.
 	# n Node: /globals/topology/ipv6 does not have global settings.
 	# n Node: /globals/topology/bfdRouter does not have global settings.
@@ -740,21 +740,21 @@ def ixnHLT_Scriptgen_RunTest(ixiahlt, ixnHLT):
 	# #######################
 	ixnHLT_logger('Waiting 60 seconds before starting protocol(s) ...')
 	time.sleep(60)
-	
+
 	ixnHLT_logger('Starting all protocol(s) ...')
-	
+
 	_result_ = ixiahlt.test_control(action='start_all_protocols')
 	# Check status
 	if _result_['status'] != IxiaHlt.SUCCESS:
 		ixnHLT_errorHandler('ixiahlt::traffic_control', _result_)
-	
+
 	time.sleep(30)
 
 
-					
-	# 
+
+	#
 	#  Reset traffic
-	# 
+	#
 	ixnHLT_logger('Resetting traffic...')
 	_result_ = ixiahlt.traffic_control(
 		action='reset',
@@ -766,7 +766,7 @@ def ixnHLT_Scriptgen_RunTest(ixiahlt, ixnHLT):
 		packet_loss_duration_enable='0',
 		latency_bins='enabled',
 		latency_control='store_and_forward',
-		instantaneous_stats_enable='0'	
+		instantaneous_stats_enable='0'
 	)
 	# Check status
 	if _result_['status'] != IxiaHlt.SUCCESS:
@@ -778,27 +778,27 @@ def ixnHLT_Scriptgen_RunTest(ixiahlt, ixnHLT):
 	for (k, v) in ixnHLT.iteritems():
 		if k.startswith('PORT-HANDLE,'):
 			traffic_stats_ph.add(v)
-					
-	# 
+
+	#
 	#  Configure traffic for all configuration elements
-	# 
+	#
 	#  -- Traffic item//traffic/trafficItem:<1>
 	ixnHLT_logger('Configuring traffic for traffic item: //traffic/trafficItem:<1>')
-	
+
 	ti_srcs, ti_dsts = {}, {}
 	ti_mcast_rcvr_handle, ti_mcast_rcvr_port_index, ti_mcast_rcvr_host_index, ti_mcast_rcvr_mcast_index = {}, {}, {}, {}
-	
+
 	ti_srcs['EndpointSet-1'] = ixnHLT_endpointMatch(ixnHLT, ['//topology:<1>'], 'HANDLE')
 	if len(ti_srcs) == 0:
 		match_err = {'log': 'Cannot find any src endpoints for EndpointSet-1'}
 		ixnHLT_errorHandler('ixnHLT_endpointMatch', match_err)
-	
+
 	ti_dsts['EndpointSet-1'] = ixnHLT_endpointMatch(ixnHLT, ['//topology:<2>'], 'HANDLE')
 	if len(ti_dsts) == 0:
 		match_err = {'log': 'Cannot find any dst endpoints for elem EndpointSet-1'}
 		ixnHLT_errorHandler('ixnHLT_endpointMatch', match_err)
-	
-	
+
+
 	_result_ = ixiahlt.traffic_config(
 		mode='create',
 		traffic_generator='ixnetwork_540',
@@ -842,15 +842,15 @@ def ixnHLT_Scriptgen_RunTest(ixiahlt, ixnHLT):
 		tag_filter=[[]],
 		merge_destinations='1',
 		circuit_endpoint_type='ipv4',
-		pending_operations_timeout='30'	
+		pending_operations_timeout='30'
 	)
 	# Check status
 	if _result_['status'] != IxiaHlt.SUCCESS:
 		ixnHLT_errorHandler('traffic_config', _result_)
-	
+
 	#  -- All current config elements
 	config_elements = ixiatcl.convert_tcl_list(_result_['traffic_item'])
-	
+
 	#  -- Config Element //traffic/trafficItem:<1>/configElement:<1>
 	ixnHLT_logger('Configuring options for config elem: //traffic/trafficItem:<1>/configElement:<1>')
 	_result_ = ixiahlt.traffic_config(
@@ -875,12 +875,12 @@ def ixnHLT_Scriptgen_RunTest(ixiahlt, ixnHLT):
 		tx_delay_unit='bytes',
 		number_of_packets_per_stream='50000',
 		loop_count='1',
-		min_gap_bytes='12'	
+		min_gap_bytes='12'
 	)
 	# Check status
 	if _result_['status'] != IxiaHlt.SUCCESS:
 		ixnHLT_errorHandler('traffic_config', _result_)
-	
+
 	#  -- Endpoint set EndpointSet-1
 	ixnHLT_logger('Configuring traffic for config elem: //traffic/trafficItem:<1>/configElement:<1>')
 	ixnHLT_logger('Configuring traffic for endpoint set: EndpointSet-1')
@@ -893,12 +893,12 @@ def ixnHLT_Scriptgen_RunTest(ixiahlt, ixnHLT):
 		l2_encap='ethernet_ii',
 		mac_src_mode='fixed',
 		mac_src_tracking='0',
-		mac_src='00:00:00:00:00:00'	
+		mac_src='00:00:00:00:00:00'
 	)
 	# Check status
 	if _result_['status'] != IxiaHlt.SUCCESS:
 		ixnHLT_errorHandler('traffic_config', _result_)
-	
+
 	#  -- Stack //traffic/trafficItem:<1>/configElement:<1>/stack:"ipv4-2"
 	_result_ = ixiahlt.traffic_config(
 		mode='modify_or_insert',
@@ -944,30 +944,30 @@ def ixnHLT_Scriptgen_RunTest(ixiahlt, ixnHLT):
 		ip_ttl='64',
 		ip_ttl_tracking='0',
 		track_by='sourceDestValuePair0 flowGroup0 trackingenabled0',
-		egress_tracking='none'	
+		egress_tracking='none'
 	)
 	# Check status
 	if _result_['status'] != IxiaHlt.SUCCESS:
 		ixnHLT_errorHandler('traffic_config', _result_)
-	
+
 	#  -- Post Options
 	ixnHLT_logger('Configuring post options for config elem: //traffic/trafficItem:<1>/configElement:<1>')
 	_result_ = ixiahlt.traffic_config(
 		mode='modify',
 		traffic_generator='ixnetwork_540',
 		stream_id=config_elements[0],
-		transmit_distribution='none'	
+		transmit_distribution='none'
 	)
 	# Check status
 	if _result_['status'] != IxiaHlt.SUCCESS:
-		ixnHLT_errorHandler('traffic_config', _result_)
-	# 
+		ixnHLT_errorHandler('traffic_config', _result_)
+	#
 	# Configure traffic for Layer 4-7 AppLibrary Profile
-	# 
-	
+	#
 
 
-	
+
+
 	#
 	# Start traffic configured earlier
 	#
@@ -980,13 +980,13 @@ def ixnHLT_Scriptgen_RunTest(ixiahlt, ixnHLT):
 	# Check status
 	if _result_['status'] != IxiaHlt.SUCCESS:
 		ixnHLT_errorHandler('traffic_control', _result_)
-				  
+
 	time.sleep(30)
-	
+
 	# ################################
 	# protocol stats phase of the test
 	# ################################
-	
+
 	#  stats for:
 	#  packet_config_buffers handles
 	ixnHLT_logger('getting stats for packet_config_buffers configuration elements')
@@ -1005,14 +1005,14 @@ def ixnHLT_Scriptgen_RunTest(ixiahlt, ixnHLT):
 	# Check status
 	if _result_['status'] != IxiaHlt.SUCCESS:
 		ixnHLT_errorHandler('traffic_control', _result_)
-	
+
 	# ###############################
 	# traffic stats phase of the test
 	# ###############################
 	time.sleep(30)
-				  
+
 	#
-	# print stats for all ports that are involved w/ 
+	# print stats for all ports that are involved w/
 	# ixnHLT(TRAFFIC-ENDPOINT-HANDLES)
 	#
 	ixnHLT_logger('Traffic stats')
@@ -1024,59 +1024,59 @@ def ixnHLT_Scriptgen_RunTest(ixiahlt, ixnHLT):
 		)
 		if _result_['status'] != IxiaHlt.SUCCESS:
 			ixnHLT_errorHandler('traffic_stats', _result_)
-		
+
 		if _result_['waiting_for_stats'] == '0':
 			break
-		
+
 		ixnHLT_logger('Traffic waiting_for_stats flag is 1. Trial %d' % traffic_stats_retry)
 		time.sleep(1)
-				  
+
 	if _result_['waiting_for_stats'] != '0':
 		add_info = 'Traffic statistics are not ready after 120 seconds. waiting_for_stats is 1'
 		raise IxiaError(IxiaError.COMMAND_FAIL, add_info)
-				  
+
 	for port_handle in traffic_stats_ph:
 		ixnHLT_logger('')
 		ixnHLT_logger('port %s' % port_handle)
 		ixnHLT_logger('-----------------------------------')
-	
+
 		ixnHLT_logger('TX')
 		for (k, v) in _result_[port_handle]['aggregate']['tx'].iteritems():
 			ixnHLT_logger('{0:40s} = {1}'.format(k, v))
-	
+
 		ixnHLT_logger('RX')
 		for (k, v) in _result_[port_handle]['aggregate']['rx'].iteritems():
 			ixnHLT_logger('{0:40s} = {1}'.format(k, v))
-	
+
 		ixnHLT_logger('')
-	
+
 	ixnHLT_logger('Stopping all protocol(s) ...')
-	
+
 	_result_ = ixiahlt.test_control(action='stop_all_protocols')
 	# Check status
 	if _result_['status'] != IxiaHlt.SUCCESS:
 		ixnHLT_errorHandler('ixiahlt::traffic_control', _result_)
-					
+
 # ----------------------------------------------------------------
 # This dict keeps all generated handles and other info
 ixnHLT = {}
 
 # ----------------------------------------------------------------
 #  chassis, card, port configuration
-# 
+#
 #  port_list needs to match up with path_list below
-# 
+#
 chassis = ['10.219.117.101']
 tcl_server = '10.219.117.101'
 port_list = [['1/1', '1/2']]
 vport_name_list = [['1/1/1', '1/1/2']]
 guard_rail = 'none'
-# 
+#
 #  this should match up w/ your port_list above
-# 
+#
 ixnHLT['path_list'] = [['//vport:<1>', '//vport:<2>']]
-# 
-# 
+#
+#
 _result_ = ixiangpf.connect(
 	reset=1,
 	device=chassis,
@@ -1114,7 +1114,7 @@ for (ch_porthandles, ch_vport_names) in zip(porthandles, vport_name_list):
 	)
 	if _result_['status'] != IxiaHlt.SUCCESS:
 		ixnHLT_errorHandler('vport_info', _result_)
-			
+
 
 # ----------------------------------------------------------------
 

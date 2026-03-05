@@ -120,7 +120,7 @@ def VerifyProtocolSessionStatusUpNgpfHlPy(protocolHandle, totalTime=60):
         if timer < totalTime and currentSessionUp != totalSessions:
             time.sleep(1)
             continue
-        
+
         if timer < totalTime and currentSessionUp == totalSessions:
             return 0
 
@@ -408,7 +408,7 @@ routeRangeTopo1Multivalue = CreateMultivalueNgpfHlPy(
     )
 
 print '\nrouteRangeTopo1Multivalue:', routeRangeTopo1Multivalue
-# 
+#
 
 routeRangeTopo2Multivalue = CreateMultivalueNgpfHlPy(
     pattern = 'counter',
@@ -420,7 +420,7 @@ routeRangeTopo2Multivalue = CreateMultivalueNgpfHlPy(
     nest_enabled = '1'
     )
 print '\nrouteRangeTopo1Multivalue:', routeRangeTopo1Multivalue
-# 
+#
 
 topo1NetworkGroup = ConfigNetworkGroupNgpfHlPy(
     protocol_handle = device_group_1_handle,
@@ -430,7 +430,7 @@ topo1NetworkGroup = ConfigNetworkGroupNgpfHlPy(
     protocol_name = 'Routes=%s' % topo1AdvertisingRoute,
     ipv4_prefix_length = '24',
     ipv4_prefix_number_of_addresses = '80',
-    ipv4_prefix_network_address = routeRangeTopo1Multivalue, 
+    ipv4_prefix_network_address = routeRangeTopo1Multivalue,
     multiplier = '1'
     )
 
@@ -450,7 +450,7 @@ topo2NetworkGroup = ConfigNetworkGroupNgpfHlPy(
     protocol_name = 'Routes=%s' % topo2AdvertisingRoute,
     ipv4_prefix_length = '24',
     ipv4_prefix_number_of_addresses = '100',
-    ipv4_prefix_network_address = routeRangeTopo2Multivalue, 
+    ipv4_prefix_network_address = routeRangeTopo2Multivalue,
     multiplier = '1'
     )
 
@@ -484,7 +484,7 @@ topo1OspfNetworkGroup = ConfigOspfNetworkGroupNgpfHlPy(
     ipv4_prefix_metric = '0',
     ipv4_prefix_active = '1',
     ipv4_prefix_allow_propagate = '0',
-    ipv4_prefix_route_origin = topo1RouteOriginMultivalue 
+    ipv4_prefix_route_origin = topo1RouteOriginMultivalue
     )
 
 print '\ntopo1 Ospf Network Group:', topo1OspfNetworkGroup
@@ -502,7 +502,7 @@ topo2OspfNetworkGroup = ConfigOspfNetworkGroupNgpfHlPy(
     ipv4_prefix_metric = '0',
     ipv4_prefix_active = '1',
     ipv4_prefix_allow_propagate = '0',
-    ipv4_prefix_route_origin = topo2RouteOriginMultivalue 
+    ipv4_prefix_route_origin = topo2RouteOriginMultivalue
     )
 
 print '\ntopo2 Ospf Network Group:', topo2OspfNetworkGroup
@@ -578,5 +578,3 @@ print '\nStopping All protocols ...'
 ixia_ngpf.test_control(action = 'stop_all_protocols')
 
 ixia_ngpf.cleanup_session(reset='0')
-
-

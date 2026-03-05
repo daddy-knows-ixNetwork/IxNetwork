@@ -59,7 +59,7 @@
 #    7. Retrieve protocol learned info in Port2.                               #
 #    8. On the fly change SID Index value for IPv4 MS Ranges in Device Group1. #
 #    9. On the fly Change IPV6 prefix in MS range and accordingly IPV6 address #
-#        count of Node Routes in  Mesh Simulated Topology behind Device Group2.#  
+#        count of Node Routes in  Mesh Simulated Topology behind Device Group2.#
 #    10.On the fly Change in IPV6 FEC prefix in MS  and accordingly IPV6       #
 #       address of Node Routes in Mesh Simulated Topology behind Device Group2.#
 #    11. Retrieve protocol learned info in both ports after On the Fly changes.#
@@ -144,7 +144,7 @@ ixNet.execute('newConfig')
 ################################################################################
 # 1. Protocol configuration section. Configure ISIS as per the description
 #  give above
-################################################################################ 
+################################################################################
 
 # assigning ports
 print("Assigning the ports")
@@ -200,7 +200,7 @@ ixNet.setAttribute(ixNet.getAttribute(mac2, '-mac') + '/singleValue',
     '-value', '18:03:73:C7:6C:01')
 ixNet.commit()
 
-# Adding Ipv4 stack 
+# Adding Ipv4 stack
 print("Add ipv4 over Ethernet stack")
 ixNet.add(mac1, 'ipv4')
 ixNet.add(mac2, 'ipv4')
@@ -315,7 +315,7 @@ ixNet.commit()
 ixNet.setAttribute(networkGoup2, '-name', 'ISIS_Mesh Topology 2')
 ixNet.commit()
 ########################################################################################
-# 2.Enabling Segment Routing in Emulated Router on Device Group 1 and Device Group 2 
+# 2.Enabling Segment Routing in Emulated Router on Device Group 1 and Device Group 2
 ########################################################################################
 print ( "Enabling Segment Routing for ISIS")
 ixNet.setAttribute(isisL3Router1, '-enableSR', 'true')
@@ -351,8 +351,8 @@ sidcountsv2 = (ixNet.getList(sidCount2, 'singleValue'))[0]
 ixNet.setAttribute(sidcountsv2, '-value', '100')
 ixNet.commit()
 ###########################################################################################################################################
-# 4. Set IPV4 and IPV6 Ranges for both router acts as Mapping Server(MS)and accordingly IPV4 & IPV6 Node Routes in Simulated Topologies    
-###########################################################################################################################################         
+# 4. Set IPV4 and IPV6 Ranges for both router acts as Mapping Server(MS)and accordingly IPV4 & IPV6 Node Routes in Simulated Topologies
+###########################################################################################################################################
 print ("Enabling IPV4  and IPV6 Node Routes Simulated Routers on Linear Network Group behind Device Group1\n")
 
 networkTopo1 = (ixNet.getList(networkGoup1, 'networkTopology'))[0]
@@ -510,7 +510,7 @@ linfo = (ixNet.getList(isisL3_1, 'learnedInfo'))[0]
 ipv6table = (ixNet.getList(linfo, 'table'))[1]
 values   = ixNet.getAttribute(ipv6table, '-values')
 v        = ''
-	 
+
 print("***************************************************")
 for v in values :
     print(v)
@@ -538,7 +538,7 @@ linfo = (ixNet.getList(isisL3_2, 'learnedInfo'))[0]
 ipv6table = (ixNet.getList(linfo, 'table'))[1]
 values   = ixNet.getAttribute(ipv6table, '-values')
 v        = ''
-	 
+
 print("***************************************************")
 for v in values :
     print(v)
@@ -575,7 +575,7 @@ except :
     print("error in applying on the fly change")
 # end try/expect
 print("Wait for 30 seconds ...")
-time.sleep(5) 
+time.sleep(5)
 #######################################################################################################
 # 10. OTF on Range  Of  Mapping Server  IPV6 and Simulated Topology  also And Apply Changes
 ######################################################################################################
@@ -597,9 +597,9 @@ except :
     print("error in applying on the fly change")
 # end try/expect
 print("Wait for 30 seconds ...")
-time.sleep(5) 
+time.sleep(5)
 ###############################################################################
-# 11 . Retrieve protocol learned info in Both Port 
+# 11 . Retrieve protocol learned info in Both Port
 ###############################################################################
 print("Fetching ISISL3 IPV4 Prefix Learned Info")
 ixNet.execute('getLearnedInfo', isisL3_1, '1')
@@ -620,7 +620,7 @@ linfo = (ixNet.getList(isisL3_1, 'learnedInfo'))[0]
 ipv6table = (ixNet.getList(linfo, 'table'))[1]
 values   = ixNet.getAttribute(ipv6table, '-values')
 v        = ''
-	 
+
 print("***************************************************")
 for v in values :
     print(v)
@@ -646,14 +646,14 @@ linfo = (ixNet.getList(isisL3_2, 'learnedInfo'))[0]
 ipv6table = (ixNet.getList(linfo, 'table'))[1]
 values   = ixNet.getAttribute(ipv6table, '-values')
 v        = ''
-	 
+
 print("***************************************************")
 for v in values :
     print(v)
 # end for
 print("***************************************************")
 ################################################################################
-# 12. Configure L2-L3 traffic 
+# 12. Configure L2-L3 traffic
 ################################################################################
 #Configuring L2-L3 IPv4 Traffic Item
 print("Configuring L2-L3 IPV4 Traffic Item")
@@ -665,7 +665,7 @@ ixNet.setMultiAttribute(trafficItem1, '-name', 'IPv4_MPLS_Traffic_Item_1',
     '-useControlPlaneRate', 'true',
     '-useControlPlaneFrameSize', 'true',
     '-mergeDestinations', 'false',
-    '-roundRobinPacketOrdering', 'false', 
+    '-roundRobinPacketOrdering', 'false',
     '-numVlansForMulticastReplication', '1')
 ixNet.commit()
 
@@ -702,7 +702,7 @@ ixNet.setMultiAttribute(trafficItem2, '-name', 'IPv6_MPLS_Traffic_Item_1',
     '-useControlPlaneRate', 'true',
     '-useControlPlaneFrameSize', 'true',
     '-mergeDestinations', 'false',
-    '-roundRobinPacketOrdering', 'false', 
+    '-roundRobinPacketOrdering', 'false',
     '-numVlansForMulticastReplication', '1',
     '-trafficType', 'ipv6')
 ixNet.commit()
@@ -731,7 +731,7 @@ ixNet.setMultiAttribute(trafficItem2 + '/tracking',
     '-values',          [])
 ixNet.commit()
 ###############################################################################
-#13 Apply and start L2/L3 traffic and Retrieve L2/L3 traffic item statistics  
+#13 Apply and start L2/L3 traffic and Retrieve L2/L3 traffic item statistics
 ###############################################################################
 print ('Applying L2/L3 traffic')
 ixNet.execute('apply', ixNet.getRoot() + '/traffic')

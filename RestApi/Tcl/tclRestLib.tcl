@@ -1,10 +1,10 @@
 proc get {url} {
     # Description
     #    A HTTP GET function to send REST APIs.
-    #	
+    #
     #Parameters
     #    url: (str): The REST API URL.
-    #	
+    #
     #Syntax
     #	/api/v1/sessions/1/ixnetwork/operations
     #
@@ -15,11 +15,11 @@ proc get {url} {
     #set currentState [dict get $response state]
     return $response
 }
-    
+
 proc post {url jsonData} {
     #Description
     #	A HTTP POST function to create and start operations.
-    #	
+    #
     #Parameters
     #	restApi: (str): The REST API URL.
     #	jsonData: (dict): The data payload for the URL.
@@ -34,15 +34,15 @@ proc post {url jsonData} {
     #puts "STATUS: [dict get $response state]"
     return $response
 }
-    
+
 proc patch {url jsonData} {
     #Description
     #	A HTTP PATCH function to modify configurations.
-    #	
+    #
     #Parameters
     #	url: (str): The REST API URL.
     #	jsonData: (dict): The data payload for the URL.
-    #    
+    #
     #Syntax
     #
     puts "PATCH: $url"
@@ -52,7 +52,7 @@ proc patch {url jsonData} {
     set response [::rest::simple $url {} $config $jsonData]
     return $response
 }
-    
+
 proc startAllProtocols {args} {
     #Description
     #    Start all protocols in NGPF and verify all Device Groups are started.
@@ -119,7 +119,7 @@ proc stopAllProtocols {args} {
     set id [dict get $response id]
     set url [concat $url/${id}]
     waitForComplete -response $response -url $url
-}		
+}
 
 proc regenerateTrafficItems {args} {
     #Description
@@ -134,18 +134,18 @@ proc regenerateTrafficItems {args} {
     set procName [lindex [info level [info level]] 0]
     puts "\nprocName: $procName"
     set trafficItemList "all"
-	
+
     set argIndex 0
     while {$argIndex < [llength $args]} {
 	set currentArg [lindex $args $argIndex]
 	switch -exact -- $currentArg {
 	    -trafficItemList {
 		set trafficItemList [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -sessionUrl {
 		set sessionUrl [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    default {
 		error "$procName: No such parameter: $currentArg"
@@ -153,7 +153,7 @@ proc regenerateTrafficItems {args} {
 	    }
 	}
     }
-	
+
     set url $sessionUrl/traffic/trafficItem
     if {$trafficItemList == "all"} {
 	set response [get $url]
@@ -177,7 +177,7 @@ proc regenerateTrafficItems {args} {
     set id [dict get $response id]
     set url [concat $url/${id}]
     waitForComplete -response $response -url $url
-}		
+}
 
 proc applyTraffic {args} {
     #Description
@@ -188,7 +188,7 @@ proc applyTraffic {args} {
     #
     set procName [lindex [info level [info level]] 0]
     puts "\nprocName: $procName"
-    
+
     set argIndex 0
     while {$argIndex < [llength $args]} {
         set currentArg [lindex $args $argIndex]
@@ -205,12 +205,12 @@ proc applyTraffic {args} {
     }
     set url $sessionUrl/traffic/operations/apply
     regexp {(.*)api(.*)} $url match ip header
-    set restApiHeader [concat '/api' $header]	
+    set restApiHeader [concat '/api' $header]
     set response [post $url {{"arg1":"/api/v1/sessions/1/ixnetwork/traffic"}}]
     set id [dict get $response id]
     set url [concat $url/${id}]
     waitForComplete -response $response -url $url
-}	
+}
 
 proc startTraffic {args} {
     #Description
@@ -218,10 +218,10 @@ proc startTraffic {args} {
     #    This function will also give you the option to regenerate and apply traffic.
     #Parameter
     #    regenerateTraffic: <bool>
-    #                   
-    #    applyTraffic: <bool> 
+    #
+    #    applyTraffic: <bool>
     #                 In a situation like packet capturing, you cannot apply traffic after
-    #                  starting packet capture because this will stop packet capturing. 
+    #                  starting packet capture because this will stop packet capturing.
     #                  You need to set applyTraffic to False in this case.
     #    blocking: <bool> If True, API server doesn't return until it has
     #                         started traffic and ready for stats.  Unblocking is the opposite.
@@ -247,26 +247,26 @@ proc startTraffic {args} {
     set regenerateTraffic "True"
     set applyTraffic "True"
     set blocking "False"
-    
+
     set argIndex 0
     while {$argIndex < [llength $args]} {
 	set currentArg [lindex $args $argIndex]
 	switch -exact -- $currentArg {
 	    -regenerateTraffic {
 		set regenerateTraffic [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -applyTraffic {
 		set applyTraffic [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -sessionUrl {
 		set sessionUrl [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -blocking {
 		set blocking [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    default {
 		error "$procName: No such parameter: $currentArg"
@@ -276,18 +276,18 @@ proc startTraffic {args} {
     }
     if {$regenerateTraffic == "True"} {
         regenerateTrafficItems -sessionUrl $sessionUrl
-    } 
+    }
     if {$applyTraffic == "True"} {
         applyTraffic -sessionUrl $sessionUrl
-    } 
-    
+    }
+
     if {$blocking == "False"} {
 	set url $sessionUrl/traffic/operations/start
 	set response [post $url {{"arg1":"/api/v1/sessions/1/ixnetwork/traffic"}}]
 	set id [dict get $response id]
 	set url [concat $url/${id}]
 	waitForComplete -response $response -url $url -timeout 120
-	
+
 	# Server will go into blocking state until it is ready to accept the next api command.
     }
     if {$blocking == "True"} {
@@ -300,7 +300,7 @@ proc startTraffic {args} {
 	set url [concat $url/${id}]
 	waitForComplete -response $response -url $url -timeout 120
     }
-}	
+}
 
 proc getAllTrafficItemObjects {args} {
     #Description
@@ -316,18 +316,18 @@ proc getAllTrafficItemObjects {args} {
     set procName [lindex [info level [info level]] 0]
     puts "\nprocName: $procName"
     set getEnabledTrafficItemsOnly "False"
-    
+
     set argIndex 0
     while {$argIndex < [llength $args]} {
 	set currentArg [lindex $args $argIndex]
 	switch -exact -- $currentArg {
 	    -getEnabledTrafficItemsOnly {
 		set getEnabledTrafficItemsOnly [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -sessionUrl {
 		set sessionUrl [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    default {
 		error "$procName: No such parameter: $currentArg"
@@ -335,18 +335,18 @@ proc getAllTrafficItemObjects {args} {
 	    }
 	}
     }
-	
+
     set url $sessionUrl/traffic/trafficItem
     set response [get $url]
     foreach trafficItem $response {
 	if {$getEnabledTrafficItemsOnly == "True"} {
 	    set a [dict get $trafficItem enabled]
-	    if {$a == [string tolower "True"]} { 
+	    if {$a == [string tolower "True"]} {
 		set links [dict get $trafficItem links]
 		set links [string range $links 1 end-1]
 		set href [dict get $links href]
 		append trafficItemObjList " " \"$href\",
-	    }	
+	    }
 	} else {
 	    set links [dict get $trafficItem links]
 	    set links [string range $links 1 end-1]
@@ -356,7 +356,7 @@ proc getAllTrafficItemObjects {args} {
     }
     puts "TrafficItemObjList : $trafficItemObjList"
     return $trafficItemObjList
-}		
+}
 
 proc stopTraffic {args} {
     #Description
@@ -375,18 +375,18 @@ proc stopTraffic {args} {
     #
     set procName [lindex [info level [info level]] 0]
     set blocking "False"
-    
+
     set argIndex 0
     while {$argIndex < [llength $args]} {
 	set currentArg [lindex $args $argIndex]
 	switch -exact -- $currentArg {
 	    -blocking {
 		set blocking [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -sessionUrl {
 		set sessionUrl [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    default {
 		error "$procName: No such parameter: $currentArg"
@@ -394,7 +394,7 @@ proc stopTraffic {args} {
 	    }
 	}
     }
-    
+
     if {$blocking == "True"} {
 	set enabledTrafficItemList [getAllTrafficItemObjects -getEnabledTrafficItemsOnly "True"]
 	set lst "\"arg1\": \[[string trimright $enabledTrafficItemList ","]\]"
@@ -411,10 +411,10 @@ proc stopTraffic {args} {
 	set url [concat $url/${id}]
 	waitForComplete -response $response -url $url -timeout 120
     }
-    
+
     checkTrafficState -expectedState [list "stopped"] -sessionUrl $sessionUrl
     after 3000
-}		
+}
 
 proc checkTrafficState {args} {
     #Description
@@ -439,26 +439,26 @@ proc checkTrafficState {args} {
     set timeout 45
     set expectedState [list "stopped"]
     set ignoreException "False"
-    
+
     set argIndex 0
     while {$argIndex < [llength $args]} {
 	set currentArg [lindex $args $argIndex]
 	switch -exact -- $currentArg {
 	    -expectedState {
 		set expectedState [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -ignoreException {
 		set ignoreException [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -timeout {
 		set timeout [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -sessionUrl {
 		set sessionUrl [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    default {
 		error "$procName: No such parameter: $currentArg"
@@ -466,10 +466,10 @@ proc checkTrafficState {args} {
 	    }
 	}
     }
-    
+
     #if type(expectedState) != list:
     #    expectedState.split(' ')
-    
+
     puts "checkTrafficState: Expecting state: $expectedState\n"
     set url $sessionUrl/traffic
     for {set counter 1} {$counter < [expr $timeout + 1]} {incr counter} {
@@ -481,11 +481,11 @@ proc checkTrafficState {args} {
         }
         puts "\ncheckTrafficState: $currentTrafficState: Expecting: $expectedState"
 	puts "\tWaited $counter/$timeout seconds"
-	
+
         if {$counter < $timeout && [lsearch $expectedState $currentTrafficState] == -1} {
             after 1000
 	    continue
-        }           
+        }
         if {$counter < $timeout && [lsearch $expectedState $currentTrafficState] != -1} {
             after 8000
             puts "checkTrafficState: Done\n"
@@ -495,25 +495,25 @@ proc checkTrafficState {args} {
             error "checkTrafficState: Traffic state did not reach the expected state(s): $expectedState"
         } else {
             return 1
-	}	
+	}
     }
 }
 
 proc connectToLinuxIxosChassis {chassisIp username password} {
     #Description
     #   Connect to a Linux Ixos Chassis.
-    #   
+    #
     #Parameters
     #   chassisIp: (str): The Linux Ixos Chassis IP address.
-    #   username: (str): Login username. 
+    #   username: (str): Login username.
     #   password: (str): Login password.
-    #   
+    #
     #Syntax
     #	POST: /api/v1/auth/session
     #
     set url "https://$chassisIp/platform/api/v1/auth/session"
     set body [list {"username": $username, "password": $password}]
-    set response [post $url $body]	
+    set response [post $url $body]
     set apiKey [dict get $response apiKey]
 
     # userAccountUrl: https://{ip}/platform/api/v1/auth/users/{id}
@@ -530,7 +530,7 @@ proc createWindowsSession {ixNetRestServerIp {ixNetRestServerPort '11009'} serve
     #   Connect to a Windows IxNetwork API Server to create a session URL. This is
     #   for both Windows and Windows server with IxNetwork Connection Manager.
     #   This will set up the session URL to use throughout the test.
-    #   
+    #
     #Parameter
     #  ixNetRestServerIp: (str): The Windows IxNetwork API Server IP address.
     #  ixNetRestServerPort: (str): Default: 11009.  Provide a port number to connect to.
@@ -540,24 +540,24 @@ proc createWindowsSession {ixNetRestServerIp {ixNetRestServerPort '11009'} serve
     if {$ixNetRestServerIp == "None"} {
 	return
     }
-    
+
     set url "http://$ixNetRestServerIp:$ixNetRestServerPort/api/v1/sessions"
     set serverAndPort "$ixNetRestServerIp:$ixNetRestServerPort"
- 
+
     if {$serverOs == "windowsConnectionMgr"} {
 	# For Connection Manager, requires a POST to automatically get the next session.
 	# {'links': [{'href': '/api/v1/sessions/8020', 'method': 'GET', 'rel': 'self'}]}
 	puts "Please wait while IxNetwork Connection Mgr starts up an IxNetwork session..."
 	set response [post $url {}]
-	
+
 	set counterStop 10
 	set url [concat $url/$sessionIdNumber ]
 	for {set counter 1} {$counter <= $counterStop} {incr counter} {
 	    set response [get $url]
 	    set currentState [dict get $response state]
-	    
+
 	    puts "\n\tNew Windows session current state: $currentState"
-	    
+
 	    if {$currentState != "ACTIVE" && $counter < $counterStop} {
 		puts "\tWaiting $counter/$counterStop seconds"
 		after 1000
@@ -577,17 +577,17 @@ proc createWindowsSession {ixNetRestServerIp {ixNetRestServerPort '11009'} serve
 	# windows sessionId is always 1 because it only supports one session.
 	set sessionIdNumber 1
     }
-    
+
     set sessionUrl "http://$ixNetRestServerIp:$ixNetRestServerPort/api/v1/sessions/$sessionIdNumber/ixnetwork"
     # http://192.168.70.127:11009
     set match [regexp "(.*)/api.*" $sessionUrl m header]
     set httpHeader $header
-    
+
     # http://192.168.70.127:11009/api/v1/sessions/1
     set match [regexp "(.*)/ixnetwork.*" $sessionUrl m id]
     set sessionId $id
     set apiSessionId "/api/v1/sessions/$sessionIdNumber/ixnetwork"
-    
+
     # Verify the API server IP and port connection.
     puts "Verifying API server connection..."
     set response [get $sessionId]
@@ -597,13 +597,13 @@ proc createWindowsSession {ixNetRestServerIp {ixNetRestServerPort '11009'} serve
 proc linuxServerWaitForSuccess {url {timeout 120}} {
     #Description
     #   Wait for a success completion on the Linux API server.
-    #   
+    #
     #Paramters
     #   url: (str): The URL's ID of the operation to verify.
     #   timeout: (int): The timeout value.
     #
     puts "linuxServerWaitForSuccess"
-    
+
     for {set counter 1} {$counter <= $timeout} {incr $counter} {
 	set response [get $url {{"applicationType": "ixnrest"}}]
 	set currentStatus [dict get $response message]
@@ -619,17 +619,17 @@ proc linuxServerWaitForSuccess {url {timeout 120}} {
 	}
     }
 }
-				
+
 proc connectToLinuxApiServer {linuxServerIp linuxServerIpPort {apiKey None} {username 'admin'} {password 'admin'} {verifySslCert False}} {
     #Description
     #   Connect to a Linux API server.
-    #   
+    #
     #Parameters
     #   linuxServerIp: (str): The Linux API server IP address.
     #   username: (str): Login username. Default = admin.
     #   password: (str): Login password. Default = admin.
     #   verifySslCert: (str): Defalt: None.  The SSL Certificate for secure access verification.
-    #   
+    #
     #Syntax
     #	POST: /api/v1/auth/session
     #
@@ -639,15 +639,15 @@ proc connectToLinuxApiServer {linuxServerIp linuxServerIpPort {apiKey None} {use
 	# 1: Connect to the Linux API server
 	set url "https://$linuxServerIp:$linuxServerIpPort/api/v1/auth/session"
 	puts "connectToLinuxApiServer: $url"
-	# response = self.post(url, data={'username': username, 'password': password}, ignoreError=True)		
+	# response = self.post(url, data={'username': username, 'password': password}, ignoreError=True)
 	set body [list {"username": $username, "password": $password}]
-	set response [post $url $body]	
-	
+	set response [post $url $body]
+
 	# if not str(response.status_code).startswith('2'):
 	# raise IxNetRestApiException('\nLogin username/password failed\n')
 	set apiKey  [dict get $response apiKey]
 	set url "https://$linuxServerIp:$linuxServerIpPort/api/v1/sessions"
-	
+
 	if {$webQuickTest == False} {
 	    set data {"applicationType" : "ixnrest"}
 	}
@@ -655,16 +655,16 @@ proc connectToLinuxApiServer {linuxServerIp linuxServerIpPort {apiKey None} {use
 	    set data {"applicationType" : "ixnetwork"}
 	}
 	set body [list $data]
-	set response [post $url $body]	
+	set response [post $url $body]
 	# self.jsonHeader = {'content-type': 'application/json', 'x-api-key': self.apiKey}
 	puts "linuxServerCreateSession"
 	# response = self.post(url, data=data, headers=self.jsonHeader)
-	
+
 	set sessionIdNumber [dict get $response id]
 	set url [concat $url/$sessionIdNumber]
-	set response [get $url]		
+	set response [get $url]
 	# response = self.get(url+'/'+str(self.sessionIdNumber))
-	
+
 	# https://192.168.70.108/ixnetworkweb/api/v1/sessions/7
 	# self.sessionId = response.json()['links'][0]['href']
 	set links [dict get $response links]
@@ -673,7 +673,7 @@ proc connectToLinuxApiServer {linuxServerIp linuxServerIpPort {apiKey None} {use
 	# Remove the redirect /ixnetworkweb from the URL. IxNetwork 8.50 will resolve this.
 	set sessionId [regsub 'ixnetworkweb/' $sessionId  '')]
         # self.sessionId = self.sessionId.replace('ixnetworkweb/', '')
-    
+
         # https://10.10.10.1:443
         set matchHeader [regexp {(https://[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+(:[0-9]+)?))} $sessionId m header]
         set httpHeader header
@@ -682,14 +682,14 @@ proc connectToLinuxApiServer {linuxServerIp linuxServerIpPort {apiKey None} {use
             set httpHeader [concat $httpHeader/$linuxServerIpPort]
 	}
         set sessionUrl [concat $sessionId/ixnetwork]
-    
+
         # /api/v1/sessions/4/ixnetwork
 	set match [regexp ".*(/api.*)" $sessionId m id]
 	set apiSessionId [concat $id/ixnetwork]
-    
+
 	# 3: Start the new session
 	set url [concat $sessionId/operations/start]
-	set response [post $url {}]		
+	set response [post $url {}]
 	# response = self.post(self.sessionId+'/operations/start')
 	set url [dict get $response url]
 	if {linuxServerWaitForSuccess $url 60 == 1} {
@@ -709,11 +709,11 @@ proc connectToLinuxApiServer {linuxServerIp linuxServerIpPort {apiKey None} {use
 	# self.get(self.sessionId)
     }
 }
-		
+
 proc configLicenseServerDetails {{licenseServer "None"} {licenseMode "None"} {licenseTier "None"} sessionUrl} {
     #Description
     #   Configure license server details: license server IP, license mode and license tier.
-    #   
+    #
     #Parameters
     #   licenseServer: (str): License server IP address(s) in a list.
     #   licenseMode: (str): subscription | perpetual | mixed
@@ -766,15 +766,15 @@ proc showLicenseDetails {sessionUrl} {
 proc connect {args} {
     #Description
     #   Initializing default parameters and making a connection to the API server
-    #   
+    #
     #Notes
     #	Starting IxNetwork 8.50, https will be enforced even for Windows connection.
     #	If you still want to use http, you need to add -restInsecure to the IxNetwork.exe appliaction under "target".
-    #	
+    #
     #Examples
     #	Right click on "IxNetwork API server", select properties and under target
     #	ixnetwork.exe -restInsecure -restPort 11009 -restOnAllInterfaces -tclPort 8009
-    #	
+    #
     #Parameters
     #   apiServerIp: (str): The API server IP address.
     #   serverIpPort: (str): The API server IP address socket port.
@@ -820,7 +820,7 @@ proc connect {args} {
     #		  DATA: {}
     #		  HEADERS: {"content-type": "application/json", "x-api-key": "d9f4da46f3c142f48dddfa464788hgee"}
     #	   sessionId = https://$apiServerIp:443/api/v1/sessions/$id
-    #	   
+    #
     #   Steps to connect to Linux Web Quick Test:
     #	   1> POST: https://$apiServerIp:443/api/v1/auth/session
     #		  DATA: {"username": "admin", "password": "admin"}
@@ -830,7 +830,7 @@ proc connect {args} {
     #	   3> POST: https://$apiServerIp:443/api/v1/sessions/2/operations/start
     #		  DATA: {"applicationType": "ixnetwork"}
     #	sessionId = https://$apiServerIp/ixnetworkweb/api/v1/sessions/$id
-    #	
+    #
     #   Notes
     #	  To connect to an existing configuration.
     #		 Windows: Nothing special to include. The session ID is always "1".
@@ -844,7 +844,7 @@ proc connect {args} {
     set apiServerPort None
     set linuxApiServerIp None
     set serverOs "windows"
-    set connectToLinuxChassisIp None	
+    set connectToLinuxChassisIp None
     set webQuickTest False
     set username None
     set password "admin"
@@ -859,7 +859,7 @@ proc connect {args} {
     set generateLogFile True
     set robotFrameworkStdout False
     set query []
-    
+
     set procName [lindex [info level [info level]] 0]
     puts "\nprocName: $procName"
 
@@ -870,72 +870,72 @@ proc connect {args} {
 	    -apiServerIp {
 		set apiServerIp [lindex $args [expr $argIndex + 1]]
 		set linuxApiServerIp $apiServerIp
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -serverIpPort {
-		set serverIpPort [lindex $args [expr $argIndex + 1]]				
+		set serverIpPort [lindex $args [expr $argIndex + 1]]
 		set apiServerPort $serverIpPort
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -serverOs {
 		set serverOs [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -connectToLinuxChassisIp {
 		set connectToLinuxChassisIp [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -webQuickTest {
 		set webQuickTest [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -username {
 		set username [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -password {
 		set password [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -licenseServerIp {
 		set licenseServerIp [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -licenseMode {
 		set licenseMode [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -licenseTier {
 		set licenseTier [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -deleteSessionAfterTest {
 		set deleteSessionAfterTest [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -verifySslCert {
 		set verifySslCert [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -includeDebugTraceback {
 		set includeDebugTraceback [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -sessionId {
 		set sessionId [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -apiKey {
 		set apiKey [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -generateLogFile {
 		set generateLogFile [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -robotFrameworkStdout {
 		set robotFrameworkStdout [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    default {
 		error "$procName: No such parameter: $currentArg"
@@ -955,7 +955,7 @@ proc connect {args} {
 	}
 	# Instantiate a new log file here.
 	set LogFile [open $restLogFile w]
-	set timestamp [clock seconds]		
+	set timestamp [clock seconds]
 	puts $LogFile "Timestamp : [clock format $timestamp -format "%D: %H:%M:%S"]"
 	close $LogFile
     }
@@ -978,7 +978,7 @@ proc connect {args} {
 	    set sessionUrl "http://$apiServerIp:$serverIpPort/api/v1/sessions/$sessionId/ixnetwork"
 	    set apiSessionId "/api/v1/sessions/$sessionId/ixnetwork"
 	    set match [regexp "(.*)/api.*" $sessionUrl m header]
-	    set httpHeader $header			
+	    set httpHeader $header
 	} else {
 	    # Create a new session
 	    set sessionUrl [createWindowsSession $apiServerIp $serverIpPort $serverOs]
@@ -987,10 +987,10 @@ proc connect {args} {
     if {$serverOs == "linux"} {
 	if {$apiServerPort == "None"} {
 	    set apiServerPort 443
-	}		
+	}
 	if {$apiKey != "None" && $sessionId == "None"} {
 	    error "Providing an apiKey must also provide a sessionId."
-	}		
+	}
 	# Connect to an existing session on the Linux API server
 	if {$apiKey != "None" && $sessionId != "None"} {
 	    set sessionIdUrl "http://$linuxApiServerIp:$apiServerPort/api/v1/sessions/$sessionId"
@@ -998,13 +998,13 @@ proc connect {args} {
 	    # set match [regexp "(.*)/ixnetworkweb.*" $sessionUrl m header]
 	    # set httpHeader $header
 	    set httpHeader "http://$linuxApiServerIp:$apiServerPort"
-	    
+
 	    # set jsonHeader {"content-type": "application/json", "x-api-key": $apiKey}
 	    set url "http://$linuxApiServerIp:$apiServerPort/api/v1/sessions/$sessionId"
 	    set response [get $url]
 	    #puts $response
 	    # response = get("https://{0}:{1}/api/v1/sessions/{2}".format(linuxApiServerIp, apiServerPort, str(sessionId)))
-	    
+
 	    if {$webQuickTest == False} {
 		# https://192.168.70.108/ixnetworkweb/api/v1/sessions/4
 		# set sessionId [dict get $response ["links"][0]["href"]]
@@ -1016,7 +1016,7 @@ proc connect {args} {
 
 		# https://192.168.70.108/ixnetworkweb/api/v1/sessions/4/ixnetork
 		set sessionUrl [concat $sessionIdUrl/ixnetwork]
-		
+
 		# /api/v1/sessions/4/ixnetwork
 		# match = re.match(".*(/api.*)", sessionId)
 		# apiSessionId = match.group(1) + "/ixnetwork"
@@ -1045,10 +1045,10 @@ proc connect {args} {
     }
     # For Linux API Server and Windoww Connection Mgr only: Delete the session when script is done if deleteSessionAfterTest = True.
     # set deleteSessionAfterTest deleteSessionAfterTest
-    
+
     # set match [regexp {http.*(/api.*/sessions/[0-9]+)/ixnetwork} $sessionUrl m session]
     # set headlessSessionId $session
-    
+
     if {$includeDebugTraceback == False} {
 	set sys.tracebacklimit 0
     }
@@ -1077,15 +1077,15 @@ proc importJsonConfigFile {args} {
 	switch -exact -- $currentArg {
 	    -jsonFileName {
 		set jsonFileName [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -option {
 		set option [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -sessionUrl {
 		set sessionUrl [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    default {
 		error "$procName: No such parameter: $currentArg"
@@ -1093,14 +1093,14 @@ proc importJsonConfigFile {args} {
 	    }
 	}
     }
-    
+
     if {$option == "modify"} {
         set arg3 "False"
-    }	
+    }
     if {$option == "newConfig"} {
         set arg3 "True"
-    }	
-    
+    }
+
     # 1> Read the config file
     puts "Reading saved config file"
     set fp [open $jsonFileName r]
@@ -1112,11 +1112,11 @@ proc importJsonConfigFile {args} {
     #    octetStreamHeader = {'content-type': 'application/octet-stream', 'x-api-key': self.ixnObj.apiKey}
     #else:
     #    octetStreamHeader = self.ixnObj.jsonHeader
-    
+
     set uploadFile [concat $sessionUrl/files?filename=$jsonFileName]
     puts "Uploading file to server: $uploadFile"
     set response [post $uploadFile $configContents]
-    
+
     # 3> Tell IxNetwork to import the JSON config file
     set lst "\"arg1\": \"/api/v1/sessions/1/ixnetwork/resourceManager\", \"arg2\": \"$jsonFileName\",  \"arg3\": \"$arg3\""
     set body [list $lst]
@@ -1130,29 +1130,29 @@ proc importJsonConfigFile {args} {
 proc waitForComplete {args} {
     #Description
     #   Wait for an operation progress to complete.
-    #   
+    #
     #Parameters
     #   response: (json response/dict): The POST action response.  Generally, after an /operations action.
     #				 Such as /operations/startallprotocols, /operations/assignports.
-    #				 
+    #
     #   silentMode: (bool):  If True, display info messages on stdout.
-    #   
+    #
     #   ignoreException: (bool): ignoreException is for assignPorts.  Don't want to exit test.
     #					Verify port connectionStatus for: License Failed and Version Mismatch to report problem immediately.
-    #					
+    #
     #   timeout: (int): The time allowed to wait for success completion in seconds.
     #
     set procName [lindex [info level [info level]] 0]
     puts "\nprocName: $procName"
     set response ""
-    set url "" 
-    set silentMode False 
+    set url ""
+    set silentMode False
     set ignoreException False
     set timeout 90
-    
+
     set argIndex 0
     while {$argIndex < [llength $args]} {
-	set currentArg [lindex $args $argIndex]		
+	set currentArg [lindex $args $argIndex]
 	switch -exact -- $currentArg {
 	    -response {
 		set response [lindex $args [expr $argIndex + 1]]
@@ -1183,7 +1183,7 @@ proc waitForComplete {args} {
     if {$silentMode == "False"} {
 	puts "\n$procName:\tState: $state"
     }
-    
+
     if {$response == []} {
 	error "\n$procName: response is empty"
     }
@@ -1215,11 +1215,11 @@ proc waitForComplete {args} {
 		return $response
 	    }
 	    error "\n$procName : State is Error or Exception : $response"
-	}	
+	}
 	if {$counter < $timeout && $state == "SUCCESS"} {
 	    return $response
 	}
-	
+
 	if {$counter == $timeout && $state != "SUCCESS"} {
 	    if {$ignoreException} {
 		return $response
@@ -1232,26 +1232,26 @@ proc waitForComplete {args} {
 proc getStats {args} {
     #Description
     #	Get stats by the statistic name or get stats by providing a view object handle.
-    #	
+    #
     #Parameters
     #	csvFile = None or <filename.csv>.
     #			  None will not create a CSV file.
     #			  Provide a <filename>.csv to record all stats to a CSV file.
     #			  Example: getStats(sessionUrl, csvFile='Flow_Statistics.csv')
-    #			  
+    #
     #	csvEnableFileTimestamp = True or False. If True, timestamp will be appended to the filename.
-    #	
+    #
     #	displayStats: True or False. True=Display stats.
-    #	
+    #
     #	ignoreError: True or False.  Returns None if viewName is not found.
-    #	
+    #
     #	viewObject: The view object: http://{apiServerIp:port}/api/v1/sessions/2/ixnetwork/statistics/view/13
     #				A view object handle could be obtained by calling getViewObject().
-    #				
+    #
     #	viewName options (Not case sensitive):
     #	   NOTE: Not all statistics are listed here.
     #		  You could get the statistic viewName directly from the IxNetwork GUI in the statistics.
-    #		  
+    #
     #	'Port Statistics'
     #	'Tx-Rx Frame Rate Statistics'
     #	'Port CPU Statistics'
@@ -1273,30 +1273,30 @@ proc getStats {args} {
     #	'PIMv6 IF Drill Down'
     #	'PIMv6 IF Per Port'
     #	'Flow View'
-    #	
+    #
     # Note: Not all of the viewNames are listed here. You have to get the exact names from
     #	   the IxNetwork GUI in statistics based on your protocol(s).
-    #	   
+    #
     # Return a dictionary of all the stats: statDict[rowNumber][columnName] == statValue
     #   Get stats on row 2 for 'Tx Frames' = statDict[2]['Tx Frames']
     #
     set procName [lindex [info level [info level]] 0]
     puts "\nprocName: $procName"
-    set viewName "Flow Statistics"	
+    set viewName "Flow Statistics"
     set viewObject None
     set csvFile None
     set csvEnableFileTimestamp False
     set displayStats True
     set silentMode True
     set ignoreError False
-	
+
     set argIndex 0
     while {$argIndex < [llength $args]} {
 	set currentArg [lindex $args $argIndex]
 	switch -exact -- $currentArg {
 	    -viewName {
 		set viewName [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -viewObject {
 		set viewObject [lindex $args [expr $argIndex + 1]]
@@ -1304,7 +1304,7 @@ proc getStats {args} {
 	    }
 	    -csvFile {
 		set csvFile [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -csvEnableFileTimestamp {
 		set csvEnableFileTimestamp [lindex $args [expr $argIndex + 1]]
@@ -1312,7 +1312,7 @@ proc getStats {args} {
 	    }
 	    -displayStats {
 		set displayStats [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -silentMode {
 		set silentMode [lindex $args [expr $argIndex + 1]]
@@ -1331,41 +1331,41 @@ proc getStats {args} {
 	    }
 	}
     }
-	
+
     if {$viewObject == "None"} {
-	set url [concat $sessionUrl/statistics/view]		 
+	set url [concat $sessionUrl/statistics/view]
 	set response [get $url]
 	set views {}
 	foreach result $response {
 	    set val $result
 	    set id [dict get $val id]
-	    set views [lappend views [concat $sessionUrl/statistics/view/$id]]			
+	    set views [lappend views [concat $sessionUrl/statistics/view/$id]]
 	}
-		 
+
 	if {$silentMode == "False"} {
 	    puts "\n$procName: Searching for viewObj for viewName: $viewName"
 	}
-	
+
 	foreach view $views {
 	    set response [get $view]
 	    set caption [dict get $response caption]
 	    set captionMatch [regexp -nocase ($viewName) $caption]
-	    if {$captionMatch} {			
+	    if {$captionMatch} {
 		# viewObj: sessionUrl + /statistics/view/11'
 		set viewObject $view
 		#puts "\nviewObject :$viewObject"
 		break
 	    }
-	}				
-	
+	}
+
 	if {$viewObject == "None" && $ignoreError == False} {
 	    error "\n$procName : viewObj wasn't found for viewName: $viewName"
-	}		
+	}
 	if {$viewObject == "None" && $ignoreError == True} {
 	    return None
 	}
     }
-    
+
     if {$silentMode == "False"} {
 	#puts "\nviewObj: $viewObject"
     }
@@ -1384,9 +1384,9 @@ proc getStats {args} {
 	if {$totalPages == "null" && $counter == 30} {
 	    puts "\n$procName failed: Getting total pages"
 	    return 1
-	}			
+	}
     }
-    #Muru: not verified CSV code 
+    #Muru: not verified CSV code
     if {$csvFile != "None"} {
 	package require csv
 	package require struct::matrix
@@ -1398,7 +1398,7 @@ proc getStats {args} {
 	    set csvFileTemp [split csvFileName '.']
 	    set csvFileNameTemp [lindex $csvFileTemp 0]
 	    set csvFileNameExtension [lindex $csvFileTemp 1]
-	    set csvFileName [concat $csvFileNameTemp'_'$timestamp'.'$csvFileNameExtension]			
+	    set csvFileName [concat $csvFileNameTemp'_'$timestamp'.'$csvFileNameExtension]
 	} else {
 	    set csvFileName [concat $csvFileName'_'$timestamp]
 	}
@@ -1437,10 +1437,10 @@ proc getStats {args} {
 		    puts "\t $statName: $value"
 		}
 		set index [expr $index + 1]
-	    }				
+	    }
 	    set flowNumber [expr $flowNumber + 1]
-	}			
-    }		
+	}
+    }
 
     if {$csvFile != "None"} {
         close $csvFile
@@ -1454,10 +1454,10 @@ proc verifyForDuplicatePorts {portList} {
     # 	Verify if the portList has any duplicate ports.
     #
     # Raise an exception if true.
-    # 
+    #
     set procName [lindex [info level [info level]] 0]
     puts "\nprocName: $procName"
-    
+
     set duplicatePorts {}
     foreach list $portList {
 	set len [llength [lsearch -all $portList $list]]
@@ -1471,10 +1471,10 @@ proc verifyForDuplicatePorts {portList} {
     }
 }
 
-proc getVportFromPortList {portList sessionUrl} {	
+proc getVportFromPortList {portList sessionUrl} {
     # Description
     # 	Get a list of vports from the specified portList.
-    # 
+    #
     # Parameter
     # 	portList: <list>: Format: [[ixChassisIp, cardNumber1, portNumber1], [ixChassisIp, cardNumber1, portNumber2]]
     #   sessionUrl : session url
@@ -1482,11 +1482,11 @@ proc getVportFromPortList {portList sessionUrl} {
     # Return
     # 	A list of vports.
     # 	[] if vportList is empty.
-    
+
     set procName [lindex [info level [info level]] 0]
     puts "\nprocName: $procName"
     set vportList []
- 
+
     foreach eachPort $portList {
 	set chassisIp [lindex [split [lindex [lindex $eachPort 0] 0] ","] 0]
 	set card [lindex [split [lindex [lindex $eachPort 0] 1] ","] 1]
@@ -1498,18 +1498,18 @@ proc getVportFromPortList {portList sessionUrl} {
                                 \"where\": \[[list [concat \"property\": \"assignedTo\", \"regex\": \"$port\"]]\]"]\]]]
         set body [list [concat \"selects\": $query]]
 	set url [concat $sessionUrl/operations/query]
-	#puts "\nurl : $url"	
+	#puts "\nurl : $url"
 	set response [post $url $body]
 	#puts "\nresponse : $response"
 	set id [dict get $response id]
 	set url [concat $url/${id}]
 	#puts "\nurl : $url"
 	set response [waitForComplete -response $response -url $url]
-	
+
 	set result [dict get $response result]
 	set result [string range $result 1 end-1]
 	set vport [dict get $result vport]
-	
+
 	if {$vport == []} {
 	    error "\n$procName: The port has no vport and not assigned. Check for port typo: $port"
 	}
@@ -1528,11 +1528,11 @@ proc resetPortCpu {{vportList None} {portList None} {timeout 90} sessionUrl} {
     # Description
     # 	Reset/Reboot ports CPU.
     #	Must call IxNetRestApi.py waitForComplete() afterwards to verify port state
-    # 
+    #
     # Parameter
     # 	vportList: <list>: A list of one or more vports to reset.
     # 	sessionUrl : session url
-	
+
     set procName [lindex [info level [info level]] 0]
     puts "\nprocName: $procName"
 
@@ -1544,22 +1544,22 @@ proc resetPortCpu {{vportList None} {portList None} {timeout 90} sessionUrl} {
     set data \"arg1\": \"$vportList\"
     set body [list $data]
     set response [post $url $body]
-    #puts "\nresponse : $response"	
+    #puts "\nresponse : $response"
     set id [dict get $response id]
     set url [concat $url/${id}]
     #puts "\nurl : $url"
     waitForComplete -response $response -url $url
 }
 
-proc verifyPortState {{timeout 70} sessionUrl} {	
+proc verifyPortState {{timeout 70} sessionUrl} {
     # Description
     # 	Verify port states for all the vports connected to physical ports.
-    #	
+    #
     # Parameter
     # 	timeout: <int>: The timeout value to declare as failed. Default=70 seconds.
     # 	sessionUrl : session url
     #
-    
+
     set procName [lindex [info level [info level]] 0]
     puts "\nprocName: $procName"
     set url [concat $sessionUrl/vport]
@@ -1569,13 +1569,13 @@ proc verifyPortState {{timeout 70} sessionUrl} {
     	set links [dict get $value links]
 	set links [string range $links 1 end-1]
 	set href [dict get $links href]
-	lappend vportList $href		
+	lappend vportList $href
     }
     # vportList = [metaDatas["links"][0]['href'] for metaDatas in response.json()]
     set match [regexp "(.*)/api.*" $sessionUrl m header]
-    set httpHeader $header	
+    set httpHeader $header
     foreach eachVport $vportList {
-    	for {set counter 1} {$counter <= $timeout} {incr $counter} {		
+    	for {set counter 1} {$counter <= $timeout} {incr $counter} {
 	    set url [concat $httpHeader$eachVport?includes=state,connectionStatus]
 	    #puts "\nurl : $url"
 	    set stateResponse [get $url]
@@ -1584,7 +1584,7 @@ proc verifyPortState {{timeout 70} sessionUrl} {
 	    #puts "\nurl : $url"
 	    set assignedToResponse [::rest::simple $url $query $args]
 	    # assignedToResponse = self.ixnObj.get(self.ixnObj.httpHeader+eachVport+'?includes=assignedTo', silentMode=True)
-			
+
 	    if {"Port Released" == [dict get $stateResponse connectionStatus] } {
 		error "\n$procName : [dict get $stateResponse connectionStatus]"
 	    }
@@ -1594,7 +1594,7 @@ proc verifyPortState {{timeout 70} sessionUrl} {
 	    }
 	    puts "\nPort: [dict get $assignedToResponse assignedTo]"
 	    puts "\tVerifyPortState: [dict get $stateResponse state] \n\tWaiting $counter/$timeout seconds"
-	    
+
             if {$counter < $timeout && ([dict get $stateResponse state] == "down" || [dict get $stateResponse state] == "busy") } {
 		after 1000
 		continue
@@ -1614,22 +1614,22 @@ proc createVports {{portList None} {rawTrafficVportStyle False} sessionUrl} {
     # Description
     # 	This API creates virtual ports based on a portList.
     # 	Next step is to call assignPort.
-    #    
+    #
     # Parameters
     # 	portList: <list>: Pass in a list of ports in the format of ixChassisIp, slotNumber, portNumber
     # 	portList = [[ixChassisIp, '1', '1'], [ixChassisIp, '2', '1']]
     # 	rawTrafficVportStyle: <bool>: For raw Traffic Item src/dest endpoints, vports must be in format:
     # 								 /api/v1/sessions1/vport/{id}/protocols
-    # 	sessionUrl : session url							 
-    #	
+    # 	sessionUrl : session url
+    #
     # Return
     #	 A list of vports
-    
+
     set procName [lindex [info level [info level]] 0]
     puts "\nprocName: $procName"
 
     set createdVportList []
-    for {set index 0} {$index < [llength $portList]} {incr $index} { 
+    for {set index 0} {$index < [llength $portList]} {incr $index} {
 	puts "\nCreating a new virtual port"
 	set url [concat $sessionUrl/vport]
 	#puts "\nurl : $url"
@@ -1639,16 +1639,16 @@ proc createVports {{portList None} {rawTrafficVportStyle False} sessionUrl} {
 	set links [dict get $response links]
 	set links [string range $links 1 end-1]
 	set vportObj [dict get $links href]
-		
+
 	if {rawTrafficVportStyle == "True"} {
             lappend createdVportList [concat $vportObj/protocols]
 	} else {
 	    lappend createdVportList $vportObj
-	}	
+	}
 	if {portList != "None"} {
 	    set match [regexp "(.*)/api.*" $sessionUrl m httpHeader]
 	    set url [concat $sessionUrl/$vportObj]
-	    set response [get $url]		
+	    set response [get $url]
 	    #puts "\nresponse : $response"
 	    # response = self.ixnObj.get(self.ixnObj.httpHeader+vportObj)
 	    set card [lindex [lindex $portList $index] 1]
@@ -1656,7 +1656,7 @@ proc createVports {{portList None} {rawTrafficVportStyle False} sessionUrl} {
 	    set portNumber \"[concat $card/$port]\"
 	    puts "\tName: $portNumber"
 	    set body [list {"name" : $portNumber}]
-	    set response [patch $url $body]	
+	    set response [patch $url $body]
 	    #puts "\nresponse : $response"
 	    # response = self.ixnObj.patch(self.ixnObj.httpHeader+vportObj, data={'name': portNumber})
 	}
@@ -1678,7 +1678,7 @@ proc getPhysicalPortFromVport {vportList sessionUrl} {
     #
     # Returns
     # 	A list of ports: ['192.168.70.11:1:1']
-    
+
     set procName [lindex [info level [info level]] 0]
     puts "\nprocName: $procName"
 
@@ -1700,21 +1700,21 @@ proc getPhysicalPortFromVport {vportList sessionUrl} {
 proc getAllVportList {sessionUrl} {
     # Description
     # 	Returns a list of all the created virtual ports
-    #    
+    #
     # Parameter
     #   sessionUrl : session url
     #
     # Returns
     # 	List of vports: ['/api/v1/sessions/1/ixnetwork/vport/1', '/api/v1/sessions/1/ixnetwork/vport/2']
-    
+
     set url $sessionUrl/vport
     set response [get $url]
-    #puts "\nresponse : $response"	
+    #puts "\nresponse : $response"
     foreach res $response {
 	set links [dict get $res links]
 	set links [string range $links 1 end-1]
 	set href [dict get $links href]
-	set vportList [lappend vportList $href]	
+	set vportList [lappend vportList $href]
     }
     return $vportList
 }
@@ -1728,7 +1728,7 @@ proc assignPorts {args} {
     # 	portList: <list>: A list of ports in a list: [ [ixChassisIp, '1','1'], [ixChassisIp, '1','2'] ]
     # 	createVports: <bool>: Optional:
     #			If True: Create vports to the amount of portList.
-    # 			If False: Automatically create vport on the server side. Optimized for port bootup performance. 
+    # 			If False: Automatically create vport on the server side. Optimized for port bootup performance.
     #
     # 	rawTraffic: <bool>:  If traffic item is raw, then vport needs to be /vport/{id}/protocols
     # 	resetPortCput: <bool>: Default=False. Some cards like the Novus 10GigLan requires a cpu reboot.
@@ -1749,15 +1749,15 @@ proc assignPorts {args} {
     # 		  headers={}
     #
     # Expecting:   RESPONSE:  SUCCESS
-	
+
     set portList []
     set createVports False
     set rawTraffic None
     set configPortName False
     set timeout 300
-    
+
     set procName [lindex [info level [info level]] 0]
-    puts "\nprocName: $procName"	
+    puts "\nprocName: $procName"
 
     set argIndex 0
     while {$argIndex < [llength $args]} {
@@ -1765,27 +1765,27 @@ proc assignPorts {args} {
 	switch -exact -- $currentArg {
 	    -portList {
 		set portList [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -createVports {
-		set createVports [lindex $args [expr $argIndex + 1]]	
-		incr argIndex 2			
+		set createVports [lindex $args [expr $argIndex + 1]]
+		incr argIndex 2
 	    }
 	    -rawTraffic {
 		set rawTraffic [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -configPortName {
 		set configPortName [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -timeout {
 		set timeout [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    -sessionUrl {
 		set sessionUrl [lindex $args [expr $argIndex + 1]]
-		incr argIndex 2			
+		incr argIndex 2
 	    }
 	    default {
 		error "$procName: No such parameter: $currentArg"
@@ -1794,15 +1794,15 @@ proc assignPorts {args} {
     }
     # Verify if the portList has duplicates.
     verifyForDuplicatePorts $portList
-    
-    # Verify if there is existing vports. If yes, user either loaded a saved config file or 
+
+    # Verify if there is existing vports. If yes, user either loaded a saved config file or
     # the configuration already has vports.
     # If loading a saved config file and reassigning ports, assign ports to existing vports.
     set url [concat $sessionUrl/vport]
     #puts "\nurl : $url"
     set response [get $url]
     #puts "\nresponse : $response"
-    
+
     if {$response != ""} {
         set mode 'modify'
 	set count [regexp ".*/api(.*)" $sessionUrl match group]
@@ -1813,7 +1813,7 @@ proc assignPorts {args} {
 	    set id [dict get $value id]
 	    set vportList [lappend list [concat "/api$preamble/vport/$id"]]
 	}
-	#puts "\nvportList : $vportList"		
+	#puts "\nvportList : $vportList"
 	if {[llength $vportList] != [llength $portList]} {
 	    error "\n$procName : virtual ports:[llength $vportList] is not equal to portList:[llength $portList]"
 	}
@@ -1837,7 +1837,7 @@ proc assignPorts {args} {
 	    }
 	    if {[llength $vportList] != [llength $portList]} {
 		error "\n$procName: virtual ports:[llength $vportList] is not equal to portList:[llength $portList]"
-	    }			
+	    }
 	}
     }
     foreach eachPort $portList {
@@ -1846,21 +1846,21 @@ proc assignPorts {args} {
 	set card [lindex [split $eachPort ","] 1]
 	set portNum [lindex [split $eachPort ","] 2]
 	set arg1 [list "\"arg1\": \"$chassisIp\", \"arg2\": \"$card\",  \"arg3\": \"$portNum\""]
-	set count [llength $portList]		
+	set count [llength $portList]
 	if {$count > 1} {
-            set args1 [append args1 $arg1 ","]		
+            set args1 [append args1 $arg1 ","]
 	} else {
 	    set args1 $arg1
 	}
     }
     foreach vport $vportList {
 	set count [llength $vportList]
-	set arg3 \"$vport\"			
+	set arg3 \"$vport\"
 	if {$count > 1} {
-            set args3 [append args3 $arg3 ","]	
+            set args3 [append args3 $arg3 ","]
 	} else {
 	    set args3 $arg3
-	}			
+	}
     }
     set args3 \[$args3\]
     set data  "\"arg1\": \[$args1\],\"arg2\": \[\], \"arg3\": $args3, \"arg4\": \"true\""
@@ -1879,7 +1879,7 @@ proc assignPorts {args} {
 	# To reboot the port cpu, the ports have to be assigned to a vport first.
 	# So it has to be done at this spot.
 	resetPortCpu $vportList $portList
-	verifyPortState		
+	verifyPortState
 	error "\n$procName : [dict get $response message]"
     } elseif {[dict get $response state] == "IN_PROGRESS" } {
 	error "\n$procName: Port failed to boot up after $timeout seconds"
@@ -1903,10 +1903,10 @@ proc assignPorts {args} {
 		if {[dict get $res connectionStatus] == "connectedLinkDown"} {
 	            error "\n$procName : Port link connection is down: [dict get $res assignedTo]"
 		}
-		#}	
+		#}
 	    }
 	}
-    }					
+    }
     if {$configPortName == "True"} {
         # Name the vports
 	set vportList [getAllVportList $sessionUrl]
@@ -1914,7 +1914,7 @@ proc assignPorts {args} {
 	set count [regexp "(.*)/api.*" $sessionUrl match group]
 	if {$count} {
 	    set httpHeader $group
-	}		
+	}
 	foreach vportObj $vportList {
 	    #puts "\nvportObj : [lindex $vportObj 0]"
 	    set port [getPhysicalPortFromVport $vportObj $sessionUrl]
@@ -1933,7 +1933,7 @@ proc assignPorts {args} {
 	foreach vport [getAllVportList $sessionUrl] {
             lappend vportProtocolList $vport/protocols
 	}
-	return $vportProtocolList		
+	return $vportProtocolList
     } else {
 	return $vportList
     }

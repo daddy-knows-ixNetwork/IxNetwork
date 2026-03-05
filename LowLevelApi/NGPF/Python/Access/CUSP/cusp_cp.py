@@ -42,7 +42,7 @@ from __future__ import absolute_import, print_function, division
 # POSSIBILITY OF  SUCH DAMAGES IN ADVANCE.                                     #
 #  Keysight will not be required to provide any software maintenance or        #
 # support services of any kind (e.g. any error corrections) in connection with #
-# script or any part thereof. The user acknowledges that although  Keysight    # 
+# script or any part thereof. The user acknowledges that although  Keysight    #
 # may from time to time and in its sole discretion provide maintenance or      #
 # support services for the script any such services are subject to the warranty#
 # and damages limitations set forth herein and will not obligate  Keysight to  #
@@ -54,7 +54,7 @@ from __future__ import absolute_import, print_function, division
 # Description:                                                                 #
 #    This script intends to demonstrate how to use IEEE 802.1x API
 #    It will do the  following :
-#1.    Add topology and devicegroup 
+#1.    Add topology and devicegroup
 #2.    Configure ethernet,IPv4,CUSP CP, UP Group Info.
 #3.    Add PPPoE server to CP device group
 #4.    Set the PPPoE Subscriber group
@@ -205,7 +205,7 @@ print("\n UP Group Info handle is : %s" % upgroupinfo_cp)
 
 print ('\n.........Adding PPPoE Server...............')
 print('''
-Similarly servers can be added for DHCP,L2TP LNS 
+Similarly servers can be added for DHCP,L2TP LNS
 ''')
 cp_dg = ixNet.getList(cp_topology, 'deviceGroup')[0]
 pppoe_server_device = ixNet.add(cp_dg, 'deviceGroup')

@@ -60,7 +60,7 @@
 #    9. Start the L2-L3 traffic.                                               #
 #   12. Retrieve L2-L3 traffic stats.                                          #
 #   13. Stop L2-L3 traffic.                                                    #
-#   15. Stop all protocols.                                                    #                                                                                          
+#   15. Stop all protocols.                                                    #
 ################################################################################
 
 # Script Starts
@@ -86,7 +86,7 @@ ixNet exec newConfig
 ################################################################################
 # 1. Protocol configuration section. Configure AVB protocols as per the
 #    description given above
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -351,7 +351,7 @@ if {[catch {ixNet exec applyOnTheFly $topology}] == 1} {
 after 5000
 
 ################################################################################
-# 7. Configure L2-L3 traffic 
+# 7. Configure L2-L3 traffic
 ################################################################################
 puts "Congfiguring L2-L3 Traffic Item"
 set trafficItem1 [ixNet add [ixNet getRoot]/traffic "trafficItem"]
@@ -381,7 +381,7 @@ ixNet setMultiAttribute $endpointSet1\
     -ngpfFilters           [list]\
     -trafficGroups         [list]\
     -sources               [list]\
-    -destinations          [list]\    
+    -destinations          [list]\
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\

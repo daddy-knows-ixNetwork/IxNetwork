@@ -47,4 +47,3 @@ class Globals(object):
                 else:
                     if key in kwargs:
                         self.ixnObj.patch(self.ixnObj.sessionUrl + restApi, data={key: kwargs[key]})
-

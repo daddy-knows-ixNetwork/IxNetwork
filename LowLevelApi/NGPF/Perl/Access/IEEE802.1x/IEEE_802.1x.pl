@@ -6,10 +6,10 @@
 ################################################################################
 
 ################################################################################
-# Description:                                                                 
+# Description:
 #    This script intends to demonstrate how to use IEEE 802.1x API
 #    It will do the  following :
-#1.    Add topology and devicegroup 
+#1.    Add topology and devicegroup
 #2.    Configure ethernet and dot1x Layer.
 #3.    Change protocol type to PEAPV0
 #4.    Change few global parameters
@@ -30,7 +30,7 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.39.65.1';
 my $ixTclPort   = '7889';
 my @ports       = (('10.39.65.187', '1', '4'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 ################################################################################
@@ -82,7 +82,7 @@ $ixNet->commit();
 my @t1devices = $ixNet->getList($topo1, 'deviceGroup');
 my $dot1x_dg = $t1devices[0];
 print("Configuring the multipliers (number of sessions)\n");
-$ixNet->setAttribute($dot1x_dg, 
+$ixNet->setAttribute($dot1x_dg,
                     '-multiplier', '1',
                     '-name', 'Dot1x DG');
 $ixNet->commit();
@@ -183,13 +183,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("Fetching Dot1x Per Port stats\n");
 my $viewPage = '::ixNet::OBJ-/statistics/view:"IEEE 802.1X Per Port"/page';
@@ -201,13 +201,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-        my $statIndiv = ''; 
+        my $statIndiv = '';
         $index = 0;
         foreach $statIndiv (@$statVal) {
             printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
             $index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 

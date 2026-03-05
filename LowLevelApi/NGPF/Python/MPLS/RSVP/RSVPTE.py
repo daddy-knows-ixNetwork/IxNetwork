@@ -50,7 +50,7 @@
 #    About Topology:                                                            #
 #       Within topology both Label Switch Router(LSR) and Label Edge Router(LER)#
 #    are created. LSR is emulated in the front Device Group(DG), which consists #
-#    of both OSPF as routing protocol as well as RSVPTE-IF for Label            # 
+#    of both OSPF as routing protocol as well as RSVPTE-IF for Label            #
 #    Distribution Protocol. The chained DG act as LER, where RSVP-TE LSPs are   #
 #    configured. Unidirectional L2-L3 Traffic from Ingress to Egress is created.#
 #         Script Flow:                                                          #

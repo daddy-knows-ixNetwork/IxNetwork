@@ -72,7 +72,7 @@
 #   11. Retrieve L2-L3 traffic stats.                                          #
 #   12. Stop L2-L3 traffic.                                                    #
 #   13. Stopallprotocols.                                                      #
-#                                                                              #                                                                                
+#                                                                              #
 # Ixia Software:                                                               #
 #    IxOS      6.90 EA                                                         #
 #    IxNetwork 7.50 EA                                                         #
@@ -384,7 +384,7 @@ print("All configuration is completed..Wait for 5 seconds...")
 time.sleep(5)
 
 ################################################################################
-# Start LDPv6 protocol and wait for 60 seconds                                 #  
+# Start LDPv6 protocol and wait for 60 seconds                                 #
 ################################################################################
 print("Starting protocols and waiting for 60 seconds for protocols to come up")
 ixNet.execute('startAllProtocols')

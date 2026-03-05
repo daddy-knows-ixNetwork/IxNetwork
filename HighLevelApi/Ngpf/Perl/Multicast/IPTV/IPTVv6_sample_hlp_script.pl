@@ -58,9 +58,9 @@
 #    4. Retrieve protocol statistics.                                          #
 #    5. Configure L2-L3 traffic.                                               #
 #    6. Start the L2-L3 traffic.                                               #
-#    7. Stat IPTV.                                                             #  
+#    7. Stat IPTV.                                                             #
 #    8. Retrieve L2-L3 traffic stats.                                          #
-#    9. Make on the fly changes of IPTV attributes                             #	
+#    9. Make on the fly changes of IPTV attributes                             #
 #   10. Retrieve protocol statistics.                                          #
 #   11. Stop IPTV.                                                             #
 #   12. Stop L2-L3 traffic.                                                    #
@@ -73,7 +73,7 @@
 ################################################################################
 
 ################################################################################
-# Utils                                                                        #	
+# Utils                                                                        #
 ################################################################################
 
 # Libraries to be included
@@ -92,7 +92,7 @@
        # use ixiahlt {IXIA_VERSION => $ENV{'IXIA_VERSION'}, TclAutoPath  => [$ENV{'PERL_IXOS_LIB_PATH'}, $ENV{'PERL_IXNET_LIB_PATH'}]};
 
 
-# Running from Windows: 
+# Running from Windows:
 
 	# use lib "C:/Program Files (x86)/Ixia/hltapi/4.95.117.44/TclScripts/lib/hltapi/library/common/ixia_hl_lib-7.40";
 	# use lib "C:/Program Files (x86)/Ixia/hltapi/4.95.117.44/TclScripts/lib/hltapi/library/common/ixiangpf/perl";
@@ -149,7 +149,7 @@ my @port_handles_list = split(/ /,$port_handles);
 ################################################################################
 
 # Creating a topology on first port
-print "Adding topology 1 on port 1\n";     
+print "Adding topology 1 on port 1\n";
 my $topology_1_status = ixiangpf::topology_config ({
     topology_name      => "{MLD Topology 1}",
     port_handle        => $port_handles_list[0],
@@ -163,8 +163,8 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $topology_1_handle = $HashRef->{'topology_handle'};
 
-# Creating a device group in topology 
-print "Creating device group 1 in topology 1\n";      
+# Creating a device group in topology
+print "Creating device group 1 in topology 1\n";
 my $device_group_1_status = ixiangpf::topology_config ({
     topology_handle              => "$topology_1_handle",
     device_group_name            => "{MLD HOST}",
@@ -179,7 +179,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $deviceGroup_1_handle = $HashRef->{'device_group_handle'};
-    
+
 
 # Creating a topology on second port
 print "Adding topology 2 on port 2\n";
@@ -217,7 +217,7 @@ my $deviceGroup_2_handle = $HashRef->{'device_group_handle'};
 #  Configure protocol interfaces                                               #
 ################################################################################
 
-# Creating ethernet stack for the first Device Group 
+# Creating ethernet stack for the first Device Group
 print "Creating ethernet stack for the first Device Group\n";
 my $ethernet_1_status = ixiangpf::interface_config ({
     protocol_name                => "{Ethernet 1}",
@@ -253,8 +253,8 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $ethernet_2_handle = $HashRef->{'ethernet_handle'};
 
-# Creating IPv6 Stack on top of Ethernet Stack for the first Device Group                                 
-print "Creating IPv6 Stack on top of Ethernet Stack for the first Device Group\n";     
+# Creating IPv6 Stack on top of Ethernet Stack for the first Device Group
+print "Creating IPv6 Stack on top of Ethernet Stack for the first Device Group\n";
 my $ipv6_1_status = ixiangpf::interface_config ({
     protocol_name                     => "{IPv6 1}",
     protocol_handle                   => "$ethernet_1_handle",
@@ -277,7 +277,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $ipv6_1_handle = $HashRef->{'ipv6_handle'};
 
-# Creating IPv6 Stack on top of Ethernet Stack for the second Device Group 
+# Creating IPv6 Stack on top of Ethernet Stack for the second Device Group
 print "Creating IPv6 2 stack on ethernet 2 stack for the second Device Group\n";
 my $ipv6_2_status = ixiangpf::interface_config ({
     protocol_name                     => "{IPv6 2}",
@@ -302,11 +302,11 @@ if ($command_status != $ixiangpf::SUCCESS) {
 my $ipv6_2_handle = $HashRef->{'ipv6_handle'};
 
 ################################################################################
-# Other protocol configurations                                                # 
+# Other protocol configurations                                                #
 ################################################################################
 
 # This will create MLD v2 Host Stack with IPTV enabled on top of IPv6 stack having zap behavior as zap and view, zapping type as multicast to leave and zap direction as down.
-    
+
 print "Creating MLD Host Stack on top of IPv6 1 stack\n";
 my $mld_host_1_status = ixiangpf::emulation_mld_config ({
     mode                                 => "create",
@@ -336,7 +336,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 my $mldHost_1_handle = $HashRef->{'mld_host_handle'};
 my $mld_host_iptv_handle = $HashRef->{'mld_host_iptv_handle'};
 
-# Creating MLD Group Ranges 
+# Creating MLD Group Ranges
 print "Creating MLD Group Ranges\n";
 my $mld_mcast_i_pv6_group_list_1_status = ixiangpf::emulation_multicast_group_config ({
     mode               => "create",
@@ -354,7 +354,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $mldMcastIPv6GroupList_1_handle = $HashRef->{'multicast_group_handle'};
 
-# Creating MLD Source Ranges 
+# Creating MLD Source Ranges
 print "Creating MLD Source Ranges\n";
 my $mld_ucast_i_pv6_source_list_1_status = ixiangpf::emulation_multicast_source_config ({
     mode               => "create",
@@ -390,7 +390,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     print "Error: $error";
     return "FAILED - $error";
 }
-    
+
 # Configuring inter stb delay and rate control for MLD Host global settings
 print "Configuring inter stb delay and rate control for MLD host\n";
 my $mld_host_2_status = ixiangpf::emulation_mld_config ({
@@ -413,7 +413,7 @@ print "Waiting 5 seconds before starting protocol(s) ...\n";
 sleep(5);
 
 ############################################################################
-# Start MLD protocol                                                       #      
+# Start MLD protocol                                                       #
 ############################################################################
 print "Starting MLD on topology1\n";
 my $run_status = ixiangpf::emulation_mld_control({
@@ -452,7 +452,7 @@ my $protostats = ixiangpf::emulation_mld_info({
     handle => $deviceGroup_1_handle,
     type   => 'host',
     mode   => 'aggregate'
-}); 
+});
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
 if ($command_status != $ixiangpf::SUCCESS) {
@@ -469,14 +469,14 @@ foreach (@status_keys) {
     print "==================================================================\n";
 }
 
-############################################################################ 
+############################################################################
 # Configure L2-L3 traffic                                                  #
 # 1. Endpoints : Source->IPv6, Destination->Multicast group                #
 # 2. Type      : Multicast IPv6 traffic                                    #
 # 3. Flow Group: On IPv6 Destination Address                               #
 # 4. Rate      : 1000 packets per second                                   #
 # 5. Frame Size: 512 bytes                                                 #
-# 6. Tracking  : IPv6 Destination Address                                  #	
+# 6. Tracking  : IPv6 Destination Address                                  #
 ############################################################################
 print "Configuring L2-L3 traffic\n";
 $_result_ = ixiangpf::traffic_config({
@@ -493,8 +493,8 @@ $_result_ = ixiangpf::traffic_config({
     emulation_multicast_rcvr_mcast_index        => 0,
     name                                        => 'TI0-Traffic_Item_1',
     circuit_endpoint_type                       => 'ipv6',
-    transmit_distribution                       => 'ipv6DestIp0',                             
-    rate_pps                                    => 1000,                                    
+    transmit_distribution                       => 'ipv6DestIp0',
+    rate_pps                                    => 1000,
     frame_size                                  => 512,
     track_by                                    => 'trackingenabled0 ipv6DestIp0'
 });
@@ -505,7 +505,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     print "Error: $error";
     return "FAILED - $error";
 }
-    
+
 ############################################################################
 # Start L2-L3 traffic configured earlier                                   #
 ############################################################################
@@ -525,7 +525,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 
 print "Let the traffic run for 20 seconds ...\n";
 sleep(20);
-    
+
 ############################################################################
 # Starting IPTV                                                            #
 ############################################################################
@@ -558,7 +558,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     my $error = ixiangpf::status_item('log');
     print "Error: $error";
     return "FAILED - $error";
-}   
+}
 @status_keys = ixiangpf::status_item_keys();
  foreach (@status_keys) {
     my $my_key = $_;
@@ -567,10 +567,10 @@ if ($command_status != $ixiangpf::SUCCESS) {
     print "\n$my_key: $allStats\n\n";
     print "==================================================================\n";
  }
-    
+
 ############################################################################
 # Making on the fly changes for zapDirection, zapIntervalType, zapInterval,#
-# numChannelChangesBeforeView and viewDuration in IPTV tab of MLD host     # 
+# numChannelChangesBeforeView and viewDuration in IPTV tab of MLD host     #
 ############################################################################
 print "Making on the fly chnages for zapDirection, zapIntervalType, zapInterval,
 numChannelChangesBeforeView and viewDuration\n";
@@ -590,7 +590,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     print "Error: $error";
     return "FAILED - $error";
 }
-    
+
 ############################################################################
 # Applying changes one the fly                                             #
 ############################################################################
@@ -607,7 +607,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 sleep(5);
-   
+
 ############################################################################
 # Retrieve protocol statistics after doing on the fly changes              #
 ############################################################################
@@ -667,7 +667,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 sleep(5);
-   
+
 ############################################################################
 # Stop all protocols                                                       #
 ############################################################################
@@ -684,5 +684,5 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 sleep(2);
 
-print "!!! Test Script Ends !!!\n";           
-print "SUCCESS - $0\n";         
+print "!!! Test Script Ends !!!\n";
+print "SUCCESS - $0\n";

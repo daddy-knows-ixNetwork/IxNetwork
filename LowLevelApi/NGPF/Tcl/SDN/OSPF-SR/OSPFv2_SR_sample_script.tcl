@@ -53,8 +53,8 @@
 #    This script intends to demonstrate how to use NGPF OSPFv2 API.            #
 #                                                                              #
 #    1. It will create 2 OSPFv2 topologies, each having an ipv4 network        #
-#       topology and loopback device group behind the network group(NG) with   # 
-#       loopback interface on it. A loopback device group(DG) behind network   # 
+#       topology and loopback device group behind the network group(NG) with   #
+#       loopback interface on it. A loopback device group(DG) behind network   #
 #       group is needed to support applib traffic.                             #
 #    2. Start the ospfv2 protocol.                                             #
 #    3. Enabling Segment Routing in ospfv2                                     #
@@ -82,7 +82,7 @@
 #   21. Stop L2-L3 traffic.                                                    #
 #   22. Stop Application traffic.                                              #
 #   23. Stop all protocols.                                                    #
-#                                                                  			   #                                                                                          
+#                                                                  			   #
 # 	Ixia Softwares:                                                            #
 #    IxOS      8.00 EB (8.00.1201.21)                                          #
 #    IxNetwork 8.00 EB (8.00.1206.6)                                           #
@@ -112,7 +112,7 @@ ixNet exec newConfig
 ################################################################################
 # 1. Protocol configuration section. Configure OSPFv2 as per the description
 #  give above
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -442,7 +442,7 @@ after 5000
 
 ###############################################################################
 # 11. Retrieve protocol learned info again and compare with
-#    previously retrieved learned info.  
+#    previously retrieved learned info.
 ###############################################################################
 puts "Fetching OSPFv2 on DG2 learned info after enabling ospf external route type1"
 ixNet exec getBasicLearnedInfo $ospf2 1
@@ -457,7 +457,7 @@ puts "***************************************************"
 
 
 ################################################################################
-# 12. Configure L2-L3 traffic 
+# 12. Configure L2-L3 traffic
 ################################################################################
 puts "Configuring MPLS L2-L3 Traffic Item"
 
@@ -489,7 +489,7 @@ ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/configElement:1/transmissionDistribution \
     -distributions [list ipv4SourceIp0 ]
-	
+
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\
@@ -497,7 +497,7 @@ ixNet setMultiAttribute $trafficItem1/tracking\
     -fieldWidth     thirtyTwoBits\
     -protocolOffset Root.0\
     -values         [list]\
-	
+
 ixNet commit
 
 puts "Configuring traffic item 2 with endpoints src :ospfv2RouterDG1 & dst :ospfv2RouterDG2 "
@@ -523,12 +523,12 @@ ixNet setMultiAttribute $endpointSet2\
     -ngpfFilters           [list]\
     -trafficGroups         [list]\
     -sources               $source\
-    -destinations          $destination 
+    -destinations          $destination
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem2/configElement:1/transmissionDistribution \
     -distributions [list ipv4SourceIp0 ]
-	
+
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem2/tracking\
@@ -536,7 +536,7 @@ ixNet setMultiAttribute $trafficItem2/tracking\
     -fieldWidth     thirtyTwoBits\
     -protocolOffset Root.0\
     -values         [list]\
-	
+
 ixNet commit
 
 puts "Enabling option Display Dynamic Value when Tracking by Dynamic Flow Descriptor from Traffic Options in Global"
@@ -585,4 +585,3 @@ after 5000
 ################################################################################
 ixNet exec stopAllProtocols
 puts "!!! Test Script Ends !!!"
-

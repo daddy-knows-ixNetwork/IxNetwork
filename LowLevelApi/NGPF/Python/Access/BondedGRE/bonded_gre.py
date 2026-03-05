@@ -43,7 +43,7 @@ import os
 # POSSIBILITY OF  SUCH DAMAGES IN ADVANCE.                                     #
 # Ixia Keysight will not be required to provide any software maintenance or    #
 # support services of any kind (e.g. any error corrections) in connection with #
-# script or any part thereof. The user acknowledges that although Ixia Keysight# 
+# script or any part thereof. The user acknowledges that although Ixia Keysight#
 # may     																	   #
 # from time to time and in its sole discretion provide maintenance or support  #
 # services for the script any such services are subject to the warranty and    #

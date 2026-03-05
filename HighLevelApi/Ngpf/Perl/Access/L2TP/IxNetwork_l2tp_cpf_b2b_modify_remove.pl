@@ -111,7 +111,7 @@ my @portHandleList         = ();
 ################################################################################
 
 # Connect to the chassis, reset to factory defaults and take ownership
-# When using P2NO HLTSET, for loading the IxTclNetwork package please 
+# When using P2NO HLTSET, for loading the IxTclNetwork package please
 # provide –ixnetwork_tcl_server parameter to ::ixia::connect
 
 $_result_ = ixiangpf::connect ({
@@ -382,7 +382,7 @@ if ($remove_l2tp_configuration == 1) {
     my $remove_lac_status = ixiangpf::l2tp_config ({
             mode                  => 'lac',
             action                => 'remove',
-            handle                => $lac_handle,              
+            handle                => $lac_handle,
             delete_attached_ppp   => '1',
     });
     &catch_error();

@@ -49,8 +49,8 @@
 #    This script intends to demonstrate how to use NGPF PIM API.               #
 #                                                                              #
 #    1. It will create 2 PIM topologies, each having an ipv6 network           #
-#       topology and loopback device group behind the network group(NG) with   # 
-#       loopback interface on it. A loopback device group(DG) behind network   # 
+#       topology and loopback device group behind the network group(NG) with   #
+#       loopback interface on it. A loopback device group(DG) behind network   #
 #       group is needed to support applib traffic.                             #
 #    2. Start the pim protocol.                                                #
 #    3. Retrieve protocol statistics.                                          #
@@ -67,7 +67,7 @@
 #   12. Retrieve L2-L3 traffic stats.                                          #
 #   13. Stop L2-L3 traffic.                                                    #
 #   14. Stop Application traffic.                                              #
-#   15. Stop all protocols.                                                    #                                                                                          
+#   15. Stop all protocols.                                                    #
 ################################################################################
 
 # Script Starts
@@ -93,7 +93,7 @@ ixNet exec newConfig
 ################################################################################
 # 1. Protocol configuration section. Configure pim as per the description
 #    give above
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -453,7 +453,7 @@ ixNet commit
 
 ###############################################################################
 # 6. Retrieve protocol learned info again and compare with
-#    previouly retrieved learned info.  
+#    previouly retrieved learned info.
 ###############################################################################
 puts "Fetching PIM Learned Info"
 ixNet exec getLearnedInfo $pim2 1
@@ -468,7 +468,7 @@ foreach v $values {
 puts "***************************************************"
 
 ################################################################################
-# 7. Configure L2-L3 traffic 
+# 7. Configure L2-L3 traffic
 ################################################################################
 puts "Congfiguring L2-L3 Traffic Item"
 set trafficItem1 [ixNet add [ixNet getRoot]/traffic "trafficItem"]
@@ -492,7 +492,7 @@ ixNet setMultiAttribute $endpointSet1\
     -ngpfFilters           [list]\
     -trafficGroups         [list]\
     -sources               $source\
-    -destinations          $destination\    
+    -destinations          $destination\
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\
@@ -528,7 +528,7 @@ ixNet setMultiAttribute $endpointSet2\
     -ngpfFilters           [list]     \
     -trafficGroups         [list]     \
     -sources               $source_app\
-    -destinations          $destin_app\    
+    -destinations          $destin_app\
 ixNet commit
 set endpointSet2 [lindex [ixNet remapIds $endpointSet2] 0]
 

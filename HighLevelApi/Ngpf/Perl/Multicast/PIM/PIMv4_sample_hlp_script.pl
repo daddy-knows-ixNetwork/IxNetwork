@@ -92,7 +92,7 @@
         #use ixiahlt {IXIA_VERSION => $ENV{'IXIA_VERSION'}, TclAutoPath  => [$ENV{'PERL_IXOS_LIB_PATH'}, $ENV{'PERL_IXNET_LIB_PATH'}]};
 
 
-# Running from Windows: 
+# Running from Windows:
 
 	# use lib "C:/Program Files (x86)/Ixia/hltapi/4.95.117.44/TclScripts/lib/hltapi/library/common/ixia_hl_lib-7.40";
 	# use lib "C:/Program Files (x86)/Ixia/hltapi/4.95.117.44/TclScripts/lib/hltapi/library/common/ixiangpf/perl";
@@ -150,7 +150,7 @@ my @port_handles_list = split(/ /,$port_handles);
 ################################################################################
 
 # Creating a topology on first port
-print "Adding topology 1 on port 1\n";     
+print "Adding topology 1 on port 1\n";
 my $topology_1_status = ixiangpf::topology_config ({
     topology_name      => "{PIM Topology 1}",
     port_handle        => $port_handles_list[0],
@@ -164,8 +164,8 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $topology_1_handle = $HashRef->{'topology_handle'};
 
-# Creating a device group in topology 
-print "Creating device group 1 in topology 1\n";      
+# Creating a device group in topology
+print "Creating device group 1 in topology 1\n";
 my $device_group_1_status = ixiangpf::topology_config ({
     topology_handle              => "$topology_1_handle",
     device_group_name            => "{Device Group 1}",
@@ -180,7 +180,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $deviceGroup_1_handle = $HashRef->{'device_group_handle'};
-    
+
 
 # Creating a topology on second port
 print "Adding topology 2 on port 2\n";
@@ -218,7 +218,7 @@ my $deviceGroup_2_handle = $HashRef->{'device_group_handle'};
 #  Configure protocol interfaces                                               #
 ################################################################################
 
-# Creating ethernet stack for the first Device Group 
+# Creating ethernet stack for the first Device Group
 print "Creating ethernet stack for the first Device Group\n";
 my $ethernet_1_status = ixiangpf::interface_config ({
     protocol_name                => "{Ethernet 1}",
@@ -254,8 +254,8 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $ethernet_2_handle = $HashRef->{'ethernet_handle'};
 
-# Creating IPv4 Stack on top of Ethernet Stack for the first Device Group                                 
-print "Creating IPv4 Stack on top of Ethernet Stack for the first Device Group\n";     
+# Creating IPv4 Stack on top of Ethernet Stack for the first Device Group
+print "Creating IPv4 Stack on top of Ethernet Stack for the first Device Group\n";
 my $ipv4_1_status = ixiangpf::interface_config ({
     protocol_name                     => "{IPv4 1}",
     protocol_handle                   => "$ethernet_1_handle",
@@ -277,7 +277,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $ipv4_1_handle = $HashRef->{'ipv4_handle'};
 
-# Creating IPv4 Stack on top of Ethernet Stack for the second Device Group 
+# Creating IPv4 Stack on top of Ethernet Stack for the second Device Group
 print "Creating IPv4 2 stack on ethernet 2 stack for the second Device Group\n";
 my $ipv4_2_status = ixiangpf::interface_config ({
     protocol_name                     => "{IPv4 2}",
@@ -302,7 +302,7 @@ my $ipv4_2_handle = $HashRef->{'ipv4_handle'};
 
 
 ################################################################################
-# Other protocol configurations                                                # 
+# Other protocol configurations                                                #
 ################################################################################
 
 # This will Create PIMv4 Stack on top of IPv4 Stack of Topology1
@@ -313,7 +313,7 @@ my $pim_v4_interface_1_status = ixiangpf::emulation_pim_config ({
     handle                         => "$ipv4_1_handle",
     ip_version                     => "4",
     });
-		
+
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
 if ($command_status != $ixiangpf::SUCCESS) {
@@ -341,10 +341,10 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 
 my $pimV4JoinPruneList_1_handle_group = $HashRef->{'multicast_group_handle'};
-        
+
 #Creating Multicast Source address
 
-print "Creating Multicast Source address\n";	
+print "Creating Multicast Source address\n";
 my $pim_v4_join_prune_list_3_status = ixiangpf::emulation_multicast_source_config ({
     mode               => "create",
     ip_addr_start      => "0.0.0.1",
@@ -358,9 +358,9 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $pimV4JoinPruneList_1_handle_source = $HashRef->{'multicast_source_handle'};
-	
+
 #Creating PIM Join-Prune List
-print "Creating Join Prune List\n";	
+print "Creating Join Prune List\n";
 my $pim_v4_join_prune_list_4_status = ixiangpf::emulation_pim_group_config ({
     mode                               => "create",
     session_handle                     => "$pimV4Interface_1_handle",
@@ -389,10 +389,10 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $pimV4JoinPruneList_1_handle = $HashRef->{'pim_v4_join_prune_handle'};
- 
+
 #Creating Multicast Group address
 
-print "Creating Multicast Group address\n"; 
+print "Creating Multicast Group address\n";
 my $pim_v4_sources_list_2_status = ixiangpf::emulation_multicast_group_config ({
     mode               => "create",
     ip_addr_start      => "225.0.0.0",
@@ -406,10 +406,10 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $pimV4SourcesList_1_handle_group = $HashRef->{'multicast_group_handle'};
-	
+
 #Creating Multicast Source address
 
-print "Creating Multicast Source address\n"; 
+print "Creating Multicast Source address\n";
 my $pim_v4_sources_list_3_status = ixiangpf::emulation_multicast_source_config ({
     mode               => "create",
     ip_addr_start      => "0.0.0.1",
@@ -424,10 +424,10 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $pimV4SourcesList_1_handle_source = $HashRef->{'multicast_source_handle'};
-	
+
 #Creating PIM Source List
- 
-print "Creating PIM Source List\n";  
+
+print "Creating PIM Source List\n";
 my $pim_v4_sources_list_4_status = ixiangpf::emulation_pim_group_config ({
     mode                               => "create",
     session_handle                     => "$pimV4Interface_1_handle",
@@ -453,10 +453,10 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $pimV4SourcesList_1_handle = $HashRef->{'pim_v4_source_handle'};
-  
-#Creating Group Address for Candidate RP 
 
-print "Creating Group Address for Candidate RP\n"; 
+#Creating Group Address for Candidate RP
+
+print "Creating Group Address for Candidate RP\n";
 my $pim_v4_candidate_r_ps_list_1_status = ixiangpf::emulation_multicast_group_config ({
     mode               => "create",
     ip_addr_start      => "225.0.0.0",
@@ -471,10 +471,10 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $pimV4CandidateRPsList_1_handle = $HashRef->{'multicast_group_handle'};
-		
+
 #Creating PIM Candidate RP List
-  
-print "Creating PIM Candidate RP List\n";  
+
+print "Creating PIM Candidate RP List\n";
 my $pim_v4_candidate_r_ps_list_2_status = ixiangpf::emulation_pim_group_config ({
     mode                       => "create",
     session_handle             => "$pimV4Interface_1_handle",
@@ -500,7 +500,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 $pimV4CandidateRPsList_1_handle = $HashRef->{'pim_v4_candidate_rp_handle'};
-		
+
 # Creating and Adding IPv4-prefix pool under Network Group1
 
 print "Creating ipv4 prefix network address\n";
@@ -522,7 +522,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $multivalue_2_handle = $HashRef->{'multivalue_handle'};
 
-print "Creating and Adding IPv4-prefix pool under Network Group1\n";	
+print "Creating and Adding IPv4-prefix pool under Network Group1\n";
 my $network_group_1_status = ixiangpf::network_group_config ({
     protocol_handle                      => "$deviceGroup_1_handle",
     protocol_name                        => "{Network Group 1}",
@@ -543,10 +543,10 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $networkGroup_1_handle = $HashRef->{'network_group_handle'};
 my $ipv4PrefixPools_1_handle = $HashRef->{'ipv4_prefix_pools_handle'};
-               
+
 # This will Create PIMv4 Stack on top of IPv4 Stack of Topology1
 
-print "Creating PIMv4 Stack on top of IPv4 Stack of Topology2\n";	 
+print "Creating PIMv4 Stack on top of IPv4 Stack of Topology2\n";
 my $pim_v4_interface_2_status = ixiangpf::emulation_pim_config ({
     mode                           => "create",
     handle                         => "$ipv4_2_handle",
@@ -560,10 +560,10 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $pimV4Interface_2_handle = $HashRef->{'pim_v4_interface_handle'};
- 
+
 #Creating Multicast Group address
 
-print "Creating Multicast Group address\n"; 
+print "Creating Multicast Group address\n";
 my $pim_v4_join_prune_list_6_status = ixiangpf::emulation_multicast_group_config ({
     mode               => "create",
     ip_addr_start      => "226.0.0.0",
@@ -578,10 +578,10 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $pimV4JoinPruneList_5_handle_group = $HashRef->{'multicast_group_handle'};
-	
+
 #Creating Multicast Source address
 
-print "Creating Multicast Source address\n";       
+print "Creating Multicast Source address\n";
 my $pim_v4_join_prune_list_7_status = ixiangpf::emulation_multicast_source_config ({
     mode               => "create",
     ip_addr_start      => "0.0.0.1",
@@ -595,10 +595,10 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $pimV4JoinPruneList_5_handle_source = $HashRef->{'multicast_source_handle'};
-		
+
 #Creating PIM Join Prune List
 
-print "Creating PIM Join Prune List\n";       
+print "Creating PIM Join Prune List\n";
 my $pim_v4_join_prune_list_8_status = ixiangpf::emulation_pim_group_config ({
     mode                               => "create",
     session_handle                     => "$pimV4Interface_2_handle",
@@ -628,9 +628,9 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $pimV4JoinPruneList_2_handle = $HashRef->{'pim_v4_join_prune_handle'};
 
-#Creating Group address for Join-Prune list 
+#Creating Group address for Join-Prune list
 
-print "Creating Group address for Join-Prune list\n";       
+print "Creating Group address for Join-Prune list\n";
 my $pim_v4_sources_list_6_status = ixiangpf::emulation_multicast_group_config ({
     mode               => "create",
     ip_addr_start      => "225.0.0.0",
@@ -645,9 +645,9 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $pimV4SourcesList_5_handle_group = $HashRef->{'multicast_group_handle'};
 
-#Creating Source address for Join-Prune list 
+#Creating Source address for Join-Prune list
 
-print "Creating Source address for Join-Prune list\n";         
+print "Creating Source address for Join-Prune list\n";
 my $pim_v4_sources_list_7_status = ixiangpf::emulation_multicast_source_config ({
     mode               => "create",
     ip_addr_start      => "0.0.0.1",
@@ -662,10 +662,10 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $pimV4SourcesList_5_handle_source = $HashRef->{'multicast_source_handle'};
-	
+
 #Creating PIM Source List
- 
-print "Creating PIM Source List\n"; 
+
+print "Creating PIM Source List\n";
 my $pim_v4_sources_list_8_status = ixiangpf::emulation_pim_group_config ({
     mode                               => "create",
     session_handle                     => "$pimV4Interface_2_handle",
@@ -709,10 +709,10 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $pimV4CandidateRPsList_3_handle = $HashRef->{'multicast_group_handle'};
-	
-#Creating PIM Candidate RP List      
- 
-print "Creating PIM Candidate RP List\n"; 
+
+#Creating PIM Candidate RP List
+
+print "Creating PIM Candidate RP List\n";
 my $pim_v4_candidate_r_ps_list_4_status = ixiangpf::emulation_pim_group_config ({
     mode                       => "create",
     session_handle             => "$pimV4Interface_2_handle",
@@ -738,7 +738,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 $pimV4CandidateRPsList_3_handle = $HashRef->{'pim_v4_candidate_rp_handle'};
-	
+
 # Creating and Adding IPv4-prefix pool under Network Group2
 
 print "Creating ipv4 prefix network address\n";
@@ -760,7 +760,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $multivalue_4_handle = $HashRef->{'multivalue_handle'};
 
-print "Creating and Adding IPv4-prefix pool under Network Group2\n";    
+print "Creating and Adding IPv4-prefix pool under Network Group2\n";
 my $network_group_2_status = ixiangpf::network_group_config ({
     protocol_handle                      => "$deviceGroup_2_handle",
     protocol_name                        => "{Network Group 2}",
@@ -781,14 +781,14 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $networkGroup_2_handle = $HashRef->{'network_group_handle'};
 my $ipv4PrefixPools_2_handle = $HashRef->{'ipv4_prefix_pools_handle'};
-	
+
 ############################################################################
 # Start PIM protocol                                                       #
 ############################################################################
-	
+
 print "Waiting 5 seconds before starting protocol(s) ...\n";
 sleep(5);
-	
+
 print "Starting All Protocols\n";
 
 my $startProtocol = ixiangpf::test_control({action => 'start_all_protocols'});
@@ -799,18 +799,18 @@ if ($command_status != $ixiangpf::SUCCESS) {
     print "Error: $error";
     return "FAILED - $error";
 }
-	
+
 print "Waiting for 60 Seconds\n";
 sleep(60);
-	
+
 ############################################################################
-# Retrieve protocol statistics                                             # 
+# Retrieve protocol statistics                                             #
 ############################################################################
 print "fetching pimv4 aggregated statistics\n";
 my $protostats = ixiangpf::emulation_pim_info({
     handle => $pimV4Interface_2_handle,
     mode   => 'aggregate'
-}); 
+});
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
 if ($command_status != $ixiangpf::SUCCESS) {
@@ -826,7 +826,7 @@ foreach (@status_keys) {
     print "\n$my_key: $allStats\n\n";
     print "==================================================================\n";
 }
-      	
+
 ############################################################################
 # Retrieve protocol learned info                                           #
 ############################################################################
@@ -834,7 +834,7 @@ print "Fetching pim learned info";
 $protostats = ixiangpf::emulation_pim_info({
     handle => $pimV4Interface_1_handle,
     mode   => 'learned_crp'
-}); 
+});
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
 if ($command_status != $ixiangpf::SUCCESS) {
@@ -850,13 +850,13 @@ foreach (@status_keys) {
     print "\n$my_key: $learnedinfo\n\n";
     print "==================================================================\n";
 }
- 	
+
 ############################################################################
 # Modifying the GroupRange Type from *G to SG and Enabling Bootstrap       #
 ############################################################################
 
 #Modifying the GroupRange Type from *G to SG for Topology1
-print "Modifying the GroupRange Type from *G to SG for Topology1"; 
+print "Modifying the GroupRange Type from *G to SG for Topology1";
 
 my $modify1 = ixiangpf::emulation_pim_group_config ({
         handle                   => $pimV4JoinPruneList_1_handle,
@@ -873,7 +873,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 
 #Modifying the GroupRange Type from *G to SG for Topology2
 print "Modifying the GroupRange Type from *G to SG for Topology2\n";
- 
+
 my $modify2 = ixiangpf::emulation_pim_group_config ({
         handle                   => $pimV4JoinPruneList_2_handle,
         mode                     => 'modify',
@@ -887,16 +887,16 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 
-#Enabling Bootstrap for Topology1   	
+#Enabling Bootstrap for Topology1
 print "Enabling Bootstrap for Topology1\n";
 
 my $modify3 = ixiangpf::emulation_pim_config ({
-        handle            => $pimV4Interface_1_handle,                                    
+        handle            => $pimV4Interface_1_handle,
         mode              => 'modify',
-        ip_version        => '4',                                                      
+        ip_version        => '4',
         bootstrap_enable  =>  '1',
 		});
-		
+
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
 if ($command_status != $ixiangpf::SUCCESS) {
@@ -904,18 +904,18 @@ if ($command_status != $ixiangpf::SUCCESS) {
     print "Error: $error";
     return "FAILED - $error";
 }
-	
+
 #Enabling Bootstrap and Modifying Priority for Topology2
 print "Enabling Bootstrap and Modifying Priority for Topology2\n";
 
 my $modify4 = ixiangpf::emulation_pim_config ({
-        handle             => $pimV4Interface_2_handle,                                    
+        handle             => $pimV4Interface_2_handle,
         mode               => 'modify',
-        ip_version         => '4',                                                      
+        ip_version         => '4',
         bootstrap_enable   => '1',
 		bootstrap_priority => '74',
 		});
-		
+
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
 if ($command_status != $ixiangpf::SUCCESS) {
@@ -924,7 +924,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 
-#Applying changes on the fly		
+#Applying changes on the fly
 print "Applying changes on the fly\n";
 my $applyChanges = ixiangpf::test_control({
    handle => $pimV4Interface_1_handle,
@@ -936,7 +936,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     my $error = ixiangpf::status_item('log');
     print "Error: $error";
     return "FAILED - $error";
-}   
+}
 
 print "Applying changes on the fly\n";
 my $applyChanges = ixiangpf::test_control({
@@ -953,7 +953,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 
 print "Waiting for 60 seconds\n";
 sleep(60);
-	
+
 ############################################################################
 # Retrieve protocol learned info again after RangeType modification        #
 ############################################################################
@@ -961,7 +961,7 @@ print "Fetching pim learned info\n";
 $protostats = ixiangpf::emulation_pim_info({
     handle => $pimV4Interface_1_handle,
     mode   => 'learned_crp'
-}); 
+});
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
 if ($command_status != $ixiangpf::SUCCESS) {
@@ -977,15 +977,15 @@ foreach (@status_keys) {
     print "\n$my_key: $learnedinfo\n\n";
     print "==================================================================\n";
 }
-	
-############################################################################ 
+
+############################################################################
 # Configure L2-L3 traffic                                                  #
 # 1. Endpoints : Source->IPv4, Destination->Multicast group                #
 # 2. Type      : Multicast IPv4 traffic                                    #
 # 3. Flow Group: On IPv4 Destination Address                               #
 # 4. Rate      : 1000 packets per second                                   #
 # 5. Frame Size: 512 bytes                                                 #
-# 6. Tracking  : IPv4 Destination Address                                  #	
+# 6. Tracking  : IPv4 Destination Address                                  #
 ############################################################################
 
 print "Configuring L2-L3 traffic\n";
@@ -997,8 +997,8 @@ $_result_ = ixiangpf::traffic_config({
     emulation_dst_handle                        => $ipv4PrefixPools_2_handle,
     name                                        => 'Traffic_Item_1',
     circuit_endpoint_type                       => 'ipv4',
-    transmit_distribution                       => 'ipv4DestIp0',                             
-    rate_pps                                    => 1000,                                    
+    transmit_distribution                       => 'ipv4DestIp0',
+    rate_pps                                    => 1000,
     frame_size                                  => 512,
     track_by                                    => 'trackingenabled0 ipv4DestIp0'
 });
@@ -1009,7 +1009,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     print "Error: $error";
     return "FAILED - $error";
 }
-	
+
 ############################################################################
 #  Start L2-L3 traffic configured earlier                                  #
 ############################################################################
@@ -1029,9 +1029,9 @@ if ($command_status != $ixiangpf::SUCCESS) {
 
 print "Let the traffic run for 20 seconds ...\n";
 sleep(20);
-	
-	   
-############################################################################                                 
+
+
+############################################################################
 # Retrieve L2-L3 traffic stats                                             #
 ############################################################################
 print "Retrieving L2-L3 traffic stats\n";
@@ -1046,7 +1046,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     my $error = ixiangpf::status_item('log');
     print "Error: $error";
     return "FAILED - $error";
-}   
+}
 @status_keys = ixiangpf::status_item_keys();
  foreach (@status_keys) {
     my $my_key = $_;
@@ -1055,7 +1055,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     print "\n$my_key: $allStats\n\n";
     print "==================================================================\n";
  }
-  
+
 ############################################################################
 # Stop L2-L3 traffic started earlier                                       #
 ############################################################################
@@ -1074,7 +1074,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 sleep(5);
-   
+
 ############################################################################
 # Stop all protocols                                                       #
 ############################################################################
@@ -1089,7 +1089,5 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 sleep(2);
 
-print "!!! Test Script Ends !!!\n";           
-print "SUCCESS - $0\n";         
-	
-	
+print "!!! Test Script Ends !!!\n";
+print "SUCCESS - $0\n";

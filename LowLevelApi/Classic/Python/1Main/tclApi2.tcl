@@ -55,7 +55,7 @@ proc ResumeHlt { connectParams } {
 proc LoadConfigFile { {type useConfigFilePorts} } {
     # Options:
     #    type = useConfigFilePorts | remapPorts
-    #   
+    #
     #    Defaults to using ports in the saved config file
 
     if {[file exists $::ixncfgFile] == 0} {
@@ -82,7 +82,7 @@ proc LoadConfigFile { {type useConfigFilePorts} } {
 			       ]
     }
 
-    # NOTE: This requires -tcl_server <ip address> if the ixNet 
+    # NOTE: This requires -tcl_server <ip address> if the ixNet
     #       Tcl server is not running IxOS Tcl Server.
     if {$type == "useConfigFilePorts"} {
 	puts "Loading saved config ports: $::portList"
@@ -92,7 +92,7 @@ proc LoadConfigFile { {type useConfigFilePorts} } {
 			              -ixnetwork_tcl_server $::ixNetworkTclServerIp \
 			              -session_resume_keys 1 \
 			              -connect_timeout 30 \
-			              -break_locks 1 
+			              -break_locks 1
 			   ]
     }
 
@@ -102,7 +102,7 @@ proc LoadConfigFile { {type useConfigFilePorts} } {
     } else {
 	puts "Successfully connected to IxNetwork Tcl server"
     }
-    
+
     puts "\n[KeylPrint connectStatus]\n"
     return $connectStatus
 }
@@ -113,7 +113,7 @@ proc GetVportConnectedToPort { vport } {
     set connectedTo [lrange [split $connectedTo /] 3 4]
     set card [lindex [split [lindex $connectedTo 0] :] end]
     set port [lindex [split [lindex $connectedTo 1] :] end]
-    return $card/$port    
+    return $card/$port
 }
 
 proc GetVportMapping { Port } {
@@ -121,12 +121,12 @@ proc GetVportMapping { Port } {
     # Port format = 1/1.  Not 1/1/1.
 
     regexp "\[0-9]+/(\[0-9]+/\[0-9]+)" $Port - Port
- 
+
     set vportList [ixNet getList [ixNet getRoot] vport]
     if {$vportList == ""} {
 	return 0
     }
-    
+
     foreach vport $vportList {
 	set connectedTo [ixNet getAttribute $vport -connectedTo]
 	set card [lindex [split [lindex [split $connectedTo /] 3] :] end]
@@ -174,7 +174,7 @@ proc PortConfigProtocolIntHlt { port portConfigParams } {
     # You could also use this for scaling, but using this API
     # will take up a lot of resource.
     # For scaling, it is better to use PortConfigStaticIp.
-    
+
     # How to use this from a script:
     #    set port 1/1/3
     #    set portConfig($port1,-mode) config
@@ -194,7 +194,7 @@ proc PortConfigProtocolIntHlt { port portConfigParams } {
     #    set endpoint($port) [PortConfigProtocolIntHlt ::portConfig]
 
     upvar $portConfigParams params
-    
+
     puts "\nPortConfigProtocolIntHlt: $port"
     foreach {properties values} [array get params $port,*] {
 	set property [lindex [split $properties ,] end]
@@ -217,10 +217,10 @@ proc PortConfigProtocolIntHlt { port portConfigParams } {
 
 proc GetProtocolIntObjects { args } {
     # This API supports single chassis ports and diasy chained chassis ports.
-    # 
+    #
     # This API will return you all the Protocol Interface objects
     # based on the $port and/or $vlanId
-    # 
+    #
     # -port format = 1/1/3 or $ixiaChassisIp/1/3
     #       -You could pass in a list of ports also:
     #           "1/1/1 1/1/2" or "$ixiaChassisIp/1/1  $ixiaChassisIp/1/2"
@@ -229,13 +229,13 @@ proc GetProtocolIntObjects { args } {
     # For a daisy chained chassis, port format must be $ixiaChassisIp1/1
 
     # For -vlanId parameter:
-    #     Currently, you can only pass in one vlan ID for a single port or for 
+    #     Currently, you can only pass in one vlan ID for a single port or for
     #     the list of ports.
 
     set argIndex 0
     while {$argIndex < [llength $args]} {
 	set currentArg [lindex $args $argIndex]
-	switch -exact -- $currentArg { 
+	switch -exact -- $currentArg {
 	    -port {
 		# For a single chassis, port format can be 1/1/1 or $ixiaChassisIp/1/1
 		# For a daisy chained chassis, port format must be $ixiaChassisIp/1/1
@@ -255,7 +255,7 @@ proc GetProtocolIntObjects { args } {
 		puts "\nError GetProtocolIntObjects: No such parameter: $currentArg"
 		return 1
 	    }
-	}    
+	}
     }
 
     set interfaceObjList {}
@@ -272,7 +272,7 @@ proc GetProtocolIntObjects { args } {
 		if {[info exists vlanId] == 0} {
 		        lappend interfaceObjList $interface
 		}
-		
+
 		# User can bind a vlanID to a port.
 		if {[info exists vlanId] == 1} {
 		    set currentVlanId [ixNet getAttribute $interface/vlan -vlanId]
@@ -297,15 +297,15 @@ proc ModifyProtocolInterfaces { args } {
     # format of 1/1/1.
     #
     # This API requires calling GetProtocolIntObjects.
-    # 
+    #
     # Usage:
-    #   
-    #    Two ways to use this.  
-    # 
+    #
+    #    Two ways to use this.
+    #
     #    1> Enter a starting address for any of the followings:
     #           -ippv4, -gatewayIpv4, -mac ...
-    # 
-    #    2> Provide a custom list: -ipv4List, -ipv4GatewayList, -vlanIdList, -macList ... 
+    #
+    #    2> Provide a custom list: -ipv4List, -ipv4GatewayList, -vlanIdList, -macList ...
     #
     #       -ipv4              = Single value
     #       -ipv4Step          = Ex: 0.0.0.1 = increment the 4th octect by 1 step
@@ -347,7 +347,7 @@ proc ModifyProtocolInterfaces { args } {
     #       -delete            = "all" or a list of interface numbers to delete.
     #                            Ex: -delete all
     #                            Ex: -delete {1 2 5} will delete only interface 1, 2 and 5
-    
+
     if {[lsearch $args -port] == -1} {
 	puts "\nModifyProtocolInterfaces Error: Must include -port"
 	return 1
@@ -364,7 +364,7 @@ proc ModifyProtocolInterfaces { args } {
 	# currentInterfaceNumber = The for loop current interface number
 	# {1 1.1.1.1} and/or {"interface name" 1.1.1.1}
 
-	# If the user provided list is not an interface number, then it's a name.	
+	# If the user provided list is not an interface number, then it's a name.
 	# Convert the interface name to interface number.
 	set theList [eval list $theList]
 	set theList2 {}
@@ -408,11 +408,11 @@ proc ModifyProtocolInterfaces { args } {
     set maskWidth 24
     set gatewayIpv4Step 0
     set macStep 00:00:00:00:00:00
-    
+
     set argIndex 0
     while {$argIndex < [llength $args]} {
 	set currentArg [lindex $args $argIndex]
-	switch -exact -- $currentArg { 
+	switch -exact -- $currentArg {
 	    -port {
 		set port [lindex $args [expr $argIndex + 1]]
 		incr argIndex 2
@@ -527,27 +527,27 @@ proc ModifyProtocolInterfaces { args } {
 		puts "\nModifyProtocolInterface: No such parameter: $currentArg"
 		return 1
 	    }
-	}    
+	}
     }
 
     global interfaceList
-    set interfaceList [GetProtocolIntObjects -port $port] 
-    
+    set interfaceList [GetProtocolIntObjects -port $port]
+
     if {[info exists mac]} {
 	# Default the incr steps to 0 in case regexp didn't find any match
 	set incr1stIpOctect 0
 	set incr2ndIpOctect 0
 	set incr3rdIpOctect 0
 	set incr4thIpOctect 0
-	
+
 	regexp "(\[0-9a-fA-F]+):(\[0-9a-fA-F]+):(\[0-9a-fA-F]+):(\[0-9a-fA-F]+):(\[0-9a-fA-F]+):(\[0-9a-fA-F]+)" $macStep - \
 	    macStepByte1 macStepByte2 macStepByte3 macStepByte4 macStepByte5 macStepByte6
 
 	scan $macStepByte1 %x incr1stMac
-	scan $macStepByte2 %x incr2ndMac   
-	scan $macStepByte3 %x incr3rdMac 
-	scan $macStepByte4 %x incr4thMac 
-	scan $macStepByte5 %x incr5thMac 
+	scan $macStepByte2 %x incr2ndMac
+	scan $macStepByte3 %x incr3rdMac
+	scan $macStepByte4 %x incr4thMac
+	scan $macStepByte5 %x incr5thMac
 	scan $macStepByte6 %x incr6thMac
 
 	set macByte1 [lindex [split $mac :] 0]
@@ -565,7 +565,7 @@ proc ModifyProtocolInterfaces { args } {
 	set incr2ndIpOctect 0
 	set incr3rdIpOctect 0
 	set incr4thIpOctect 0
-	
+
 	regexp "(\[0-9]+)\.(\[0-9]+)\.(\[0-9]+)\.(\[0-9]+)" $ipv4Step - \
 	    incr1stIpOctect incr2ndIpOctect incr3rdIpOctect incr4thIpOctect
 
@@ -582,10 +582,10 @@ proc ModifyProtocolInterfaces { args } {
 	set incr2ndGatewayOctect 0
 	set incr3rdGatewayOctect 0
 	set incr4thGatewayOctect 0
-	
+
 	regexp "(\[0-9]+)\.(\[0-9]+)\.(\[0-9]+)\.(\[0-9]+)" $gatewayIpv4Step - \
 	    incr1stGatewayOctect incr2ndGatewayOctect incr3rdGatewayOctect incr4thGatewayOctect
-	
+
 	set gatewayByte1 [lindex [split $startingGatewayIpv4 .] 0]
 	set gatewayByte2 [lindex [split $startingGatewayIpv4 .] 1]
 	set gatewayByte3 [lindex [split $startingGatewayIpv4 .] 2]
@@ -632,7 +632,7 @@ proc ModifyProtocolInterfaces { args } {
 	    } else {
 		if {[lsearch $vlanEnableList $currentInterfaceNumber] != -1} {
 		    puts "\tvlan: -enable True"
-		    ixNet setAttribute $interface/vlan -vlanEnable True 
+		    ixNet setAttribute $interface/vlan -vlanEnable True
 		}
 	    }
 	}
@@ -644,7 +644,7 @@ proc ModifyProtocolInterfaces { args } {
 	    } else {
 		if {[lsearch $vlanDisableList $currentInterfaceNumber] != -1} {
 		    puts "\tvlan: -enable False"
-		    ixNet setAttribute $interface/vlan -vlanEnable False 
+		    ixNet setAttribute $interface/vlan -vlanEnable False
 		}
 	    }
 	}
@@ -667,7 +667,7 @@ proc ModifyProtocolInterfaces { args } {
 		if {$incr5thMac > 0 && $macByte5 < "254"} {
 		    incr macByte5 $incr5thMac
 		}
- 
+
 		if {$incr4thMac > 0 && $macByte4 >= "254"} {
 		    set macByte4 1
 		    incr macByte3
@@ -707,7 +707,7 @@ proc ModifyProtocolInterfaces { args } {
 		if {$incr4thIpOctect > 0 && $byte4 < "254"} {
 		    incr byte4 $incr4thIpOctect
 		}
-		
+
 		if {$incr3rdIpOctect > 0 && $byte3 >= "254"} {
 		    set byte3 1
 		    incr byte2
@@ -715,7 +715,7 @@ proc ModifyProtocolInterfaces { args } {
 		if {$incr3rdIpOctect > 0 && $byte3 < "254"} {
 		    incr byte3 $incr3rdIpOctect
 		}
-		
+
 		if {$incr2ndIpOctect > 0 && $byte2 >= "254"} {
 		    set byte2 1
 		    incr byte1
@@ -723,31 +723,31 @@ proc ModifyProtocolInterfaces { args } {
 		if {$incr2ndIpOctect > 0 && $byte2 < "254"} {
 		    incr byte1 $incr2ndIpOctect
 		}
-	    }	    
+	    }
 	    set currentIpv4 $byte1.$byte2.$byte3.$byte4
 	    puts "\t-ip $currentIpv4"
 	    ixNet setAttribute $interface/ipv4 -ip $currentIpv4
 	}
-	
+
 	if {[info exists startingGatewayIpv4]} {
 	    # Generate IP Gateway address
 	    if {$oneTimeOnly == 1} {
 		if {$incr4thGatewayOctect > 0 && $gatewayByte4 >= "254"} {
 		    set gatewayByte4 1
-		    incr gatewayByte3 
+		    incr gatewayByte3
 		}
 		if {$incr4thGatewayOctect > 0 && $gatewayByte4 < "254"} {
 		    incr gatewayByte4 $incr4thGatewayOctect
 		}
-		
+
 		if {$incr3rdGatewayOctect > 0 && $gatewayByte3 >= "254"} {
 		    set gatewayByte3 1
-		    incr gatewayByte2 
+		    incr gatewayByte2
 		}
 		if {$incr3rdGatewayOctect > 0 && $gatewayByte3 < "254"} {
 		    incr gatewayByte3 $incr3rdGatewayOctect
 		}
-		
+
 		if {$incr2ndGatewayOctect > 0 && $gatewayByte2 >= "254"} {
 		    set gatewayByte2 1
 		    incr gatewayByte1
@@ -755,41 +755,41 @@ proc ModifyProtocolInterfaces { args } {
 		if {$incr2ndGatewayOctect > 0 && $gatewayByte2 < "254"} {
 		    incr gatewayByte2 $incr2ndGatewayOctect
 		}
-	    }	    
+	    }
 	    set currentGatewayIpv4 $gatewayByte1.$gatewayByte2.$gatewayByte3.$gatewayByte4
 	    puts "\t-gateway $currentGatewayIpv4"
 	    ixNet setAttribute $interface/ipv4 -gateway $currentGatewayIpv4
 	}
-	
+
 	if {[info exists macList]} {
 	    # -ipv4List {{1 00:01:02:03:00:01} {2 00:02:02:03:00:01} {3 00:03:02:03:00:01}}
 	    # lindex 0 = 2 00:02:02:03:00:01
 	    lsearchList $interface/ethernet -macAddress $macList $currentInterfaceNumber
 	}
-	
+
 	if {[info exists ipv4List]} {
 	    # -ipv4List {{1 1.1.1.1} {2 2.2.2.1} {3 3.3.3.1}}
 	    # lindex 0 = 2 2.2.2.1
 	    lsearchList $interface/ipv4 -ip $ipv4List $currentInterfaceNumber
 	}
-	
+
 	if {[info exists ipv4GatewayList]} {
 	    lsearchList $interface/ipv4 -gateway $ipv4GatewayList $currentInterfaceNumber
 	}
-	
+
 	if {[info exists ipv4MaskWidthList]} {
 	    lsearchList $interface/ipv4 -maskWidth $ipv4MaskWidthList $currentInterfaceNumber
 	}
-	
+
 	if {[info exists ipv4MaskWidth]} {
 	    puts "\t-maskWidth $ipv4MaskWidth"
 	    ixNet setAttribute $interface/ipv4 -maskWidth $ipv4MaskWidth
 	}
-	
+
 	if {[info exists name]} {
 	    lsearchList $interface -description $name $currentInterfaceNumber
 	}
-	
+
 	if {[info exists enableList]} {
 	    if {[regexp "A|all" $enableList]} {
 		puts "\t-enable True"
@@ -797,11 +797,11 @@ proc ModifyProtocolInterfaces { args } {
 	    } else {
 		if {[lsearch $enableList $currentInterfaceNumber] != -1} {
 		    puts "\t-enable True"
-		    ixNet setAttribute $interface -enabled True 
+		    ixNet setAttribute $interface -enabled True
 		}
 	    }
 	}
-	
+
 	if {[info exists disableList]} {
 	    if {[regexp "A|all" $disableList]} {
 		puts "\t-enable False"
@@ -813,7 +813,7 @@ proc ModifyProtocolInterfaces { args } {
 		}
 	    }
 	}
-	
+
 	if {[info exists delete]} {
 	    if {[regexp "A|all" $delete]} {
 		puts "\tDelete interface: $currentInterfaceNumber"
@@ -839,7 +839,7 @@ proc CreateTrafficItemHlt { trafficItemParams } {
     # For single burst traffic: -transmit single_burst -number_of_packets-per_stream 50000
 
     # How to use this from a script:
-    #     set trafficItem1(-mode) create 
+    #     set trafficItem1(-mode) create
     #     set trafficItem1(-endpointset_count) 1
     #     set trafficItem1(-emulation_src_handle) $topology1(portHandle)
     #     set trafficItem1(-emulation_dst_handle) $topology2(portHandle)
@@ -876,7 +876,7 @@ proc SendArpOnProtocolIntHlt { ports } {
     # Returns the Arp results.
     #
     # Success: {1/1/1 {{arp_request_success 1}}} {status 1}
-    # Failed: 
+    # Failed:
     #
     # 1/1/1:
     #   arp_ipv4_interfaces_failed: ::ixNet::OBJ-/vport:2/interface:1
@@ -893,11 +893,11 @@ proc StopAllProtocolsHlt { {platform legacy} } {
 
     if {$platform == "legacy"} {
 	set params "::ixia::test_control -action stop_all_protocols"
-    } 
+    }
     if {$platform == "ngpf"} {
 	set params "::ixiangpf::test_control -action stop_all_protocols"
-    } 
-    
+    }
+
     puts "\nStopAllProtocolsHlt: $platform"
     set stopProtocolStatus [eval $params]
     if {[keylget stopProtocolStatus status] != $::SUCCESS} {
@@ -924,7 +924,7 @@ proc ConfigIgmpHostHlt { igmpParams } {
     #    set igmpHost($port1,-intf_prefix_len) 24
     #    set igmpHost($port1,-vlan) 1
     #    set igmpHost($port1,-vlan_id) 101
-    #    set igmpHostHandle($port1) [ConfigIgmpHostHlt ::igmpHost]    
+    #    set igmpHostHandle($port1) [ConfigIgmpHostHlt ::igmpHost]
 
     upvar $igmpParams params
 
@@ -1003,8 +1003,8 @@ proc ConfigIgmpSourceMode { igmpSessionHandle mode } {
     # Usage example:
     #    -mode create
     #    -session_handle ::ixNet::OBJ-/vport:1/protocols/igmp/host:3
-    #    -source_pool_handle [list source1 source2] 
-    #    -group_pool_handle group3 
+    #    -source_pool_handle [list source1 source2]
+    #    -group_pool_handle group3
 
     puts  "\nConfigIgmpSourceMode: $igmpSessionHandle"
     ixNet setAttribute $igmpSessionHandle -sourceMode $mode
@@ -1013,15 +1013,15 @@ proc ConfigIgmpSourceMode { igmpSessionHandle mode } {
 
 proc ConfigIgmpSourceHlt { igmpParams } {
     upvar $igmpParams params
-    
+
     foreach {properties values} [array get params *] {
 	set property [lindex [split $properties ,] end]
 	append paramList "$property $values "
     }
-    
+
     puts "\nConfigIgmpSourceHlt: $paramList\n"
     set status [eval ::ixia::emulation_multicast_source_config $paramList]
-    
+
     if {[keylget status status] != $::SUCCESS} {
 	puts "ConfigIgmpSourceHlt Error:\n[keylget status log]"
 	return 1
@@ -1035,7 +1035,7 @@ proc ModifyIgmpGroup { args } {
     set argIndex 0
     while {$argIndex < [llength $args]} {
 	set currentArg [lindex $args $argIndex]
-	switch -exact -- $currentArg { 
+	switch -exact -- $currentArg {
 	    -port {
 		set port [lindex $args [expr $argIndex + 1]]
 		incr argIndex 2
@@ -1066,24 +1066,24 @@ proc ModifyIgmpGroup { args } {
     set vport [GetVportMapping $port]
     set igmpObj $vport/protocols/igmp
 
-    foreach igmpHostNumObj [ixNet getList $igmpObj host] {	
+    foreach igmpHostNumObj [ixNet getList $igmpObj host] {
 	foreach igmpGroupObj [ixNet getList $igmpHostNumObj group] {
 	    # TODO:  Incomplete. Need to know what to modify and how it is based on.
 	}
     }
     ixNet commit
-    
+
 }
 
 proc EnableIgmpGroup { port igmpGroupList } {
     # This API requires GetVportMapping API
     # port = 1/1/1 format
     # igmpGroupList = One or more IP addresses in a list.
-    
+
     set vport [GetVportMapping $port]
     set igmpObj $vport/protocols/igmp
 
-    foreach igmpHostNumObj [ixNet getList $igmpObj host] {	
+    foreach igmpHostNumObj [ixNet getList $igmpObj host] {
 	foreach igmpGroupObj [ixNet getList $igmpHostNumObj group] {
 	    set currentIgmpGroup [ixNet getAttribute $igmpGroupObj -groupFrom]
 	    if {[lsearch $igmpGroupList $currentIgmpGroup] != -1} {
@@ -1099,11 +1099,11 @@ proc DisableIgmpGroup { port igmpGroupList } {
     # This API requires GetVportMapping API
     # port = 1/1/1 format
     # igmpGroupList = One or more IP addresses in a list.
-    
+
     set vport [GetVportMapping $port]
     set igmpObj $vport/protocols/igmp
 
-    foreach igmpHostNumObj [ixNet getList $igmpObj host] {	
+    foreach igmpHostNumObj [ixNet getList $igmpObj host] {
 	foreach igmpGroupObj [ixNet getList $igmpHostNumObj group] {
 	    set currentIgmpGroup [ixNet getAttribute $igmpGroupObj -groupFrom]
 	    if {[lsearch $igmpGroupList $currentIgmpGroup] != -1} {
@@ -1119,11 +1119,11 @@ proc DeleteIgmpGroup { port igmpGroupList } {
     # This API requires GetVportMapping API
     # port = 1/1/1 format
     # igmpGroupList = One or more IP addresses in a list.
-    
+
     set vport [GetVportMapping $port]
     set igmpObj $vport/protocols/igmp
 
-    foreach igmpHostNumObj [ixNet getList $igmpObj host] {	
+    foreach igmpHostNumObj [ixNet getList $igmpObj host] {
 	foreach igmpGroupObj [ixNet getList $igmpHostNumObj group] {
 	    set currentIgmpGroup [ixNet getAttribute $igmpGroupObj -groupFrom]
 	    if {[lsearch $igmpGroupList $currentIgmpGroup] != -1} {
@@ -1143,7 +1143,7 @@ proc StartTrafficHlt {} {
     if {[keylget startTrafficStatus status] != $::SUCCESS} {
 	puts "\nError StartTrafficHlt: $startTrafficStatus\n"
 	return 1
-    } 
+    }
 
     # By including VerifyTrafficState, it will wait up to 15 seconds until
     # traffic is started before returning.
@@ -1165,4 +1165,3 @@ proc KeylPrint {keylist {space ""}} {
     }
     return $result
 }
-

@@ -59,7 +59,7 @@
 #    9. Start the L2-L3 traffic.                                               #
 #   12. Retrieve L2-L3 traffic stats.                                          #
 #   13. Stop L2-L3 traffic.                                                    #
-#   15. Stop all protocols.                                                    #                                                                                          
+#   15. Stop all protocols.                                                    #
 ################################################################################
 
 import os
@@ -187,12 +187,12 @@ mac3 = ixNet.getList(t2dev2, 'ethernet')[0]
 
 print("Configuring the mac addresses")
 ixNet.setMultiAttribute(ixNet.getAttribute(mac1, '-mac') + '/counter',
-    '-direction', 'increment',                        
+    '-direction', 'increment',
     '-start', '22:22:22:22:22:22',
     '-step', '00:00:00:00:00:01')
 
 ixNet.setMultiAttribute(ixNet.getAttribute(mac2, '-mac') + '/counter',
-    '-direction', 'increment',                        
+    '-direction', 'increment',
     '-start', '44:44:44:44:44:44',
     '-step', '00:00:00:00:00:01')
 
@@ -385,7 +385,7 @@ except :
 time.sleep(5)
 
 ################################################################################
-# 7. Configure L2-L3 traffic 
+# 7. Configure L2-L3 traffic
 ################################################################################
 print("Configuring L2-L3 Traffic Item")
 trafficItem1 = ixNet.add(ixNet.getRoot() + '/traffic', 'trafficItem')
@@ -404,7 +404,7 @@ mcastReceiver = [[listener1 + '/subscribedStreams', '0', '0', '0'],
     [listener1 + '/subscribedStreams', '0', '0', '1'],
     [listener1 + '/subscribedStreams', '0', '1', '0'],
     [listener1 + '/subscribedStreams', '0', '1', '1']]
-          
+
 ixNet.setMultiAttribute(endpointSet1,
     '-name',                  'EndpointSet-1',
     '-multicastDestinations', mcastDestination,

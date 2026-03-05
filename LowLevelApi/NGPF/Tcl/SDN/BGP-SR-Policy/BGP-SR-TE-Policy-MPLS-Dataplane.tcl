@@ -70,7 +70,7 @@ ixNet exec newConfig
 
 ################################################################################
 # protocol configuration section                                               #
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -298,7 +298,7 @@ foreach statValList [ixNet getAttr $viewPage -rowValues] {
 puts "***************************************************"
 
 ################################################################################
-# On the fly section                                                           #  
+# On the fly section                                                           #
 ################################################################################
 puts "Changing the Lable Value on the Fly"
 ixNet setAttr [ixNet getAttribute $bgp1/bgpSRTEPoliciesListV4/bgpSRTEPoliciesTunnelEncapsulationListV4/bgpSRTEPoliciesSegmentListV4/bgpSRTEPoliciesSegmentsCollectionV4 -label]/singleValue -value "1000"

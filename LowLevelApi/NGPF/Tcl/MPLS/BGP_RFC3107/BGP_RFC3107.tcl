@@ -184,10 +184,10 @@ set bgp1 [ixNet getList $ip1 bgpIpv4Peer]
 set bgp2 [ixNet getList $ip2 bgpIpv4Peer]
 
 puts "Enabling BGP 3107 advertising capability in BGP Peer"
-ixNet setMultiAttribute $bgp1 -ipv4MplsCapability true 
+ixNet setMultiAttribute $bgp1 -ipv4MplsCapability true
 ixNet commit
 
-ixNet setMultiAttribute $bgp2 -ipv4MplsCapability true 
+ixNet setMultiAttribute $bgp2 -ipv4MplsCapability true
 ixNet commit
 
 puts "Setting IPs in BGP DUT IP tab"
@@ -204,10 +204,10 @@ set networkGroup2 [lindex [ixNet getList $t2devices networkGroup] 0]
 
 puts "Configuring the number of addresses"
 set ipv4PrefixPools1 [ixNet getList $networkGroup1 ipv4PrefixPools]
-ixNet setMultiAttribute $ipv4PrefixPools1 -numberOfAddresses 5 
+ixNet setMultiAttribute $ipv4PrefixPools1 -numberOfAddresses 5
 ixNet commit
 set ipv4PrefixPools1 [lindex [ixNet remapIds $ipv4PrefixPools1] 0]
-		
+
 set ipv4PrefixPools2 [ixNet getList $networkGroup2 ipv4PrefixPools]
 ixNet setMultiAttribute $ipv4PrefixPools2 -numberOfAddresses 5
 ixNet commit
@@ -215,12 +215,12 @@ set ipv4PrefixPools2 [lindex [ixNet remapIds $ipv4PrefixPools2] 0]
 
 puts "Enabling BGP 3107 in BGP IP Route Ranges"
 set bgpIPRouteProp1 [ixNet add $ipv4PrefixPools1 "bgpIPRouteProperty"]
-ixNet setMultiAttribute $bgpIPRouteProp1 -advertiseAsBgp3107 true 
+ixNet setMultiAttribute $bgpIPRouteProp1 -advertiseAsBgp3107 true
 ixNet commit
 set bgpIPRouteProp1 [lindex [ixNet remapIds $bgpIPRouteProp1] 0]
 
 set bgpIPRouteProp2 [ixNet add $ipv4PrefixPools2 "bgpIPRouteProperty"]
-ixNet setMultiAttribute $bgpIPRouteProp2 -advertiseAsBgp3107 true 	
+ixNet setMultiAttribute $bgpIPRouteProp2 -advertiseAsBgp3107 true
 ixNet commit
 set bgpIPRouteProp2 [lindex [ixNet remapIds $bgpIPRouteProp2] 0]
 
@@ -245,7 +245,7 @@ puts "Enabling IPv4 MPLS Learned Information for BGP Routers"
 ixNet setAttr [ixNet getAttr $bgp1 -filterIpV4Mpls]/singleValue -value true
 ixNet setAttr [ixNet getAttr $bgp2 -filterIpV4Mpls]/singleValue -value true
 ixNet commit
-		
+
 puts "Configuring the multipliers (number of sessions)"
 ixNet setAttr $networkGroup1 -multiplier 5
 ixNet setAttr $networkGroup2 -multiplier 5
@@ -309,7 +309,7 @@ set destination  [list $networkGroup2/ipv4PrefixPools:1]
 ixNet setMultiAttribute $endpointSet1\
     -name                  "EndpointSet-1"\
 	-sources               $source\
-	-destinations          $destination\	
+	-destinations          $destination\
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking -trackBy \

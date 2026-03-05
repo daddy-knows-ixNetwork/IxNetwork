@@ -14,7 +14,7 @@
 #    This script is a sample to show how to use customer's existing HL API parameters/values
 #    and automatically ...
 #        - Create one Traffic Item and circuit_type = Quick Flow
-#        - Get all the configured vports (excluding the TxPort) and 
+#        - Get all the configured vports (excluding the TxPort) and
 #          add all vports to the HLAPI parameter -port_handle2 as receiving ports.
 #        - Enable traffic item Ingress tracking.
 #        - Regenerate Traffic Item.
@@ -67,11 +67,11 @@ proc ConfigQuickFlowGroup {trafficParam} {
     #    Using IxExplorer-FT HL APIs to configure IxNetwork Quick Flow Group.
     #    For Quick Flow Group, only one Traffic Item is allowed and required.
     #    If you have multiple streams (QFG), they all fall under this Traffic Item.
-    
+
     upvar $trafficParam params
 
     set portHandle $params(-port_handle)
-    array unset params -port_handle 
+    array unset params -port_handle
 
     # Create just ONE Traffic Item for Quick Flow Group. Cannot and should not create more than one Traffic Item.
     # After creating one Traffic Item, you could add multiple Quick Flow Groups.
@@ -86,7 +86,7 @@ proc ConfigQuickFlowGroup {trafficParam} {
 	set quickFlowGroupObj [lindex [ixNet remapIds $quickFlowGroupObj] 0]
 	puts "QuickFlowGroupObj: $quickFlowGroupObj"
     }
-    
+
     # Create a list of receiving ports and exclude the transmitting port
     puts "ConfigQuickFlowGroup: [array get params name]"
     set portList {}
@@ -98,25 +98,25 @@ proc ConfigQuickFlowGroup {trafficParam} {
 	}
     }
     puts "\nAll vport list for Rx ports: $portList"
-    
+
     # Add the receiving port(s) and make the Traffic Item type as quick_flows
     #params.update({'port_handle': portHandle, 'port_handle2': ' '.join(portList), 'circuit_type':'quick_flows'})
     set params(-port_handle) $portHandle
     set params(-port_handle2) [list $portList]
     set params(-circuit_type) quick_flows
-    
+
     foreach {properties values} [array get params *] {
 	set property [lindex [split $properties ,] end]
 	append paramList "$property $values "
     }
-    
+
     puts "\nConfiguring HLT params: $paramList"
     set status [eval ::ixia::traffic_config $paramList]
     if {[keylget status status] != $::SUCCESS} {
 	puts "\nError: traffic_config failed: $status\n"
     }
     puts "\nconfig_traffic status: $status"
-    
+
     # Enable ingress tracking
     puts "\nEnabling Quick Flow Group statistics tracking"
     set quickFlowGroupObj [lindex [ixNet getList [ixNet getRoot]/traffic trafficItem] 0]
@@ -145,7 +145,7 @@ proc StartTrafficNgpfHlt {} {
     if {[keylget startTrafficStatus status] != $::SUCCESS} {
 	puts "\nError StartTrafficHlt: $startTrafficStatus\n"
 	return 1
-    } 
+    }
 
     # By including VerifyTrafficState, it will wait up to 15 seconds until
     # traffic is started before returning.
@@ -159,7 +159,7 @@ proc StopTrafficNgpfHlt {} {
     if {[keylget stopTrafficStatus status] != $::SUCCESS} {
 	puts "\nError StopTrafficNgpfHlt: $stopTrafficStatus\n"
 	return 1
-    } 
+    }
     after 5000
     return 0
 }
@@ -178,7 +178,7 @@ proc VerifyTrafficState {} {
 		return 1
 	    }
 	}
-	
+
 	if {$trafficState == "started"} {
 	    puts "VerifyTrafficState: Traffic Started"
 	    break
@@ -274,7 +274,7 @@ proc GetStats {{viewName "Traffic Item Statistics"}} {
     #    'PIMv6 IF Per Port'
 
     set root [ixNet getRoot]
-    set viewList [ixNet getList $root/statistics view]    
+    set viewList [ixNet getList $root/statistics view]
     set statViewIndex [lsearch -nocase -regexp $viewList $viewName]
     set view [lindex $viewList $statViewIndex]
     puts "\nview: $view"
@@ -286,7 +286,7 @@ proc GetStats {{viewName "Traffic Item Statistics"}} {
 
     set columnList [ixNet getAttribute ${view}/page -columnCaptions]
     #puts "\n$columnList\n"
-    
+
     set startTime 1
     set stopTime 30
     while {$startTime < $stopTime} {
@@ -300,7 +300,7 @@ proc GetStats {{viewName "Traffic Item Statistics"}} {
     }
     #puts "\ntotal Pages: $totalPages"
 
-    # Iterrate through each page 
+    # Iterrate through each page
     set row 0
     for {set currentPage 1} {$currentPage <= $totalPages} {incr currentPage} {
 	puts "\nGetStatView: Getting statistics on page: $currentPage/$totalPages. Please wait ..."
@@ -311,7 +311,7 @@ proc GetStats {{viewName "Traffic Item Statistics"}} {
 	            return 1
 	}
 	ixNet commit
-	
+
 	# Wait for statistics to populate on current page
 	set whileLoopStopCounter 0
 	while {[ixNet getAttribute $view/page -isReady] != "true"} {
@@ -325,7 +325,7 @@ proc GetStats {{viewName "Traffic Item Statistics"}} {
 	    }
 	            incr whileLoopStopCounter
 	}
-	
+
 	set pageList [ixNet getAttribute $view/page -rowValues] ;# first list of all rows in the page
 	set totalFlowStatistics [llength $pageList]
 
@@ -339,7 +339,7 @@ proc GetStats {{viewName "Traffic Item Statistics"}} {
 
 		# cellList: 1/1/1 1/1/2 TI0-Flow_1 1.1.1.1-1.1.2.1 4000 4000 0 0 0 0 256000 0 0 0 0 0 0 0 0 0 0 0 00:00:00.684 00:00:00.700
 		set cellList [lindex $rowList $rowIndex] ;# third list of cell values
-		
+
 		puts "\n  $row:"
 		for {set index 0} {$index <[llength $cellList]} {incr index} {
 		    keylset getStats flow.$row.[join [lindex $columnList $index] _] [lindex $cellList $index]
@@ -347,7 +347,7 @@ proc GetStats {{viewName "Traffic Item Statistics"}} {
 		}
 	    }
 	}
-    }  
+    }
     ixNet setAttribute $view -enabled false
     ixNet commit
 

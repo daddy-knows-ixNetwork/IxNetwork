@@ -68,7 +68,7 @@
 ################################################################################
 
 ################################################################################
-# Please ensure that PERL5LIB environment variable is set properly so that 
+# Please ensure that PERL5LIB environment variable is set properly so that
 # IxNetwork.pm module is available. IxNetwork.pm is generally available in
 # C:\<IxNetwork Install Path>\API\Perl
 ################################################################################
@@ -86,13 +86,13 @@ sub assignPorts {
 	my $port2    = $my_resource[6];
 	my $vport1   = $my_resource[7];
 	my $vport2   = $my_resource[8];
-	
+
 	my $root = $ixNet->getRoot();
 	my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-	
+
 	my $chassisObj2 = '';
 	if ($chassis1 ne $chassis2) {
 	    $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -102,7 +102,7 @@ sub assignPorts {
 	} else {
 	    $chassisObj2 = $chassisObj1;
 	}
-	
+
 	my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -111,7 +111,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-		
+
     $ixNet->commit();
 }
 
@@ -123,7 +123,7 @@ my $ixTclServer = '10.216.104.58';
 my $ixTclPort   = '8919';
 my @ports       = (('10.216.108.99', '11', '3'), ('10.216.108.99', '11', '4'));
 
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
@@ -136,7 +136,7 @@ $ixNet->execute('newConfig');
 ################################################################################
 #  Protocol configuration section. Configure ISIS as per the description
 #  give above
-################################################################################ 
+################################################################################
 # Adding Virtual ports
 print("Adding 2 vports\n");
 $ixNet->add($ixNet->getRoot(), 'vport');
@@ -240,20 +240,20 @@ $ixNet->commit();
 print("Disabling the checkbox 'Use This Device As Ingress' for the 2nd Tunnel in 1st device of IPv6 SR Ext\n");
 my $useAsIngress = $ixNet->getAttribute($ipv6sr, '-useAsIngress');
 my $OverlayIngress = $ixNet->add($useAsIngress, 'overlay');
-$ixNet->setAttribute($OverlayIngress, '-count', '1', 
-                                      '-index', '2', 
-                                      '-indexStep', '0', 
-                                      '-valueStep', 'false', 
+$ixNet->setAttribute($OverlayIngress, '-count', '1',
+                                      '-index', '2',
+                                      '-indexStep', '0',
+                                      '-valueStep', 'false',
                                       '-value', 'false');
 $ixNet->commit();
 
 print("Setting values to 'Segment Left' field for the 2nd tunnel of device 1\n");
 my $segmentsLeft = $ixNet->getAttribute($ipv6sr, '-segmentsLeft');
 my $OverlaySL = $ixNet->add($segmentsLeft, 'overlay');
-$ixNet->setAttribute($OverlaySL, '-count', '1', 
-                                 '-index', '2', 
-                                 '-indexStep', '0', 
-                                 '-valueStep', '3', 
+$ixNet->setAttribute($OverlaySL, '-count', '1',
+                                 '-index', '2',
+                                 '-indexStep', '0',
+                                 '-valueStep', '3',
                                  '-value', '3');
 $ixNet->commit();
 
@@ -261,10 +261,10 @@ print("Disabling the checkbox 'Enable Segment 4' for the 1st Tunnel in 1st devic
 my $IPv6SegmentsList4 = ($ixNet->getList($ipv6sr, 'IPv6SegmentsList'))[3];
 my $sIDEnable = $ixNet->getAttribute($IPv6SegmentsList4, '-sIDEnable');
 my $OverlaySID = $ixNet->add($sIDEnable, 'overlay');
-$ixNet->setMultiAttribute($OverlaySID, '-count', '1', 
-                                       '-index', '1', 
-                                       '-indexStep', '0', 
-                                       '-valueStep', 'false', 
+$ixNet->setMultiAttribute($OverlaySID, '-count', '1',
+                                       '-index', '1',
+                                       '-indexStep', '0',
+                                       '-valueStep', 'false',
                                        '-value', 'false');
 $ixNet->commit();
 
@@ -284,7 +284,7 @@ $ixNet->execute('startAllProtocols');
 sleep(60);
 
 ################################################################################
-## Configure L2-L3 traffic 
+## Configure L2-L3 traffic
 #################################################################################
 
 print ("Congfiguring L2-L3 IPv4 Traffic Item\n");
@@ -343,13 +343,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -366,4 +366,3 @@ sleep(5);
 print("Stopping All Protocols");
 $ixNet->execute('stopAllProtocols');
 print("!!! Test Script Ends !!!\n");
-

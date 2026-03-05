@@ -3,14 +3,14 @@
 # Connecting to multiple Ixia chassis's.
 
 # About daisy chaining Ixia chassis's:
-# 
-# There's nothing that needs to be done. IxNetwork and IxExplorer 
+#
+# There's nothing that needs to be done. IxNetwork and IxExplorer
 # will recognize which are the Master and Slave (and actually, they don't care).
-# Turn on the Master chassis first, and bring up IxServer. Once IxServer says it's 
-# master, you can turn up the Slave chassis and bring up IxServer on that chassis. 
+# Turn on the Master chassis first, and bring up IxServer. Once IxServer says it's
+# master, you can turn up the Slave chassis and bring up IxServer on that chassis.
 # Make sure IxServer on that chassis recognizes it's a slave.
 
-# Add the chassis and  ports to the IxNetwork config (slave or master doesn't matter). 
+# Add the chassis and  ports to the IxNetwork config (slave or master doesn't matter).
 # In IxExplorer, just connect to both the chassis. Again master or slave doesn't matter.
 
 # Whenever connecting from a Linux machine, always include -tcl_server, and

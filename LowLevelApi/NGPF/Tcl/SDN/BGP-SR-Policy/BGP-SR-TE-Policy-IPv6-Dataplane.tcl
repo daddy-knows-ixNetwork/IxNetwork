@@ -70,7 +70,7 @@ ixNet exec newConfig
 
 ################################################################################
 # protocol configuration section                                               #
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -302,7 +302,7 @@ foreach statValList [ixNet getAttr $viewPage -rowValues] {
 puts "***************************************************"
 
 ################################################################################
-# On the fly section                                                           #  
+# On the fly section                                                           #
 ################################################################################
 puts "Changing the SID Value on the Fly"
 ixNet setAttr [ixNet getAttribute $bgp1/bgpSRTEPoliciesListV6/bgpSRTEPoliciesTunnelEncapsulationListV6/bgpSRTEPoliciesSegmentListV6/bgpSRTEPoliciesSegmentsCollectionV6 -ipv6SID]/singleValue -value "3333:0:0:0:0:0:0:1"
@@ -329,7 +329,7 @@ set table [lindex [ixNet getList $learnedInfo table] 1]
 set learnedInfoColumnsList [ixNet getAttr $table -columns]
 set learnedInfoValuesList [ixNet getAttr $table -values]
 puts "***************************************************"
-puts $learnedInfoColumnsList 
+puts $learnedInfoColumnsList
 puts "***************************************************"
 
 puts "***************************************************"

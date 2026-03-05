@@ -105,12 +105,12 @@ proc printTrafficWarningsAndErrors {{tiList "Unused for now"}} {
     if {$it == 0} {puts "Traffic had no errors nor warnings."}
     return 0
 }
-	
+
 proc generateApplyTraffic {} {
     puts "using the procedure from 5.40TrafficCommonUtils.tcl"
     set flag 1
     set traffic [ixNet getRoot]/traffic
-    
+
 	# Generating Traffic
 	puts "Generating the traffic..."
 	foreach TI traffic {
@@ -120,7 +120,7 @@ proc generateApplyTraffic {} {
 			return $flag
 		}
     }
-	
+
 	ixNet setAttribute ::ixNet::OBJ-//traffic -refreshLearnedInfoBeforeApply false
 	ixNet commit
 
@@ -147,7 +147,7 @@ proc generateApplyTraffic {} {
     #---------------------------------------------------------------------------
     ixNet connect $::py::ixTclServer -port $::py::ixTclPort -version 7.20
     puts "connectToClient Successful"
-    
+
     #---------------------------------------------------------------------------
     #Cleaning up all the existing configurations from client
     #---------------------------------------------------------------------------
@@ -165,7 +165,7 @@ proc generateApplyTraffic {} {
     if  {[ixNet exec loadConfig [ixNet readFrom $config_file ]] != "::ixNet::OK"} {
     error "Loading IxNetwork config file FAILED "
     }
-    
+
     #---------------------------------------------------------------------------
     # Remove the last used chassis in the config
     #---------------------------------------------------------------------------
@@ -178,9 +178,9 @@ proc generateApplyTraffic {} {
         if {[catch {ixNet commit} err] != 0} {
             error "Commit Failed: $err"
         }
-    }    
-    
-    #--------------------------------------------------------------------------- 
+    }
+
+    #---------------------------------------------------------------------------
     # get the virtual port list and real port list
     #---------------------------------------------------------------------------
     # Assign real ports to virtual ports
@@ -188,11 +188,11 @@ proc generateApplyTraffic {} {
     set vPorts [ixNet getList [ixNet getRoot] vport]
     set vPort1 [lindex $vPorts 0]
     set vPort2 [lindex $vPorts 1]
-    
+
     puts "Assign virtual ports to real ports"
     set status [::ixTclNet::AssignPorts $::py::ports {} $vPorts force]
     puts "Assigned: $status"
-        
+
     # Check if port assign was ok
     puts "Checking if Ports were assigned correctly"
     foreach port $vPorts {
@@ -201,10 +201,10 @@ proc generateApplyTraffic {} {
             if {[::ixNet exec connectPort $port] != "::ixNet::OK"} {
                error "Unable to connect $port"
             }
-        }        
+        }
     }
     puts "Ports assigned."
-    
+
 	# #---------------------------------------------------------------------------
     # # Starting protocols and wait for protocols to be started
     # #---------------------------------------------------------------------------
@@ -215,16 +215,16 @@ proc generateApplyTraffic {} {
        error "FAILED : Starting Protocol"
     }
 	after 60000
-	
+
 	# #---------------------------------------------------------------------------
     # # Marking the fields for on the fly change
     # #---------------------------------------------------------------------------
-	
+
 	set TI [ixNet getL [ixNet getRoot]/traffic trafficItem]
 	set Traffic [ixNet getL / traffic]
 	set i 1
 	foreach IndTI $TI {
-		set TIname [ixNet getA $IndTI -name] 
+		set TIname [ixNet getA $IndTI -name]
 		set stream [ixNet getL $IndTI highLevelStream]
 		foreach Indstream $stream {
 			set streamname [ixNet getA $Indstream -name]
@@ -250,33 +250,33 @@ proc generateApplyTraffic {} {
 					ixNet setA $HopLimit -onTheFlyMask ff
 					ixNet setA $DstIP6 -onTheFlyMask ffffffffffffffffffffffffffffffff
 				}
-				
+
 				puts "\n"
-			} 
+			}
 		}
 	}
 	ixNet commit
-	ixNet exec applyOnTheFlyTrafficChanges $Traffic	
-	
-		
+	ixNet exec applyOnTheFlyTrafficChanges $Traffic
+
+
 	# #---------------------------------------------------------------------------
 	# # Generate and Apply traffic                                               #
 	# #---------------------------------------------------------------------------
-	
+
 	set root [ixNet getRoot]
 	set traffic $root/traffic
 
 	if {[generateApplyTraffic]} {
 		error "Failed to Generate and Apply traffic"
 	}
-	
+
 	after 30000
-	
-	
+
+
 	#---------------------------------------------------------------------------
 	# Start traffic
 	#---------------------------------------------------------------------------
-	
+
 	puts "Starting Traffic ..."
 	set startTraffic [catch {::ixNet exec startStatelessTraffic $traffic} errMsg]
 	if {$startTraffic} {
@@ -285,7 +285,7 @@ proc generateApplyTraffic {} {
 		return $flag
 	}
 	puts "Traffic started successfully !!!"
-	
+
 	set count 0
 	puts "Waiting for traffic to start (Checking Traffic State) ..."
 	while { [ixNet getAttr $traffic -state] != "started" } {
@@ -298,17 +298,17 @@ proc generateApplyTraffic {} {
 	}
 	puts "Traffic started successfully ...(in $count sec)"
 
-	after 15000	
-	
+	after 15000
+
 	#################################################################################
 	#   Changing Header Fields On The Fly                                           #
 	#################################################################################
-	
+
 	set TI [ixNet getL [ixNet getRoot]/traffic trafficItem]
 	set Traffic [ixNet getL / traffic]
 	set i 1
 	foreach IndTI $TI {
-		set TIname [ixNet getA $IndTI -name] 
+		set TIname [ixNet getA $IndTI -name]
 		set stream [ixNet getL $IndTI highLevelStream]
 		foreach Indstream $stream {
 			set streamname [ixNet getA $Indstream -name]
@@ -334,24 +334,24 @@ proc generateApplyTraffic {} {
 					ixNet setA $HopLimit -singleValue 120
 					ixNet setA $DstIP6 -valueList [list 9000:0:$i:0:0:0:0:1  9000:0:[expr $i+1]:0:0:0:0:1]
 				}
-				
+
 				puts "\n"
-			} 
+			}
 		}
 	}
 	ixNet commit
 	ixNet exec applyOnTheFlyTrafficChanges $Traffic
-	
-	
+
+
 	#################################################################################
 	#   Verification of changed fields on the fly                                   #
 	#################################################################################
-	
+
 	set TI [ixNet getL [ixNet getRoot]/traffic trafficItem]
 	set Traffic [ixNet getL / traffic]
 	set i 1
 	foreach IndTI $TI {
-		set TIname [ixNet getA $IndTI -name] 
+		set TIname [ixNet getA $IndTI -name]
 		set stream [ixNet getL $IndTI highLevelStream]
 		foreach Indstream $stream {
 			set streamname [ixNet getA $Indstream -name]
@@ -369,7 +369,7 @@ proc generateApplyTraffic {} {
 					set Identification [lindex $fld 18]
 					set DstIP [lindex $fld 27]
 					set Ident [ixNet getA $Identification -fieldValue]
-					set DestinationIP [ixNet exec getLearntInfo $DstIP] 
+					set DestinationIP [ixNet exec getLearntInfo $DstIP]
 					puts "Identification value after OTF is ... $Ident"
 					puts "Destination IP's after OTF changes are ... $DestinationIP"
 				}
@@ -382,16 +382,16 @@ proc generateApplyTraffic {} {
 					puts "Hoplimit after OTF change is ... $hoplimit"
 					puts "Destination IP after OTF changes are ... $DestinationIP6"
 				}
-				
+
 				puts "\n"
-			} 
+			}
 		}
 	}
-	
-	
+
+
 ########################
 ####### TEST BODY END
-########################    
+########################
 
 puts "Cleaning up the client: "
 
@@ -406,8 +406,8 @@ puts "    3. Performing New Config"
 if {[catch {ixNet exec newConfig} err] != 0} {
     error "Clean-up Failed: $err"
 }
-after 2000    
-    
+after 2000
+
 puts "DONE"
-        
+
 return $PASSED

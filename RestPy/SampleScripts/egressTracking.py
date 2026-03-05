@@ -84,7 +84,7 @@ egressStatViewName = 'EgressStats'
 
 # This is optional.
 # Set to None if you don't want to include ingress tracking in the egress stat view that you're about to create for egress tracking.
-#   - Initially, set to None since you don't know the filter name yet. In this example, VLAN:VLAN-ID. 
+#   - Initially, set to None since you don't know the filter name yet. In this example, VLAN:VLAN-ID.
 #   - Then run this script.
 #   - On your terminal, you will see a list of tracking filter names like shown below:
 #         ID: 1  VLAN:VLAN-ID  <-- For this example, going to track ingressing vlanID.
@@ -136,7 +136,7 @@ def configEgressCustomTracking(trafficItemObj, offsetBits, widthBits):
 
 
 try:
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin', 
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin',
                                SessionName=None, SessionId=None, ApiKey=None,  ClearConfig=True, LogLevel='all')
 
     ixNetwork = session.Ixnetwork
@@ -194,7 +194,7 @@ try:
 
     ixNetwork.info('Add endpoint flow group')
     trafficItemObj.EndpointSet.add(Sources=topology1, Destinations=topology2)
-    
+
 
     # Note: A Traffic Item could have multiple EndpointSets (Flow groups).
     #       Therefore, ConfigElement is a list.
@@ -294,7 +294,7 @@ try:
 
     flowStatistics = session.StatViewAssistant(egressStatViewName)
 
-    # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL. 
+    # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL.
     # Examples:
     #    flowStatistics.AddRowFilter('Port Name', flowStatistics.REGEX, '^Port 1$')
     #    flowStatistics.AddRowFilter('Tx Frames', flowStatistics.LESS_THAN, 50000)
@@ -309,5 +309,3 @@ except Exception as errMsg:
     print('\n%s' % traceback.format_exc(None, errMsg))
     if debugMode == False and 'session' in locals():
         session.Session.remove()
-
-    

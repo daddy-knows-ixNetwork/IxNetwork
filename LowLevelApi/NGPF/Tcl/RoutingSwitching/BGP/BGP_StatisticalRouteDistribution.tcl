@@ -78,7 +78,7 @@ ixNet exec newConfig
 
 ################################################################################
 # Protocol configuration section                                               #
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -185,7 +185,7 @@ ixNet commit
 # Generate IPv4 Statistical Routes in Topology2                                #
 ################################################################################
 puts "Generating routes statistically"
-set networkGroup [ixNet add $t2dev1 networkGroup] 
+set networkGroup [ixNet add $t2dev1 networkGroup]
 ixNet commit
 set networkGroup [ixNet remapId $networkGroup]
 set ipv4PrefixPools [ixNet add $networkGroup ipv4PrefixPools]
@@ -230,7 +230,7 @@ foreach statValList [ixNet getAttr $viewPage -rowValues] {
 puts "***************************************************"
 
 ################################################################################
-# On the fly section                                                           #  
+# On the fly section                                                           #
 ################################################################################
 puts "Enabling IPv4 Unicast Learned Information for BGP Router"
 ixNet setAttr [ixNet getAttr $bgp1 -filterIpV4Unicast]/singleValue -value true

@@ -102,17 +102,17 @@ try:
         else:
             raise IxNetRestApiException('\nPorts are owned by another user and forceTakePortOwnership is set to False. Exiting test.')
 
-    fileMgmtObj = FileMgmt(mainObj)    
+    fileMgmtObj = FileMgmt(mainObj)
     # localFile=True if config file is not located in the Windows c: drive.
     fileMgmtObj.loadConfigFile(configFile, localFile=True)
-    
+
     portObj.releasePorts(portList)
     mainObj.configLicenseServerDetails([licenseServerIp], licenseModel, licenseTier)
 
     portObj = PortMgmt(mainObj)
     portObj.assignPorts(portList, forceTakePortOwnership)
     portObj.verifyPortState()
-    
+
     protocolObj = Protocol(mainObj)
 
     # MODIFY BGP CONFIG:

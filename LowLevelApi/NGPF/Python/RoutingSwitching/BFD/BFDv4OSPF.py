@@ -209,7 +209,7 @@ print ('ixNet.help(\'::ixNet::OBJ-/topology/deviceGroup/ethernet/ipv4\')')
 print (ixNet.help('::ixNet::OBJ-/topology/deviceGroup/ethernet/ipv4'))
 
 ###########################################################################
-#Add and Configure BFDv4 Interface 
+#Add and Configure BFDv4 Interface
 ###########################################################################
 print("Adding BFDv4 and Configuring")
 ixNet.add(ip1, 'bfdv4Interface')
@@ -312,7 +312,7 @@ except :
 time.sleep(10)
 
 ###############################################################################
-# Retrieve protocol learned info                                              # 
+# Retrieve protocol learned info                                              #
 ###############################################################################
 print("Fetching BFD learned info")
 ixNet.execute('getLearnedInfo', bfdv41, '1')

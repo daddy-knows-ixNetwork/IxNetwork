@@ -44,20 +44,20 @@
 #                                                                              #
 ################################################################################
 
-#####################################################################################################        
+#####################################################################################################
 #                                                                                                   #
 # Description:                                                                                      #
-#    This script intends to demonstrate how to use Flex-Algo Over  ISIS-SRv6 Using TCL APIs.        #  
+#    This script intends to demonstrate how to use Flex-Algo Over  ISIS-SRv6 Using TCL APIs.        #
 #                                                                                                   #
-#    1. It will create 2 ISISL3 topologies with Flex Algorithm enabled, each having an ipv6 network #                    
+#    1. It will create 2 ISISL3 topologies with Flex Algorithm enabled, each having an ipv6 network #
 #       topology and loopback devicegroup behind the network group(NG) with loopback interface.     #
 #    2. Configure ISIS with SRv6.                                                                   #
 #    3. Configure Flex-Algo related fields one by one.                                              #
 #    4. Start protocols                                                                             #
 #    5. Retrieve protocol statistics.                                                               #
 #    6. Retrieve protocol learned info.                                                             #
-#    7. Stop all protocols.                                                                         #                                                                                          
-#####################################################################################################                     
+#    7. Stop all protocols.                                                                         #
+#####################################################################################################
 
 # Script Starts
 puts "!!! Test Script Starts !!!"

@@ -1,34 +1,34 @@
 """
 bgpevpnvpws.py:
-   This script intends to demonstrate how to use NGPF BGP EVPN-VPWS API.     
-    About Topology:                                                           
-       It will create 2 BGP EVPN-VPWS topologies, each having LDP configured  
-       in connected Device Group .BGP EVPN-VPWS configured in chained device  
-       group along with Mac pools connected behind the chained Device Group.   
-    Script Flow:                                                                 
-        Step 1. Configuration of protocols.                                   
-                                                                              
-    Configuration flow of the script is as follow:                            
-       i.    Adding of Ethernet and IP within both topologies,                 
-       ii.   Ading and configuration of OSPF and LDP router over IP           
-       iii.  Adding of Route Range behind DG of each topology                 
-       iv.   Configuring loopback address as Router ID                        
-       v.    Adding of chain DG for both topologies, act as PE router         
-       vi.   Adding of BGP over loopback address within chained DG in both    
-               topologies                                                     
-       vii.  Adding of EVPN-VPWS EVI over BGP within both topologies          
-       viii. Adding of MAC cloud behind each EVPN-VPWS EVI                    
-       ix.   Configuring VPWS Service Id and service Id along with label      
-               value and No. of MAC pools                                     
-                                                                              
-    2. Start all protocol.                                                    
-    3. Retrieve protocol statistics.                                          
-    4. Retrieve protocol learned info.                                        
-    5. Configure L2-L3 traffic.                                               
-    6. Start the L2-L3 traffic.                                               
-    7. Retrieve L2-L3 traffic stats.                                          
-    8. Stop L2-L3 traffic.                                                    
-    9. Stop all protocols.   
+   This script intends to demonstrate how to use NGPF BGP EVPN-VPWS API.
+    About Topology:
+       It will create 2 BGP EVPN-VPWS topologies, each having LDP configured
+       in connected Device Group .BGP EVPN-VPWS configured in chained device
+       group along with Mac pools connected behind the chained Device Group.
+    Script Flow:
+        Step 1. Configuration of protocols.
+
+    Configuration flow of the script is as follow:
+       i.    Adding of Ethernet and IP within both topologies,
+       ii.   Ading and configuration of OSPF and LDP router over IP
+       iii.  Adding of Route Range behind DG of each topology
+       iv.   Configuring loopback address as Router ID
+       v.    Adding of chain DG for both topologies, act as PE router
+       vi.   Adding of BGP over loopback address within chained DG in both
+               topologies
+       vii.  Adding of EVPN-VPWS EVI over BGP within both topologies
+       viii. Adding of MAC cloud behind each EVPN-VPWS EVI
+       ix.   Configuring VPWS Service Id and service Id along with label
+               value and No. of MAC pools
+
+    2. Start all protocol.
+    3. Retrieve protocol statistics.
+    4. Retrieve protocol learned info.
+    5. Configure L2-L3 traffic.
+    6. Start the L2-L3 traffic.
+    7. Retrieve L2-L3 traffic stats.
+    8. Stop L2-L3 traffic.
+    9. Stop all protocols.
 Supports IxNetwork API servers:
    - Windows, Windows Connection Mgr and Linux
 Requirements:
@@ -69,7 +69,7 @@ debugMode = False
 
 try:
     # LogLevel: none, info, warning, request, request_response, all
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=11219, UserName='admin', Password='admin', 
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=11219, UserName='admin', Password='admin',
                                SessionName=None, SessionId=None, ApiKey=None,
                                ClearConfig=True, LogLevel="info", LogFilename='restpy.log')
 
@@ -82,7 +82,7 @@ try:
         vport[portName] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name=portName)
 
     portMap.Connect(forceTakePortOwnership)
-    
+
     ixNetwork.info("Creating Topology")
     topology1 = ixNetwork.Topology.add(Name="EVPN Topology 1", Ports=vport['Port_1'])
 
@@ -111,7 +111,7 @@ try:
     ixNetwork.info("Configuring LDP Prefixes")
     ldpPrefixPool1.NetworkAddress.Single("2.2.2.2")
     ldpPrefixPool1.PrefixLength.Single("32")
-    
+
     ixNetwork.info("Adding IPv4 loopback in DeviceGroup behind NetworkGroup")
     chainedDG1 = networkGroup1.DeviceGroup.add(Multiplier=1, Name="Device Group 3")
     loopback1 = chainedDG1.Ipv4Loopback.add(StackedLayers=[], Name="IPv4 Loopback 1")
@@ -132,7 +132,7 @@ try:
 
     broadcastDomain1 = evpnVpws1.BroadcastDomainV4Vpws
 
-    ixNetwork.info("Changing default values of Ethernet tag Id")    
+    ixNetwork.info("Changing default values of Ethernet tag Id")
     broadcastDomain1.EthernetTagId.Single("1000")
 
     ixNetwork.info("Changing default values of Remote Service Id")
@@ -199,7 +199,7 @@ try:
     evpnVpws2 = bgp2.BgpIPv4EvpnVpws.add()
     broadcastDomain2 = evpnVpws2.BroadcastDomainV4Vpws
 
-    ixNetwork.info("Changing default values of Ethernet tag Id")    
+    ixNetwork.info("Changing default values of Ethernet tag Id")
     broadcastDomain2.EthernetTagId.Single("2000")
 
     ixNetwork.info("Changing default values of Remote Service Id")
@@ -242,7 +242,7 @@ try:
             for word in values:
                 print(word)
 
-    
+
     ixNetwork.info("Configuring L2-L3 Traffic Item")
     trafficItem1 = ixNetwork.Traffic.TrafficItem.add(Name="EVPN VXLAN Traffic 1",
     RoundRobinPacketOrdering="false", TrafficType="ipv4")
@@ -268,7 +268,7 @@ try:
     flowStatistics = session.StatViewAssistant('Flow Statistics')
     flowStatistics.AddRowFilter('Traffic Item', flowStatistics.REGEX, '^EVPN.*')
     flowStatistics.AddRowFilter('Loss %', flowStatistics.EQUAL, "0")
-    
+
 
     ixNetwork.info('{}\n'.format(flowStatistics))
 

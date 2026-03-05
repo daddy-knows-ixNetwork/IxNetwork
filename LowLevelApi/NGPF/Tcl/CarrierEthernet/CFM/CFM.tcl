@@ -260,7 +260,7 @@ ixNet setMultiAttribute $configMDLevels2 -numMDLevels 2 -mdLevel1 "1"\
 ixNet commit
 
 
-# Execute configMDLevels command after setting required MD level parameters 
+# Execute configMDLevels command after setting required MD level parameters
 # (To created simultaed topology with paramters configured above)
 
 ixNet execute configMDLevels $configMDLevels2
@@ -313,7 +313,7 @@ puts "************************************************************"
 ###############################################################################
 puts "Fetch CCM, Loopback  and Link Trace learned info... \n"
 
-ixNet exec getCfmCcmLearnedInformation $cfmMp1 1 
+ixNet exec getCfmCcmLearnedInformation $cfmMp1 1
 after 1000
 set linfo [ixNet getList $cfmBridge1 learnedInfo]
 set columns [ixNet getAttribute $linfo -columns]
@@ -405,7 +405,7 @@ ixNet setMultiAttribute $endpointSet1           \
         -ngpfFilters           [list]           \
         -trafficGroups         [list]           \
         -sources               $source          \
-        -destinations          $destination        
+        -destinations          $destination
 ixNet commit
 set endpointSet1 [lindex [ixNet remapIds $endpointSet1] 0]
 ixNet setMultiAttribute $trafficItem1/tracking\

@@ -38,7 +38,7 @@
 # POSSIBILITY OF  SUCH DAMAGES IN ADVANCE.                                     #
 # Ixia Keysight will not be required to provide any software maintenance or    #
 # support services of any kind (e.g. any error corrections) in connection with #
-# script or any part thereof. The user acknowledges that although Ixia Keysight# 
+# script or any part thereof. The user acknowledges that although Ixia Keysight#
 # may     																	   #
 # from time to time and in its sole discretion provide maintenance or support  #
 # services for the script any such services are subject to the warranty and    #
@@ -62,7 +62,7 @@
 
 
 ################################################################################
-# Please ensure that PERL5LIB environment variable is set properly so that 
+# Please ensure that PERL5LIB environment variable is set properly so that
 # IxNetwork.pm module is available. IxNetwork.pm is generally available in
 # C:\<IxNetwork Install Path>\API\Perl
 ################################################################################
@@ -80,13 +80,13 @@ sub assignPorts {
 	my $port2    = $my_resource[6];
 	my $vport1   = $my_resource[7];
 	my $vport2   = $my_resource[8];
-	
+
 	my $root = $ixNet->getRoot();
 	my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-	
+
 	my $chassisObj2 = '';
 	if ($chassis1 ne $chassis2) {
 	    $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -96,7 +96,7 @@ sub assignPorts {
 	} else {
 	    $chassisObj2 = $chassisObj1;
 	}
-	
+
 	my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -105,7 +105,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-		
+
     $ixNet->commit();
 }
 
@@ -116,7 +116,7 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.39.65.1';
 my $ixTclPort   = '9862';
 my @ports       = (('10.39.64.117', '2', '5'), ('10.39.64.117', '2', '6'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
@@ -180,13 +180,13 @@ my $dg2_1 = @dg2[0];
 
 
 print "Add Multiplier to device groups\n";
-$ixNet->setAttribute($dg1_1, 
-	'-multiplier', '2', 
+$ixNet->setAttribute($dg1_1,
+	'-multiplier', '2',
 	'-name', 'PPP Servers');
 $ixNet->commit();
 
-$ixNet->setAttribute($dg2_1, 
-	'-multiplier', '5', 
+$ixNet->setAttribute($dg2_1,
+	'-multiplier', '5',
 	'-name', 'PPP Clients');
 $ixNet->commit();
 
@@ -205,14 +205,14 @@ my $pppox_server = $ixNet->add($mac1_1, 'pppoxserver');
 my $pppox_client = $ixNet->add($mac2_1, 'pppoxclient');
 $ixNet->commit();
 
-$ixNet->setAttribute($pppox_server, 
-	'-sessionsCount', '5', 
-	'-stackedLayers', [], 
+$ixNet->setAttribute($pppox_server,
+	'-sessionsCount', '5',
+	'-stackedLayers', [],
 	'-name', 'PPPoX Server 1');
 $ixNet->commit();
 
-$ixNet->setAttribute($pppox_client, 
-	'-stackedLayers', [], 
+$ixNet->setAttribute($pppox_client,
+	'-stackedLayers', [],
 	'-name', 'PPPoX Client 1');
 $ixNet->commit();
 
@@ -262,7 +262,7 @@ my @sub_tlv_array = $ixNet->getList($req_tlv, 'subTlv');
 my $sub_tlv = @sub_tlv_array[0];
 print "\n sub_tlv: $sub_tlv \n";
 
-#Enable [84] Minimum-Net-Data-Rate-Downstream sub tlv 
+#Enable [84] Minimum-Net-Data-Rate-Downstream sub tlv
 $ixNet->setMultiAttribute($sub_tlv, '-isEnabled', 'true');
 $ixNet->commit();
 
@@ -278,7 +278,7 @@ my @dsl_type_field = $ixNet->getList($dsl_type_tlv_obj[0], 'field');
 my @dsl_type_tlv_field_value = $ixNet->getAttribute($dsl_type_field[0], '-value');
 
 my $dsl_counter_value = $ixNet->add($dsl_type_tlv_field_value[0], 'singleValue');;
-$ixNet->setMultiAttribute($dsl_counter_value, 
+$ixNet->setMultiAttribute($dsl_counter_value,
 	'-value', '456');
 $ixNet->commit();
 
@@ -289,7 +289,7 @@ my @sub_tlv__custom_array = $ixNet->getList($req_custom_tlv, 'subTlv');
 my $sub_tlv_custom = @sub_tlv__custom_array[0];
 print "\n sub_tlv_custom: $sub_tlv_custom \n";
 
-#Enable [84] Minimum-Net-Data-Rate-Downstream sub tlv 
+#Enable [84] Minimum-Net-Data-Rate-Downstream sub tlv
 $ixNet->setMultiAttribute($sub_tlv_custom, '-isEnabled', 'true');
 $ixNet->commit();
 
@@ -305,7 +305,7 @@ my @custom_field = $ixNet->getList($custom_tlv_obj[0], 'field');
 my @custom_tlv_field_value = $ixNet->getAttribute($custom_field[0], '-value');
 
 my $custom_counter_value = $ixNet->add($custom_tlv_field_value[0], 'singleValue');;
-$ixNet->setMultiAttribute($custom_counter_value, 
+$ixNet->setMultiAttribute($custom_counter_value,
 	'-value', '12345');
 $ixNet->commit();
 
@@ -322,7 +322,7 @@ my @custom_type_field = $ixNet->getList($custom_type_tlv_obj[0], 'field');
 my @custom_type_tlv_field_value = $ixNet->getAttribute($custom_type_field[0], '-value');
 
 my $custom_counter_value = $ixNet->add($custom_type_tlv_field_value[0], 'singleValue');;
-$ixNet->setMultiAttribute($custom_counter_value, 
+$ixNet->setMultiAttribute($custom_counter_value,
 	'-value', 'cc');
 $ixNet->commit();
 
@@ -358,7 +358,7 @@ my @access_loop_tlv_field = $ixNet->getList($access_loop_tlv_object[0], 'field')
 my @dsl_type_tlv_field_value = $ixNet->getAttribute($access_loop_tlv_field[0], '-value');
 
 my $access_loop_single_value = $ixNet->add($dsl_type_tlv_field_value[0], 'singleValue');;
-$ixNet->setMultiAttribute($access_loop_single_value, 
+$ixNet->setMultiAttribute($access_loop_single_value,
 	'-value', 'circuit1');
 $ixNet->commit();
 
@@ -368,7 +368,7 @@ $ixNet->commit();
 #############################################################################
 # This part is doing following:
 # 1. Create PON-Access-Line-Attributes
-# 2. Fetch [96] ONT/ONU-Assured-Data-Rate-Upstream handle 
+# 2. Fetch [96] ONT/ONU-Assured-Data-Rate-Upstream handle
 #	 Sub TLV API path is : /topology:2/deviceGroup:1/ethernet:1/pppoxclient:1/tlvProfile/tlv:3/value/object:5/subTlv
 
 
@@ -406,7 +406,7 @@ my @pon_type_field = $ixNet->getList($pon_type_tlv_obj[0], 'field');
 my @pon_type_tlv_field_value = $ixNet->getAttribute($pon_type_field[0], '-value');
 
 my $pon_counter_value = $ixNet->add($pon_type_tlv_field_value[0], 'singleValue');;
-$ixNet->setMultiAttribute($pon_counter_value, 
+$ixNet->setMultiAttribute($pon_counter_value,
 	'-value', '876');
 $ixNet->commit();
 
@@ -414,7 +414,7 @@ $ixNet->commit();
 
 
 ###############################################################################
-#Start protocol 
+#Start protocol
 ###############################################################################
 
 print("\n Starting protocol\n");
@@ -436,13 +436,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 print("PPPox Client  per port Stats\n");
@@ -455,20 +455,20 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 sleep(5);
 
 
 ###############################################################################
-#Stop protocol 
+#Stop protocol
 ###############################################################################
 
 print("\nStopping protocol\n");

@@ -63,7 +63,7 @@
 #    8. Retrieve L2-L3 traffic stats.                                          #
 #    9. Stop L2-L3 traffic.                                                    #
 #   10. Stop all protocols.                                                    #
-#                                                                              # 
+#                                                                              #
 # Ixia Software:                                                               #
 #    IxOS      8.10 EA                                                         #
 #    IxNetwork 8.10 EA                                                         #
@@ -320,7 +320,7 @@ except :
 time.sleep(30)
 
 ###############################################################################
-# Print learned info                                                          # 
+# Print learned info                                                          #
 ###############################################################################
 print("Fetching BGP learned on BGP-SR Topology 2 Router")
 ixNet.execute('getIPv4MplsLearnedInfo', bgp2, '1')
@@ -358,7 +358,7 @@ ixNet.setMultiAttribute(endpointSet1,
     '-trafficGroups',         [],
     '-sources',               source,
     '-destinations',          destination)
-	
+
 ixNet.commit()
 
 ixNet.setMultiAttribute(trafficItem1 + '/tracking',

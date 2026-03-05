@@ -7,7 +7,7 @@
 #                                                                              #
 ################################################################################
 
-####################################################################################    
+####################################################################################
 #                                                                                  #
 #                                LEGAL  NOTICE:                                    #
 #                                ==============                                    #
@@ -42,24 +42,24 @@
 # damages limitations forth herein and will not obligate Keysight to provide       #
 # any additional maintenance or support services.                                  #
 #                                                                                  #
-####################################################################################    
+####################################################################################
 
-##########################################################################################################              
+##########################################################################################################
 #                                                                                                        #
 # Description:                                                                                           #
 #    This script intends to demonstrate how to use SRv6 OAM (Ping/TraceRoute)in L3vpn Over SRv6 TCL APIs #
 #                                                                                                        #
 #    1. It will create 2 ISISL3 topologies, each having an ipv6 network                                  #
-#       topology and loopback device group behind the network group(NG) with                             # 
+#       topology and loopback device group behind the network group(NG) with                             #
 #       loopback interface on it. L3vpn configure behind IPv6 Loopback.                                  #
-#       IPv4 NG configured begind L3vpn DG.                           								     # 
+#       IPv4 NG configured begind L3vpn DG.                           								     #
 #    2. Start the protocol.                                                                              #
 #    3. Retrieve protocol statistics.                                                                    #
 #    4. Send Ping Request to VPN SID.                                                                    #
 #    5. Retrieve Ping Learned information.                                                               #
 #    6. Send Ping Request to VPN SID.                                                                    #
 #    7. Retrieve Traceroute Learned information.                                                         #
-#    8. Stop all protocols.                                                                              #                                                                                          
+#    8. Stop all protocols.                                                                              #
 ##########################################################################################################
 
 # Script Starts
@@ -139,7 +139,7 @@ ixNet.execute('newConfig')
 ################################################################################
 # 1. Protocol configuration section. Configure ISIS as per the description
 #    give above
-################################################################################ 
+################################################################################
 root = ixNet.getRoot()
 assignPorts(ixNet, ports[0], ports[1])
 time.sleep(5)
@@ -290,7 +290,7 @@ single_value_1 = ixNet.add(ipv6Srh_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
-#Configure Locator in isisL3Router in topology 2 
+#Configure Locator in isisL3Router in topology 2
 print "Configure Locator in isisL3Router in topology 2"
 locator_1 = ixNet.getAttribute(t2dev1 + '/isisL3Router:1/isisSRv6LocatorEntryList', '-locator')
 ixNet.setMultiAttribute(locator_1, '-clearOverlays', 'false')
@@ -302,7 +302,7 @@ ixNet.setMultiAttribute(counter_locator,
 	'-direction', 'increment')
 ixNet.commit()
 
-#Configure End SID in isisL3Router in topology 2 
+#Configure End SID in isisL3Router in topology 2
 print "Configure End SID in isisL3Router in topology 2"
 EndSid = ixNet.getAttribute(t2dev1 + '/isisL3Router:1/isisSRv6LocatorEntryList/isisSRv6EndSIDList', '-sid')
 ixNet.setMultiAttribute(EndSid, '-clearOverlays', 'false')
@@ -383,7 +383,7 @@ singleValue = ixNet.add(active, 'singleValue')
 ixNet.setMultiAttribute(singleValue, '-value', 'true')
 ixNet.commit()
 
-#Configure locator in isisL3PseudoRouter in topology 2 
+#Configure locator in isisL3PseudoRouter in topology 2
 print "Configure locator in isisL3PseudoRouter in topology 2"
 locator = ixNet.getAttribute(Network_Topology + '/simRouter:1/isisL3PseudoRouter:1/isisPseudoSRv6LocatorEntryList', '-locator')
 ixNet.setMultiAttribute(locator, '-clearOverlays', 'false')
@@ -395,7 +395,7 @@ ixNet.setMultiAttribute(counter_locator,
 	'-direction', 'increment')
 ixNet.commit()
 
-#Configure End SID in isisL3PseudoRouter in topology 2 
+#Configure End SID in isisL3PseudoRouter in topology 2
 print "Configure End SID in isisL3PseudoRouter in topology 2"
 EndSid = ixNet.getAttribute(Network_Topology + '/simRouter:1/isisL3PseudoRouter:1/isisPseudoSRv6LocatorEntryList/isisPseudoSRv6EndSIDList', '-sid')
 ixNet.setMultiAttribute(EndSid, '-clearOverlays', 'false')
@@ -444,7 +444,7 @@ ixNet.commit()
 Single_Value = ixNet.add(prefix, 'singleValue')
 ixNet.setMultiAttribute(Single_Value,
 	'-value', ' 128')
-ixNet.commit()        
+ixNet.commit()
 address = ixNet.getAttribute(ipv6Loopback, '-address')
 ixNet.setMultiAttribute(address,
 	'-clearOverlays', 'false')
@@ -716,7 +716,7 @@ print "Enable srv6OAMService in BGP+ Peer in Topology 1 and Topology 2"
 ixNet.setMultiAttribute(bgpIpv6Peer_1, '-enableSRv6OAMService', 'true')
 ixNet.commit()
 
-ixNet.setAttribute(bgpIpv6Peer_p2, '-enableSRv6OAMService', 'true') 
+ixNet.setAttribute(bgpIpv6Peer_p2, '-enableSRv6OAMService', 'true')
 ixNet.commit()
 
 
@@ -810,7 +810,7 @@ ixNet.setMultiAttribute(singleValue,'-value', '250')
 ixNet.commit()
 
 
-#Configure the value for field oFlag 
+#Configure the value for field oFlag
 print "Configure the value for field oFlag"
 oFlag = ixNet.getAttribute(srv6OamDestination, '-oFlag')
 singleValue = ixNet.add(oFlag, 'singleValue')
@@ -819,7 +819,7 @@ ixNet.commit()
 
 
 srv6oamSegmentNode = ixNet.getList(srv6OamDestination, 'srv6oamSegmentNode')[0]
-#Configure the value for field segmentAddress 
+#Configure the value for field segmentAddress
 print "Configure the value for field segmentAddress"
 segmentAddress = ixNet.getAttribute(srv6oamSegmentNode, '-segmentAddress')
 counter = ixNet.add(segmentAddress, 'counter')
@@ -829,14 +829,14 @@ ixNet.setMultiAttribute(counter,
 	'-direction', 'increment')
 ixNet.commit()
 
-#Configure the value for field gSIDEnableFlag 
+#Configure the value for field gSIDEnableFlag
 print "Configure the value for field gSIDEnableFlag"
 gSIDEnableFlag = ixNet.getAttribute(srv6oamSegmentNode, '-gSIDEnableFlag')
 singleValue = ixNet.add(gSIDEnableFlag, "singleValue")
 ixNet.setMultiAttribute(singleValue, '-value', 'true')
 ixNet.commit()
 
-#Configure the value for field locatorBlkLen 
+#Configure the value for field locatorBlkLen
 print "Configure the value for field locatorBlkLen"
 locatorBlkLen = ixNet.getAttribute(srv6oamSegmentNode, '-locatorBlkLen')
 singleValue = ixNet.add(locatorBlkLen, "singleValue")
@@ -917,4 +917,3 @@ print "***************************************************"
 print ('Stopping protocols')
 ixNet.execute('stopAllProtocols')
 print ('!!! Test Script Ends !!!')
-

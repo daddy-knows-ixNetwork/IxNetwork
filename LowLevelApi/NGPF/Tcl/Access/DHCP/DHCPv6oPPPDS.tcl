@@ -47,9 +47,9 @@
 #                                                                              #
 # Description:                                                                 #
 #  This script intends to demonstrate how to configure PPPv6 Server and Client #
-#  with DHCPv6 Server and Client. It configures one topology with one Device   # 
-#  Group with the DHCPv6 Server stack over the PPPv6 Server stack and a        #	
-#  corresponding topology containing one Device Group with DHCPv6 Client stack # 
+#  with DHCPv6 Server and Client. It configures one topology with one Device   #
+#  Group with the DHCPv6 Server stack over the PPPv6 Server stack and a        #
+#  corresponding topology containing one Device Group with DHCPv6 Client stack #
 #  over PPPv6 Client stack.                                                    #
 # Module:                                                                      #
 #    The sample was tested on an 10GE LSM XM8S module.                         #
@@ -199,4 +199,3 @@ puts ""
 puts "!!! TEST DONE !!!"
 
 return 0
-

@@ -50,7 +50,7 @@
 #   This script intends to demonstrate how to configure L2TP in a back 	       #
 #   to back scenario.							  	       	       	           #
 #   It configures one topology with one Device Group with LAC and PPP client   #
-#   chained behind it							       	       	    	       # 
+#   chained behind it							       	       	    	       #
 #   and another with LNS and PPP server on top of it.      		     	       #
 # Module:                                                                      #
 #    The sample was tested on an XM4S module.                          	       #

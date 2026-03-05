@@ -131,7 +131,7 @@ proc getAssignedLabelInfo {neighborpair mainCheckLearnedLabelList {exactMatch 1}
 
     log "Refreshing for Learnt Assigned label for Downstream \
             Router neighborpair : $neighborpair...\n"
-    
+
     set count 0
     set isComplete false
     while {$isComplete != true} {
@@ -176,7 +176,7 @@ proc getAssignedLabelInfo {neighborpair mainCheckLearnedLabelList {exactMatch 1}
                     incr isFound
                 }
             }
-            
+
             if {($isFound != 0) && ($mismatch == 0)} {
                 log "Among all $isFound info are present in Assigned \
                      Label Learnt Info List"
@@ -213,7 +213,7 @@ proc getReceivedLabelInfo {neighborpair mainCheckLearnedLabelList {exactMatch 1}
          neighborpair : $neighborpair...\n"
     set count      0
     set isComplete false
-    
+
     while {$isComplete != true} {
         set isComplete [ixNet getAttr $neighborpair -isLearnedInfoRefreshed]
         log "isComplete --> $isComplete"
@@ -268,7 +268,7 @@ proc getReceivedLabelInfo {neighborpair mainCheckLearnedLabelList {exactMatch 1}
             return $isError
         }
     }
-    
+
     set isError 0
     log "All infos not present in Received Label Learnt Info List"
     return $isError
@@ -288,7 +288,7 @@ proc matchAttributeValue {object attr expectedVal} {
     log "\t -$attr : $val (expected $expectedVal) ---> Match"
     set noMatch 0
     return $noMatch
-}    
+}
 
 
 #-------------------------------------------------------------------------------
@@ -304,7 +304,7 @@ proc matchAttributeValue {object attr expectedVal} {
 #-------------------------------------------------------------------------------
 proc verifyCapturedPackets {chassis card port matchFieldList {expPktCnt 1} \
      {index 0}} {
-        
+
     set isError 1
 
     log "Initializing through IxTclHal...."

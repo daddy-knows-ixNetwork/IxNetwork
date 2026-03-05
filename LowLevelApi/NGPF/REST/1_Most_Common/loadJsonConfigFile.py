@@ -92,7 +92,7 @@ try:
     fileMgmtObj = FileMgmt(mainObj)
     jsonData = fileMgmtObj.jsonReadConfig(jsonConfigFile)
 
-    # 8.40: Takes 5 minutes to load/assignPorts on OVA/VE Linux. 
+    # 8.40: Takes 5 minutes to load/assignPorts on OVA/VE Linux.
     fileMgmtObj.importJsonConfigFile(jsonConfigFile, type='newConfig')
     fileMgmtObj.jsonAssignPorts(jsonData, portList, timeout=300)
     portObj.verifyPortState()
@@ -164,7 +164,3 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
         if connectToApiServer == 'windowsConnectionMgr':
             if deleteSessionAfterTest:
                 mainObj.deleteSession()
-
-
-
-

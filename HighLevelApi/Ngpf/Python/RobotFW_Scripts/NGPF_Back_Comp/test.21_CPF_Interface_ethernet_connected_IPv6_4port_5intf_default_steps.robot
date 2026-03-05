@@ -25,31 +25,15 @@ test
 	${vport_list} =  Get From Dictionary  ${result}  vport_list
 	@{portHandles} =  Split String  ${vport_list}
 	Log Many  @{portHandles}
-	
+
 ###############################################################################
-# Configure interface in the test IPv4 
+# Configure interface in the test IPv4
 ################################################################################
-	
-	
-	
+
+
+
 	${result} =  Interface Config  port_handle=@{portHandles}[0] @{portHandles}[1] @{portHandles}[2] @{portHandles}[3]  connected_count=5  ipv6_intf_addr=12::100 13::100 14::100 15::100  ipv6_prefix_length=96 96 96 96  autonegotiation=1  src_mac_addr=00aa.00aa.0001 00bb.00bb.0001 00cc.00cc.0001 00dd.00dd.0001  op_mode=normal  intf_mode=ethernet  duplex=auto  speed=auto
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${intf_eth} =  Get From Dictionary  ${result}  ethernet_handle
 	${intf_ipv6} =  Get From Dictionary  ${result}  ipv6_handle
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	

@@ -43,7 +43,7 @@ class PortMgmt(object):
 
         Parameter
            chassisIp: <str>|<list>: A string or a list of chassis IP addresses.
-           timeout: <int>: Default=30 seconds. The amount of time to wait for the 
+           timeout: <int>: Default=30 seconds. The amount of time to wait for the
                            chassis to be in the ready state.
 
            kwargs: Any chassis attributes and values. For example, if two chassis' are dasisy chained, include:
@@ -70,7 +70,7 @@ class PortMgmt(object):
                 chassisIdObj = response.json()[0]['links'][0]['href']
             else:
                 chassisIdObj = response.json()['links'][0]['href']
- 
+
             self.ixnObj.logInfo('\n', timestamp=False)
 
             # Chassis states: down, polling, ready
@@ -100,7 +100,7 @@ class PortMgmt(object):
         # http://192.168.70.127:11009/api/v1/sessions/1/ixnetwork/availableHardware/chassis/1
         return chassisObjList
 
-    
+
     def disconnectIxChassis(self, chassisIp):
         """
         Description
@@ -124,7 +124,7 @@ class PortMgmt(object):
         """
         Description
            Get the chassis ID based on the chassis IP address.
-        
+
         Parameter
            chassisIp: <str>: The chassis IP address
         """
@@ -337,7 +337,7 @@ class PortMgmt(object):
     def verifyPortConnectionStatus(self, vport=None):
         """
         Description
-           Verify port connection status for errors such as License Failed, 
+           Verify port connection status for errors such as License Failed,
            Version Mismatch, Incompatible IxOS version, or any other error.
         """
         self.ixnObj.logInfo('verifyPortConnectionStatus')
@@ -361,7 +361,7 @@ class PortMgmt(object):
 
             createVports: <bool>: Optional:
                           If True: Create vports to the amount of portList.
-                          If False: Automatically create vport on the server side. Optimized for port bootup performance. 
+                          If False: Automatically create vport on the server side. Optimized for port bootup performance.
 
             rawTraffic: <bool>:  If traffic item is raw, then vport needs to be /vport/{id}/protocols
             resetPortCput: <bool>: Default=False. Some cards like the Novus 10GigLan requires a cpu reboot.
@@ -384,7 +384,7 @@ class PortMgmt(object):
         # Verify if the portList has duplicates.
         self.verifyForDuplicatePorts(portList)
 
-        # Verify if there is existing vports. If yes, user either loaded a saved config file or 
+        # Verify if there is existing vports. If yes, user either loaded a saved config file or
         # the configuration already has vports.
         # If loading a saved config file and reassigning ports, assign ports to existing vports.
         response = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
@@ -424,7 +424,7 @@ class PortMgmt(object):
             # To reboot the port cpu, the ports have to be assigned to a vport first.
             # So it has to be done at this spot.
             self.resetPortCpu(vportList=vportList, portList=portList)
-            self.verifyPortState()            
+            self.verifyPortState()
             raise IxNetRestApiException('assignPort Error: {}'.format(response.json()['message']))
         elif response.json()['state'] == 'IN_PROGRESS':
             raise IxNetRestApiException('assignPort Error: Port failed to boot up after 120 seconds')
@@ -445,7 +445,7 @@ class PortMgmt(object):
                             raise IxNetRestApiException('Port link connection is down: {0}'.format(vport['assignedTo']))
         '''
 
-        # Verify if port license was the cause of the assignport failure 
+        # Verify if port license was the cause of the assignport failure
         if response.json()['state'] in ['ERROR', 'EXCEPTION']:
             vportResponse = self.ixnObj.get(self.ixnObj.sessionUrl+'/vport')
             for vport in vportResponse.json():
@@ -461,7 +461,7 @@ class PortMgmt(object):
                             raise IxNetRestApiException('Port License failed.')
                         if vport['connectionStatus'] == 'connectedLinkDown':
                             raise IxNetRestApiException('Port link connection is down: {0}'.format(vport['assignedTo']))
-                        
+
             raise IxNetRestApiException('AssignPort failed: {}'.format(response.json()))
 
         if response.json()['state'] == 'IN_PROGRESS':
@@ -518,7 +518,7 @@ class PortMgmt(object):
         if response.json()['state'] == 'SUCCESS': return 0
         if response.json()['id'] != '':
             self.ixnObj.waitForComplete(response, url+'/'+response.json()['id'], timeout=120)
-            
+
     def releasePorts(self, portList):
         """
         Description
@@ -544,7 +544,7 @@ class PortMgmt(object):
         Description
             Reset/Reboot ports CPU.
             Must call IxNetRestApi.py waitForComplete() afterwards to verify port state
-        
+
         Parameter
             vportList: <list>: A list of one or more vports to reset.
         """
@@ -647,7 +647,7 @@ class PortMgmt(object):
 
                 self.ixnObj.logInfo('Querying for %s/%s/%s' % (chassisIp, cardId, portId))
                 queryResponse = self.ixnObj.query(data=queryData, silentMode=False)
-                    
+
                 queryResponse.json()['result'][0]['chassis'][0]['ip']
                 queryResponse.json()['result'][0]['chassis'][0]['card'][0]['id']
                 queryResponse.json()['result'][0]['chassis'][0]['card'][0]['port'][0]['portId']
@@ -708,7 +708,7 @@ class PortMgmt(object):
 
         Parameter
            portList: <list>: Format: [[ixChassisIp, cardNumber1, portNumber1], [ixChassisIp, cardNumber1, portNumber2]]
-    
+
         Return
            A list of vports.
            [] if vportList is empty.
@@ -725,7 +725,7 @@ class PortMgmt(object):
                          "nodes": [{"node": "vport", "properties": ["assignedTo"],
                                     "where": [{"property": "assignedTo", "regex": port}]
                                 }]}
-            
+
             queryResponse = self.ixnObj.query(data=queryData, silentMode=False)
             vport = queryResponse.json()['result'][0]['vport']
             if vport == []:
@@ -735,14 +735,14 @@ class PortMgmt(object):
                 # Appending vportList: ['/api/v1/sessions/1/ixnetwork/vport/1', '/api/v1/sessions/1/ixnetwork/vport/2']
                 vportList.append(vport[0]['href'])
         return vportList
-                                
+
     def modifyPortMediaType(self, portList='all', mediaType='fiber'):
         """
         Description
            Modify the port media type: fiber, copper, SGMII
 
         Parameters
-           portList: <'all'|list of ports>: 
+           portList: <'all'|list of ports>:
                      <list>: Format: [[ixChassisIp, str(cardNumber1), str(portNumber1])]...]
                      Or if portList ='all', will modify all assigned ports to the specified mediaType.
 
@@ -767,13 +767,13 @@ class PortMgmt(object):
            Modify Layer 1 Configuration
 
         Parameters
-           portList: <'all'|list of ports>: 
+           portList: <'all'|list of ports>:
                      <list>: Format: [[ixChassisIp, str(cardNumber1), str(portNumber1])]...]
                      Or if portList ='all', will modify all assigned ports to the specified configSettings.
                      Note:  all ports must be of the same type
 
            configSettings: <dict>: L1 Settings. The actual settings depend on the card type.
-                           example for novusHundredGigLan card:   
+                           example for novusHundredGigLan card:
                            configSettings ={'enabledFlowControl': True,
                                             'flowControlDirectedAddress': '01 80 C2 00 00 00 CC',
                                             'txIgnoreRxLinkFaults': False,
@@ -805,14 +805,14 @@ class PortMgmt(object):
             portType = portType.strip('Fcoe')
             self.ixnObj.patch(self.ixnObj.httpHeader+vport+'/l1Config/'+portType, data=configSettings)
 
-            
+
     def configLoopbackPort(self, portList='all', enabled=True):
         """
         Description
            Configure port to loopback.
 
         Parameters
-           portList: <'all'|list of ports>: 
+           portList: <'all'|list of ports>:
                      <list>: Format: [[ixChassisIp, str(cardNumber1), str(portNumber1])]...]
                      Or if portList ='all', will modify all assigned ports to the specified mediaType.
 
@@ -852,24 +852,24 @@ class PortMgmt(object):
            Configure rxFilters and User Defined Stats on a port
 
         Parameters
-           portList: <'all'|list of ports>: 
+           portList: <'all'|list of ports>:
                      <list>: Format: [[ixChassisIp, str(cardNumber1), str(portNumber1])]...]
                      Or if portList ='all', will modify all assigned ports to the specified mediaType.
 
            filterPalette: Filter Palette kwargs.
-           udsNum: <string>:  uds number          
+           udsNum: <string>:  uds number
            udsArgs: uds kwargs.
 
         USAGE EXAMPLE:
-           portMgmtObj.configUdsRxFilters(portList=[['10.113.9.219', '6', '1']], 
+           portMgmtObj.configUdsRxFilters(portList=[['10.113.9.219', '6', '1']],
                                           filterPalette={'pattern1':'01', 'pattern1Mask':'FC',
-                                                         'pattern1Offset':'15', 'pattern1OffsetType':'fromStartOfFrame', 
+                                                         'pattern1Offset':'15', 'pattern1OffsetType':'fromStartOfFrame',
                                           udsNum=1
                                           udsArgs={'isEnabled':'true', 'patternSelector':'pattern1'})
 
-           portMgmtObj.configUdsRxFilters(portList=[['10.113.9.219', '6', '1']], 
+           portMgmtObj.configUdsRxFilters(portList=[['10.113.9.219', '6', '1']],
                                           filterPalette={'pattern2':'03', 'pattern2Mask':'FC',
-                                                         'pattern2Offset':'19', 'pattern2OffsetType':'fromStartOfFrame', 
+                                                         'pattern2Offset':'19', 'pattern2OffsetType':'fromStartOfFrame',
                                           udsNum=2
                                           udsArgs={'isEnabled':'true', 'patternSelector':'pattern2'})
 
@@ -888,4 +888,3 @@ class PortMgmt(object):
             portType = response.json()['type']
             self.ixnObj.patch(self.ixnObj.httpHeader+vport+'/l1Config/rxFilters/filterPalette', data=filterPalette)
             self.ixnObj.patch(self.ixnObj.httpHeader+vport+'/l1Config/rxFilters/uds/'+udsNum, data=udsArgs)
-

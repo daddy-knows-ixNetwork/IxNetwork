@@ -7,7 +7,7 @@
 #                                                                              #
 ################################################################################
 
-####################################################################################    
+####################################################################################
 #                                                                                  #
 #                                LEGAL  NOTICE:                                    #
 #                                ==============                                    #
@@ -42,7 +42,7 @@
 # damages limitations set forth herein and will not obligate Keysight to provide   #
 # any additional maintenance or support services.                                  #
 #                                                                                  #
-####################################################################################   
+####################################################################################
 
 ################################################################################################
 #                                                                                              #
@@ -57,8 +57,8 @@
 #		and SID.                                                                               #
 #    2. Start the OSPFV3 protocol.                                                             #
 #    3. Retrieve protocol statistics.                                                          #
-#    4. Stop all protocols.                                                                    #                                                                                          
-################################################################################################   
+#    4. Stop all protocols.                                                                    #
+################################################################################################
 # Script Starts
 print "!!! Test Script Starts !!!"
 import os
@@ -136,7 +136,7 @@ ixNet.execute('newConfig')
 ################################################################################
 # 1. Protocol configuration section. Configure ISIS as per the description
 #    give above
-################################################################################ 
+################################################################################
 root = ixNet.getRoot()
 assignPorts(ixNet, ports[0], ports[1])
 time.sleep(5)
@@ -268,7 +268,7 @@ single_value_1 = ixNet.add(ipv6Srh_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
-#Change the value flagOfSRv6Cap 
+#Change the value flagOfSRv6Cap
 print "Change the value flagOfSRv6Cap"
 flagOfSRv6Cap_1 = ixNet.getAttribute(ospfv3Rtr_1, '-flagOfSRv6Cap')
 single_value_1 = ixNet.add(flagOfSRv6Cap_1, 'singleValue')
@@ -280,7 +280,7 @@ single_value_1 = ixNet.add(flagOfSRv6Cap_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '4000')
 ixNet.commit()
 
-#Change the value reservedInsideSRv6Cap 
+#Change the value reservedInsideSRv6Cap
 print "Change the value reservedInsideSRv6Cap"
 reservedInsideSRv6Cap_1 = ixNet.getAttribute(ospfv3Rtr_1, '-reservedInsideSRv6Cap')
 single_value_1 = ixNet.add(reservedInsideSRv6Cap_1, 'singleValue')
@@ -292,7 +292,7 @@ single_value_1 = ixNet.add(reservedInsideSRv6Cap_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '3fff')
 ixNet.commit()
 
-#Change the value sRv6NodePrefix 
+#Change the value sRv6NodePrefix
 print "Change the value sRv6NodePrefix"
 sRv6NodePrefix_1 = ixNet.getAttribute(ospfv3Rtr_1, '-sRv6NodePrefix')
 single_value_1 = ixNet.add(sRv6NodePrefix_1, 'singleValue')
@@ -304,7 +304,7 @@ single_value_1 = ixNet.add(sRv6NodePrefix_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '2000:0:0:1:0:0:0:2')
 ixNet.commit()
 
-#Change the value srv6PrefixOptions 
+#Change the value srv6PrefixOptions
 print "Change the value srv6PrefixOptions"
 srv6PrefixOptions_1 = ixNet.getAttribute(ospfv3Rtr_1, '-srv6PrefixOptions')
 single_value_1 = ixNet.add(srv6PrefixOptions_1, 'singleValue')
@@ -317,7 +317,7 @@ ixNet.setMultiAttribute(single_value_1, '-value', '128')
 ixNet.commit()
 
 
-#Change the value advertiseNodeMsd 
+#Change the value advertiseNodeMsd
 print "Change the value advertiseNodeMsd"
 advertiseNodeMsd_1 = ixNet.getAttribute(ospfv3Rtr_1, '-advertiseNodeMsd')
 single_value_1 = ixNet.add(advertiseNodeMsd_1, 'singleValue')
@@ -329,7 +329,7 @@ single_value_1 = ixNet.add(advertiseNodeMsd_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
-#Change the value includeMaxSlMsd 
+#Change the value includeMaxSlMsd
 print "Change the value includeMaxSlMsd"
 includeMaxSlMsd_1 = ixNet.getAttribute(ospfv3Rtr_1, '-includeMaxSlMsd')
 single_value_1 = ixNet.add(includeMaxSlMsd_1, 'singleValue')
@@ -341,7 +341,7 @@ single_value_1 = ixNet.add(includeMaxSlMsd_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
-#Change the value includeMaximumEndPopMsd 
+#Change the value includeMaximumEndPopMsd
 print "Change the value includeMaximumEndPopMsd"
 includeMaximumEndPopMsd_1 = ixNet.getAttribute(ospfv3Rtr_1, '-includeMaximumEndPopMsd')
 single_value_1 = ixNet.add(includeMaximumEndPopMsd_1, 'singleValue')
@@ -353,7 +353,7 @@ single_value_1 = ixNet.add(includeMaximumEndPopMsd_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
-#Change the value includeMaximumHEncapMsd 
+#Change the value includeMaximumHEncapMsd
 print "Change the value includeMaximumHEncapMsd"
 includeMaximumHEncapMsd_1 = ixNet.getAttribute(ospfv3Rtr_1, '-includeMaximumHEncapMsd')
 single_value_1 = ixNet.add(includeMaximumHEncapMsd_1, 'singleValue')
@@ -365,7 +365,7 @@ single_value_1 = ixNet.add(includeMaximumHEncapMsd_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
-#Change the value includeMaximumEndDMsd 
+#Change the value includeMaximumEndDMsd
 print "Change the value includeMaximumEndDMsd"
 includeMaximumEndDMsd_1 = ixNet.getAttribute(ospfv3Rtr_1, '-includeMaximumEndDMsd')
 single_value_1 = ixNet.add(includeMaximumEndDMsd_1, 'singleValue')
@@ -377,7 +377,7 @@ single_value_1 = ixNet.add(includeMaximumEndDMsd_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
-#Change the value maxSlMsd 
+#Change the value maxSlMsd
 print "Change the value maxSlMsd"
 maxSlMsd_1 = ixNet.getAttribute(ospfv3Rtr_1, '-maxSlMsd')
 single_value_1 = ixNet.add(maxSlMsd_1, 'singleValue')
@@ -389,7 +389,7 @@ single_value_1 = ixNet.add(maxSlMsd_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '5')
 ixNet.commit()
 
-#Change the value maxEndPopMsd 
+#Change the value maxEndPopMsd
 print "Change the value maxEndPopMsd"
 maxEndPopMsd_1 = ixNet.getAttribute(ospfv3Rtr_1, '-maxEndPopMsd')
 single_value_1 = ixNet.add(maxEndPopMsd_1, 'singleValue')
@@ -401,7 +401,7 @@ single_value_1 = ixNet.add(maxEndPopMsd_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '5')
 ixNet.commit()
 
-#Change the value maxHEncapsMsd 
+#Change the value maxHEncapsMsd
 print "Change the value maxHEncapsMsd"
 maxHEncapsMsd_1 = ixNet.getAttribute(ospfv3Rtr_1, '-maxHEncapsMsd')
 single_value_1 = ixNet.add(maxHEncapsMsd_1, 'singleValue')
@@ -413,7 +413,7 @@ single_value_1 = ixNet.add(maxHEncapsMsd_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '5')
 ixNet.commit()
 
-#Change the value maxEndDMsd 
+#Change the value maxEndDMsd
 print "Change the value maxEndDMsd"
 maxEndDMsd_1 = ixNet.getAttribute(ospfv3Rtr_1, '-maxEndDMsd')
 single_value_1 = ixNet.add(maxEndDMsd_1, 'singleValue')
@@ -426,14 +426,14 @@ ixNet.setMultiAttribute(single_value_1, '-value', '5')
 ixNet.commit()
 
 
-#Change the value of locatorCount 
+#Change the value of locatorCount
 print "Change the value of locatorCount"
 ixNet.setAttribute(ospfv3Rtr_1, '-locatorCount', '1')
 ixNet.commit()
 ixNet.setAttribute(ospfv3Rtr_2, '-locatorCount', '1')
 ixNet.commit()
 
-#Change the value metric 
+#Change the value metric
 print "Change the value metric"
 metric_1 = ixNet.getAttribute(ospfv3Rtr_1 + '/ospfv3SRv6LocatorEntryList', '-metric')
 single_value_1 = ixNet.add(metric_1, 'singleValue')
@@ -445,7 +445,7 @@ single_value_1 = ixNet.add(metric_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '1')
 ixNet.commit()
 
-#Change the value algorithm 
+#Change the value algorithm
 print "Change the value algorithm"
 algorithm_1 = ixNet.getAttribute(ospfv3Rtr_1 + '/ospfv3SRv6LocatorEntryList', '-algorithm')
 single_value_1 = ixNet.add(algorithm_1, 'singleValue')
@@ -457,7 +457,7 @@ single_value_1 = ixNet.add(algorithm_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '1')
 ixNet.commit()
 
-#Change the value nBit 
+#Change the value nBit
 print "Change the value nBit"
 nBit_1 = ixNet.getAttribute(ospfv3Rtr_1 + '/ospfv3SRv6LocatorEntryList', '-nBit')
 single_value_1 = ixNet.add(nBit_1, 'singleValue')
@@ -469,7 +469,7 @@ single_value_1 = ixNet.add(nBit_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
-#Change the value aBit 
+#Change the value aBit
 print "Change the value aBit"
 aBit_1 = ixNet.getAttribute(ospfv3Rtr_1 + '/ospfv3SRv6LocatorEntryList', '-aBit')
 single_value_1 = ixNet.add(aBit_1, 'singleValue')
@@ -481,7 +481,7 @@ single_value_1 = ixNet.add(aBit_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
-#Change the value reservedFlag 
+#Change the value reservedFlag
 print "Change the value reservedFlag"
 reservedFlag_1 = ixNet.getAttribute(ospfv3Rtr_1 + '/ospfv3SRv6LocatorEntryList', '-reservedFlag')
 single_value_1 = ixNet.add(reservedFlag_1, 'singleValue')
@@ -493,7 +493,7 @@ single_value_1 = ixNet.add(reservedFlag_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '01')
 ixNet.commit()
 
-#Change the value locatorLength 
+#Change the value locatorLength
 print "Change the value locatorLength"
 locatorLength_1 = ixNet.getAttribute(ospfv3Rtr_1 + '/ospfv3SRv6LocatorEntryList', '-locatorLength')
 single_value_1 = ixNet.add(locatorLength_1, 'singleValue')
@@ -505,7 +505,7 @@ single_value_1 = ixNet.add(locatorLength_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '64')
 ixNet.commit()
 
-#Change the value advertiseLocatorAsPrefix 
+#Change the value advertiseLocatorAsPrefix
 print "Change the value advertiseLocatorAsPrefix"
 advertiseLocatorAsPrefix_1 = ixNet.getAttribute(ospfv3Rtr_1 + '/ospfv3SRv6LocatorEntryList', '-advertiseLocatorAsPrefix')
 single_value_1 = ixNet.add(advertiseLocatorAsPrefix_1, 'singleValue')
@@ -517,7 +517,7 @@ single_value_1 = ixNet.add(advertiseLocatorAsPrefix_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
-#Change the value locatorRouteType 
+#Change the value locatorRouteType
 print "Change the value locatorRouteType"
 locatorRouteType_1 = ixNet.getAttribute(ospfv3Rtr_1 + '/ospfv3SRv6LocatorEntryList', '-locatorRouteType')
 single_value_1 = ixNet.add(locatorRouteType_1, 'singleValue')
@@ -529,7 +529,7 @@ single_value_1 = ixNet.add(locatorRouteType_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'intraarea')
 ixNet.commit()
 
-#Change the value prefixMetric 
+#Change the value prefixMetric
 print "Change the value prefixMetric"
 prefixMetric_1 = ixNet.getAttribute(ospfv3Rtr_1 + '/ospfv3SRv6LocatorEntryList', '-prefixMetric')
 single_value_1 = ixNet.add(prefixMetric_1, 'singleValue')
@@ -542,7 +542,7 @@ ixNet.setMultiAttribute(single_value_1, '-value', '10')
 ixNet.commit()
 
 
-#Change the value flags 
+#Change the value flags
 print "Change the value flags"
 flags_1 = ixNet.getAttribute(ospfv3Rtr_1 + '/ospfv3SRv6LocatorEntryList/ospfv3SRv6EndSIDList', '-flags')
 single_value_1 = ixNet.add(flags_1, 'singleValue')
@@ -554,7 +554,7 @@ single_value_1 = ixNet.add(flags_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '01')
 ixNet.commit()
 
-#Change the value reserved 
+#Change the value reserved
 print "Change the value reserved"
 reserved_1 = ixNet.getAttribute(ospfv3Rtr_1 + '/ospfv3SRv6LocatorEntryList/ospfv3SRv6EndSIDList', '-reserved')
 single_value_1 = ixNet.add(reserved_1, 'singleValue')
@@ -566,7 +566,7 @@ single_value_1 = ixNet.add(reserved_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '02')
 ixNet.commit()
 
-#Change the value endPointFunction 
+#Change the value endPointFunction
 print "Change the value endPointFunction"
 endPointFunction_1 = ixNet.getAttribute(ospfv3Rtr_1 + '/ospfv3SRv6LocatorEntryList/ospfv3SRv6EndSIDList', '-endPointFunction')
 single_value_1 = ixNet.add(endPointFunction_1, 'singleValue')
@@ -578,7 +578,7 @@ single_value_1 = ixNet.add(endPointFunction_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '5')
 ixNet.commit()
 
-#Change the value includeSRv6SIDStructureSubTlv 
+#Change the value includeSRv6SIDStructureSubTlv
 print "Change the value includeSRv6SIDStructureSubTlv"
 includeSRv6SIDStructureSubTlv_1 = ixNet.getAttribute(ospfv3Rtr_1 + '/ospfv3SRv6LocatorEntryList/ospfv3SRv6EndSIDList', '-includeSRv6SIDStructureSubTlv')
 single_value_1 = ixNet.add(includeSRv6SIDStructureSubTlv_1, 'singleValue')
@@ -591,7 +591,7 @@ ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
 
-#Change the value locatorBlockLength 
+#Change the value locatorBlockLength
 print "Change the value locatorBlockLength"
 locatorBlockLength_1 = ixNet.getAttribute(ospfv3Rtr_1 + '/ospfv3SRv6LocatorEntryList/ospfv3SRv6EndSIDList', '-locatorBlockLength')
 single_value_1 = ixNet.add(locatorBlockLength_1, 'singleValue')
@@ -603,7 +603,7 @@ single_value_1 = ixNet.add(locatorBlockLength_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '40')
 ixNet.commit()
 
-#Change the value locatorNodeLength 
+#Change the value locatorNodeLength
 print "Change the value locatorNodeLength"
 locatorNodeLength_1 = ixNet.getAttribute(ospfv3Rtr_1 + '/ospfv3SRv6LocatorEntryList/ospfv3SRv6EndSIDList', '-locatorNodeLength')
 single_value_1 = ixNet.add(locatorNodeLength_1, 'singleValue')
@@ -615,7 +615,7 @@ single_value_1 = ixNet.add(locatorNodeLength_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '24')
 ixNet.commit()
 
-#Change the value functionLength 
+#Change the value functionLength
 print "Change the value functionLength"
 functionLength_1 = ixNet.getAttribute(ospfv3Rtr_1 + '/ospfv3SRv6LocatorEntryList/ospfv3SRv6EndSIDList', '-functionLength')
 single_value_1 = ixNet.add(functionLength_1, 'singleValue')
@@ -627,7 +627,7 @@ single_value_1 = ixNet.add(functionLength_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '16')
 ixNet.commit()
 
-#Change the value argumentLength 
+#Change the value argumentLength
 print "Change the value argumentLength"
 argumentLength_1 = ixNet.getAttribute(ospfv3Rtr_1 + '/ospfv3SRv6LocatorEntryList/ospfv3SRv6EndSIDList', '-argumentLength')
 single_value_1 = ixNet.add(argumentLength_1, 'singleValue')
@@ -639,7 +639,7 @@ single_value_1 = ixNet.add(argumentLength_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '0')
 ixNet.commit()
 
-#Change the value bFlag 
+#Change the value bFlag
 print "Change the value bFlag"
 bFlag_1 = ixNet.getAttribute(ospfv3_1 + '/ospfv3SRv6AdjSIDList', '-bFlag')
 single_value_1 = ixNet.add(bFlag_1, 'singleValue')
@@ -651,7 +651,7 @@ single_value_1 = ixNet.add(bFlag_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
-#Change the value sFlag 
+#Change the value sFlag
 print "Change the value sFlag"
 sFlag_1 = ixNet.getAttribute(ospfv3_1 + '/ospfv3SRv6AdjSIDList', '-sFlag')
 single_value_1 = ixNet.add(sFlag_1, 'singleValue')
@@ -663,7 +663,7 @@ single_value_1 = ixNet.add(sFlag_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
-#Change the value pFlag 
+#Change the value pFlag
 print "Change the value pFlag"
 pFlag_1 = ixNet.getAttribute(ospfv3_1 + '/ospfv3SRv6AdjSIDList', '-pFlag')
 single_value_1 = ixNet.add(pFlag_1, 'singleValue')
@@ -676,7 +676,7 @@ ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
 
-#Change the value reservedFlag 
+#Change the value reservedFlag
 print "Change the value reservedFlag"
 reservedFlag_1 = ixNet.getAttribute(ospfv3_1 + '/ospfv3SRv6AdjSIDList', '-reservedFlag')
 single_value_1 = ixNet.add(reservedFlag_1, 'singleValue')
@@ -688,7 +688,7 @@ single_value_1 = ixNet.add(reservedFlag_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '01')
 ixNet.commit()
 
-#Change the value algorithm 
+#Change the value algorithm
 print "Change the value algorithm"
 algorithm_1 = ixNet.getAttribute(ospfv3_1 + '/ospfv3SRv6AdjSIDList', '-algorithm')
 single_value_1 = ixNet.add(algorithm_1, 'singleValue')
@@ -700,7 +700,7 @@ single_value_1 = ixNet.add(algorithm_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '1')
 ixNet.commit()
 
-#Change the value weight 
+#Change the value weight
 print "Change the value weight"
 weight_1 = ixNet.getAttribute(ospfv3_1 + '/ospfv3SRv6AdjSIDList', '-weight')
 single_value_1 = ixNet.add(weight_1, 'singleValue')
@@ -712,7 +712,7 @@ single_value_1 = ixNet.add(weight_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '100')
 ixNet.commit()
 
-#Change the value reserved1 
+#Change the value reserved1
 print "Change the value reserved1"
 reserved1_1 = ixNet.getAttribute(ospfv3_1 + '/ospfv3SRv6AdjSIDList', '-reserved1')
 single_value_1 = ixNet.add(reserved1_1, 'singleValue')
@@ -724,7 +724,7 @@ single_value_1 = ixNet.add(reserved1_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '01')
 ixNet.commit()
 
-#Change the value reserved2 
+#Change the value reserved2
 print "Change the value reserved2"
 reserved2_1 = ixNet.getAttribute(ospfv3_1 + '/ospfv3SRv6AdjSIDList', '-reserved2')
 single_value_1 = ixNet.add(reserved2_1, 'singleValue')
@@ -736,7 +736,7 @@ single_value_1 = ixNet.add(reserved2_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '0001')
 ixNet.commit()
 
-#Change the value endPointFunction 
+#Change the value endPointFunction
 print "Change the value endPointFunction"
 endPointFunction_1 = ixNet.getAttribute(ospfv3_1 + '/ospfv3SRv6AdjSIDList', '-endPointFunction')
 single_value_1 = ixNet.add(endPointFunction_1, 'singleValue')
@@ -748,7 +748,7 @@ single_value_1 = ixNet.add(endPointFunction_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '9')
 ixNet.commit()
 
-#Change the value includeSRv6SIDStructureSubTlv 
+#Change the value includeSRv6SIDStructureSubTlv
 print "Change the value includeSRv6SIDStructureSubTlv"
 includeSRv6SIDStructureSubTlv_1 = ixNet.getAttribute(ospfv3_1 + '/ospfv3SRv6AdjSIDList', '-includeSRv6SIDStructureSubTlv')
 single_value_1 = ixNet.add(includeSRv6SIDStructureSubTlv_1, 'singleValue')
@@ -760,7 +760,7 @@ single_value_1 = ixNet.add(includeSRv6SIDStructureSubTlv_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
-#Change the value locatorBlockLength 
+#Change the value locatorBlockLength
 print "Change the value locatorBlockLength"
 locatorBlockLength_1 = ixNet.getAttribute(ospfv3_1 + '/ospfv3SRv6AdjSIDList', '-locatorBlockLength')
 single_value_1 = ixNet.add(locatorBlockLength_1, 'singleValue')
@@ -772,7 +772,7 @@ single_value_1 = ixNet.add(locatorBlockLength_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '40')
 ixNet.commit()
 
-#Change the value locatorNodeLength 
+#Change the value locatorNodeLength
 print "Change the value locatorNodeLength"
 locatorNodeLength_1 = ixNet.getAttribute(ospfv3_1 + '/ospfv3SRv6AdjSIDList', '-locatorNodeLength')
 single_value_1 = ixNet.add(locatorNodeLength_1, 'singleValue')
@@ -784,7 +784,7 @@ single_value_1 = ixNet.add(locatorNodeLength_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '24')
 ixNet.commit()
 
-#Change the value functionLength 
+#Change the value functionLength
 print "Change the value functionLength"
 functionLength_1 = ixNet.getAttribute(ospfv3_1 + '/ospfv3SRv6AdjSIDList', '-functionLength')
 single_value_1 = ixNet.add(functionLength_1, 'singleValue')
@@ -796,7 +796,7 @@ single_value_1 = ixNet.add(functionLength_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '16')
 ixNet.commit()
 
-#Change the value argumentLength 
+#Change the value argumentLength
 print "Change the value argumentLength"
 argumentLength_1 = ixNet.getAttribute(ospfv3_1 + '/ospfv3SRv6AdjSIDList', '-argumentLength')
 single_value_1 = ixNet.add(argumentLength_1, 'singleValue')
@@ -830,28 +830,28 @@ single_value_1 = ixNet.add(ipv6Srh_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
-#Change the value flagOfSRv6Cap 
+#Change the value flagOfSRv6Cap
 print "Change the value flagOfSRv6Cap"
 flagOfSRv6Cap_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1', '-flagOfSRv6Cap')
 single_value_1 = ixNet.add(flagOfSRv6Cap_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '4000')
 ixNet.commit()
 
-#Change the value reservedInsideSRv6Cap 
+#Change the value reservedInsideSRv6Cap
 print "Change the value reservedInsideSRv6Cap"
 reservedInsideSRv6Cap_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1', '-reservedInsideSRv6Cap')
 single_value_1 = ixNet.add(reservedInsideSRv6Cap_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '3fff')
 ixNet.commit()
 
-#Change the value sRv6NodePrefix 
+#Change the value sRv6NodePrefix
 print "Change the value sRv6NodePrefix"
 sRv6NodePrefix_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1', '-sRv6NodePrefix')
 single_value_1 = ixNet.add(sRv6NodePrefix_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '2000:0:0:1:0:0:0:1')
 ixNet.commit()
 
-#Change the value srv6PrefixOptions 
+#Change the value srv6PrefixOptions
 print "Change the value srv6PrefixOptions"
 srv6PrefixOptions_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1', '-srv6PrefixOptions')
 single_value_1 = ixNet.add(srv6PrefixOptions_1, 'singleValue')
@@ -859,7 +859,7 @@ ixNet.setMultiAttribute(single_value_1, '-value', '128')
 ixNet.commit()
 
 
-#Change the value advertiseNodeMsd 
+#Change the value advertiseNodeMsd
 print "Change the value advertiseNodeMsd"
 advertiseNodeMsd_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1', '-advertiseNodeMsd')
 single_value_1 = ixNet.add(advertiseNodeMsd_1, 'singleValue')
@@ -867,7 +867,7 @@ ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
 
-#Change the value includeMaxSlMsd 
+#Change the value includeMaxSlMsd
 print "Change the value includeMaxSlMsd"
 includeMaxSlMsd_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1', '-includeMaxSlMsd')
 single_value_1 = ixNet.add(includeMaxSlMsd_1, 'singleValue')
@@ -875,7 +875,7 @@ ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
 
-#Change the value includeMaximumEndPopMsd 
+#Change the value includeMaximumEndPopMsd
 print "Change the value includeMaximumEndPopMsd"
 includeMaximumEndPopMsd_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1', '-includeMaximumEndPopMsd')
 single_value_1 = ixNet.add(includeMaximumEndPopMsd_1, 'singleValue')
@@ -883,14 +883,14 @@ ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
 
-#Change the value includeMaximumHEncapsMsd 
+#Change the value includeMaximumHEncapsMsd
 print "Change the value includeMaximumHEncapMsd"
 includeMaximumHEncapMsd_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1', '-includeMaximumHEncapsMsd')
 single_value_1 = ixNet.add(includeMaximumHEncapMsd_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
-#Change the value includeMaximumEndDMsd 
+#Change the value includeMaximumEndDMsd
 print "Change the value includeMaximumEndDMsd"
 includeMaximumEndDMsd_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1', '-includeMaximumEndDMsd')
 single_value_1 = ixNet.add(includeMaximumEndDMsd_1, 'singleValue')
@@ -898,7 +898,7 @@ ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
 
-#Change the value maxSlMsd 
+#Change the value maxSlMsd
 print "Change the value maxSlMsd"
 maxSlMsd_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1', '-maxSlMsd')
 single_value_1 = ixNet.add(maxSlMsd_1, 'singleValue')
@@ -906,7 +906,7 @@ ixNet.setMultiAttribute(single_value_1, '-value', '5')
 ixNet.commit()
 
 
-#Change the value maxEndPopMsd 
+#Change the value maxEndPopMsd
 print "Change the value maxEndPopMsd"
 maxEndPopMsd_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1', '-maxEndPopMsd')
 single_value_1 = ixNet.add(maxEndPopMsd_1, 'singleValue')
@@ -915,7 +915,7 @@ ixNet.commit()
 
 
 
-#Change the value maxHEncapsMsd 
+#Change the value maxHEncapsMsd
 print "Change the value maxHEncapsMsd"
 maxHEncapsMsd_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1', '-maxHEncapsMsd')
 single_value_1 = ixNet.add(maxHEncapsMsd_1, 'singleValue')
@@ -923,21 +923,21 @@ ixNet.setMultiAttribute(single_value_1, '-value', '5')
 ixNet.commit()
 
 
-#Change the value maxEndDMsd 
+#Change the value maxEndDMsd
 print "Change the value maxEndDMsd"
 maxEndDMsd_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1', '-maxEndDMsd')
 single_value_1 = ixNet.add(maxEndDMsd_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '5')
 ixNet.commit()
 
-#Change the value metric 
+#Change the value metric
 print "Change the value metric"
 metric_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1/ospfv3PseudoSRv6LocatorEntryList', '-metric')
 single_value_1 = ixNet.add(metric_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '1')
 ixNet.commit()
 
-#Change the value algorithm 
+#Change the value algorithm
 print "Change the value algorithm"
 algorithm_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1/ospfv3PseudoSRv6LocatorEntryList', '-algorithm')
 single_value_1 = ixNet.add(algorithm_1, 'singleValue')
@@ -945,7 +945,7 @@ ixNet.setMultiAttribute(single_value_1, '-value', '1')
 ixNet.commit()
 
 
-#Change the value nBit 
+#Change the value nBit
 print "Change the value nBit"
 nBit_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1/ospfv3PseudoSRv6LocatorEntryList', '-nBit')
 single_value_1 = ixNet.add(nBit_1, 'singleValue')
@@ -953,14 +953,14 @@ ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
 
-#Change the value aBit 
+#Change the value aBit
 print "Change the value aBit"
 aBit_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1/ospfv3PseudoSRv6LocatorEntryList', '-aBit')
 single_value_1 = ixNet.add(aBit_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
-#Change the value reservedFlag 
+#Change the value reservedFlag
 print "Change the value reservedFlag"
 reservedFlag_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1/ospfv3PseudoSRv6LocatorEntryList', '-reservedFlag')
 single_value_1 = ixNet.add(reservedFlag_1, 'singleValue')
@@ -968,7 +968,7 @@ ixNet.setMultiAttribute(single_value_1, '-value', '01')
 ixNet.commit()
 
 
-#Change the value locatorLength 
+#Change the value locatorLength
 print "Change the value locatorLength"
 locatorLength_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1/ospfv3PseudoSRv6LocatorEntryList', '-locatorLength')
 single_value_1 = ixNet.add(locatorLength_1, 'singleValue')
@@ -976,7 +976,7 @@ ixNet.setMultiAttribute(single_value_1, '-value', '64')
 ixNet.commit()
 
 
-#Change the value advertiseLocatorAsPrefix 
+#Change the value advertiseLocatorAsPrefix
 print "Change the value advertiseLocatorAsPrefix"
 advertiseLocatorAsPrefix_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1/ospfv3PseudoSRv6LocatorEntryList', '-advertiseLocatorAsPrefix')
 single_value_1 = ixNet.add(advertiseLocatorAsPrefix_1, 'singleValue')
@@ -984,7 +984,7 @@ ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
 
-#Change the value locatorRouteType 
+#Change the value locatorRouteType
 print "Change the value locatorRouteType"
 locatorRouteType_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1/ospfv3PseudoSRv6LocatorEntryList', '-locatorRouteType')
 single_value_1 = ixNet.add(locatorRouteType_1, 'singleValue')
@@ -992,7 +992,7 @@ ixNet.setMultiAttribute(single_value_1, '-value', 'intraarea')
 ixNet.commit()
 
 
-#Change the value prefixMetric 
+#Change the value prefixMetric
 print "Change the value prefixMetric"
 prefixMetric_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1/ospfv3PseudoSRv6LocatorEntryList', '-prefixMetric')
 single_value_1 = ixNet.add(prefixMetric_1, 'singleValue')
@@ -1000,14 +1000,14 @@ ixNet.setMultiAttribute(single_value_1, '-value', '10')
 ixNet.commit()
 
 
-#Change the value flags 
+#Change the value flags
 print "Change the value flags"
 flags_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1/ospfv3PseudoSRv6LocatorEntryList/ospfv3PseudoSRv6EndSIDList', '-flags')
 single_value_1 = ixNet.add(flags_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '01')
 ixNet.commit()
 
-#Change the value reserved 
+#Change the value reserved
 print "Change the value reserved"
 reserved_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1/ospfv3PseudoSRv6LocatorEntryList/ospfv3PseudoSRv6EndSIDList', '-reserved')
 single_value_1 = ixNet.add(reserved_1, 'singleValue')
@@ -1015,7 +1015,7 @@ ixNet.setMultiAttribute(single_value_1, '-value', '02')
 ixNet.commit()
 
 
-#Change the value endPointFunction 
+#Change the value endPointFunction
 print "Change the value endPointFunction"
 endPointFunction_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1/ospfv3PseudoSRv6LocatorEntryList/ospfv3PseudoSRv6EndSIDList', '-endPointFunction')
 single_value_1 = ixNet.add(endPointFunction_1, 'singleValue')
@@ -1023,7 +1023,7 @@ ixNet.setMultiAttribute(single_value_1, '-value', 'endt_nopsp_nousp')
 ixNet.commit()
 
 
-#Change the value includeSRv6SIDStructureSubTlv 
+#Change the value includeSRv6SIDStructureSubTlv
 print "Change the value includeSRv6SIDStructureSubTlv"
 includeSRv6SIDStructureSubTlv_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1/ospfv3PseudoSRv6LocatorEntryList/ospfv3PseudoSRv6EndSIDList', '-includeSRv6SIDStructureSubTlv')
 single_value_1 = ixNet.add(includeSRv6SIDStructureSubTlv_1, 'singleValue')
@@ -1031,7 +1031,7 @@ ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
 
-#Change the value locatorBlockLength 
+#Change the value locatorBlockLength
 print "Change the value locatorBlockLength"
 locatorBlockLength_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1/ospfv3PseudoSRv6LocatorEntryList/ospfv3PseudoSRv6EndSIDList', '-locatorBlockLength')
 single_value_1 = ixNet.add(locatorBlockLength_1, 'singleValue')
@@ -1039,7 +1039,7 @@ ixNet.setMultiAttribute(single_value_1, '-value', '40')
 ixNet.commit()
 
 
-#Change the value locatorNodeLength 
+#Change the value locatorNodeLength
 print "Change the value locatorNodeLength"
 locatorNodeLength_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1/ospfv3PseudoSRv6LocatorEntryList/ospfv3PseudoSRv6EndSIDList', '-locatorNodeLength')
 single_value_1 = ixNet.add(locatorNodeLength_1, 'singleValue')
@@ -1047,7 +1047,7 @@ ixNet.setMultiAttribute(single_value_1, '-value', '24')
 ixNet.commit()
 
 
-#Change the value functionLength 
+#Change the value functionLength
 print "Change the value functionLength"
 functionLength_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1/ospfv3PseudoSRv6LocatorEntryList/ospfv3PseudoSRv6EndSIDList', '-functionLength')
 single_value_1 = ixNet.add(functionLength_1, 'singleValue')
@@ -1055,7 +1055,7 @@ ixNet.setMultiAttribute(single_value_1, '-value', '16')
 ixNet.commit()
 
 
-#Change the value argumentLength 
+#Change the value argumentLength
 print "Change the value argumentLength"
 argumentLength_1 = ixNet.getAttribute(Network_Topology + '/simRouter:1/ospfv3PseudoRouter:1/ospfv3PseudoSRv6LocatorEntryList/ospfv3PseudoSRv6EndSIDList', '-argumentLength')
 single_value_1 = ixNet.add(argumentLength_1, 'singleValue')
@@ -1063,42 +1063,42 @@ ixNet.setMultiAttribute(single_value_1, '-value', '0')
 ixNet.commit()
 
 
-#Change the value enableIPv6SID 
+#Change the value enableIPv6SID
 print "Change the value enableIPv6SID"
 enableIPv6SID_1 = ixNet.getAttribute(Network_Topology + '/simInterface:1/simInterfaceIPv6Config:1/ospfv3PseudoInterface:1', '-enableIPv6SID')
 single_value_1 = ixNet.add(enableIPv6SID_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
-#Change the value bFlag 
+#Change the value bFlag
 print "Change the value bFlag"
 bFlag_1 = ixNet.getAttribute(Network_Topology + '/simInterface:1/simInterfaceIPv6Config:1/ospfv3PseudoInterface:1/ospfv3PseudoSRv6AdjSIDList', '-bFlag')
 single_value_1 = ixNet.add(bFlag_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
-#Change the value sFlag 
+#Change the value sFlag
 print "Change the value sFlag"
 sFlag_1 = ixNet.getAttribute(Network_Topology + '/simInterface:1/simInterfaceIPv6Config:1/ospfv3PseudoInterface:1/ospfv3PseudoSRv6AdjSIDList', '-sFlag')
 single_value_1 = ixNet.add(sFlag_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
-#Change the value pFlag 
+#Change the value pFlag
 print "Change the value pFlag"
 pFlag_1 = ixNet.getAttribute(Network_Topology + '/simInterface:1/simInterfaceIPv6Config:1/ospfv3PseudoInterface:1/ospfv3PseudoSRv6AdjSIDList', '-pFlag')
 single_value_1 = ixNet.add(pFlag_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
-#Change the value reservedFlag 
+#Change the value reservedFlag
 print "Change the value reservedFlag"
 reservedFlag_1 = ixNet.getAttribute(Network_Topology + '/simInterface:1/simInterfaceIPv6Config:1/ospfv3PseudoInterface:1/ospfv3PseudoSRv6AdjSIDList', '-reservedFlag')
 single_value_1 = ixNet.add(reservedFlag_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '01')
 ixNet.commit()
 
-#Change the value algorithm 
+#Change the value algorithm
 print "Change the value algorithm"
 algorithm_1 = ixNet.getAttribute(Network_Topology + '/simInterface:1/simInterfaceIPv6Config:1/ospfv3PseudoInterface:1/ospfv3PseudoSRv6AdjSIDList', '-algorithm')
 single_value_1 = ixNet.add(algorithm_1, 'singleValue')
@@ -1106,63 +1106,63 @@ ixNet.setMultiAttribute(single_value_1, '-value', '1')
 ixNet.commit()
 
 
-#Change the value weight 
+#Change the value weight
 print "Change the value weight"
 weight_1 = ixNet.getAttribute(Network_Topology + '/simInterface:1/simInterfaceIPv6Config:1/ospfv3PseudoInterface:1/ospfv3PseudoSRv6AdjSIDList', '-weight')
 single_value_1 = ixNet.add(weight_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '100')
 ixNet.commit()
 
-#Change the value reserved1 
+#Change the value reserved1
 print "Change the value reserved1"
 reserved1_1 = ixNet.getAttribute(Network_Topology + '/simInterface:1/simInterfaceIPv6Config:1/ospfv3PseudoInterface:1/ospfv3PseudoSRv6AdjSIDList', '-reserved1')
 single_value_1 = ixNet.add(reserved1_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '01')
 ixNet.commit()
 
-#Change the value reserved2 
+#Change the value reserved2
 print "Change the value reserved2"
 reserved2_1 = ixNet.getAttribute(Network_Topology + '/simInterface:1/simInterfaceIPv6Config:1/ospfv3PseudoInterface:1/ospfv3PseudoSRv6AdjSIDList', '-reserved2')
 single_value_1 = ixNet.add(reserved2_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '0001')
 ixNet.commit()
 
-#Change the value endPointFunction 
+#Change the value endPointFunction
 print "Change the value endPointFunction"
 endPointFunction_1 = ixNet.getAttribute(Network_Topology + '/simInterface:1/simInterfaceIPv6Config:1/ospfv3PseudoInterface:1/ospfv3PseudoSRv6AdjSIDList', '-endPointFunction')
 single_value_1 = ixNet.add(endPointFunction_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'endt_nopsp_nousp')
 ixNet.commit()
 
-#Change the value includeSRv6SIDStructureSubTlv 
+#Change the value includeSRv6SIDStructureSubTlv
 print "Change the value includeSRv6SIDStructureSubTlv"
 includeSRv6SIDStructureSubTlv_1 = ixNet.getAttribute(Network_Topology + '/simInterface:1/simInterfaceIPv6Config:1/ospfv3PseudoInterface:1/ospfv3PseudoSRv6AdjSIDList', '-includeSRv6SIDStructureSubTlv')
 single_value_1 = ixNet.add(includeSRv6SIDStructureSubTlv_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', 'true')
 ixNet.commit()
 
-#Change the value locatorBlockLength 
+#Change the value locatorBlockLength
 print "Change the value locatorBlockLength"
 locatorBlockLength_1 = ixNet.getAttribute(Network_Topology + '/simInterface:1/simInterfaceIPv6Config:1/ospfv3PseudoInterface:1/ospfv3PseudoSRv6AdjSIDList', '-locatorBlockLength')
 single_value_1 = ixNet.add(locatorBlockLength_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '40')
 ixNet.commit()
 
-#Change the value locatorNodeLength 
+#Change the value locatorNodeLength
 print "Change the value locatorNodeLength"
 locatorNodeLength_1 = ixNet.getAttribute(Network_Topology + '/simInterface:1/simInterfaceIPv6Config:1/ospfv3PseudoInterface:1/ospfv3PseudoSRv6AdjSIDList', '-locatorNodeLength')
 single_value_1 = ixNet.add(locatorNodeLength_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '24')
 ixNet.commit()
 
-#Change the value functionLength 
+#Change the value functionLength
 print "Change the value functionLength"
 functionLength_1 = ixNet.getAttribute(Network_Topology + '/simInterface:1/simInterfaceIPv6Config:1/ospfv3PseudoInterface:1/ospfv3PseudoSRv6AdjSIDList', '-functionLength')
 single_value_1 = ixNet.add(functionLength_1, 'singleValue')
 ixNet.setMultiAttribute(single_value_1, '-value', '16')
 ixNet.commit()
 
-#Change the value argumentLength 
+#Change the value argumentLength
 print "Change the value argumentLength"
 argumentLength_1 = ixNet.getAttribute(Network_Topology + '/simInterface:1/simInterfaceIPv6Config:1/ospfv3PseudoInterface:1/ospfv3PseudoSRv6AdjSIDList', '-argumentLength')
 single_value_1 = ixNet.add(argumentLength_1, 'singleValue')

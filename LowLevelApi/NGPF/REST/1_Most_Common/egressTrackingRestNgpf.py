@@ -78,7 +78,7 @@ from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiProtocol import Protocol
 from IxNetRestApiTraffic import Traffic
 from IxNetRestApiStatistics import Statistics
- 
+
 # Default the API server to either windows or linux.
 connectToApiServer = 'windows'
 
@@ -176,18 +176,18 @@ try:
     protocolObj = Protocol(mainObj, portObj)
     topologyObj1 = protocolObj.createTopologyNgpf(portList=[portList[0]],
                                                   topologyName='Topo1')
-    
+
     deviceGroupObj1 = protocolObj.createDeviceGroupNgpf(topologyObj1,
                                                         multiplier=1,
                                                         deviceGroupName='DG1')
-    
+
     topologyObj2 = protocolObj.createTopologyNgpf(portList=[portList[1]],
                                                   topologyName='Topo2')
-    
+
     deviceGroupObj2 = protocolObj.createDeviceGroupNgpf(topologyObj2,
                                                         multiplier=1,
                                                         deviceGroupName='DG2')
-    
+
     ethernetObj1 = protocolObj.createEthernetNgpf(deviceGroupObj1,
                                                   ethernetName='MyEth1',
                                                   macAddress={'start': '00:01:01:00:00:01',
@@ -197,7 +197,7 @@ try:
                                                   vlanId={'start': 103,
                                                           'direction': 'increment',
                                                           'step':0})
-    
+
     ethernetObj2 = protocolObj.createEthernetNgpf(deviceGroupObj2,
                                                   ethernetName='MyEth2',
                                                   macAddress={'start': '00:01:02:00:00:01',
@@ -219,7 +219,7 @@ try:
                                           gatewayPortStep='disabled',
                                           prefix=24,
                                           resolveGateway=True)
-    
+
     ipv4Obj2 = protocolObj.createIpv4Ngpf(ethernetObj2,
                                           ipv4Address={'start': '1.1.1.2',
                                                        'direction': 'increment',
@@ -231,10 +231,10 @@ try:
                                           gatewayPortStep='disabled',
                                           prefix=24,
                                           resolveGateway=True)
-    
+
     protocolObj.startAllProtocols()
     protocolObj.verifyProtocolSessionsNgpf()
-    
+
     # For all parameter options, please go to the API configTrafficItem
     # mode = create or modify
     trafficObj = Traffic(mainObj)
@@ -257,32 +257,32 @@ try:
                            'frameRate': 88,
                            'frameRateType': 'percentLineRate',
                            'frameSize': 128}])
-    
+
     trafficItemObj   = trafficStatus[0]
     endpointObj      = trafficStatus[1][0]
     configElementObj = trafficStatus[2][0]
-    
+
     trafficObj.regenerateTrafficItems()
     trafficObj.applyTraffic()
     trafficObj.configEgressCustomTracking(trafficItemObj, offsetBit, bitWidth)
     statview = trafficObj.createEgressStatView(trafficItemObj, egressTrackingPort, offsetBit, bitWidth,
                                     egressStatViewName, ingressTrackingFilterName)
-    
+
     trafficObj.startTraffic()
-    
+
     response = mainObj.get(mainObj.httpHeader+statview)
     print(response.json())
 
     # Check the traffic state to assure traffic has indeed stopped before checking for stats.
     if trafficObj.getTransmissionType(configElementObj) == "fixedFrameCount":
         trafficObj.checkTrafficState(expectedState=['stopped', 'stoppedWaitingForStats'], timeout=45)
-    
+
     statObj = Statistics(mainObj)
     stats = statObj.getStats(viewName=egressStatViewName)
-        
+
     #if removeAllTclStatViews:
     #    mainObj.removeAllTclViews()
-    
+
     print('{0:10} {1:15} {2:15}'.format(
         'rxPort', 'txFrames', 'rxFrames'))
     print('-'*90)

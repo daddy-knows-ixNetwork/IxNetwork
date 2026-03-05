@@ -6,13 +6,13 @@
 #
 # REQUIREMENTS
 #    - Python modules: requests and napalm
-#    
+#
 # DESCRIPTION
 #    This sample script demonstrates:
 #        - Using ReST API to load a saved BGP configurations.
 #        - Ixia ports connecting to a virtual DUT.
 #        - Full reference guide could be found in ../../Automation Getting Started.docx
-# 
+#
 #    Supports Windows, Windows Connection Mgr and Linux API server.
 #
 # USAGE
@@ -95,11 +95,11 @@ try:
     portObj.assignPorts(portList)
     portObj.verifyPortState()
 
-    #---------- load DUT configurations --------------    
+    #---------- load DUT configurations --------------
     driver = napalm.get_network_driver('eos')
     device = driver(hostname='10.36.79.66', username='winscp',
                     password='winscp', optional_args={'port': 443})
-    
+
     mainObj.logInfo('Opening ...')
     device.open()
     mainObj.logInfo('Loading replacement candidate ...')
@@ -108,13 +108,13 @@ try:
     device.close()
     mainObj.logInfo('Done.')
 
-   #---------- Continue test --------------  
+   #---------- Continue test --------------
     protocolObj = Protocol(mainObj)
     protocolObj.startAllProtocols()
     protocolObj.verifyArp(ipType='ipv4')
     protocolObj.verifyProtocolSessionsUp(protocolViewName='BGP Peer Per Port', timeout=120)
 
-    #---------- get DUT BGP peers --------------  
+    #---------- get DUT BGP peers --------------
     dutBGPPeers = device.get_bgp_neighbors()
     pp = pprint.PrettyPrinter(indent=2)
     mainObj.logInfo("\nBGP Peers details in DUT\n")

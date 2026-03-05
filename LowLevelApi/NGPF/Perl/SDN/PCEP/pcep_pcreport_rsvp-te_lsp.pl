@@ -66,13 +66,13 @@ sub assignPorts {
     my $port2    = $my_resource[6];
     my $vport1   = $my_resource[7];
     my $vport2   = $my_resource[8];
-    
+
     my $root = $ixNet->getRoot();
     my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-    
+
     my $chassisObj2 = '';
     if ($chassis1 ne $chassis2) {
         $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -82,7 +82,7 @@ sub assignPorts {
     } else {
         $chassisObj2 = $chassisObj1;
     }
-    
+
     my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -91,7 +91,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-        
+
     $ixNet->commit();
 }
 
@@ -99,7 +99,7 @@ sub assignPorts {
 my @ports       = (('10.216.108.96', '4', '3'), ('10.216.108.96', '4', '4'));
 my $ixTclServer = '10.216.108.113';
 my $ixTclPort   = '8074';
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 ################################################################################
@@ -159,7 +159,7 @@ $ixNet->commit();
 $ethernet1 = ($ixNet->remapIds($ethernet1))[0];
 my $macMv = $ixNet->getAttribute($ethernet1, '-mac');
 $ixNet->add($macMv, 'counter');
-$ixNet->setMultiAttribute($macMv.'/counter',  
+$ixNet->setMultiAttribute($macMv.'/counter',
              '-direction', 'increment',
              '-start'    , '00:11:01:00:00:01',
              '-step'     , '00:00:00:00:00:01');
@@ -259,7 +259,7 @@ $ixNet->commit();
 $ethernet2 = ($ixNet->remapIds($ethernet2))[0];
 my $macMv = $ixNet->getAttribute($ethernet2, '-mac');
 $ixNet->add($macMv, 'counter');
-$ixNet->setMultiAttribute($macMv.'/counter',  
+$ixNet->setMultiAttribute($macMv.'/counter',
              '-direction', 'increment',
              '-start'    , '00:12:01:00:00:01',
              '-step'     , '00:00:00:00:00:01');
@@ -331,7 +331,7 @@ $rsvpteLsps2 = ($ixNet->remapIds($rsvpteLsps2))[0];
 my $rsvpp2p2 = $rsvpteLsps2.'/rsvpP2PIngressLsps';
 my $tunnelIdMv = $ixNet->getAttribute($rsvpp2p2, '-tunnelId');
 $ixNet->add($tunnelIdMv, 'counter');
-$ixNet->setMultiAttribute($tunnelIdMv.'/counter',  
+$ixNet->setMultiAttribute($tunnelIdMv.'/counter',
              '-direction', 'increment',
              '-start'    , '1',
              '-step'     , '1');
@@ -347,9 +347,9 @@ $ixNet->commit();
 # Assign ports
 ################################################################################
 print("Connect to IxNetwork Tcl server\n");
-$ixNet->connect($ixTclServer, 
-                '-port', $ixTclPort, 
-                '-version', '8.00', 
+$ixNet->connect($ixTclServer,
+                '-port', $ixTclPort,
+                '-version', '8.00',
                 '-setAttribute', 'strict');
 my @vPorts  = $ixNet->getList($ixNet->getRoot(), 'vport');
 my $vport1 = $vPorts[0];
@@ -415,5 +415,3 @@ print("***************************************************\n");
 ################################################################################
 print "Stopping all protocol\n";
 $ixNet->execute('stopAllProtocols');
-
-

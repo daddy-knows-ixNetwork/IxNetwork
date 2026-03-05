@@ -69,7 +69,7 @@
 #       when protocol is not started.                                          #
 #   13. Start protocol.                                                        #
 #   14. Retreive protocol statistics                                           #
-#   15. Stop all protocols.                                                    #                
+#   15. Stop all protocols.                                                    #
 # Ixia Softwares:                                                              #
 #    IxOS      6.80 EB (6.80.1100.7)                                           #
 #    IxNetwork 7.40 EB (7.40.929.15)                                           #
@@ -234,7 +234,7 @@ ixNet.commit()
 
 ################################################################################
 # adding MLD over ipv6 stack
-################################################################################ 
+################################################################################
 print ("Adding MLD over IP6 stack")
 ixNet.add(ip1, 'mldHost')
 ixNet.add(ip2, 'mldQuerier')
@@ -256,9 +256,9 @@ ixNet.setMultiAttribute (gqueryi,
 	 '-pattern', 'counter')
 ixNet.commit()
 ixNet.setMultiAttribute(ixNet.add(gqueryi, 'counter'),
-        '-step', '1', 
+        '-step', '1',
 	'-start', '140',
-	'-direction', 'increment')                        
+	'-direction', 'increment')
 ixNet.commit()
 
 ################################################################################
@@ -283,7 +283,7 @@ print ("Changing version of MLD HOST to v2")
 mldport1 = ixNet.getList(mldHost, 'port')[0]
 vesriontypehost = ixNet.getAttribute(mldport1, '-versionType')
 versionvaluehost = ixNet.getList(vesriontypehost, 'singleValue')[0]
-ixNet.setAttribute(versionvaluehost, '-value', 'version2')                                
+ixNet.setAttribute(versionvaluehost, '-value', 'version2')
 ixNet.commit()
 
 ################################################################################
@@ -459,7 +459,7 @@ ixNet.commit()
 print ("Changing number of source address count")
 ipv4sourcelist1 = ixNet.getList(ipv6grouplist1, 'mldUcastIPv6SourceList')[0]
 ucastSrcAddrCnt = ixNet.getAttribute(ipv4sourcelist1, '-ucastSrcAddrCnt')
-singleValue = ixNet.getList(ucastSrcAddrCnt, 'singleValue')[0] 
+singleValue = ixNet.getList(ucastSrcAddrCnt, 'singleValue')[0]
 ixNet.setAttribute(singleValue,
         '-value', '2')
 ixNet.commit()
@@ -596,4 +596,3 @@ print ('Stopping protocols')
 ixNet.execute('stopAllProtocols')
 time.sleep(10)
 print ('!!! Test Script Ends !!!')
-

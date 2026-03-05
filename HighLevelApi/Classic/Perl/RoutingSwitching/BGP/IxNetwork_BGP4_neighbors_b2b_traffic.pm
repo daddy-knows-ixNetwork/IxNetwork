@@ -68,7 +68,7 @@ use Carp;
 
 # use lib where the HLPAPI files are located
 # This can be moved to .pl files in the JT framework
-# It is typically: 
+# It is typically:
 # "/volume/labtools/ixia/<version_number>/lib/library/common/ixia_hl_lib-<version>"
 # For Ex:
 # use lib "/volume/labtools/ixia/6.30.850.7/lib";
@@ -110,12 +110,12 @@ my $value                  = '';
 # args Ip_Address, Increment_Step
 # returns sum of Ip_Address and Increment_Step
 # No Error handling yet
-# 
+#
 # Handles only IPv4 address format
 #
 # Ex: Ip_Address     = "10.10.10.1"
 #     Increment_Step = "1.0.0.0"
-#     Summation      = "11.10.10.1"  
+#     Summation      = "11.10.10.1"
 sub ip_addr_incr {
     my ($set_addr, $add_addr) = @_;
     my @set_array = ();
@@ -167,7 +167,7 @@ $_result_ = ixiahlt::connect({
     guard_rail           => "statistics",
 });
 &catch_error();
-    
+
 @status_keys = ixiahlt::status_item_keys();
 $port_handle = ixiahlt::status_item('port_handle');
 $vport_list = ixiahlt::status_item('vport_list');
@@ -215,7 +215,7 @@ $_result_ = ixiahlt::emulation_bgp_config({
     count            => $num_of_bgp_neighbors,
     neighbor_type    => "internal",
     local_as         => 200,
-    local_as_step    => 1,       
+    local_as_step    => 1,
     local_as_mode    => "increment"
 });
 &catch_error();
@@ -240,16 +240,16 @@ foreach my $bgp_neighbor_handle (@ce_bgp_neighbor_handle_list){
     # Configure BGP routes on each BGP peer     #
     #############################################
     $_result_ = ixiahlt::emulation_bgp_route_config({
-        mode	 	    => "add",                    
-        handle	 	    => $bgp_neighbor_handle,  
-        prefix	 	    => $prefix_ce1,             
-        prefix_step	    => 1,                       
-        netmask	 	    => "255.255.255.0",           
-        num_routes	    => $num_of_prefix,          
-        ip_version	    => "4",                       
-        origin_route_enable => 1,                       
-        origin	 	    => "igp"	
-    }); 
+        mode	 	    => "add",
+        handle	 	    => $bgp_neighbor_handle,
+        prefix	 	    => $prefix_ce1,
+        prefix_step	    => 1,
+        netmask	 	    => "255.255.255.0",
+        num_routes	    => $num_of_prefix,
+        ip_version	    => "4",
+        origin_route_enable => 1,
+        origin	 	    => "igp"
+    });
     &catch_error();
     $prefix_ce1 = &ip_addr_incr($prefix_ce1, "0.1.0.0");
 }
@@ -270,7 +270,7 @@ $_result_ = ixiahlt::emulation_bgp_config({
     count            => $num_of_bgp_neighbors,
     neighbor_type    => "internal",
     local_as         => 200,
-    local_as_step    => 1,       
+    local_as_step    => 1,
     local_as_mode    => "increment"
 });
 &catch_error();
@@ -295,16 +295,16 @@ foreach my $bgp_neighbor_handle (@pe_bgp_neighbor_handle_list){
     # Configure BGP routes on each BGP peer		#
     #############################################
     $_result_ = ixiahlt::emulation_bgp_route_config({
-        mode	 	    => "add",                    
-        handle	 	    => $bgp_neighbor_handle,  
-        prefix	 	    => $prefix_ce2,             
-        prefix_step	    => 1,                       
-        netmask	 	    => "255.255.255.0",           
-        num_routes	    => $num_of_prefix,          
-        ip_version	    => "4",                       
-        origin_route_enable => 1,                       
-        origin	 	    => "igp"	
-    }); 
+        mode	 	    => "add",
+        handle	 	    => $bgp_neighbor_handle,
+        prefix	 	    => $prefix_ce2,
+        prefix_step	    => 1,
+        netmask	 	    => "255.255.255.0",
+        num_routes	    => $num_of_prefix,
+        ip_version	    => "4",
+        origin_route_enable => 1,
+        origin	 	    => "igp"
+    });
     &catch_error();
     $prefix_ce2 = &ip_addr_incr($prefix_ce2, "0.1.0.0");
 }
@@ -332,7 +332,7 @@ foreach my $bgp_neighbor_handle (@pe_bgp_neighbor_handle_list) {
     });
     &catch_error();
 
-    print ("INFO: \n"); 
+    print ("INFO: \n");
     @status_keys = ixiahlt::status_item_keys();
     $status = ixiahlt::status_item('status');
     print ("INFO: $status\n\n");
@@ -344,7 +344,7 @@ foreach my $bgp_neighbor_handle (@pe_bgp_neighbor_handle_list) {
         }
     }
 
-    # Optionally Loop through all the key-value pairs and print them 
+    # Optionally Loop through all the key-value pairs and print them
     #&display_all_values ( @status_keys );
 }
 
@@ -357,8 +357,8 @@ foreach my $bgp_neighbor_handle (@ce_bgp_neighbor_handle_list) {
         handle => $bgp_neighbor_handle
     });
     &catch_error();
-    
-    print ("INFO: \n"); 
+
+    print ("INFO: \n");
     @status_keys = ixiahlt::status_item_keys();
     $status = ixiahlt::status_item('status');
     print ("INFO: $status\n\n");
@@ -370,7 +370,7 @@ foreach my $bgp_neighbor_handle (@ce_bgp_neighbor_handle_list) {
         }
     }
 
-    # Optionally Loop through all the key-value pairs and print them 
+    # Optionally Loop through all the key-value pairs and print them
     #&display_all_values ( @status_keys );
 }
 
@@ -390,7 +390,7 @@ $_result_ = ixiahlt::traffic_config ({
 #####################################################################
 # Configuring Traffic												#
 #																	#
-# NOTE: You may use the track_by option to  specify the method of 	#	
+# NOTE: You may use the track_by option to  specify the method of 	#
 # tracking the generated traffic									#
 # in order to gather traffic statistics								#
 #####################################################################
@@ -401,15 +401,15 @@ my $stream1 = ixiahlt::traffic_config({
     transmit_mode        => "continuous",
     port_handle          => $port_tx,
     emulation_src_handle => \@ce_bgp_neighbor_handle_list,
-    emulation_dst_handle => \@pe_bgp_neighbor_handle_list, 
+    emulation_dst_handle => \@pe_bgp_neighbor_handle_list,
     name                 => "IPv4_TRAFFIC",
-    src_dest_mesh        => "one_to_one", 
+    src_dest_mesh        => "one_to_one",
     route_mesh           => "one_to_one",
-    circuit_type         => "none",     
+    circuit_type         => "none",
     circuit_endpoint_type => "ipv4",
-    rate_percent         => 10,                                      
-    tx_delay             => 10,                                      
-    length_mode          => "fixed",                                   
+    rate_percent         => 10,
+    tx_delay             => 10,
+    length_mode          => "fixed",
     frame_size           => 512,
     track_by             => "endpoint_pair",
 });
@@ -429,8 +429,8 @@ $_result_ = ixiahlt::traffic_control ({
 # Start the traffic 							     #
 ######################################################
 $_result_ = ixiahlt::traffic_control ({
-        action               =>  "run",            
-});     
+        action               =>  "run",
+});
 &catch_error();
 
 ######################################################
@@ -492,7 +492,7 @@ my %packet_aggregate_mode = (
 "Data Integrity Errors Min"          =>  "aggregate.rx.data_int_errors_count.min"  ,
 "Valid Frames Rx."                   =>  "aggregate.rx.pkt_count.max",
 "Valid Frames Rx. Rate"              =>  "aggregate.rx.pkt_rate",
-"Traffic Item Total Packets Rate Tx" => "traffic_item.$tiName1.tx.total_pkt_rate", 
+"Traffic Item Total Packets Rate Tx" => "traffic_item.$tiName1.tx.total_pkt_rate",
 "Traffic Item Total Packets Rate Rx" => "traffic_item.$tiName1.rx.total_pkt_rate",
 "Traffic Item Total packets Tx"      => "traffic_item.$tiName1.tx.total_pkts",
 "Traffic Item Total packets Rx"      => "traffic_item.$tiName1.rx.total_pkts",

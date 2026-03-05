@@ -46,7 +46,7 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#    This sample configures 10 IPv6 sessions on each of the two ports          # 
+#    This sample configures 10 IPv6 sessions on each of the two ports          #
 #                                                                              #
 ################################################################################
 
@@ -137,7 +137,7 @@ ixNet setMultiAttr [ixNet getAttr $ipv6_2 -prefix]/singleValue -value 64
 ixNet commit
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 set vPorts [ixNet getList [ixNet getRoot] vport]
 puts "Assigning ports to $vPorts"

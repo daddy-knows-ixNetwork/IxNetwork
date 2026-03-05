@@ -48,7 +48,7 @@ set topology1(portHandle) [keylget topology1Status topology_handle]
 set topology2(portHandle) [keylget topology2Status topology_handle]
 
 # 2> Create Device Group(s) to a Topology Group
-#    
+#
 set deviceGroup1(topo1,-topology_handle) $topology1(portHandle)
 set deviceGroup1(topo1,-device_group_multiplier) 5
 set deviceGroup1(topo1,-device_group_name) "Ipv4 Tx-1"
@@ -129,7 +129,7 @@ set portConfig2(-vlan_id_step)            1
 set portConfig2(-vlan_user_priority_step) 0
 
 set portConfig3(-mode)                    config
-set portConfig3($port2,-mtu)                     1500 
+set portConfig3($port2,-mtu)                     1500
 set portConfig3($port2,-protocol_handle)         $deviceGroup3(topo2,groupHandle)
 set portConfig3($port2,-ipv4_resolve_gateway)    1
 set portConfig3($port2,-ipv4_manual_gateway_mac) 00.00.00.00.00.01
@@ -148,7 +148,7 @@ set portConfig3($port2,-vlan_id_step)            1
 set portConfig3($port2,-vlan_user_priority_step) 0
 
 set portConfig4(-mode)                           config
-set portConfig4(-mtu)                     1500 
+set portConfig4(-mtu)                     1500
 set portConfig4(-protocol_handle)         $deviceGroup4(topo2,groupHandle)
 set portConfig4(-ipv4_resolve_gateway)    1
 set portConfig4(-ipv4_manual_gateway_mac) 00.00.00.00.00.01
@@ -185,7 +185,7 @@ set deviceGroup4Topo2 [PortConfigProtocolIntNgpfHlt ::portConfig4]
 # ipv4_handle: /topology:1/deviceGroup:1/ethernet:1/ipv4:1
 # interface_handle: /topology:1/deviceGroup:1/ethernet:1/ipv4:1/item:1 /topology:1/deviceGroup:1/ethernet:1/ipv4:1/item:2 /topology:1/deviceGroup:1/ethernet:1/ipv4:1/item:3 /topology:1/deviceGroup:1/ethernet:1/ipv4:1/item:4 /topology:1/deviceGroup:1/ethernet:1/ipv4:1/item:5 /topology:1/deviceGroup:1/ethernet:1/ipv4:1/item:6 /topology:1/deviceGroup:1/ethernet:1/ipv4:1/item:7 /topology:1/deviceGroup:1/ethernet:1/ipv4:1/item:8 /topology:1/deviceGroup:1/ethernet:1/ipv4:1/item:9 /topology:1/deviceGroup:1/ethernet:1/ipv4:1/item:10
 
-set trafficItem1(-mode) create 
+set trafficItem1(-mode) create
 set trafficItem1(-endpointset_count) 1
 set trafficItem1(-emulation_src_handle) $topology1(portHandle)
 set trafficItem1(-emulation_dst_handle) $topology2(portHandle)
@@ -203,7 +203,7 @@ set trafficItem1Objects [CreateTrafficItemHlt ::trafficItem1]
 puts "\n$trafficItem1Objects"
 
 # status: 1
-# log: 
+# log:
 # ::ixNet::OBJ-/traffic/trafficItem:1 - {Not all the Packets could be Generated: One or more destination MACs or VPNs are invalid or unreachable and the packets configured to be sent to them were not created}.
 # stream_id: TI0-Traffic_Item_1
 # traffic_item: ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1

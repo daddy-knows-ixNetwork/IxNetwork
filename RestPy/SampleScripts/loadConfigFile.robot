@@ -11,7 +11,7 @@ Documentation  sample demonstrating traffic creation using ixnetwork_restpy and 
 ...     - Optional: Assign ports or use the ports that are in the saved config file.
 ...     - Start all protocols
 ...     - Verify all protocols
-...     - Start traffic 
+...     - Start traffic
 ...     - Get Traffic Item
 ...     - Get Flow Statistics stats
 
@@ -19,7 +19,7 @@ Documentation  sample demonstrating traffic creation using ixnetwork_restpy and 
 ...     - Windows, Windows Connection Mgr and Linux
 
 ...  Requirements
-...     - RestPy 1.0.33   
+...     - RestPy 1.0.33
 ...     - IxNetwork 8.50
 ...     - Python 2.7 and 3+
 ...     - pip install requests
@@ -28,7 +28,7 @@ Documentation  sample demonstrating traffic creation using ixnetwork_restpy and 
 ...  RestPy Doc:
 ...      https://www.openixia.com/userGuides/restPyDoc
 
- 
+
 Library  BuiltIn
 Library  Collections
 
@@ -44,7 +44,7 @@ ${forceTakePortOwnership} =  True
 
 @{licenseServerIp} =  192.168.70.3
 ${licenseMode} =  subscription
-${licenseTier} =  tier3  
+${licenseTier} =  tier3
 
 ${configFile} =  bgp_ngpf_9.00.ixncfg
 
@@ -58,7 +58,7 @@ ${ixChassisIp} =  192.168.70.128
 @{portList} =  ${port_1_1}  ${port_2_1}
 
 @{trackBy} =  flowGroup0
-@{EMPTYLIST} =  
+@{EMPTYLIST} =
 
 *** Test Cases ***
 Load a saved config file that configures BGP in NGPF
@@ -67,7 +67,7 @@ Load a saved config file that configures BGP in NGPF
 
 	# If using RestPy version < 1.0.33, uncomment this.  Backward compatibility still works, but
 	# the parameters rest_port and platform are deprecated.
-	#Import Library  ixnetwork_restpy.testplatform.testplatform.TestPlatform  
+	#Import Library  ixnetwork_restpy.testplatform.testplatform.TestPlatform
 	#...  ${apiServerIp}  rest_port=11009  platform=windows  log_file_name=restpy.log  WITH NAME  testPlatformObj
 
 	# If using RestPy version >= 1.0.33
@@ -85,7 +85,7 @@ Load a saved config file that configures BGP in NGPF
 	${ixNetwork.Globals.Licensing.LicensingServers} =  Set Variable  ${licenseServerIp}
         ${ixNetwork.Globals.Licensing.Mode} =  Set Variable  ${licenseMode}
         ${ixNetwork.Globals.Licensing.Tier} =  Set Variable  ${licenseTier}
- 	
+
 	Log To Console  Loading config file: ${configFile} ...
         Import Library  ixnetwork_restpy.files.Files  ${configFile}  local_file=True  WITH NAME  fileObj
 	${fileTransfer} =  Get Library Instance  fileObj
@@ -103,8 +103,8 @@ Load a saved config file that configures BGP in NGPF
 	:FOR  ${vport}  IN  @{ixNetwork.Vport.find()}
 	\    Append To List  ${vportList}  ${vport.href}
 
-	Call Method  ${ixNetwork}  AssignPorts  ${testPorts}  ${EMPTYLIST}  ${vportList}  ${forceTakePortOwnership} 
-	
+	Call Method  ${ixNetwork}  AssignPorts  ${testPorts}  ${EMPTYLIST}  ${vportList}  ${forceTakePortOwnership}
+
 	Log To Console  Start all protocols
 	Call Method  ${ixNetwork}  StartAllProtocols  sync
 
@@ -137,4 +137,4 @@ Load a saved config file that configures BGP in NGPF
 	Log To Console  RxFrames: ${flowStatistics.Rows[0]['Rx Frames']}
 
         # Note: Using Call Method to remove the session doesn't work.
-	${status} =  Run Keyword If  "${debugMode}"=="False"   Set Variable  ${session.remove()}  
+	${status} =  Run Keyword If  "${debugMode}"=="False"   Set Variable  ${session.remove()}

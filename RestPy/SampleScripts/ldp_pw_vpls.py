@@ -1,31 +1,31 @@
 """
 ldppwvpls.py:
     Within toplogy both Provider Edge(PE) and Provider(P) Routers are created.
-    created.P router is emulated in the front Device Group(DG), which consists of both 
-    OSPF as routing protocol as well as Basic LDP sessions for Transport Label         
-    Distribution Protocol. The chained DG act as PE Router, where LDP Extended Martini 
-    is configured for VPN Label distibution protocol.Bidirectional L2-L3 Traffic is    
-    configured in between two CE cloud is created.                                     
-     Script Flow:			                                                         
-     1. Configuration of protocols.	                                                 
-         Configuration flow of the script is as follow:                                  
- 		i.    Adding of OSPF router.			        	                         
- 		ii.   Adding of Network Cloud.      				                         
- 		iii.  Adding of chain DG.					                                 
- 		iv.   Adding of LDP(basic session) on Front DG 		                         
- 		v.    Adding of LDP Extended Martini(Targeted sess.) over chained DG.        
- 		vi.   Adding of LDP PW/VPLS Tunnel over LDP Extended Martini.	             
-    2. Start the ldp protocol.                                                      
-    3. Retrieve protocol statistics.                                         	    
-    4. Retrieve protocol learned info.                                              
-    5. Disbale/Enable the ldp FECs and change label & apply change on the fly       
-    6. Retrieve protocol learned info again and notice the difference with          
-       previouly retrieved learned info.                                            
-    7. Configure L2-L3 traffic.                                                     
-    8. Start the L2-L3 traffic.                                                     
-    9. Retrieve L2-L3 traffic stats.                                                
-   10. Stop L2-L3 traffic.                                                          
-   11. Stop all protocols.    
+    created.P router is emulated in the front Device Group(DG), which consists of both
+    OSPF as routing protocol as well as Basic LDP sessions for Transport Label
+    Distribution Protocol. The chained DG act as PE Router, where LDP Extended Martini
+    is configured for VPN Label distibution protocol.Bidirectional L2-L3 Traffic is
+    configured in between two CE cloud is created.
+     Script Flow:
+     1. Configuration of protocols.
+         Configuration flow of the script is as follow:
+ 		i.    Adding of OSPF router.
+ 		ii.   Adding of Network Cloud.
+ 		iii.  Adding of chain DG.
+ 		iv.   Adding of LDP(basic session) on Front DG
+ 		v.    Adding of LDP Extended Martini(Targeted sess.) over chained DG.
+ 		vi.   Adding of LDP PW/VPLS Tunnel over LDP Extended Martini.
+    2. Start the ldp protocol.
+    3. Retrieve protocol statistics.
+    4. Retrieve protocol learned info.
+    5. Disbale/Enable the ldp FECs and change label & apply change on the fly
+    6. Retrieve protocol learned info again and notice the difference with
+       previouly retrieved learned info.
+    7. Configure L2-L3 traffic.
+    8. Start the L2-L3 traffic.
+    9. Retrieve L2-L3 traffic stats.
+   10. Stop L2-L3 traffic.
+   11. Stop all protocols.
 Supports IxNetwork API servers:
    - Windows, Windows Connection Mgr and Linux
 Requirements:
@@ -67,7 +67,7 @@ debugMode = False
 
 try:
     # LogLevel: none, info, warning, request, request_response, all
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=11219, UserName='admin', Password='admin', 
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=11219, UserName='admin', Password='admin',
                                SessionName=None, SessionId=None, ApiKey=None,
                                ClearConfig=True, LogLevel="info", LogFilename='restpy.log')
 
@@ -80,7 +80,7 @@ try:
         vport[portName] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name=portName)
 
     portMap.Connect(forceTakePortOwnership)
-    
+
     ixNetwork.info("Creating Topology 1")
     topology1 = ixNetwork.Topology.add(Name="EVPN Topology 1", Ports=vport['Port_1'])
 
@@ -223,10 +223,10 @@ try:
 
     for v in values1:
         print(v)
-    
+
     ixNetwork.info("Fetching FEC 128 Learned Info")
     ldpTargeted2.GetFEC128LearnedInfo("1")
-    
+
     linfo2 = ldpTargeted2.LearnedInfo.find()[0]
     values2 = linfo2.Values
 
@@ -245,13 +245,13 @@ try:
     ixNetwork.info("Fetching FEC 128 Learned Info, it must be \
         updated after previous OTF change")
     ldpTargeted2.GetFEC128LearnedInfo("1")
-    
+
     linfo2 = ldpTargeted2.LearnedInfo.find()[0]
     values2 = linfo2.Values
 
     for v in values2:
         print(v)
-    
+
     ixNetwork.info("Stopping Protocols")
     ixNetwork.StopAllProtocols()
 
@@ -262,18 +262,3 @@ except Exception as errMsg:
     print(traceback.print_exception())
     if 'session' in locals():
         session.Session.remove()
-
-
-    
-    
-
-
-
-    
-
-
-
-
-      
-
-

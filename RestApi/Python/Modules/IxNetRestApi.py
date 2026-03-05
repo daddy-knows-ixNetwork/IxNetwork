@@ -247,12 +247,12 @@ class Connect:
 
         if serverOs == 'windowsConnectionMgr':
             # User connecting to existing sessionId
-            # 
+            #
             # Starting 8.50, IxNetwork API server supports https on Windows.
             # If connecting to an existing session with the api server set to https::
             #     - Pass in apiServerIp, serverIpPort, httpsSecured and  sessionId
             #     - Although the serverIpPort default is 443 for https, this could change in the future.
-            
+
             if sessionId:
                 url = '{0}://{1}:{2}/api/v1/sessions/{3}'.format(self.httpScheme, apiServerIp, self.apiServerPort, str(sessionId))
                 try:
@@ -404,7 +404,7 @@ class Connect:
                     restExecutionFailures += 1
                     time.sleep(retryInterval)
                     continue
-                
+
                 if restExecutionFailures == maxRetries:
                     raise IxNetRestApiException(errMsg)
 
@@ -475,7 +475,7 @@ class Connect:
                     restExecutionFailures += 1
                     time.sleep(retryInterval)
                     continue
-                
+
                 if restExecutionFailures == maxRetries:
                     raise IxNetRestApiException(errMsg)
 
@@ -498,7 +498,7 @@ class Connect:
                 self.logInfo('\n\tPATCH: {0}\n\tDATA: {1}'.format(restApi, data))
 
             try:
-                response = self._session.request('PATCH', restApi, data=json.dumps(data), headers=self.jsonHeader, allow_redirects=True, 
+                response = self._session.request('PATCH', restApi, data=json.dumps(data), headers=self.jsonHeader, allow_redirects=True,
                                           verify=self.verifySslCert)
 
                 if silentMode == False:
@@ -524,7 +524,7 @@ class Connect:
                     restExecutionFailures += 1
                     time.sleep(retryInterval)
                     continue
-                
+
                 if restExecutionFailures == maxRetries:
                     raise IxNetRestApiException(errMsg)
 
@@ -573,7 +573,7 @@ class Connect:
                     restExecutionFailures += 1
                     time.sleep(retryInterval)
                     continue
-                
+
                 if restExecutionFailures == maxRetries:
                     raise IxNetRestApiException(errMsg)
 
@@ -591,14 +591,14 @@ class Connect:
         """
         if headers != None:
             self.jsonHeader = headers
-            
+
         retryInterval = 3
         restExecutionFailures = 0
         while True:
             self.logInfo('\n\tDELETE: {0}\n\tDATA: {1}'.format(restApi, data))
 
             try:
-                response = self._session.request('DELETE', restApi, data=json.dumps(data), headers=self.jsonHeader, allow_redirects=True, 
+                response = self._session.request('DELETE', restApi, data=json.dumps(data), headers=self.jsonHeader, allow_redirects=True,
                                                  verify=self.verifySslCert)
 
                 for redirectStatus in response.history:
@@ -621,7 +621,7 @@ class Connect:
                     restExecutionFailures += 1
                     time.sleep(retryInterval)
                     continue
-                
+
                 if restExecutionFailures == maxRetries:
                     raise IxNetRestApiException(errMsg)
 
@@ -911,7 +911,7 @@ class Connect:
 
         if response.json() == '' or response.json()['progress'] == 100:
             return response
-                    
+
         if 'errors' in response.json():
             raise IxNetRestApiException(response.json()["errors"][0])
 
@@ -924,10 +924,10 @@ class Connect:
 
             if httpAction == 'post':
                 response = self.post(url, silentMode=True)
-                
+
             state = response.json()["state"]
             progress = response.json()["progress"]
-            
+
             if silentMode == False:
                 if progress != 100:
                     self.logInfo("\tState:{}  Progress:{}:  Wait {}/{} seconds".format(state, progress,
@@ -944,7 +944,7 @@ class Connect:
                 # Verify port connectionStatus for: License Failed and Version Mismatch to report problem immediately.
                 if ignoreException:
                     return response
-                
+
                 raise IxNetRestApiException(response.text)
 
             if counter < timeout and progress == 100:
@@ -953,9 +953,9 @@ class Connect:
             if counter == timeout and progress != 100:
                 if ignoreException:
                     return response
-                
+
                 raise IxNetRestApiException('waitForComplete failed: %s' % response.json())
-            
+
     def waitForComplete_backup(self, response='', url='', silentMode=False, ignoreException=False, httpAction='get', timeout=90):
         """
         Description
@@ -1174,13 +1174,13 @@ class Connect:
         """
         Description
            Get a list of open session IDs and some session metas.
-           
+
         Syntax
             GETE: /api/v1/sessions
 
         Return
             A dict
-            
+
         """
         response = self.get(self.sessionUrl)
         sessionIdDict = {}
@@ -1370,7 +1370,7 @@ class Connect:
         response = self.post(url, data=data)
         self.waitForComplete(response, url+'/'+response.json()['id'])
         return response
-    
+
     def configMultivalue(self, multivalueUrl, multivalueType, data):
         """
         Description
@@ -1509,5 +1509,3 @@ class Connect:
 
     def placeholder():
         pass
-
-

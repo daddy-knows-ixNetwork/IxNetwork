@@ -201,7 +201,7 @@ ixNet setMultiAttribute $ti1/tracking -trackBy {{sourceDestValuePair0}}
 ixNet commit
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 set vPorts [ixNet getList [ixNet getRoot] vport]
 puts "Assigning ports to $vPorts"
@@ -349,4 +349,3 @@ puts "Sleep 5sec then stop traffic"
 after 5000
 ixNet exec stop [ixNet getRoot]/traffic
 puts "Stop traffic"
-

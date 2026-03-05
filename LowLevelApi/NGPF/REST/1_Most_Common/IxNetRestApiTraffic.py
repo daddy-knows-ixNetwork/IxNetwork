@@ -40,7 +40,7 @@ class Traffic(object):
 
         If mode is modify:
             The required parameters are: mode, obj, and one of the objects to modify (trafficIemObj, endpointObj or configElementObj).
-            
+
             You need to provide the right object handle.
 
                To modify trafficItem:
@@ -134,7 +134,7 @@ class Traffic(object):
                                                                'frameCount': 10000,
                                                                'frameRate': 18,
                                                                'frameRateType': 'percentLineRate',
-                                                               'frameSize': 128}), 
+                                                               'frameSize': 128}),
                                                            ({
                                                                'transmissionType': 'fixedFrameCount',
                                                                'frameCount': 20000,
@@ -144,7 +144,7 @@ class Traffic(object):
                                                        ]
                                                     })],
                                          configElements = None)
-    
+
 
         Return: trafficItemObj, endpointSetObjList, configElementObjList
         """
@@ -469,7 +469,7 @@ class Traffic(object):
                                            'stepValue': '00:00:00:00:00:00',
                                            'countValue': 1,
                                            'auto': False})
-        
+
     def showPacketHeaderFieldNames(self, stackObj):
         """
         Description
@@ -973,9 +973,3 @@ class Traffic(object):
         """
         data = {'type': payloadType, 'customRepeat': customRepeat, 'customPattern': customPattern}
         self.ixnObj.patch(self.ixnObj.httpHeader+configElementObj+'/framePayload', data=data)
-
-
-
-
-
-

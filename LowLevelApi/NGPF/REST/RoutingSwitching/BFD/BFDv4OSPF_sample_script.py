@@ -182,7 +182,7 @@ ixNet.commit()
 
 
 ###########################################################################
-#Add and Configure BFDv4 Interface 
+#Add and Configure BFDv4 Interface
 ###########################################################################
 print("Adding BFDv4 and Configuring")
 ixNet.add(ip1, 'bfdv4Interface')
@@ -227,7 +227,7 @@ ixNet.setAttribute(networkType2 +'/singleValue', '-value', 'pointtopoint')
 ixNet.commit()
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 vports = ixNet.getList(ixNet.getRoot(), 'vport')
 print "Assigning ports to " + str(vports) + " ..."
@@ -251,7 +251,7 @@ for view in views:
     if viewName == ixNet.getAttribute(view,"caption"):
         viewObj = view
         break
-viewPage=viewObj+'/page'			
+viewPage=viewObj+'/page'
 statcap   = ixNet.getAttribute(viewPage, '-columnCaptions')
 for statValList in ixNet.getAttribute(viewPage, '-rowValues') :
     print '**************1',statValList
@@ -295,7 +295,7 @@ except :
 time.sleep(10)
 
 ###############################################################################
-# Retrieve protocol learned info                                              # 
+# Retrieve protocol learned info                                              #
 ###############################################################################
 print("Fetching BFD learned info")
 data ={'arg1':['/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bfdv4Interface/1'],'arg2':['1']}

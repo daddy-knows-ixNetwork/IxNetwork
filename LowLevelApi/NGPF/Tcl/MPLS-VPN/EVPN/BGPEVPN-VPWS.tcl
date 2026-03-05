@@ -51,12 +51,12 @@
 #    About Topology:                                                           #
 #       It will create 2 BGP EVPN-VPWS topologies, each having LDP configured  #
 #       in connected Device Group .BGP EVPN-VPWS configured in chained device  #
-#       group along with Mac pools connected behind the chained Device Group.  # 
+#       group along with Mac pools connected behind the chained Device Group.  #
 # Script Flow:                                                                 #
 #        Step 1. Configuration of protocols.                                   #
 #                                                                              #
 #    Configuration flow of the script is as follow:                            #
-#       i.    Adding of Ethernet and IP within both topologies,                # 
+#       i.    Adding of Ethernet and IP within both topologies,                #
 #       ii.   Ading and configuration of OSPF and LDP router over IP           #
 #       iii.  Adding of Route Range behind DG of each topology                 #
 #       iv.   Configuring loopback address as Router ID                        #
@@ -101,7 +101,7 @@ ixNet exec newConfig
 ################################################################################
 # 1. Protocol configuration section. Configure LDP as per the description
 #    give above
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -336,7 +336,7 @@ ixNet exec createDefaultStack $chainedDg1 macPools
 puts "Adding Mac Pools behind EVPN-VPWS in topology 2"
 ixNet exec createDefaultStack $chainedDg2 macPools
 
-# VPWS Service Instance Configuration 
+# VPWS Service Instance Configuration
 puts "Changing default values of Ethernet Tag Id"
 ixNet setAttr [ixNet getAttr $broadcastDomain1 -ethernetTagId]/singleValue -value "1000"
 ixNet setAttr [ixNet getAttr $broadcastDomain2 -ethernetTagId]/singleValue -value "2000"
@@ -413,12 +413,12 @@ puts "***************************************************"
 ###############################################################################
 
 puts "Fetching EVPN  Learned Info"
-ixNet exec getEVPNLearnedInfo $bgp1 
+ixNet exec getEVPNLearnedInfo $bgp1
 
 after 5000
 set learnedInfoList [ixNet getList $bgp1 learnedInfo]
 set linfoList [ixNet getList $learnedInfoList table]
-set table [lindex $linfoList 3] 
+set table [lindex $linfoList 3]
 
 puts "EVPN learned info"
 puts "***************************************************"
@@ -432,7 +432,7 @@ puts "$values\n"
 puts "***************************************************"
 
 ################################################################################
-# 5. Configure L2-L3 traffic 
+# 5. Configure L2-L3 traffic
 ################################################################################
 puts "Congfiguring L2-L3 Traffic Item"
 set trafficItem1 [ixNet add [ixNet getRoot]/traffic "trafficItem"]
@@ -456,7 +456,7 @@ ixNet setMultiAttribute $endpointSet1\
     -ngpfFilters           [list]\
     -trafficGroups         [list]\
     -sources               $source\
-    -destinations          $destination    
+    -destinations          $destination
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\

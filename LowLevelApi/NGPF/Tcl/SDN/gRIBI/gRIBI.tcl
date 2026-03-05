@@ -71,7 +71,7 @@
 #               We are running a demo server in the gRIBI server port using some#
 #               cli commands. For example purpose the command to run demo server#
 #               is provided in sample script, but it will not run the commands. #
-#               so gRIBI client sessions will not be up unless we connect it to # 
+#               so gRIBI client sessions will not be up unless we connect it to #
 #               real server  session  with matching IP and port number.         #
 #                                                                               #
 #               The script flow only gives an example of how to configure gRIBI #
@@ -196,7 +196,7 @@ ixNet setMultiAttr [ixNet getAttr $ip1 -resolveGateway]/singleValue -value true
 ixNet setMultiAttr [ixNet getAttr $ip2 -resolveGateway]/singleValue -value true
 ixNet commit
 
-#  Adding gRPC Client and configuring it in topology 1 
+#  Adding gRPC Client and configuring it in topology 1
 puts "Adding gRPC Client and configuring it in topology 1"
 ixNet add $ip1 gRPCClient
 ixNet commit
@@ -211,7 +211,7 @@ ixNet setAttribute $remotePortMultiValue1 -pattern singleValue -clearOverlays Fa
 ixNet setAttribute $remotePortMultiValue1/singleValue -value "50001"
 ixNet commit
 
-#  Adding gRIBI Client stack over gRPC Client in topology 1 
+#  Adding gRIBI Client stack over gRPC Client in topology 1
 puts "Adding gRIBI Client stack over gRPC Client in topology 1"
 ixNet add $gRPCClient gRIBIClient
 ixNet commit
@@ -233,7 +233,7 @@ ixNet setAttribute $electionIdLowMultiValue1 -pattern singleValue -clearOverlays
 ixNet setAttribute $electionIdLowMultiValue1/singleValue -value "2001"
 ixNet commit
 
-#  Adding gRIBI Next Hop Stack over gRIBI Client in topology 1 
+#  Adding gRIBI Next Hop Stack over gRIBI Client in topology 1
 puts "Adding gRIBI Next Hop Stack over gRIBI Client in topology 1"
 ixNet add $gRIBIClient gRIBINextHopGroup
 ixNet commit
@@ -331,7 +331,7 @@ foreach statValList [ixNet getAttr $viewPage -rowValues] {
 puts "************************************************************"
 
 ################################################################################
-# Step 4 > Change following parameters in Next Hop Group 1 
+# Step 4 > Change following parameters in Next Hop Group 1
 #          Apply changes on the fly.
 ################################################################################
 #---------------------------------------------------------------------------

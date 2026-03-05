@@ -75,13 +75,13 @@ sub assignPorts {
 	my $port2    = $my_resource[6];
 	my $vport1   = $my_resource[7];
 	my $vport2   = $my_resource[8];
-	
+
 	my $root = $ixNet->getRoot();
 	my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-	
+
 	my $chassisObj2 = '';
 	if ($chassis1 ne $chassis2) {
 	    $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -91,7 +91,7 @@ sub assignPorts {
 	} else {
 	    $chassisObj2 = $chassisObj1;
 	}
-	
+
 	my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -100,7 +100,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-		
+
     $ixNet->commit();
 }
 
@@ -111,7 +111,7 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.216.104.58';
 my $ixTclPort   = '8919';
 my @ports       = (('10.216.108.99', '11', '3'), ('10.216.108.99', '11', '4'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
@@ -134,7 +134,7 @@ sleep(5);
 
 ################################################################################
 # protocol configuration section                                               #
-################################################################################ 
+################################################################################
 
 print("Adding 2 topologies\n");
 $ixNet->add($ixNet->getRoot(), 'topology', '-vports', $vportTx);
@@ -362,14 +362,14 @@ $ixNet->commit();
 print("Setting Adj-SID value in first Emulated Router\n");
 my $adjSID1 = ($ixNet->getAttribute($isisL3_1, '-adjSID'));
 $ixNet->setAttribute($adjSID1.'/counter', '-step', '1',
-                                          '-start', '9001', 
+                                          '-start', '9001',
                                           '-direction', 'increment');
 $ixNet->commit();
 
 print("Setting Adj-SID value in second Emulated Router\n");
 my $adjSID2 = ($ixNet->getAttribute($isisL3_2, '-adjSID'));
 $ixNet->setAttribute($adjSID2.'/counter', '-step', '1',
-                                          '-start', '9002', 
+                                          '-start', '9002',
                                           '-direction', 'increment');
 $ixNet->commit();
 
@@ -514,13 +514,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 

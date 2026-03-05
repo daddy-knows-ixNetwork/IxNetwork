@@ -39,7 +39,7 @@
 # POSSIBILITY OF  SUCH DAMAGES IN ADVANCE.                                     #
 # Ixia Keysight will not be required to provide any software maintenance or    #
 # support services of any kind (e.g. any error corrections) in connection with #
-# script or any part thereof. The user acknowledges that although Ixia Keysight# 
+# script or any part thereof. The user acknowledges that although Ixia Keysight#
 # may     																	   #
 # from time to time and in its sole discretion provide maintenance or support  #
 # services for the script any such services are subject to the warranty and    #
@@ -110,12 +110,12 @@ proc traffitem_enable_regenerate {tItemName} {
 			ixNet execute generate $item
 			set flag 0
 	return $flag
-		
+
 		}
 	}
 }
 
-# Procedure for disabling traffic item 
+# Procedure for disabling traffic item
 proc traffitem_disable {tItemName} {
 	set root [ixNet getRoot]
 	set traffic [ixNet getL $root traffic]
@@ -128,7 +128,7 @@ proc traffitem_disable {tItemName} {
 			ixNet commit
 			set flag 0
 	return $flag
-		
+
 		}
 	}
 }
@@ -223,8 +223,8 @@ set bonded_gre_lte [ixNet add $greoipv4 "bondedGRE"]
 ixNet setMultiAttribute $bonded_gre_lte 			\
 	-name "LTE Bonded GRE"
 ixNet commit
-		
-puts "\n .........Adding Bonded GRE DSL ............ "		
+
+puts "\n .........Adding Bonded GRE DSL ............ "
 
 set dsl_device [ixNet add $hg_topology "deviceGroup"]
 ixNet setMultiAttribute $dsl_device 				\
@@ -269,7 +269,7 @@ set bonded_gre_dsl [ixNet add $greoipv4_dsl "bondedGRE"]
 ixNet setMultiAttribute $bonded_gre_dsl 				\
 	-name "DSL Bonded GRE"
 ixNet commit
-		
+
 puts "\n Modify tunnel type of DSL device group to DSL value"
 ixNet setMultiAttribute $bonded_gre_dsl \
 	-tunnelType dsl \
@@ -288,7 +288,7 @@ set dhcpv4server [lindex [ixNet getList $dhcpip dhcpv4server] 0]
 
 puts "\n HAAP DHCPv4 Server handle is : $dhcpv4server"
 puts "\n HAAP DHCPv4 Server IP handle is : $dhcpip"
-		
+
 puts  "Get global templates"
 set global_config 		[lindex [ixNet getList $root globals] 0]
 set global_top 			[lindex [ixNet getList $global_config topology] 0]
@@ -325,13 +325,13 @@ ixNet commit
 # Copy Custom Type TLV template to tlv profile
 set custom_type_tlv		 			[ixNet -strip execute copyTlv $tlv_profile $tlv_list]
 ixNet commit
-	
+
 
 # Get Custom type field value
 set tlv_val 			[ixNet getL $custom_type_tlv type]
 # Get Custom type field object
 set tlv_obj_val 		[ixNet getL $tlv_val object]
-# Get Custom type field 
+# Get Custom type field
 set obj_field_val 		[ixNet getL $tlv_obj_val field]
 set obj_value 			[ixNet getA $obj_field_val -value]
 set obj_counter 		[ixNet add $obj_value "counter"]
@@ -343,13 +343,13 @@ ixNet setMultiAttribute $obj_counter \
 	-start 12 \
 	-direction increment
 ixNet commit
-		
+
 puts "Change the value for $custom_tlv to value aabbccdd"
 # Get Custom value
 set tlv_val 			[ixNet getL $custom_type_tlv value]
 # Get Custom value object
 set tlv_obj_val 		[ixNet getL $tlv_val object]
-# Get Custom value field 
+# Get Custom value field
 set obj_field_val 		[ixNet getL $tlv_obj_val field]
 set obj_value 			[ixNet getA $obj_field_val -value]
 set obj_counter 		[ixNet add $obj_value "counter"]
@@ -359,7 +359,7 @@ ixNet setMultiAttribute $obj_counter \
 	-step 01 \
 	-start aabbccdd \
 	-direction increment
-ixNet commit		
+ixNet commit
 
 puts "********************************************************"
 puts "		Starting protocols "
@@ -371,7 +371,7 @@ puts "\n\n 2. Starting DSL Bonded GRE protocols...\n\n"
 ixNet exec start $bonded_gre_dsl
 
 puts "\n\n 3. Starting HAAP GRE...\n\n"
-ixNet exec start $greoipv4 
+ixNet exec start $greoipv4
 
 puts "Wait 30 sec"
 after 30000
@@ -429,7 +429,7 @@ foreach statValList [ixNet getAttr $viewPage -rowValues] {
         }
     }
 }
-puts "\n\n 4 . Starting HAAP dhcp server....\n\n"  
+puts "\n\n 4 . Starting HAAP dhcp server....\n\n"
 ixNet exec start $dhcpv4server
 
 puts "\n\n 5 . Starting Home Gateway dhcp client....\n\n"
@@ -462,7 +462,7 @@ ixNet setMultiAttribute $ti1/tracking -trackBy [list ethernetIiSourceaddress0 \
 												ethernetIiDestinationaddress0]
 ixNet commit
 
-# Apply and start traffic from Home Gateway DHCP client to DHCP Server IPV4 
+# Apply and start traffic from Home Gateway DHCP client to DHCP Server IPV4
 ixNet exec apply $traffic
 ixNet exec start $traffic
 after 5000
@@ -586,7 +586,7 @@ puts "Bonded GRE info after Tear down from Homegateway to HAAP is : $teardown_in
 
 puts "********************************************************"
 puts "\n\nStopping Bonded GRE...\n\n"
-puts "********************************************************"		  
+puts "********************************************************"
 ixNet exec stopAllProtocols
 after 5000
 
@@ -617,8 +617,3 @@ puts ""
 puts "!!! TEST DONE !!!"
 
 return 0
-
-
-
-
-

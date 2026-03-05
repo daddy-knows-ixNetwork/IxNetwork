@@ -45,7 +45,7 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#    This sample configures 10 IPv6 sessions on each of the two ports          # 
+#    This sample configures 10 IPv6 sessions on each of the two ports          #
 #                                                                              #
 ################################################################################
 
@@ -157,7 +157,7 @@ puts "Setting multi values for ipv6 addresses"
 @ixNet.commit()
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 vports = @ixNet.getList(@ixNet.getRoot(), 'vport')
 puts "Assigning ports to " + vports.to_s + " ..."

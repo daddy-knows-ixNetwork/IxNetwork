@@ -6,10 +6,10 @@
 #                                                                              #
 ################################################################################
 ################################################################################
-# Description:                                                                 
+# Description:
 #    This script intends to demonstrate how to use IEEE 802.1x API
 #    It will do the  following :
-#1.    Add topology and devicegroup 
+#1.    Add topology and devicegroup
 #2.    Configure ethernet and dot1x Layer.
 #3.    Change protocol type to PEAPV0
 #4.    Change few global parameters
@@ -37,7 +37,7 @@ def assignPorts (ixNet, realPort1) :
 
     cardPortRef1 = chassisObj1 + '/card:%s/port:%s' % (card1, port1)
     ixNet.setMultiAttribute(vport1, '-connectedTo', cardPortRef1,
-                                 '-rxMode', 'captureAndMeasure', '-name', 
+                                 '-rxMode', 'captureAndMeasure', '-name',
                                  'Ethernet - 001')
     ixNet.commit()
 # end def assignPorts

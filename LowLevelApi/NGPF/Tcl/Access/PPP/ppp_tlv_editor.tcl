@@ -39,7 +39,7 @@
 # POSSIBILITY OF  SUCH DAMAGES IN ADVANCE.                                     #
 # Ixia Keysight will not be required to provide any software maintenance or    #
 # support services of any kind (e.g. any error corrections) in connection with #
-# script or any part thereof. The user acknowledges that although Ixia Keysight# 
+# script or any part thereof. The user acknowledges that although Ixia Keysight#
 # may     																	   #
 # from time to time and in its sole discretion provide maintenance or support  #
 # services for the script any such services are subject to the warranty and    #
@@ -254,7 +254,7 @@ ixNet commit
 set tlv_val 			[ixNet getL $sub_tlv type]
 # Get Sub-tlv type field object
 set tlv_obj_val 		[ixNet getL $tlv_val object]
-# Get Sub-Tlv type field 
+# Get Sub-Tlv type field
 set obj_field_val 		[ixNet getL $tlv_obj_val field]
 set obj_value 			[ixNet getA $obj_field_val -value]
 set obj_counter 		[ixNet add $obj_value "counter"]
@@ -272,7 +272,7 @@ puts "Change the type for $req_tlv to value aabbccdd"
 set tlv_val 			[ixNet getL $sub_tlv value]
 # Get Sub-tlv value object
 set tlv_obj_val 		[ixNet getL $tlv_val object]
-# Get Sub-Tlv value field 
+# Get Sub-Tlv value field
 set obj_field_val 		[ixNet getL $tlv_obj_val field]
 set obj_value 			[ixNet getA $obj_field_val -value]
 set obj_counter 		[ixNet add $obj_value "counter"]

@@ -52,20 +52,20 @@
 #                                                                               #
 #    1. It will create 2 LAGs as RED-LAG & BLUE-LAG with LACP as LAG protocol,  #
 #       and  MACsec and MKA as LAG L23 Protocol,each LAG having two member      #
-#       ports. It with configure LACP, MKA and MACsec properties and add        # 
+#       ports. It with configure LACP, MKA and MACsec properties and add        #
 #       Topology over the LAG ports with IPv4 devices                           #
 #    2. Start All Protocols                                                     #
 #    3. Retrieve protocol statistics and LACP per port statistics.              #
 #    4. Configure Traffic over the LAG Topologies                               #
 #    5. Regenerate,Apply,Start traffic                                          #
 #    6. Retrieve Traffic Flow Statistics                                        #
-#	 7. Disable Synchronization flag on RED-LAG-port1 in RED-LAG.               # 
+#	 7. Disable Synchronization flag on RED-LAG-port1 in RED-LAG.               #
 #	 8. Retrieve protocol statistics and Traffic Flow Statistics.               #
-#	 9. Re-enable Synchronization flag on RED-LAG-port1 in RED-LAG.             # 
+#	 9. Re-enable Synchronization flag on RED-LAG-port1 in RED-LAG.             #
 #	 10. Retrieve protocol statistics and Traffic Flow Statistics.              #
-#	 11. Perform StopPDU on RED-LAG-port1 in RED-LAG.                           # 
+#	 11. Perform StopPDU on RED-LAG-port1 in RED-LAG.                           #
 #	 12. Retrieve LACP global learned info and Traffic Flow Statistics.         #
-#	 13. Perform StartPDU on RED-LAG-port1 in RED-LAG.                          # 
+#	 13. Perform StartPDU on RED-LAG-port1 in RED-LAG.                          #
 #	 14. Retrieve LACP global learned info and Traffic Flow Statistics.         #
 #	 15. Stop Traffic and Stop All protocols.                                   #
 #################################################################################
@@ -80,7 +80,7 @@ variable currentStatView
 	set drillDownType "Global Learned Info"
     set root $root
 	set statsViewList [ixNet getList $root/statistics view]
-	
+
 	# Add a StatsView
 	set statistics $root/statistics
     set view [ixNet add $statistics view]
@@ -90,14 +90,14 @@ variable currentStatView
 	ixNet commit
 	set view [ixNet remapIds $view]
 
-	# Set Filters        
+	# Set Filters
     set trackingFilter [ixNet add $view advancedCVFilters]
     ixNet setAttribute $trackingFilter -protocol $protocol
 	ixNet commit
-	#ixNet getAttr $trackingFilter -availableGroupingOptions        
+	#ixNet getAttr $trackingFilter -availableGroupingOptions
 	ixNet setAttribute $trackingFilter -grouping $drillDownType
 	ixNet commit
-	set layer23NextGenProtocolFilter $view/layer23NextGenProtocolFilter        
+	set layer23NextGenProtocolFilter $view/layer23NextGenProtocolFilter
 	ixNet setAttribute $layer23NextGenProtocolFilter -advancedCVFilter $trackingFilter
 	ixNet commit
 
@@ -130,7 +130,7 @@ ixNet exec newConfig
 
 ################################################################################
 # 1. Protocol configuration section. Configure LACP as per the description     #
-################################################################################ 
+################################################################################
 puts "Add 4 virtual ports"
 set root [ixNet getRoot]
 ixNet add $root vport
@@ -270,25 +270,25 @@ ixNet commit
 ixNet setAttribute $lag1mka -periodicRekeyInterval 30
 ixNet commit
 
-# Set RED-LAG MKA Key derivation function = AES-CMAC-128  for all ports in RED-LAG 
+# Set RED-LAG MKA Key derivation function = AES-CMAC-128  for all ports in RED-LAG
 set lag1mka_keyDerivationFunction [ ixNet getA $lag1mka -keyDerivationFunction]
 ixNet setAttribute $lag1mka_keyDerivationFunction/singleValue -value "aescmac128"
 ixNet commit
 
-# Set Cipher suite = GCM-AES-XPN-128 in RED-LAG MKA Key Server Attributes for all ports in RED-LAG 
+# Set Cipher suite = GCM-AES-XPN-128 in RED-LAG MKA Key Server Attributes for all ports in RED-LAG
 set lag1mka_cipherSuite [ ixNet getA $lag1mka -cipherSuite]
 ixNet setAttribute $lag1mka_cipherSuite/singleValue -value "aesxpn128"
-ixNet commit 
+ixNet commit
 
 # Set MKA Key Server Priority = 11 for all ports in RED-LAG , so that these ports act as Key Server
 set lag1mka_keyServerPriority [ ixNet getA $lag1mka -keyServerPriority]
 ixNet setAttribute $lag1mka_keyServerPriority/singleValue -value 11
-ixNet commit 
+ixNet commit
 
 # Set RED-LAG - MKA MKPDU Hello interval - 2 sec (default)
 set lag1mka_helloInterval [ ixNet getA $lag1mka -mkaHelloTime]
 ixNet setAttribute $lag1mka_helloInterval/singleValue -value 2000
-ixNet commit 
+ixNet commit
 
 # Configure CAK, CKN values in MKA - PSK Chain , same vales for all ports in RED-LAG
 set lag1mka_pskChain [ixNet getL $lag1mka cakCache]
@@ -301,20 +301,20 @@ ixNet setAttribute $lag1mka_pskChain_cakValue128/singleValue -value "00000000000
 ixNet commit
 
 # Configure MKA & MACsec properties in BLUE-LAG
-# Set BLUE-LAG MKA Key derivation function = AES-CMAC-128  for all ports in BLUE-LAG 
+# Set BLUE-LAG MKA Key derivation function = AES-CMAC-128  for all ports in BLUE-LAG
 set lag2mka_keyDerivationFunction [ ixNet getA $lag2mka -keyDerivationFunction]
 ixNet setAttribute $lag2mka_keyDerivationFunction/singleValue -value "aescmac128"
 ixNet commit
 
-# Set Cipher suite = GCM-AES-XPN-128 in BLUE-LAG MKA Key Server Attributes for all ports in BLUE-LAG 
+# Set Cipher suite = GCM-AES-XPN-128 in BLUE-LAG MKA Key Server Attributes for all ports in BLUE-LAG
 set lag2mka_cipherSuite [ ixNet getA $lag2mka -cipherSuite]
 ixNet setAttribute $lag2mka_cipherSuite/singleValue -value "aesxpn128"
-ixNet commit 
+ixNet commit
 
 # Set BLUE-LAG - MKA MKPDU Hello interval - 2 sec (default)
 set lag2mka_helloInterval [ ixNet getA $lag2mka -mkaHelloTime]
 ixNet setAttribute $lag2mka_helloInterval/singleValue -value 2000
-ixNet commit 
+ixNet commit
 
 # Configure CAK, CKN values in MKA - PSK Chain , same vales for all ports in BLUE-LAG
 set lag2mka_pskChain [ixNet getL $lag2mka cakCache]
@@ -491,9 +491,9 @@ ixNet setMultiAttribute $trafficItem1/configElement:1/frameSize \
         -incrementFrom   128									\
 		-incrementTo  1518
 ixNet setMultiAttribute $trafficItem1/configElement:1/frameRate   \
-        -rate       25                                    
+        -rate       25
 
-ixNet setMultiAttribute $trafficItem1/tracking -trackBy ipv4DestIp0 
+ixNet setMultiAttribute $trafficItem1/tracking -trackBy ipv4DestIp0
 ixNet commit
 after 5000
 
@@ -766,7 +766,7 @@ foreach statValList [ixNet getAttr $viewPage -rowValues] {
 }
 
 ################################################################################
-# Perform LACPDU start on RED-LAG-LACP                                         # 
+# Perform LACPDU start on RED-LAG-LACP                                         #
 ################################################################################
 puts "\n\nPerform LACPDU start on RED-LAG-LACP-Port1 "
 set RedLAGlacpPort1 [lindex [ixNet getList $RedLAGlacp port] 0]
