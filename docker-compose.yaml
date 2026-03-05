@@ -21,3 +21,75 @@ services:
     env_file:
       - ./ixnetwork.env
     working_dir: /IxNetwork
+
+  ixnetwork12.0:
+    platform: linux/amd64
+    privileged: true
+    build:
+      context: .
+    image: ghcr.io/daddy-knows-ixnetwork/ixnetwork:main
+    volumes:
+      # For future ssh use in development
+      - ~/.ssh:/home/ubuntu/.ssh:ro
+      - .:/IxNetwork
+      - ~/.gitconfig:/home/ubuntu/.gitconfig:ro
+      #- /var/run/docker.sock:/var/run/docker.sock
+      #- ~/.kube:/home/ubuntu/.kube_host:ro
+      #environment:
+    env_file:
+      - ./ixenv/ixnetwork12.0.env
+    working_dir: /IxNetwork
+
+  ixnetwork11.10:
+    platform: linux/amd64
+    privileged: true
+    build:
+      context: .
+    image: ghcr.io/daddy-knows-ixnetwork/ixnetwork:main
+    volumes:
+      # For future ssh use in development
+      - ~/.ssh:/home/ubuntu/.ssh:ro
+      - .:/IxNetwork
+      - ~/.gitconfig:/home/ubuntu/.gitconfig:ro
+      #- /var/run/docker.sock:/var/run/docker.sock
+      #- ~/.kube:/home/ubuntu/.kube_host:ro
+      #environment:
+    env_file:
+      - ./ixenv/ixnetwork11.10.env
+    working_dir: /IxNetwork
+
+  ixnetwork11.00:
+    platform: linux/amd64
+    privileged: true
+    build:
+      context: .
+    image: ghcr.io/daddy-knows-ixnetwork/ixnetwork:main
+    volumes:
+      # For future ssh use in development
+      - ~/.ssh:/home/ubuntu/.ssh:ro
+      - .:/IxNetwork
+      - ~/.gitconfig:/home/ubuntu/.gitconfig:ro
+      #- /var/run/docker.sock:/var/run/docker.sock
+      #- ~/.kube:/home/ubuntu/.kube_host:ro
+      #environment:
+    env_file:
+      - ./ixenv/ixnetwork11.00.env
+    working_dir: /IxNetwork
+
+  ixnetwork10.00:
+    platform: linux/amd64
+    privileged: true
+    build:
+      context: .
+    image: ghcr.io/daddy-knows-ixnetwork/ixnetwork:main
+    volumes:
+      # For future ssh use in development
+      - ~/.ssh:/home/ubuntu/.ssh:ro
+      - .:/IxNetwork
+      - ~/.gitconfig:/home/ubuntu/.gitconfig:ro
+      #- /var/run/docker.sock:/var/run/docker.sock
+      #- ~/.kube:/home/ubuntu/.kube_host:ro
+      #environment:
+    env_file:
+      - ./ixenv/ixnetwork10.00.env
+    working_dir: /IxNetwork

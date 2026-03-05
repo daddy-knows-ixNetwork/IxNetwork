@@ -91,14 +91,6 @@ RUN set -ex && \
     uv \
     pre-commit
 
-# ohmybash
-#RUN set -ex && \
-#    cd ${HOME} && \
-#    cp .bashrc .bashrc_copy && \
-#    bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" && \
-#    cat .bashrc_copy >> .bashrc && \
-#    rm .bashrc_copy
-
 # kubectl cli
 #RUN set -ex && \
 #    bash -c "curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg" && \
@@ -140,5 +132,12 @@ RUN set -ex && \
     uv pip install -r /opt/ixia/ixnetwork/10.00.2312.4/lib/PythonApi/requirements.txt &&\
     deactivate
 
+# ohmybash
+RUN set -ex && \
+    cd ${HOME} && \
+    cp .bashrc .bashrc_copy && \
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" && \
+    cat .bashrc_copy >> .bashrc && \
+    rm .bashrc_copy
 
 WORKDIR ${WORKDIR}
