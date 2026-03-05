@@ -46,7 +46,7 @@ Script ended SUCCESSFULLY!
 ubuntu@319964059de2:/IxNetwork$
 ```
 
-# The orginal README from the upstream
+# The original README from the upstream
 
 PlEASE READ:
 
