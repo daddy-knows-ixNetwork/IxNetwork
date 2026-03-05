@@ -65,7 +65,7 @@
 #    9. Stopallprotocols.                                                      #
 # Ixia Software:                                                               #
 #    IxOS      8.00 EA                                                         #
-#    IxNetwork 8.00 EA                                                         # 
+#    IxNetwork 8.00 EA                                                         #
 #                                                                              #
 ################################################################################
 import os

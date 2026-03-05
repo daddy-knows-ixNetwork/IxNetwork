@@ -52,8 +52,8 @@
 #    This script intends to demonstrate how to use NGPF BGP+ API.              #
 #                                                                              #
 #    1. It will create 2 BGP+ topologies, each having an ipv6 network          #
-#       topology and loopback device group behind the network group(NG) with   # 
-#       loopback interface on it. A loopback device group(DG) behind network   # 
+#       topology and loopback device group behind the network group(NG) with   #
+#       loopback interface on it. A loopback device group(DG) behind network   #
 #       group is needed to support applib traffic.                             #
 #    2. Start BGP+ protocol.                                                   #
 #    3. Retrieve protocol statistics.                                          #
@@ -160,9 +160,9 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $topology_1_handle = ixiangpf::status_item('topology_handle');
- 
-# Creating a device group in topology 
-print "Creating device group 1 in topology 1\n";   
+
+# Creating a device group in topology
+print "Creating device group 1 in topology 1\n";
 my $device_group_1_status = ixiangpf::topology_config ({
     topology_handle              => "$topology_1_handle",
     device_group_name            => "{BGP+ Topology 1 Router}",
@@ -214,7 +214,7 @@ my $deviceGroup_2_handle = ixiangpf::status_item('device_group_handle');
 #  Configure protocol interfaces                                               #
 ################################################################################
 
-# Creating ethernet stack for the first Device Group 
+# Creating ethernet stack for the first Device Group
 my $ethernet_1_status = ixiangpf::interface_config ({
     protocol_name                => "{Ethernet 1}",
     protocol_handle              => "$deviceGroup_1_handle",
@@ -230,7 +230,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $ethernet_1_handle = $HashRef->{'ethernet_handle'};
-    
+
 # Creating ethernet stack for the second Device Group
 print "Creating ethernet for the second Device Group\n";
 my $ethernet_2_status = ixiangpf::interface_config ({
@@ -249,7 +249,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $ethernet_2_handle = $HashRef->{'ethernet_handle'};
 
-# Creating IPv6 Stack on top of Ethernet Stack for the first Device Group                                 
+# Creating IPv6 Stack on top of Ethernet Stack for the first Device Group
 print "Creating IPv6 Stack on top of Ethernet Stack for the first Device Group\n";
 my $ipv6_1_status = ixiangpf::interface_config ({
     protocol_name                     => "{IPv6 1}",
@@ -298,7 +298,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 my $ipv6_2_handle = ixiangpf::status_item('ipv6_handle');
 
 ################################################################################
-# Other protocol configurations                                                # 
+# Other protocol configurations                                                #
 ################################################################################
 # This will create BGP Stack on top of IPv6 stack
 
@@ -336,7 +336,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $bgpIpv6Peer_2_handle = ixiangpf::status_item('bgp_handle');
-    
+
 # Creating multivalue for network group
 print "Creating multivalue pattern for BGP+ network group on Port 1\n";
 my $multivalue_4_status = ixiangpf::multivalue_config ({
@@ -356,8 +356,8 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $multivalue_4_handle = ixiangpf::status_item('multivalue_handle');
-    
-# Creating BGP+ Network Group 
+
+# Creating BGP+ Network Group
 print "Creating BGP+ Network Group on Port 1\n";
 my $network_group_1_status = ixiangpf::network_group_config ({
     protocol_handle                      => "$deviceGroup_1_handle",
@@ -459,7 +459,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $multivalue_7_handle = ixiangpf::status_item('multivalue_handle');
-    
+
 # Creating IPv6 Loopback
 print "Creating IPv6 Loopback on Port 1\n";
 my $ipv6_loopback_1_status = ixiangpf::interface_config ({
@@ -479,7 +479,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $ipv6Loopback_1_handle = ixiangpf::status_item('ipv6_loopback_handle');
-    
+
 # Creating device group to add loopback
 print "Creating device group to add loopback\n";
 my $device_group_4_status = ixiangpf::topology_config ({
@@ -498,7 +498,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 my $deviceGroup_4_handle = ixiangpf::status_item('device_group_handle');
 
 # Creating multivalue pattern for IPv6 Loopback
-print "Creating multivalue pattern for IPv6 Loopback on Port 2\n";    
+print "Creating multivalue pattern for IPv6 Loopback on Port 2\n";
 my $multivalue_13_status = ixiangpf::multivalue_config ({
     pattern                => "counter",
     counter_start          => "3000:1:1:1:0:0:0:0",
@@ -516,7 +516,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $multivalue_13_handle = ixiangpf::status_item('multivalue_handle');
-    
+
 # Creating multivalue pattern for IPv6 Loopback
 print "Creating IPv6 Loopback behind Network Group in Topology 2\n";
 my $ipv6_loopback_2_status = ixiangpf::interface_config ({
@@ -536,10 +536,10 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $ipv6Loopback_2_handle = ixiangpf::status_item('ipv6_loopback_handle');
-    
+
 print "Waiting 05 seconds before starting protocol\n";
 sleep(5);
-    
+
 ############################################################################
 # Start BGP protocol                                                       #
 ############################################################################
@@ -561,7 +561,7 @@ sleep(45);
 print "Fetching BGP aggregated statistics on Port 1";
 my $protostats = ixiangpf::emulation_bgp_info({
     handle => $bgpIpv6Peer_1_handle,
-    mode   => 'stats'}); 
+    mode   => 'stats'});
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
 if ($command_status != $ixiangpf::SUCCESS) {
@@ -672,7 +672,7 @@ foreach (@status_keys) {
     print "==================================================================\n";
 }
 
-############################################################################ 
+############################################################################
 # Configure L2-L3 traffic                                                  #
 ############################################################################
 print "Configuring L2-L3 Traffic Item\n";
@@ -683,7 +683,7 @@ $_result_ = ixiangpf::traffic_config({
     circuit_endpoint_type => 'ipv6',
     emulation_src_handle => $networkGroup_1_handle,
     emulation_dst_handle => $networkGroup_3_handle,
-    rate_pps => '1000',	
+    rate_pps => '1000',
     frame_size => '512',
     track_by => 'sourceDestEndpointPair0 trackingenabled0',
 });
@@ -718,7 +718,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     print "Error: $error\n";
     return "FAILED - $error";
 }
-       
+
 ############################################################################
 #  Start L2-L3 & L4-L7 traffic configured earlier                          #
 ############################################################################
@@ -737,7 +737,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 print "Let the traffic run for 20 seconds\n";
 sleep(20);
-    
+
 ############################################################################
 # Retrieve L2-L3 & L4-L7 traffic stats                                     #
 ############################################################################
@@ -763,7 +763,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     print "==================================================================\n";
 }
 
-############################################################################    
+############################################################################
 # Stop L2-L3 & L4-L7 traffic started earlier                               #
 ############################################################################
 print "Stopping Traffic\n";
@@ -779,7 +779,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     print "Error: $error\n";
     return "FAILED - $error";
 }
-    
+
 ############################################################################
 # Stop all protocols                                                       #
 ############################################################################
@@ -794,6 +794,5 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 sleep(2);
 
-print "!!! Test Script Ends !!!\n";           
-print "SUCCESS - $0\n";         
-                    
+print "!!! Test Script Ends !!!\n";
+print "SUCCESS - $0\n";

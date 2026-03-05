@@ -2,7 +2,7 @@
 Description
    Verify IPv4 and IPv6 ARP.
 
-   If there is any ARP failure, create a list with all the ip addresses that failed ARP and 
+   If there is any ARP failure, create a list with all the ip addresses that failed ARP and
    insert the ipv4/ipv6 obj as the first element in the list.
 
    This code will loop through all created topologies, device groups that are started/enabled, ethernet, for ipv4 and ipv6.
@@ -40,13 +40,13 @@ try:
 
     # ixNetwork is the root object to the IxNetwork API tree.
     ixNetwork = session.Ixnetwork
-    
+
     arpFailedList = []
     for topology in ixNetwork.Topology.find():
         for deviceGroup in topology.DeviceGroup.find():
             # Verify if the device group is enabled/started
             if deviceGroup.Status == 'started':
-                for ethernet in deviceGroup.Ethernet.find(): 
+                for ethernet in deviceGroup.Ethernet.find():
 
                     ipv4Obj = ethernet.Ipv4.find()
                     if ipv4Obj:

@@ -53,8 +53,8 @@
 #    This script intends to demonstrate how to use NGPF EVPN VXLAN API          #
 #    About Topology:                                                            #
 #        It will create 2 BGP EVPN-VXLAN topologies, each having OSPFv2         #
-#    configured in connected Device Group .BGP EVPN VXLAN configured in chained # 
-#    device group along with Mac pools connected behind the chained             # 
+#    configured in connected Device Group .BGP EVPN VXLAN configured in chained #
+#    device group along with Mac pools connected behind the chained             #
 #    Device Group.                                                              #
 #         Script Flow:                                                          #
 #        Step 1. Configuration of protocols.                                    #
@@ -534,7 +534,7 @@ ixNet setMultiAttribute [ixNet getAtt $cMacProperties1 -labelStep]/counter \
                         -step 0                                            \
                         -start 1                                           \
                         -direction increment
-ixNet commit                       
+ixNet commit
 ixNet setMultiAttribute [ixNet getAtt $cMacProperties2 -labelStep]/counter \
                         -step 0                                            \
                         -start 1                                           \
@@ -571,15 +571,15 @@ puts "************************************************************"
 ###############################################################################
 
 puts "Fetching EVPN  Learned Info"
-ixNet exec getEVPNLearnedInfo $bgpIpv4Peer1 
+ixNet exec getEVPNLearnedInfo $bgpIpv4Peer1
 
 after 5000
 set learnedInfoList [ixNet getList $bgpIpv4Peer1 learnedInfo]
 set linfoList [ixNet getList $learnedInfoList table]
-set EvpnMacLInfo [lindex $linfoList 0] 
-set EvpnMulticastLInfo [lindex $linfoList 1] 
-set EvpnESLInfo [lindex $linfoList 2] 
-set EvpnEthernetADLInfo [lindex $linfoList 3] 
+set EvpnMacLInfo [lindex $linfoList 0]
+set EvpnMulticastLInfo [lindex $linfoList 1]
+set EvpnESLInfo [lindex $linfoList 2]
+set EvpnEthernetADLInfo [lindex $linfoList 3]
 
 puts "EVPN learned info"
 puts "***************************************************"
@@ -614,12 +614,12 @@ after 20000
 ###############################################################################
 
 puts "Fetching EVPN  Learned Info"
-ixNet exec getEVPNLearnedInfo $bgpIpv4Peer1 
+ixNet exec getEVPNLearnedInfo $bgpIpv4Peer1
 
 after 5000
 set learnedInfoList [ixNet getList $bgpIpv4Peer1 learnedInfo]
 set linfoList [ixNet getList $learnedInfoList table]
-set EvpnMacLInfo [lindex $linfoList 0] 
+set EvpnMacLInfo [lindex $linfoList 0]
 
 puts "EVPN learned info"
 puts "***************************************************"
@@ -637,7 +637,7 @@ puts "***************************************************"
 
 
 ################################################################################
-# 7. Configure L2-L3 traffic 
+# 7. Configure L2-L3 traffic
 ################################################################################
 puts "Congfiguring L2-L3 Traffic Item"
 set trafficItem1 [ixNet add [ixNet getRoot]/traffic "trafficItem"]
@@ -659,7 +659,7 @@ ixNet setMultiAttribute $endpointSet1\
     -ngpfFilters           [list]           \
     -trafficGroups         [list]           \
     -sources               $ipv4PrefixPools1\
-    -destinations          $ipv4PrefixPools2    
+    -destinations          $ipv4PrefixPools2
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\

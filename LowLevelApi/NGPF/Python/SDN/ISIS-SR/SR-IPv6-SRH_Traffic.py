@@ -143,7 +143,7 @@ ixNet.execute('newConfig')
 ################################################################################
 # 1. Protocol configuration section. Configure ISIS as per the description
 #  give above
-################################################################################ 
+################################################################################
 # assigning ports
 print("Assigning the ports")
 assignPorts(ixNet, ports[0], ports[1])
@@ -240,20 +240,20 @@ ixNet.commit()
 print("Disabling the checkbox 'Use This Device As Ingress' for the 2nd Tunnel in 1st device of IPv6 SR Ext")
 useAsIngress = ixNet.getAttribute(ipv6sr, '-useAsIngress')
 OverlayIngress = ixNet.add(useAsIngress, 'overlay')
-ixNet.setMultiAttribute(OverlayIngress, '-count', '1', 
-                                      '-index', '2', 
-                                      '-indexStep', '0', 
-                                      '-valueStep', 'false', 
+ixNet.setMultiAttribute(OverlayIngress, '-count', '1',
+                                      '-index', '2',
+                                      '-indexStep', '0',
+                                      '-valueStep', 'false',
                                       '-value', 'false')
 ixNet.commit()
 
 print("Setting values to 'Segment Left' field for the 2nd tunnel of device 1")
 segmentsLeft = ixNet.getAttribute(ipv6sr, '-segmentsLeft')
 OverlaySL = ixNet.add(segmentsLeft, 'overlay')
-ixNet.setMultiAttribute(OverlaySL, '-count', '1', 
-                                 '-index', '2', 
-                                 '-indexStep', '0', 
-                                 '-valueStep', '3', 
+ixNet.setMultiAttribute(OverlaySL, '-count', '1',
+                                 '-index', '2',
+                                 '-indexStep', '0',
+                                 '-valueStep', '3',
                                  '-value', '3')
 ixNet.commit()
 
@@ -284,7 +284,7 @@ ixNet.execute('startAllProtocols')
 time.sleep(60)
 
 ################################################################################
-## Configure L2-L3 traffic 
+## Configure L2-L3 traffic
 #################################################################################
 
 print ("Congfiguring L2-L3 IPv4 Traffic Item")

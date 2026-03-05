@@ -43,16 +43,16 @@
 ################################################################################
 
 ################################################################################
-# Description: 
-# 1. Pre - Established SR LSPs are statically configured in PCC, 
-#	 with initial delegation TRUE. When PCC starts, it synchronizes 
+# Description:
+# 1. Pre - Established SR LSPs are statically configured in PCC,
+#	 with initial delegation TRUE. When PCC starts, it synchronizes
 #	 these LSPs with PCE.
 # 2. Assign ports
 # 3. Start all protocols
 # 4. Retrieve protocol statistics.  (PCE Sessions Per Port)
 # 5. Retrieve protocol statistics. (PCC Per Port)
 # 6. Fetch Pre - Established SR LSPs learned Info in PCE side.
-# 7. Change LSP & Symbolic Path Name Value in PCE Learned Info 
+# 7. Change LSP & Symbolic Path Name Value in PCE Learned Info
 #    over Pre - Established SR LSPs.
 # 8. Send PCUpdate from Learned Info from PCE side.
 # 9. Stop all protocols
@@ -350,7 +350,7 @@ ixNet exec getPceBasicSrPccSyncLspLearnedInfo $pccGroup1 1
 after 2000
 #---------------------------------------------------------------------------
 # Setting the TCL APIs for getting PCUpdate Triggers
-#---------------------------------------------------------------------------  
+#---------------------------------------------------------------------------
 set learnedInfoUpdate1 [lindex [ixNet getList $pccGroup1 learnedInfoUpdate] 0]
 
 set trigger1 [ixNet getList $learnedInfoUpdate1 pceBasicSrSyncLspUpdateParams]

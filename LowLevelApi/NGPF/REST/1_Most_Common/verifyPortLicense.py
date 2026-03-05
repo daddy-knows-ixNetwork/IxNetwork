@@ -16,7 +16,7 @@ except:
 Description
     Verify port license availability.
     Supports retrieving license check on chassis and Windows.
-    
+
 Usage:
     import verifyPortLicense
     licenseObj = verifyPortLicense.Connect(platform='chassis', licenseServerIp=ip, username='admin', password='admin', licenseModel='VM-IXN-TIER3')
@@ -44,8 +44,8 @@ def _xmlprettyprint(stringlist):
             yield token
         else:
             yield indent + token + '\n'
- 
- 
+
+
 def pretty_xml(element):
     return ''.join(_xmlprettyprint(tostringlist(element)))
 
@@ -119,7 +119,7 @@ class Connect():
         expect = '(#|>)'
         timeout = 10
         expectTimeout = 60
-        #time.sleep(1)        
+        #time.sleep(1)
         channelData = str()
         sys.stdout.flush()
 
@@ -131,7 +131,7 @@ class Connect():
         breakWhileFlag = 0
 
         while True:
-            # Keep checking for any output datas to be read up to 
+            # Keep checking for any output datas to be read up to
             # timeout seconds.
             #print('ready:', self.channel.recv_ready())
             if self.channel.recv_ready():
@@ -232,7 +232,7 @@ class Connect():
             for counter in range(1,11):
                 print('\nareThereEnoughLicenses.verifyLockFile: Somebody is reserving ports. Waiting %d/%d seconds ...' % (counter, 10))
                 time.sleep(1)
-                
+
         self.lockFile(True)
 
         if self.platform == 'chassis':
@@ -279,7 +279,7 @@ class Connect():
                 print('\nNo match found')
 
         self.releaseLockFile()
-                    
+
     def lockFile(self, enabled=True):
         result = subprocess.Popen('touch verifyPortLicense.lock'.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         stdout,stderr = result.communicate()

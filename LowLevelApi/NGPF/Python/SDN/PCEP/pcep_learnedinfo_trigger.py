@@ -44,16 +44,16 @@
 ################################################################################
 
 ################################################################################
-# Description: 
-# 1. Pre - Established SR LSPs are statically configured in PCC, 
-#	 with initial delegation TRUE. When PCC starts, it synchronizes 
+# Description:
+# 1. Pre - Established SR LSPs are statically configured in PCC,
+#	 with initial delegation TRUE. When PCC starts, it synchronizes
 #	 these LSPs with PCE.
 # 2. Assign ports
 # 3. Start all protocols
 # 4. Retrieve protocol statistics.  (PCE Sessions Per Port)
 # 5. Retrieve protocol statistics. (PCC Per Port)
 # 6. Fetch Pre - Established SR LSPs learned Info in PCE side.
-# 7. Change LSP & Symbolic Path Name Value in PCE Learned Info 
+# 7. Change LSP & Symbolic Path Name Value in PCE Learned Info
 #    over Pre - Established SR LSPs.
 # 8. Send PCUpdate from Learned Info from PCE side.
 # 9. Stop all protocols
@@ -137,7 +137,7 @@ ixNet.commit()
 ethernet1 = ixNet.remapIds(ethernet1)[0]
 macMv = ixNet.getAttribute(ethernet1, '-mac')
 ixNet.add(macMv, 'counter')
-ixNet.setMultiAttribute(macMv + '/counter',  
+ixNet.setMultiAttribute(macMv + '/counter',
              '-direction', 'increment',
              '-start'    , '00:11:01:00:00:01',
              '-step'     , '00:00:00:00:00:01')
@@ -175,7 +175,7 @@ ixNet.commit()
 pccGroup1 = ixNet.remapIds(pccGroup1)[0]
 pccIpv4AddressMv = ixNet.getAttribute(pccGroup1, '-pccIpv4Address')
 ixNet.add(pccIpv4AddressMv, 'counter')
-ixNet.setMultiAttribute(pccIpv4AddressMv + '/counter',  
+ixNet.setMultiAttribute(pccIpv4AddressMv + '/counter',
              '-direction', 'increment',
              '-start'    , '1.1.1.2',
              '-step'     , '0.0.0.1')
@@ -216,7 +216,7 @@ ixNet.commit()
 ethernet2 = ixNet.remapIds(ethernet2)[0]
 macMv = ixNet.getAttribute(ethernet2, '-mac')
 ixNet.add(macMv, 'counter')
-ixNet.setMultiAttribute(macMv + '/counter',  
+ixNet.setMultiAttribute(macMv + '/counter',
              '-direction', 'increment',
              '-start'    , '00:12:01:00:00:01',
              '-step'     , '00:00:00:00:00:01')
@@ -230,7 +230,7 @@ ixNet.commit()
 ipv4Addr2 = ixNet.remapIds(ipv4Addr2)[0]
 addressMv = ixNet.getAttribute(ipv4Addr2, '-address')
 ixNet.add(addressMv, 'counter')
-ixNet.setMultiAttribute(addressMv + '/counter',  
+ixNet.setMultiAttribute(addressMv + '/counter',
              '-direction', 'increment',
              '-start'    , '1.1.1.2',
              '-step'     , '0.0.0.1')
@@ -365,7 +365,7 @@ time.sleep(2)
 
 #---------------------------------------------------------------------------
 # Setting the TCL APIs for getting PCUpdate Triggers
-#---------------------------------------------------------------------------  
+#---------------------------------------------------------------------------
 learnedInfoUpdate1 = ixNet.getList(pccGroup1, 'learnedInfoUpdate')[0]
 
 trigger1 = learnedInfoUpdate1+ '/pceBasicSrSyncLspUpdateParams:1'

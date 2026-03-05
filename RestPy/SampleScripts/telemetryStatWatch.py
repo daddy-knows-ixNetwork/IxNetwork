@@ -47,4 +47,3 @@ watch_assistant.start()
 time.sleep(30)
 
 watch_assistant.stop()
-

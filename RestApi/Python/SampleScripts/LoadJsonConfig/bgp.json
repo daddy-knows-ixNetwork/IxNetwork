@@ -9,7 +9,7 @@
   "releasePortsWhenDone": false,
   "enableDebugTracing": true,
   "deleteSessionAfterTest": false,
-  "configLicense": true,  
+  "configLicense": true,
   "licenseServerIp": "192.168.70.3",
   "licenseModel": "subscription",
   "licenseTier": "tier3",
@@ -2818,5 +2818,3 @@
     ]
   }
 }
-
-

@@ -11,7 +11,7 @@
 #
 # For traffic_config emulation src/dst handles, must be in this format:
 #     ::ixNet::OBJ-/vport:1/protocolStack
-# 
+#
 
 package require Ixia
 
@@ -35,7 +35,7 @@ proc KeylPrint {keylist {space ""}} {
     return $result
 }
 
-# When using P2NO HLTSET, for loading the IxTclNetwork package please 
+# When using P2NO HLTSET, for loading the IxTclNetwork package please
 # provide ixnetwork_tcl_server parameter to ::ixia::connect
 set connect_status [::ixia::connect             \
 			-reset                                  \
@@ -399,5 +399,3 @@ set trafficConfig [::ixia::traffic_config\
 if {[keylget trafficConfig status] != $::SUCCESS}   {
     puts "FAIL:  Traffic Config"
 }
-
-

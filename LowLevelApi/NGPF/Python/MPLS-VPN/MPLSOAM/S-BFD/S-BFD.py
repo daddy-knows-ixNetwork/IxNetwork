@@ -46,7 +46,7 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#   This script intends to demonstrate how to use NGPF S-BFD using Python      #               					                               
+#   This script intends to demonstrate how to use NGPF S-BFD using Python      #
 #                                                                              #
 #    1. Configuration of protocols as described in topology.                   #
 #    2. Start all protocols.                                                   #
@@ -57,7 +57,7 @@
 #    7. Retrieve protocol statistics again                                     #
 #    8. Change the discrminator of the first responder OTF                     #
 #    9. Retrieve protocol statistics again.                                    #
-#   10. Stop all protocols.                                                    #                                                                                
+#   10. Stop all protocols.                                                    #
 ################################################################################
 import os
 import sys
@@ -410,7 +410,7 @@ for statValList in ixNet.getAttribute(viewPage, '-rowValues') :
 print("***************************************************")
 
 ###############################################################################
-# Retrieve protocol learned info                                              # 
+# Retrieve protocol learned info                                              #
 ###############################################################################
 print("Fetching MPLSOAM learned info")
 ixNet.execute('getAllLearnedInfo', mplsoam1, '3')
@@ -467,7 +467,7 @@ for statValList in ixNet.getAttribute(viewPage, '-rowValues') :
 print("***************************************************")
 
 ###############################################################################
-# Retrieve protocol learned info                                              # 
+# Retrieve protocol learned info                                              #
 ###############################################################################
 print("Fetching MPLSOAM learned info")
 ixNet.execute('getAllLearnedInfo', mplsoam1, '3')

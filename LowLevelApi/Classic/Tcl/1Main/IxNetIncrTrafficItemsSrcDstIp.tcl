@@ -5,7 +5,7 @@
 #    Version 1.0 - Aug-7-2013 By Hubert Gee: hgee@ixiacom.com
 #        - destIp list
 #        - incr 2nd octet network address
-# 
+#
 #    Version 2.0 - Sep-18-2013
 #        - added srcIp list
 #        - incr 2nd octet network addresses and 4th octet host ip addresses.
@@ -63,7 +63,7 @@ foreach {properties ip} [array get trafficItemList *] {
 	    set currentFlowNumber 0
 
 	    puts "\nConfiguring TrafficItemName: \"$currentTrafficItemName\" : $ipHeader\n"
-	    
+
 	    # Each Traffic Item can have man Flows.
 	    # Using foreach to loop through each Flow in the same Traffic Item
 	    foreach highLevelStream [ixNet getList $trafficItem highLevelStream] {
@@ -71,7 +71,7 @@ foreach {properties ip} [array get trafficItemList *] {
 		incr currentFlowNumber
 
 		# Build the list of IP addresses.
-		# Customer provides the starting point for each IP address, 
+		# Customer provides the starting point for each IP address,
 		# and this piece of code will increment the 2nd octet up the the total
 		# amount specified by the user:  Example: trafficItem(1,2,250) <-- 250 is total
 		if {$currentFlowNumber == $flowNumber} {
@@ -83,22 +83,22 @@ foreach {properties ip} [array get trafficItemList *] {
 			set totalNetworkIpFromPrefix [expr $2ndOctet + $totalNetworkIp]
 			set startHostIp              $4thOctet
 			set endHostIp                [expr $4thOctet + [expr $totalHostIp - 1]]
-			
+
 			# set trafficItemList($trafficItem1Name,2,1,5,3) "1.1.1.1 2.1.1.1 3.1.1.1"
 			set hostIp $startHostIp
 
 			for {set ipNum $2ndOctet} {$ipNum < $totalNetworkIpFromPrefix} {incr ipNum} {
 			    # Increment the 2nd octet network address and increment
 			    # the last octet host ip address.
-			    
+
 			    set flag 0
 			    lappend ipList $1stOctet.$ipNum.$3rdOctet.$hostIp
-			    
+
 			    if {$hostIp == $endHostIp} {
 				set hostIp $startHostIp
 				set flag 1
 			    }
-			    
+
 			    if {$flag == 0} {
 				incr hostIp
 			    }
@@ -110,11 +110,11 @@ foreach {properties ip} [array get trafficItemList *] {
 		    set ipv4Stack [lindex [ixNet getList $highLevelStream stack] $ipv4Index]
 		    # ipHeader == dstIp or srcIp
 		    set ipv4StackFieldIndex [lsearch -regexp [ixNet getList $ipv4Stack field] $ipHeader]
-		    
+
 		    # This is the complete API object to configure this current Flow
 		    # ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1/stack:"ipv4-2"/field:"ipv4.header.dstIp-28"
 		    set ipv4StackIpField [lindex [ixNet getList $ipv4Stack field] $ipv4StackFieldIndex]
-		    
+
 		    puts "\tFlow: $ipv4StackIpField"
 		    ixNet setMultiAttribute $ipv4StackIpField \
 			-fieldValue 0.0.0.0 \
@@ -135,4 +135,3 @@ foreach {properties ip} [array get trafficItemList *] {
 	}
     }
 }
-

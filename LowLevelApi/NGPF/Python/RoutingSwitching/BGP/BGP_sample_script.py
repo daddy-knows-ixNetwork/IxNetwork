@@ -333,7 +333,7 @@ time.sleep(10)
 
 ###############################################################################
 # Retrieve protocol learned info again and compare with previouly retrieved   #
-# learned info                                                                # 
+# learned info                                                                #
 ###############################################################################
 print("Fetching BGP learned info after enabling ipv4 learned info")
 ixNet.execute('getIPv4LearnedInfo', bgp1, '1')
@@ -387,7 +387,7 @@ print("Configuring Applib traffic")
 trafficItem2 = ixNet.add(ixNet.getRoot() + '/traffic', 'trafficItem')
 
 ixNet.setMultiAttribute(trafficItem2,
-    '-name',                     'Traffic Item 2',             
+    '-name',                     'Traffic Item 2',
     '-trafficItemType',          'applicationLibrary',
     '-roundRobinPacketOrdering', 'false',
     '-trafficType',              'ipv4ApplicationTraffic')
@@ -407,7 +407,7 @@ ixNet.setMultiAttribute(endpointSet2,
     '-ngpfFilters',           [],
     '-trafficGroups',         [],
     '-sources',               source_app,
-    '-destinations',          destin_app)    
+    '-destinations',          destin_app)
 ixNet.commit()
 
 endpointSet2 = ixNet.remapIds(endpointSet2)[0]

@@ -136,7 +136,7 @@ try:
 
     # This will show you all the available protocol header options to create
     trafficObj.showProtocolTemplates(configElementObj)
-    
+
     # Show the configured packet headers in sequential order to get the stack ID.
     trafficObj.showTrafficItemPacketStack(configElementObj)
     # 1: Ethernet II
@@ -164,7 +164,7 @@ try:
                                              'startValue': '00:0c:29:aa:86:e0',
                                              'stepValue': '00:00:00:00:00:01',
                                              'countValue': 1})
-    
+
     stackObj = trafficObj.addTrafficItemPacketStack(configElementObj, protocolStackNameToAdd='MPLS', stackNumber=1, action='append')
     # Just an example to show a list of field names in order to know which field to configure the IP addresses.
     trafficObj.showPacketHeaderFieldNames(stackObj)
@@ -175,7 +175,7 @@ try:
                                              'stepValue': '1',
                                              'countValue': 2,
                                              'auto': False})
-        
+
     stackObj = trafficObj.addTrafficItemPacketStack(configElementObj, protocolStackNameToAdd='IPv4', stackNumber=2, action='append')
     #stackObj = getPacketHeaderStackIdObj(configElementObjList[0], stackId=6)
     # Show a list of field names in order to know which field to configure the IP addresses.
@@ -186,18 +186,18 @@ try:
                                              'startValue': '1.1.1.1',
                                              'stepValue': '0.0.0.1',
                                              'countValue': 1})
-    
+
     trafficObj.configPacketHeaderField(stackObj,
                                        fieldName='Destination Address',
                                        data={'valueType': 'increment',
                                              'startValue': '1.1.1.2',
                                              'stepValue': '0.0.0.1',
                                              'countValue': 1})
-    
+
     trafficObj.showTrafficItemPacketStack(configElementObj)
     trafficObj.regenerateTrafficItems()
     trafficObj.startTraffic()
-    
+
     # Check the traffic state to assure traffic has indeed stopped before checking for stats.
     if trafficObj.getTransmissionType(configElementObj) == "fixedFrameCount":
         trafficObj.checkTrafficState(expectedState=['stopped', 'stoppedWaitingForStats'], timeout=45)

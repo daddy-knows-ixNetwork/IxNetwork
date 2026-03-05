@@ -96,18 +96,18 @@ try:
     protocolObj = Protocol(mainObj, portObj)
     topologyObj1 = protocolObj.createTopologyNgpf(portList=[portList[0]],
                                                   topologyName='Topo1')
-    
+
     deviceGroupObj1 = protocolObj.createDeviceGroupNgpf(topologyObj1,
                                                         multiplier=1,
                                                         deviceGroupName='DG1')
-    
+
     topologyObj2 = protocolObj.createTopologyNgpf(portList=[portList[1]],
                                                   topologyName='Topo2')
-    
+
     deviceGroupObj2 = protocolObj.createDeviceGroupNgpf(topologyObj2,
                                                         multiplier=1,
                                                         deviceGroupName='DG2')
-    
+
     ethernetObj1 = protocolObj.configEthernetNgpf(deviceGroupObj1,
                                                   ethernetName='MyEth1',
                                                   macAddress={'start': '00:01:01:00:00:01',
@@ -117,7 +117,7 @@ try:
                                                   vlanId={'start': 103,
                                                           'direction': 'increment',
                                                           'step':0})
-    
+
     ethernetObj2 = protocolObj.configEthernetNgpf(deviceGroupObj2,
                                                   ethernetName='MyEth2',
                                                   macAddress={'start': '00:01:02:00:00:01',
@@ -127,7 +127,7 @@ try:
                                                   vlanId={'start': 103,
                                                           'direction': 'increment',
                                                           'step':0})
-    
+
     mplsObj1 = protocolObj.configMpls(ethernetObj=ethernetObj1,
                                       name = 'mpls-1',
                                       destMac = {'start': '00:01:02:00:00:01', 'direction': 'increment', 'step': '00:00:00:00:00:01'},
@@ -155,7 +155,7 @@ try:
                                           gatewayPortStep='disabled',
                                           prefix=24,
                                           resolveGateway=True)
-    
+
     ipv4Obj2 = protocolObj.configIpv4Ngpf(ethernetObj2,
                                           ipv4Address={'start': '1.1.1.2',
                                                        'direction': 'increment',
@@ -167,7 +167,7 @@ try:
                                           gatewayPortStep='disabled',
                                           prefix=24,
                                           resolveGateway=True)
-        
+
     protocolObj.startAllProtocols()
     protocolObj.verifyProtocolSessionsUp()
 

@@ -62,7 +62,7 @@
 #    2. Start the ESMC protocol.                                               #
 #    3. Retrieve protocol statistics.                                          #
 #    4. Stop all protocols.                                                    #
-#                                                                              #                                                                                
+#                                                                              #
 # Ixia Software:                                                               #
 #    IxOS      9.10 EB                                                         #
 #    IxNetwork 9.10 EB                                                         #

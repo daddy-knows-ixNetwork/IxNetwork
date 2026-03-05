@@ -2,7 +2,7 @@
 ################################################################################
 # Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright  1997 - 2015 by IXIA                                            # 
+#    Copyright  1997 - 2015 by IXIA                                            #
 #    All Rights Reserved.                                                      #
 #                                                                              #
 #    Revision Log:                                                             #
@@ -56,14 +56,14 @@
 #    1. It will create 2 ISIS topologies, topology1 will have a simulated      #
 #       topology Linear behind Device Group1 and Mesh behind Device Group2     #
 #    2. Enable Shared Risk Link Group(SRLG) in ISIS Emulated                   #
-#       Router in both Device Group.                                           # 
+#       Router in both Device Group.                                           #
 #    3. Give SRLG count 2 with value 5 and 6 for ISIS Emulated router          #
 #       Router in both Device Group.                                           #
 #    4. Give SRLG count 1 with value 10 for all ISIS simulated routers         #
 #       Router behind Device Group1 & with value 15 for all ISIS simulated     #
 #       routers Router behind Device Group2 .                                  #
 #    5. Enable Link Protection in ISIS Emulated Router in both Device Group    #
-#    6. Give Link Protection type Of Extra traffic,Unprotected and Dedicated   # 
+#    6. Give Link Protection type Of Extra traffic,Unprotected and Dedicated   #
 #       :true for emulated Router in both device group.                        #
 #    7. Give Link Protection type Of Dedicated 1:1 and shared:true for all     #
 #       simulated Router behind  both device group.                            #
@@ -72,7 +72,7 @@
 #    10. On the fly uncheck "Enable SRLG"  emulated router in Device group2 &  #
 #        check  "Enable SRLG" for all simulated Routers behind device group1   #
 #    11. On the fly do change on Link type i.e  make enhanced:true and         #
-#       unprotected:false for emulated router in Device group1 & disable"Enable# 
+#       unprotected:false for emulated router in Device group1 & disable"Enable#
 #       Link Protection" for first 2 simulated Routers behind device group2    #
 #                                                                              #
 #    12. Stop all protocols.                                                   #
@@ -159,7 +159,7 @@ ixNet.execute('newConfig')
 ################################################################################
 # 1. Protocol configuration section. Configure ISIS as per the description
 #  give above
-################################################################################ 
+################################################################################
 
 # assigning ports
 print("Assigning the ports")
@@ -215,7 +215,7 @@ ixNet.setAttribute(ixNet.getAttribute(mac2, '-mac') + '/singleValue',
     '-value', '18:03:73:C7:6C:01')
 ixNet.commit()
 
-# Adding Ipv4 stack 
+# Adding Ipv4 stack
 print("Add ipv4 over Ethernet stack")
 ixNet.add(mac1, 'ipv4')
 ixNet.add(mac2, 'ipv4')
@@ -357,7 +357,7 @@ ixNet.setAttribute(networkGoup2, '-name', 'ISIS_Mesh Topology 1')
 ixNet.commit()
 
 ###############################################################################
-# 2. Enable SRLG in Both emulated Router 
+# 2. Enable SRLG in Both emulated Router
 ###############################################################################
 print("Enabling SRLG in emulated router in both device group")
 
@@ -374,8 +374,8 @@ ixNet.setAttribute(s31, '-value', 'True')
 ixNet.commit()
 
 ##########################################################################################################
-# 3. Give SRLG count to 2 and SRLG value to 5 and 6 for ISIS Emulated  Router in both Device Group      
-##########################################################################################################       
+# 3. Give SRLG count to 2 and SRLG value to 5 and 6 for ISIS Emulated  Router in both Device Group
+##########################################################################################################
 print("Setting SRLG count to 2 and SRLG Value to 5 and 6 in emulated router in both Device Group ")
 ixNet.setAttribute(isisL3_1, '-srlgCount', '2')
 ixNet.commit()

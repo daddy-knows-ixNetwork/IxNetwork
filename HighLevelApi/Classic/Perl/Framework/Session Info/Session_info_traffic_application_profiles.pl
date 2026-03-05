@@ -99,8 +99,8 @@ sub catch_error {
 my $_result_               = '';
 my $status                 = '';
 
-# Connect to the chassis, and load the configuration on ports using the 
-# given IxNetwork configuration file. Also instruct not to load the 
+# Connect to the chassis, and load the configuration on ports using the
+# given IxNetwork configuration file. Also instruct not to load the
 # session resumes keys during connect.
 $_result_ = ixiahlt::connect ( {
     config_file            => 'session_info_traffic_application_profiles.ixncfg',

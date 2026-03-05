@@ -4,7 +4,7 @@
 #    - This script is written using IxNetwork low level api
 #      because HLT currently isn't supporting Quick Test RFC's yet.
 #
-#    - All stats will be copied from the Windows C: drive to the local 
+#    - All stats will be copied from the Windows C: drive to the local
 #      Linux path where this script is executed.
 #
 # Note:
@@ -15,7 +15,7 @@
 #      Traffic Item because this allows back-to-back ports with ip gateways
 #      pointing to the back-to-back ports.
 #
-# Note that if you want to run your configuration dynamically without having any hardware 
+# Note that if you want to run your configuration dynamically without having any hardware
 # dependency, you can save your configuration file without chassis and port assignment.
 # Then, you can load the configuration and add the chassis and ports as shown below.
 package req Ixia
@@ -27,7 +27,7 @@ set ixNetworkVersion 7.40
 # true or false to reassign ports.
 set reassignPorts true
 # This variable of ports will be ignored if $reassignPorts is set to false
-set remapPorts {{1 5} {1 6}} ;# card port 
+set remapPorts {{1 5} {1 6}} ;# card port
 
 # The full path to the config file/configFileName.ixncfg if it is not in the same folder
 set ixnConfigFile  /home/hgee/MyIxiaWork/Temp/QuickTest_7.12.ixncfg
@@ -103,7 +103,7 @@ proc GetVportConnectedToPort { vport } {
     set connectedTo [lrange [split $connectedTo /] 3 4]
     set card [lindex [split [lindex $connectedTo 0] :] end]
     set port [lindex [split [lindex $connectedTo 1] :] end]
-    return $card/$port    
+    return $card/$port
 }
 
 proc SendArp { vPort } {
@@ -117,7 +117,7 @@ proc SendArp { vPort } {
 	    set isIntEnabled [ixNet getAttribute $interface -enabled]
 	    if {$isIntEnabled == "true" || $isIntEnabled == "True"} {
 		puts "SendArp on: $interface"
-		
+
 		catch {ixNet exec sendArp $interface} ipv4ErrMsg
 		catch {ixNet exec sendNs $interface} ipv6ErrMsg2
 		if {$ipv4ErrMsg != "::ixNet::OK" || $ipv6ErrMsg2 != "::ixNet::OK" } {
@@ -149,7 +149,7 @@ proc VerifyArpDiscoveries { {ExitTest doNotExitTest} } {
     # interface isn't enable.
     # Then get a list of all the discovered arps.
     # At the end, compare the two list. Any left overs are unresolved arps.
-    
+
     set resolvedArp {}
     set allIpGateways {}
 
@@ -169,18 +169,18 @@ proc VerifyArpDiscoveries { {ExitTest doNotExitTest} } {
 		set isIntEnabled [ixNet getAttribute $int -enabled]
 		if {$isIntEnabled == "true" || $isIntEnabled == "True"} {
 		    catch {ixNet getAttribute $int/ipv4 -gateway} ipv4GatewayReturn
-		    
+
 		    if {[regexp "null" $ipv4GatewayReturn] != 1} {
 			if {[lsearch $allIpGateways $ipv4GatewayReturn] == -1} {
 			    lappend allIpGateways $ipv4GatewayReturn
 			}
 		    }
-		    
+
 		    catch {ixNet getList $int ipv6} ipv6GatewayList
 		    if {$ipv6GatewayList != ""} {
 			foreach ipv6Gateway $ipv6GatewayList {
 			    set ipv6 [ixNet getAttribute $ipv6Gateway -gateway]
-			    
+
 			    if {$ipv6 != "0:0:0:0:0:0:0:0"} {
 				if {[lsearch $allIpGateways $ipv6] == -1} {
 				    lappend allIpGateways $ipv6
@@ -202,19 +202,19 @@ proc VerifyArpDiscoveries { {ExitTest doNotExitTest} } {
     foreach vP [ixNet getList [ixNet getRoot] vport] {
 	# Get all the discovered ARPs for the current vPort
 	set vPortInterfaceList [ixNet getList $vP discoveredNeighbor]
-	
+
 	if {$vPortInterfaceList != ""} {
 	    set currentPort [GetVportConnectedToPort $vP]
 
 	    # vPortInt = ::ixNet::OBJ-/vport:1/discoveredNeighbor:1
 	    foreach vPortInt $vPortInterfaceList {
 		set currentVp [join [lrange [split $vPortInt /] 0 1] /]
-		
+
 		set discoveredIp [ixNet getAttribute $vPortInt -neighborIp]
 		set discoveredMac [ixNet getAttribute $vPortInt -neighborMac]
-		
+
 		puts "Discovered arp on $currentPort: $discoveredIp : $discoveredMac"
-		
+
 		if {$discoveredMac != "" || $discoveredMac != "00:00:00:00:00:00"} {
 		    if {[lsearch $allIpGateways $discoveredIp] != -1} {
 			lappend resolvedArp $discoveredIp
@@ -245,15 +245,15 @@ proc VerifyArpDiscoveries { {ExitTest doNotExitTest} } {
 
 proc GetStatView { statType {getStatsBy trafficItem} } {
     # $statType is one of the following statistics
-    # $viewList: 
-    # {::ixNet::OBJ-/statistics/view:"Port Statistics"} 
-    # {::ixNet::OBJ-/statistics/view:"Tx-Rx Frame Rate Statistics"} 
-    # {::ixNet::OBJ-/statistics/view:"Port CPU Statistics"} 
+    # $viewList:
+    # {::ixNet::OBJ-/statistics/view:"Port Statistics"}
+    # {::ixNet::OBJ-/statistics/view:"Tx-Rx Frame Rate Statistics"}
+    # {::ixNet::OBJ-/statistics/view:"Port CPU Statistics"}
     # {::ixNet::OBJ-/statistics/view:"Global Protocol Statistics"}
-    # {::ixNet::OBJ-/statistics/view:"Flow Statistics"} 
-    # {::ixNet::OBJ-/statistics/view:"Flow Detective"}  
-    # {::ixNet::OBJ-/statistics/view:"Data Plane Port Statistics"} 
-    # {::ixNet::OBJ-/statistics/view:"User Defined Statistics"} 
+    # {::ixNet::OBJ-/statistics/view:"Flow Statistics"}
+    # {::ixNet::OBJ-/statistics/view:"Flow Detective"}
+    # {::ixNet::OBJ-/statistics/view:"Data Plane Port Statistics"}
+    # {::ixNet::OBJ-/statistics/view:"User Defined Statistics"}
     # {::ixNet::OBJ-/statistics/view:"Traffic Item Statistics"}
     set viewList [ixNet getList [ixNet getRoot]/statistics view]
     #puts "\nviewList: $viewList\n"
@@ -279,7 +279,7 @@ proc GetStatView { statType {getStatsBy trafficItem} } {
 
     # $columnList:
     # {Tx Port} {Rx Port} {Traffic Item} {Ethernet II:Destination MAC Address} {Ethernet II:Source MAC Address} {Ethernet II:Ethernet-Type} {Ethernet II:PFC Queue} {IPv4 :Precedence} {IPv4 :Source Address} {IPv4 :Destination Address} {Custom Tracking: Byte Offset 0} {Source/Dest Endpoint Pair} {Source/Dest Value Pair} {Source/Dest Port Pair} {Source Endpoint} {Source Port} {Dest Endpoint} {Frame Size} {Flow Group} {Traffic Group ID} {Tx Frames} {Rx Frames} {Frames Delta} {Loss %} {Tx Frame Rate} {Rx Frame Rate} {Rx Bytes} {Tx Rate (Bps)} {Rx Rate (Bps)} {Tx Rate (bps)} {Rx Rate (bps)} {Tx Rate (Kbps)} {Rx Rate (Kbps)} {Tx Rate (Mbps)} {Rx Rate (Mbps)} {Store-Forward Avg Latency (ns)} {Store-Forward Min Latency (ns)} {Store-Forward Max Latency (ns)} {First TimeStamp} {Last TimeStamp}
-    
+
     set columnList [ixNet getAttribute ${view}/page -columnCaptions]
     #puts "\nColumnList: $columnList\n"
 
@@ -294,8 +294,8 @@ proc GetStatView { statType {getStatsBy trafficItem} } {
 	    break
 	}
     }
-    
-    # Iterrate through each page 
+
+    # Iterrate through each page
     for {set currPage 1} {$currPage <= $totalPages} {incr currPage} {
 	catch {ixNet setAttribute $view/page -currentPage $currPage} errMsg
 	if {$errMsg != "::ixNet::OK"} {
@@ -303,7 +303,7 @@ proc GetStatView { statType {getStatsBy trafficItem} } {
 	    exit
 	}
 	ixNet commit
-	
+
 	# Wait for statistics to populate on current page
 	set whileLoopStopCounter 0
 	while {[ixNet getAttribute $view/page -isReady] != "true"} {
@@ -317,7 +317,7 @@ proc GetStatView { statType {getStatsBy trafficItem} } {
 	    }
 	    incr whileLoopStopCounter
 	}
-	
+
 	set pageList [ixNet getAttribute $view/page -rowValues] ;# first list of all rows in the page
 	set totalFlowStatistics [llength $pageList]
 
@@ -329,7 +329,7 @@ proc GetStatView { statType {getStatsBy trafficItem} } {
 	    for {set rowIndex 0} {$rowIndex < [llength $rowList]} {incr rowIndex} {
 		# cellList: 1/1/1 1/1/2 TI0-Flow_1 1.1.1.1-1.1.2.1 4000 4000 0 0 0 0 256000 0 0 0 0 0 0 0 0 0 0 0 00:00:00.684 00:00:00.700
 		set cellList [lindex $rowList $rowIndex] ;# third list of cell values
-		
+
 		#puts "\n--- cellList $pageListIndex: $cellList ---\n"
 
 		if {$statViewSelection == "Port Statistics"} {
@@ -360,7 +360,7 @@ proc GetStatView { statType {getStatsBy trafficItem} } {
 		    } else {
 			set trafficItem [lindex $cellList $trafficItemIndex]
 		    }
-		    
+
 		    # Get the Flow Group
 		    set flowGroupIndex [lsearch $columnList "Flow Group"]
 		    if {$flowGroupIndex == -1} {
@@ -369,25 +369,25 @@ proc GetStatView { statType {getStatsBy trafficItem} } {
 			# Flow Group 0008
 			set flowGroup [lindex [lindex $cellList $flowGroupIndex] end]
 		    }
-		    
+
 		    set rxPortIndex [lsearch $columnList "Rx Port"]
 		    set rxPort [lindex $cellList $rxPortIndex]
-		    
+
 		    foreach column $columnList item $cellList {
 			if {[regexp "VLAN:VLAN Priority" $column]} {
 			    set column "Vlan Priority"
 			}
-			
+
 			if {[regexp "VLAN:VLAN-ID" $column]} {
 			    set column "Vlan ID"
 			}
-			
+
 			if {$getStatsBy == "trafficItem"} {
 			    if {[regexp "Traffic Item" $column] == 0} {
 				keylset getStats trafficItem.[join $trafficItem _].flowGroup.Flow_Group_$flowGroup.[join $column _] $item
 			    }
 			}
-			
+
 			if {$getStatsBy == "port"} {
 			    if {[regexp "Rx Port" $column] == 0} {
 				keylset getStats rxPort.$rxPort.trafficItem.[join $trafficItem _].[join $column _] $item
@@ -428,7 +428,7 @@ set root [ixNet getRoot]
 # IxNetwork config file, if the file is not in the same folder as this script
 SendIxNetCmd "ixNet exec loadConfig [ixNet readFrom $ixnConfigFile]"
 
-# Uncomment this out if you want to reassign ports and 
+# Uncomment this out if you want to reassign ports and
 # not want to use the saved config ports.
 if {$reassignPorts == "true"} {
     puts "\nResassigning ports\n"
@@ -439,11 +439,11 @@ if {$reassignPorts == "true"} {
 	puts "Error: $errMsg"
 	exit
     }
-    
+
     SendIxNetCmd "ixNet setAttribute $sg_chassis -hostname $ixiaChassisIp"
     puts "Please wait 40 seconds for all ports to reboot ..."
     SendIxNetCmd "ixNet commit"
-    
+
     # Physical port list
     set portList {}
     # set portList [list [list $ixiaChassisIp $card $port1] [list $ixiaChassisIp $card $port2]]
@@ -453,7 +453,7 @@ if {$reassignPorts == "true"} {
 
     # Virtual port list from the config file
     set vPortList [ixNet getList $root vport]
-    
+
     # This will assign the virtual ports to the actual ports
     #  ::ixNet::OBJ-/vport:1 ::ixNet::OBJ-/vport:2
     catch {ixTclNet::AssignPorts $portList {} $vPortList true} errMsg
@@ -504,10 +504,10 @@ SendIxNetCmd "ixNet exec start $test1"
 #     -status (readOnly=True, type=kString)
 #
 # Right after exec start
-#   -duration 
+#   -duration
 #   -isRunning true
-#   -progress -progress Trial 1/1 Iteration 1, Size 64, Rate 10 % 
-#   -result 
+#   -progress -progress Trial 1/1 Iteration 1, Size 64, Rate 10 %
+#   -result
 #   -resultPath C:\Users\hgee\AppData\Local\Ixia\IxNetwork\data\result\DP.Rfc2544Tput\eb2465e5-b0ca-4160-81fc-1fda223554f4\Run0001
 #   -startTime 06/06/13 15:05:11
 #   -status none
@@ -515,7 +515,7 @@ SendIxNetCmd "ixNet exec start $test1"
 # When QT is complete
 #    -duration 00:04:54
 #    -isRunning false
-#    -progress 
+#    -progress
 #    -result pass
 #    -resultPath C:\Users\hgee\AppData\Local\Ixia\IxNetwork\data\result\DP.Rfc2544Tput\eb2465e5-b0ca-4160-81fc-1fda223554f4\Run0001
 #    -startTime 06/06/13 15:05:11
@@ -556,16 +556,16 @@ set isThereQtLogFileFlag 0
 #           Trial 1/1 Iteration 7, Size 64, Rate 98.594 % Transmitting frames for 10 seconds
 #           Trial 1/1 Iteration 7, Size 64, Rate 98.594 % Wait for 8 seconds Wait 35.0770073%complete
 #           Trial 1/1 Iteration 7, Size 64, Rate 98.594 %
-# 
+#
 while {1}  {
     set progress [ixNet getAttribute $test1/results -progress]
     set status [ixNet getAttribute $test1/results -status]
     puts "Progress: $progress ; Status: $status"
-    
+
     #catch {ixNet exec copyFile [ixNet readFrom $resultPath\\iteration.csv -ixNetRelative] [ixNet writeTo QuickTest_iteration.csv -overwrite]} errMsg
-    
+
     #catch {ixNet exec copyFile [ixNet readFrom $resultPath\\results.csv -ixNetRelative] [ixNet writeTo QuickTest_results.csv -overwrite]} errMsg
-    
+
     # Sometimes the QT logFile takes a little longer to get generated.
     # Must wait until the first iteration is done so there is a logFile result
     if {$isThereQtLogFileFlag == 0} {
@@ -575,9 +575,9 @@ while {1}  {
 	    set status [ixNet getAttribute $test1/results -status]
 
 	    catch {ixNet exec copyFile [ixNet readFrom $resultPath\\logFile.txt -ixNetRelative] [ixNet writeTo QuickTest_logFile.txt -overwrite]} errMsg
-	    
+
 	    catch {exec ls QuickTest_logFile.txt} isThereQtLogFile
-	    
+
 	    if {[regexp "No such file" $isThereQtLogFile]} {
 		puts "No QuickTest logFile generated yet. Waiting $timer/$timeStop seconds"
 		after 2000
@@ -591,12 +591,12 @@ while {1}  {
 		puts "IxNet Tcl Server failed to generate the QT logFile on..."
 		puts "$resultPath.  Exiting test"
 		exit
-	    }	    
+	    }
 	}
     }
 
     catch {ixNet exec copyFile [ixNet readFrom $resultPath\\iteration.csv -ixNetRelative] [ixNet writeTo QuickTest_iteration.csv -overwrite]} iterationCsvFileMsg
-    
+
     catch {ixNet exec copyFile [ixNet readFrom $resultPath\\logFile.txt -ixNetRelative] [ixNet writeTo QuickTest_logFile.txt -overwrite]} errMsg
 
     # Uncomment this if you want iteration stats.
@@ -636,18 +636,18 @@ while {1}  {
 	# BINARY iteration 8, Trial 1, Frame Size 64,  Rate  99.297 % RFC 2544 Throughput test, Started 4:51:45 PM
 	# BINARY iteration 9, Trial 1, Frame Size 64,  Rate  100 % RFC 2544 Throughput test, Started 4:52:15 PM
 	# 06/06/2013 16:52:44: Ethernet - 001 :  Total frames transmitted: 14880952
-	# 06/06/2013 16:52:44: 
+	# 06/06/2013 16:52:44:
 	# 06/06/2013 16:52:44: Collecting receive statistics ...
 	# 06/06/2013 16:52:44: Ethernet - 002 :  Total frames received: 14880952
-	
-	# 06/06/2013 16:52:44: Tx Port   Rx Port  Traffic Item  Flow Group  Tx Rate (% Line Rate) Rx Throughput (% Line Rate)  Rx Throughput (fps)  Rx Throughput (Mbps)  Tx Count (frames)  Rx Count (frames)  Frame Loss (frames)  Frame Loss (%)  Min Latency (ns)  Max Latency (ns)  Avg Latency (ns)  
+
+	# 06/06/2013 16:52:44: Tx Port   Rx Port  Traffic Item  Flow Group  Tx Rate (% Line Rate) Rx Throughput (% Line Rate)  Rx Throughput (fps)  Rx Throughput (Mbps)  Tx Count (frames)  Rx Count (frames)  Frame Loss (frames)  Frame Loss (%)  Min Latency (ns)  Max Latency (ns)  Avg Latency (ns)
 	#06/06/2013 16:52:44: ********************************************************************************************************************************************************************************************************************************************************************************************************************************
-	#06/06/2013 16:52:44: Ethernet - 001  Ethernet - 002  Traffic Item 1  Traffic Item 1-EndpointSet-1 - Flow Group 0001  100.000                100.000                      1488095.213          761.905               14880952           14880952           0                    0.000           640               680               652  
+	#06/06/2013 16:52:44: Ethernet - 001  Ethernet - 002  Traffic Item 1  Traffic Item 1-EndpointSet-1 - Flow Group 0001  100.000                100.000                      1488095.213          761.905               14880952           14880952           0                    0.000           640               680               652
 
 	if {[regexp "BINARY *iteration *(\[0-9]+), *Trial *(\[0-9]+), *Frame *Size *(\[0-9]+), *Rate *(\[0-9]+).*Started *(\[0-9]+.*)" $line - iteration trial frameSize rate startTime]} {
 	    puts "\nIteration $iteration, Trial $trial, FrameSize $frameSize, Rate $rate%, StartTime $startTime"
 	}
-	
+
 	if 0 {
 	    # 06/06/2013 16:52:44: Ethernet - 001 :  Total frames transmitted: 14880952
 	    if {[regexp "\[0-9]+/\[0-9]+/\[0-9]+ *(\[0-9:]+) *(.*) : *Total *frames *transmitted: *(\[0-9]+)" $line - startTime portName totalTx]} {
@@ -685,7 +685,7 @@ if 0 {
 
 # TODO:  VerifyTrafficStatus
 
-# You need to call this in the loop to get the status when the test is complete 
+# You need to call this in the loop to get the status when the test is complete
 # or stopped before you run the next test
 # ::ixNet::OK-{kArray,{{kString,isRunning},{kString,False},{kString,status},{kString,The execution was aborted.},{kString,result},{kString,fail},{kString,resultPath},{kString,C:\Users\hgee\AppData\Local\Ixia\IxNetwork\data\result\DP.Rfc2544Tput\c5f38e39-17a8-47f2-a3c8-9a82ebf4d274\Run0001}}}
 
@@ -701,5 +701,3 @@ if 0 {
 #     after 5000
 #    ixNet exec waitForTest $test1
 #}
-
-

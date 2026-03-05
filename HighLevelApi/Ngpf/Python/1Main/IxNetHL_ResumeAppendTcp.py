@@ -58,12 +58,12 @@ def print_dict(obj, nested_level=0, output=sys.stdout):
 
 
 # To Resume
-connect_result = ixia_hlt.connect ( 
+connect_result = ixia_hlt.connect (
     ixnetwork_tcl_server = ixnetwork_tcl_server,
     tcl_server = tcl_server,
     username = user_name,
     break_locks = '1'
-    ) 
+    )
 
 print_dict(connect_result)
 
@@ -89,4 +89,3 @@ traffic_status = ixia_hlt.traffic_config(
     tcp_src_port_mode = 'list',
     tcp_dst_port_mode = 'list'
     )
-

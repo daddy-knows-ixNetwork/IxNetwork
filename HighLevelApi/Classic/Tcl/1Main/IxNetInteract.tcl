@@ -2,10 +2,10 @@
 
 # This script is meant to be sourced inside a tclsh shell.
 # Then users have knobs to control the following APIs at anytime:
-# 
+#
 # API usage:
 #
-#    help                       = Show all API command usage   
+#    help                       = Show all API command usage
 #    starttraffic               = Start traffic on all Trafic Items
 #    stoptraffic                = Stop traffic on all Traffic Items
 #    getstats                   = Show current statistics
@@ -72,7 +72,7 @@ proc ConfigInterfaceIp {} {
 	puts "Error: You must create a variable \"portList\" with all your ports"
 	exit
     }
-    
+
     foreach port $::portList {
 	set port 1/$port
 	set portConfigProperties {-mode config }
@@ -96,9 +96,9 @@ proc ConfigInterfaceIp {} {
 	} else {
 	    puts "Successfully configured IP interface on $port:\n\n$portStatus\n"
 	}
-	
+
 	set interfaceHandle [keylget portStatus interface_handle]
-	
+
 	# Build a list of all the src/dst emulation handles for Traffic Item
 	# interfaceHandles: ::ixNet::OBJ-/vport:1/interface:1
 	set ::trafficConfig($port,interfaceHandle) $interfaceHandle
@@ -107,11 +107,11 @@ proc ConfigInterfaceIp {} {
 
 proc ConfigTrafficItem {} {
     # This Proc will create Traffic Items "dynamically".
-    # This configures only what the user create for the 
+    # This configures only what the user create for the
     # array trafficConfig.
     # All the parameters must be the same as the HLT parameters.
 
-    # Get a list of all the Traffic Items first in order to know exactly 
+    # Get a list of all the Traffic Items first in order to know exactly
     # how many Traffic Items to create.
     set totalTrafficItem {}
     foreach {properties values} [array get ::trafficConfig *] {
@@ -125,8 +125,8 @@ proc ConfigTrafficItem {} {
 	puts "\nTrafficItem $traffItemNum:\n\t-mode create"
 
 	set trafficItemProperties {-mode create }
-	
-	foreach {properties value} [array get ::trafficConfig trafficItem,$traffItemNum,*] {	    
+
+	foreach {properties value} [array get ::trafficConfig trafficItem,$traffItemNum,*] {
 	    set property [lindex [split $properties ,] end]
 
 	    if {$property == "endpoints"} {
@@ -154,7 +154,7 @@ proc ConfigTrafficItem {} {
 	}
 
 	set trafficItemStatus [eval ::ixia::traffic_config $trafficItemProperties]
-	
+
 	if {[keylget trafficItemStatus status] != $::SUCCESS} {
 	    puts "\nERROR: Ixia traffic item $traffItemNum failed: $trafficItemStatus"
 	    exit
@@ -209,7 +209,7 @@ proc starttraffic {} {
 		exit
 	    }
 	}
-	
+
 	if {$trafficState == "started"} {
 	    puts "Traffic Started"
 	    break
@@ -274,7 +274,7 @@ proc CheckTrafficState {} {
 
 proc ConnectToIxia { ixiaChassisIp ixNetworkTclServerIp portList userName} {
     puts "\nConnecting to $ixNetworkTclServerIp ..."
-    
+
     puts "Wait 40 seconds. Rebooting ports $portList ..."
     set connectStatus [::ixia::connect \
 			   -reset \
@@ -288,7 +288,7 @@ proc ConnectToIxia { ixiaChassisIp ixNetworkTclServerIp portList userName} {
     if {[keylget connectStatus status] != $::SUCCESS} {
 	puts "Error: Connecting to ixNetwork Tcl server failed\n\n$connectStatus\n"
 	exit
-    } 
+    }
 
     set trafficControlStatus [::ixia::traffic_control -action reset -packet_loss_duration_enable 1]
     if {[keylget trafficControlStatus status] != $::SUCCESS} {
@@ -305,9 +305,9 @@ proc getstats {} {
 	puts "Failed to get statistics"
 	exit
     }
-    
+
     #puts [KeylPrint flowStats]
-     
+
     for {set flowNumber 1} {$flowNumber <= [llength [keylget flowStats flow]]} {incr flowNumber} {
 	set txPort [keylget flowStats flow.$flowNumber.tx.port]
 	set rxPort [keylget flowStats flow.$flowNumber.rx.port]
@@ -315,7 +315,7 @@ proc getstats {} {
 	set rxFrames [keylget flowStats flow.$flowNumber.rx.total_pkts]
 	set flowName [keylget flowStats flow.$flowNumber.flow_name]
 	set pktLossDuration [keylget flowStats flow.$flowNumber.rx.pkt_loss_duration]
-	
+
 	puts "\nFlow Group $flowNumber\:"
 	puts "\t[format %8s TxPort][format %8s RxPort][format %12s TxFrames][format %15s RxFrames][format %22s PktLossDuration(ms)]"
 	puts "\t-----------------------------------------------------------------"
@@ -351,5 +351,3 @@ if {$resumeNoConfig == 0} {
 set resumeNoConfig 1
 
 getstats
-
-

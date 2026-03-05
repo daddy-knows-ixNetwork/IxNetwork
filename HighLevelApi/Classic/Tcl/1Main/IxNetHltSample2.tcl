@@ -35,7 +35,7 @@ proc VerifyPortState { {portList all} {expectedPortState up} } {
 	    set port [lindex [split [lindex $connectedTo 1] :] end]
 	    set port $card/$port
 
-	    if {[lsearch $portList $port] != -1} { 
+	    if {[lsearch $portList $port] != -1} {
 		lappend vPortList $vport
 	    }
 	}
@@ -51,7 +51,7 @@ proc VerifyPortState { {portList all} {expectedPortState up} } {
 	    set card [lindex [split [lindex $connectedTo 0] :] end]
 	    set port [lindex [split [lindex $connectedTo 1] :] end]
 	    set port $card/$port
-	    
+
 	    set portState [ixNet getAttribute $vport -state]
 
 	    # Expecting port state = UP
@@ -61,12 +61,12 @@ proc VerifyPortState { {portList all} {expectedPortState up} } {
 		    after 2000
 		    continue
 		}
-		
+
 		if {$portState != "up" && $timer == "60"} {
 		    puts "\nError VerifyPortState: $port seem to be stuck on $portState state. Expecting port up.\n"
 		    set portsAllUpFlag 1
 		}
-		
+
 		if {$portState == "up"} {
 		    puts "\nVerifyPortState: $port state is $portState"
 		    break
@@ -80,12 +80,12 @@ proc VerifyPortState { {portList all} {expectedPortState up} } {
 		    after 2000
 		    continue
 		}
-		
+
 		if {$portState == "up" && $timer == "60"} {
 		    puts "\nError VerifyPortState: $port seem to be stuck on the $portState state. Expecting port down."
 		    set portsAllUpFlag 1
 		}
-		
+
 		if {$portState == "down"} {
 		    puts "\nVerifyPortState: $port state is $portState as expected"
 		    break
@@ -131,7 +131,7 @@ set connectStatus [::ixia::connect \
 if {[keylget connectStatus status] != $::SUCCESS} {
     puts "Connecting to ixNetwork Tcl server failed\n\n$connectStatus\n"
     exit
-} 
+}
 
 if {[VerifyPortState]} {
     exit

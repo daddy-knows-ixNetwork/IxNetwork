@@ -48,7 +48,7 @@
 #                                                                              #
 # Description:                                                                 #
 #   This script intends to demonstrate how to use NGPF S-BFD using             #
-#   Low Level TCL API #               					                       #        
+#   Low Level TCL API #               					                       #
 #                                                                              #
 #    1. Configuration of protocols as described in topology.                   #
 #    2. Start all protocols.                                                   #
@@ -59,7 +59,7 @@
 #    7. Retrieve protocol statistics again                                     #
 #    8. Change the discrminator of the first responder OTF                     #
 #    9. Retrieve protocol statistics again.                                    #
-#   10. Stop all protocols.                                                    #                                                                                
+#   10. Stop all protocols.                                                    #
 ################################################################################
 
 # Script Starts
@@ -83,8 +83,8 @@ puts "Creating a new config"
 ixNet exec newConfig
 
 ################################################################################
-# 1. Protocol configuration section. 
-################################################################################ 
+# 1. Protocol configuration section.
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -406,7 +406,7 @@ puts "***************************************************"
 # Retrieve protocol learned info                                                #
 #################################################################################
 puts "Fetching MPLSOAM Basic Learned Info"
-ixNet exec getAllLearnedInfo $mplsoam1 1 
+ixNet exec getAllLearnedInfo $mplsoam1 1
 after 5000
 set linfo [ixNet getList $mplsoam1 learnedInfo]
 ixNet getAttr $linfo -columns
@@ -469,7 +469,7 @@ puts "***************************************************"
 # Retrieve protocol learned info again afetr deactivating                       #
 #################################################################################
 puts "Fetching MPLSOAM Basic Learned Info"
-ixNet exec getAllLearnedInfo $mplsoam1 1 
+ixNet exec getAllLearnedInfo $mplsoam1 1
 after 5000
 set linfo [ixNet getList $mplsoam1 learnedInfo]
 ixNet getAttr $linfo -columns
@@ -580,4 +580,3 @@ puts "Stopping all protocols"
 ixNet exec stopAllProtocols
 
 puts "!!! Test Script Ends !!!"
-

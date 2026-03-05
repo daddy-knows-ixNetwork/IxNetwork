@@ -40,7 +40,7 @@ def waitForComplete(response, sessionUrl, timeout=90):
     # response: Provide the POST action response.  Generally, after an /operations action.
     #           Such as /operations/startallprotocols, /operations/assignports
     # sessionUrl: http://10.219.x.x:11009/api/v1/sessions/1/ixnetwork
-    # 
+    #
     # Returns 0 if the state is good
     # Returns 1 if the  state remains down or IN_PROGRESS after timeout.
 
@@ -57,13 +57,13 @@ def waitForComplete(response, sessionUrl, timeout=90):
         state = response.json()["state"]
         print "\t\tState:", state
         timeout = timeout - 1
-    
+
     # Falling down here means success
     return 0
 
 def assignPorts(sessionUrl, portList):
     # Use this API to assign or reassign ports.
-    # 
+    #
     # sessionUrl: http://10.219.117.103:11009/api/v1/sessions/1/ixnetwork
     # portList: [['10.219.117.101','1','1'], ['10.219.117.101','1','2']]
     #
@@ -81,7 +81,7 @@ def assignPorts(sessionUrl, portList):
     #
     # Returns 0 if success
     # Returns 1 if failed
-    
+
     response = requests.get(sessionUrl+'/vport')
     if response.status_code != 200:
         return 1
@@ -92,7 +92,7 @@ def assignPorts(sessionUrl, portList):
         return 1
 
     data = {"arg1": [], "arg2": [], "arg3": vportList, "arg4": "true"}
-    [data["arg1"].append({"arg1":str(chassis), "arg2":str(card), "arg3":str(port)}) for chassis,card,port in portList] 
+    [data["arg1"].append({"arg1":str(chassis), "arg2":str(card), "arg3":str(port)}) for chassis,card,port in portList]
     response = requests.post(sessionUrl+'/operations/assignports',
                              data=json.dumps(data),
                              headers={'content-type': 'application/json'})
@@ -129,7 +129,7 @@ def startAllProtocols(sessionUrl):
     # POST:  http://10.219.117.103:11009/api/v1/sessions/1/ixnetwork/operations/startallprotocols
     #        data={}
     #        headers={'content-type': 'application/json'}
-    # 
+    #
     # Returns 0 if success
     # Returns 1 if failed
 
@@ -142,7 +142,7 @@ def startAllProtocols(sessionUrl):
 
 def stopAllProtocols(session):
     # sessionUrl: http://10.219.x.x:11009/api/v1/sessions/1/ixnetwork
-    # 
+    #
     # Returns 0 if success
     # Returns 1 if failed
 
@@ -191,7 +191,7 @@ def verifyProtocolSessions(protocolObjList, timeout=90):
             if timer < timerStop+1:
                 if 'down' in protocolSessionStatus or 'notStarted' in protocolSessionStatus:
                     time.sleep(1)
-            if timer < timerStop+1: 
+            if timer < timerStop+1:
                 if 'down' not in protocolSessionStatus and 'notStarted' not in protocolSessionStatus:
                     print '\n\tStatus: All UP'
                     break
@@ -205,7 +205,7 @@ def verifyAllProtocolSessionsNgpf(sessionUrl, timeout=120):
     # This API will loop through each created Topology Group and verify
     # all the created protocols for session up for up to 120 seconds total.
     # Will verify IPv4 and IPv6.
-    # 
+    #
     # Returns 0 if all sessions are UP.
     # Returns 1 if any session remains DOWN after 120 seconds.
 
@@ -303,15 +303,15 @@ def verifyAllProtocolSessionsNgpf(sessionUrl, timeout=120):
     # All active protocols are up. Return 0
     return 0
 
-                        
+
 def applyTraffic(sessionUrl):
     # sessionUrl: http://10.219.x.x:11009/api/v1/sessions/1/ixnetwork
     #        data={arg1: http://10.219.x.x:11009/api/v1/sessions/1/ixnetwork/traffic}
-    #        headers={'content-type': 'application/json'}    
+    #        headers={'content-type': 'application/json'}
     #
     # Returns 0 if success
     # Returns 1 if failed
-    
+
     print '\napplyTraffic:', sessionUrl
     response = requests.post(sessionUrl+'/traffic/operations/apply',
                              data=json.dumps({'arg1': sessionUrl+'/traffic'}),
@@ -377,10 +377,10 @@ def startTraffic(sessionUrl):
 
 def stopTraffic(sessionUrl):
     # sessionUrl: http://10.219.x.x:11009/api/v1/sessions/1/ixnetwork
-    # 
+    #
     # Returns 0 if success
     # Returns 1 if failed
-    
+
     print '\nstopTraffic:', sessionUrl+'/traffic/operations/stop'
     response = requests.post(sessionUrl+'/traffic/operations/stop',
                              data=json.dumps({'arg1': sessionUrl+'/traffic'}),
@@ -425,9 +425,9 @@ def getStats(sessionUrl, csvFile=None, csvEnableFileTimestamp=False, viewName='F
     #    'PIMv6 IF Drill Down'
     #    'PIMv6 IF Per Port'
 
-    # Note: Not all of the viewNames are listed here. You have to get the exact names from 
+    # Note: Not all of the viewNames are listed here. You have to get the exact names from
     #       the IxNetwork GUI in statistics based on your protocol(s).
-    # 
+    #
     # Return you a dictionary of all the stats: statDict[rowNumber][columnName] == statValue
     #   Get stats on row 2 for 'Tx Frames' = statDict[2]['Tx Frames']
 
@@ -521,7 +521,7 @@ def getStats(sessionUrl, csvFile=None, csvEnableFileTimestamp=False, viewName='F
     if csvFile != None:
         csvFile.close()
     return statDict
-    
+
     # Flow Statistics dictionary output example
     '''
     Flow: 50
@@ -590,7 +590,7 @@ def enableDisableBgpFlapNgpf(sessionUrl, action='true', upTimeInSec=0, downTimeI
     #
     # sessionUrl = The BGP object handle.
     #              http://10.219.117.x:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/bgpIpv4Peer/1
-    # 
+    #
     # action     = string format.  Not boolean.
     #              'true'  = enable BGP flap.
     #              'false' = disable BGP flap.
@@ -637,7 +637,7 @@ def enableDisableBgpFlapNgpf(sessionUrl, action='true', upTimeInSec=0, downTimeI
 def startStopIgmpHostNgpf(protocolSessionUrl, action='start'):
     # protocolSessionUrl: http://192.168.70.127:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/igmpHost/1
     # action: start or stop
-    
+
     # http://192.168.70.127:11009/api/v1/sessions/1/ixnetwork
     sessionUrl = protocolSessionUrl.split('/topology')[0]
     url = sessionUrl+'/topology/deviceGroup/ethernet/ipv4/igmpHost/operations/%s' % action
@@ -674,7 +674,7 @@ def startStopPimV4InterfaceNgpf(protocolSessionUrl, action='start'):
 
 def startStopMldHostNgpf(protocolSessionUrl, action='start'):
     # For IPv6 only
-    # 
+    #
     # protocolSessionUrl: Ex: http://192.168.70.127:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv6/1/mldHost/1
     # action: start or stop
     #
@@ -700,7 +700,7 @@ def enableDisableIgmpGroupNgpf(protocolSessionUrl, groupRangeList, action='disab
     # action: disable or enable
     #
     # Description:
-    #   To enable or disable specific multicast group range IP addresses by using 
+    #   To enable or disable specific multicast group range IP addresses by using
     #   overlay.
     #
     # 1> Get a list of all the Multicast group range IP addresses.
@@ -744,28 +744,28 @@ def enableDisableIgmpGroupNgpf(protocolSessionUrl, groupRangeList, action='disab
     # [u'225.0.0.1', u'225.0.0.2', u'225.0.0.3', u'225.0.0.4', u'225.0.0.5']
     groupRangeValues = response.json()['values']
     print '\nConfigured groupRangeValues:', groupRangeValues
-    
+
     listOfIndexesToDisable = []
     # Loop through user list of specified group ranges to disable.
     for groupRangeIp in groupRangeList:
         index = groupRangeValues.index(groupRangeIp)
         listOfIndexesToDisable.append(index)
-    
+
     if listOfIndexesToDisable == []:
         print '\ndisableIgmpGroupNgpf Error: No multicast group range ip address found on your list'
         return 1
-    
+
     for index in listOfIndexesToDisable:
         currentOverlayUrl = httpHeader+activeMultivalue+'/overlay'
         # http://192.168.70.127:11009/api/v1/sessions/1/ixnetwork/multivalue/5/overlay
         # NOTE:  Index IS NOT zero based.
-        print 'enableDisableIgmpGroupNgpf: %s: %s' % (action, groupRangeValues[index]) 
-        response = requests.post(currentOverlayUrl, 
+        print 'enableDisableIgmpGroupNgpf: %s: %s' % (action, groupRangeValues[index])
+        response = requests.post(currentOverlayUrl,
                                  data=json.dumps({'index': index+1, 'value': enableDisable}),
                                  headers=urlHeadersJson)
         if response.status_code != 201:
             return 1
-    
+
     return 0
 
 def enableDisableMldGroupNgpf(protocolSessionUrl, groupRangeList, action='disable'):
@@ -777,7 +777,7 @@ def enableDisableMldGroupNgpf(protocolSessionUrl, groupRangeList, action='disabl
     # action: disable or enable
     #
     # Description:
-    #   To enable or disable specific multicast group range IP addresses by using 
+    #   To enable or disable specific multicast group range IP addresses by using
     #   overlay.
     #
     # 1> Get a list of all the Multicast group range IP addresses.
@@ -822,48 +822,48 @@ def enableDisableMldGroupNgpf(protocolSessionUrl, groupRangeList, action='disabl
     # ['ff03::1', 'ff03::2']
     groupRangeValues = response.json()['values']
     print '\nConfigured groupRangeValues:', groupRangeValues
-    
+
     listOfIndexesToDisable = []
     # Loop through user list of specified group ranges to disable.
     for groupRangeIp in groupRangeList:
         index = groupRangeValues.index(groupRangeIp)
         listOfIndexesToDisable.append(index)
-    
+
     if listOfIndexesToDisable == []:
         print '\ndisableMldGroupNgpf Error: No multicast group range ip address found on your list'
         return 1
-    
+
     for index in listOfIndexesToDisable:
         currentOverlayUrl = httpHeader+activeMultivalue+'/overlay'
         # http://192.168.70.127:11009/api/v1/sessions/1/ixnetwork/multivalue/5/overlay
         # NOTE:  Index IS NOT zero based.
-        print 'enableDisableMldGroupNgpf: %s: %s' % (action, groupRangeValues[index]) 
-        response = requests.post(currentOverlayUrl, 
+        print 'enableDisableMldGroupNgpf: %s: %s' % (action, groupRangeValues[index])
+        response = requests.post(currentOverlayUrl,
                                  data=json.dumps({'index': index+1, 'value': enableDisable}),
                                  headers=urlHeadersJson)
         if response.status_code != 201:
             return 1
-    
+
     return 0
 
 def sendIgmpJoinNgpf_backup(sessionUrl, multicastIpAddress):
     # This API will send IGMP join.
     # If multicastIpAddress is 'all', this will send IGMP join on all multicast addresses.
     # Else, provide a list of multicast IP addresses to send join.
-    # 
+    #
     # sessionUrl: 'http://192.168.70.127:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/igmpHost/1'
     # multicastIpAddress: 'all' or a list of multicast IP addresses to send joins
     #                      Example: ['225.0.0.3', '225.0.0.4']
 
     httpHeader = sessionUrl.split('/api')[0]
     jsonHeader = {'content-type': 'application/json'}
-    
+
     # 1> Based on the list of multicastIpAddress, get all their indexes.
     response = requests.get(sessionUrl+'/igmpMcastIPv4GroupList')
     if response.status_code != 200:
         return 1
     startMcastAddrMultivalue = response.json()['startMcastAddr']
-    
+
     response = requests.get(httpHeader+startMcastAddrMultivalue)
     if response.status_code != 200:
         return 1
@@ -899,16 +899,16 @@ def sendIgmpJoinNgpf_backup(sessionUrl, multicastIpAddress):
 
 def sendIgmpJoinOrLeaveNgpf(**kwargs):
     # This API will send IGMP joins or leaves.
-    # 
+    #
     # If groupRangeList or sourceRangeList is 'all', this will send IGMP join
     # on all configured multicast addresses.
     # Else, provide a list of group range IP addresses to send join or leave.
-    # 
+    #
     # MANDATORY PARAMETERS:
     #    protocolObject or sessionUrl
     #    groupRangeList or sourcRangeList
     #    action (join or leave)
-    # 
+    #
     # OPTIONAL PARAMETERS:
     #    portName
     #    hostIp
@@ -920,44 +920,44 @@ def sendIgmpJoinOrLeaveNgpf(**kwargs):
     #
     #    sessionUrl:      This is the session ID: 'http://192.168.70.127:11009/api/v1/sessions/1/ixnetwork'.
     #                     If you want this API to dynamically figure out the igmp host
-    #                     object based on hostIp or portName, then use sessionUrl 
+    #                     object based on hostIp or portName, then use sessionUrl
     #                     because this API needs to know your REST API server:port and the connected session ID.
     #
     #    groupRangeList:  State 'all' or a list of mcast group range ip addresses to send joins|leaves.
-    # 
+    #
     #    sourceRangeList: State 'all' or a list of mcast source group ip addresses to send joins|leaves.
-    # 
+    #
     #    hostIp:          Dynamically get the igmpHost object based on the provided host IP address.
     #
     #    portName:        Dynamically get the igmpHost object based on the provided host IP address.
     #
     # USAGE: SELECT A METHOD
-    # 
+    #
     #    1> protocolObject + action + groupRangeList or sourceRangeList
     #    2> sessionUrl  + action + portName + mcastGroupRangeList or sourceRangeList
     #    3> sessionUrl  + action + hostIp   + mcastGroupRangeList or sourceRangeList
     #    4> sessionUrl  + action + hostIp   + portName + mcastGroupRangeList or sourceRangeList
-    #       (About #4: Include a portName to handle VPN configurations if the 
+    #       (About #4: Include a portName to handle VPN configurations if the
     #        same IP address is on multiple ports.)
-    # 
+    #
     # EXAMPLE #1:
     #    Provide a known IGMP host object:
-    #    sendIgmpJoinOrLeaveNgpf(protocolObject='http://x.x.x.x:11009/api/v1/.../topology/1/.../ipv4/1/igmpHost/1', 
+    #    sendIgmpJoinOrLeaveNgpf(protocolObject='http://x.x.x.x:11009/api/v1/.../topology/1/.../ipv4/1/igmpHost/1',
     #                            groupRangeList=['225.0.0.2', '255.0.0.4'],
     #                            action='join')
     #
-    # All examples below will search for the corresponding igmpHost 
+    # All examples below will search for the corresponding igmpHost
     # object based on hostIp or portName.
     #
     # EXAMPLE #2:
     #    sendIgmpJoinOrLeaveNgpf(sessionUrl='http://192.168.70.127:11009',
-    #                            portName='my port1', 
+    #                            portName='my port1',
     #                            groupRangeList='all',
     #                            action='leave')
     #
     # EXAMPLE #3:
     #    sendIgmpJoinOrLeaveNgpf(sessionUrl='http://192.168.70.127:11009',
-    #                            hostIp='1.1.1.1', 
+    #                            hostIp='1.1.1.1',
     #                            groupRangeList=['225.0.0.2', '255.0.0.4'],
     #                            action='join')
     #
@@ -967,10 +967,10 @@ def sendIgmpJoinOrLeaveNgpf(**kwargs):
     #    as a filter to distinguish which multicast IP address to send joins or leaves.
     #    sendIgmpJoinOrLeaveNgpf(sessionUrl='http://192.168.70.127:11009',
     #                            hostIp='my 1.1.1.1',
-    #                            portName='my port1', 
+    #                            portName='my port1',
     #                            groupRangeList=['225.0.0.2', '255.0.0.4'],
     #                            action='leave')
-    
+
     if 'protocolObject' not in kwargs and 'sessionUrl' not in kwargs:
         print '\nError: You must provide one of the followings: protocolObject or sessionUrl'
         print 'Please read the API description for usage.'
@@ -993,7 +993,7 @@ def sendIgmpJoinOrLeaveNgpf(**kwargs):
     if 'action' not in kwargs:
         print '\nError: You must include the "action" parameter and state join or leave'
         return 1
-    
+
     if kwargs['action'] == 'join':
         sendAction = 'igmpjoingroup'
     if kwargs['action'] == 'leave':
@@ -1092,10 +1092,10 @@ def sendIgmpJoinOrLeaveNgpf(**kwargs):
             print 'Error: No IGMP host object found.'
             return 1
         protocolHostObj = igmpHostSessionUrlList[0]
-        
+
     if 'protocolObject' in kwargs:
         protocolHostObj = kwargs['protocolObject']
-    
+
     # Logic:
     #     - Get igmpHost object.
     #     - Get its list of configured mcast:
@@ -1138,7 +1138,7 @@ def sendIgmpJoinOrLeaveNgpf(**kwargs):
     #print '\nsendIgmpJoinNgpf: List of configured Mcast IP addresses:', listOfConfiguredMcastIpAddresses
     if listOfConfiguredMcastIpAddresses == []:
         print 'sendIgmpJoinNgpf: No Mcast IP address configured'
-        return 1    
+        return 1
 
     try:
         if 'groupRangeList' in kwargs and kwargs['groupRangeList'] == 'all':
@@ -1211,7 +1211,7 @@ def sendIgmpJoinOrLeaveNgpf(**kwargs):
             groupIpAddrCount=groupIpAddrCount,
             lastGroupIp=lastGroupIpAddress
         )
-        
+
     url = protocolHostObj+'/igmpMcastIPv4GroupList/operations/%s' % sendAction
     if indexListToSend != []:
         data = {'arg1': [protocolHostObj+'/igmpMcastIPv4GroupList'], 'arg2': indexListToSend}
@@ -1231,20 +1231,20 @@ def sendIgmpJoinNgpf_backup(sessionUrl, multicastIpAddress):
     # This API will send IGMP join.
     # If multicastIpAddress is 'all', this will send IGMP join on all multicast addresses.
     # Else, provide a list of multicast IP addresses to send join.
-    # 
+    #
     # sessionUrl: 'http://192.168.70.127:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/igmpHost/1'
     # multicastIpAddress: 'all' or a list of multicast IP addresses to send joins
     #                      Example: ['225.0.0.3', '225.0.0.4']
 
     httpHeader = sessionUrl.split('/api')[0]
     jsonHeader = {'content-type': 'application/json'}
-    
+
     # 1> Based on the list of multicastIpAddress, get all their indexes.
     response = requests.get(sessionUrl+'/igmpMcastIPv4GroupList')
     if response.status_code != 200:
         return 1
     startMcastAddrMultivalue = response.json()['startMcastAddr']
-    
+
     response = requests.get(httpHeader+startMcastAddrMultivalue)
     if response.status_code != 200:
         return 1
@@ -1282,20 +1282,20 @@ def sendIgmpLeaveNgpf(sessionUrl, multicastIpAddress):
     # This API will send IGMP leaves.
     # If multicastIpAddress is 'all', this will send IGMP leaves on all multicast addresses.
     # Else, provide a list of multicast IP addresses to send leaves.
-    # 
+    #
     # sessionUrl: 'http://192.168.70.127:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/igmpHost/1'
     # multicastIpAddress: 'all' or a list of multicast IP addresses to send leaves
     #                      Example: ['225.0.0.3', '225.0.0.4']
 
     httpHeader = sessionUrl.split('/api')[0]
     jsonHeader = {'content-type': 'application/json'}
-    
+
     # 1> Based on the list of multicastIpAddress, get all their indexes.
     response = requests.get(sessionUrl+'/igmpMcastIPv4GroupList')
     if response.status_code != 200:
         return 1
     startMcastAddrMultivalue = response.json()['startMcastAddr']
-    
+
     response = requests.get(httpHeader+startMcastAddrMultivalue)
     if response.status_code != 200:
         return 1
@@ -1328,7 +1328,7 @@ def sendIgmpLeaveNgpf(sessionUrl, multicastIpAddress):
         return 1
     else:
         return 0
-    
+
 def sendPimV4JoinNgpf(sessionUrl):
     # sessionUrl: The pimV4Interace object.
     #    Example: http://192.168.70.127:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/pimV4Interface/2
@@ -1376,7 +1376,7 @@ def sendMldJoinNgpf(sessionUrl, ipv6AddressList):
     #
     # This API will take the mld sessionUrl object and loop through all the configured ports
     # looking for the specified ipv6Address to send a join.
-    # 
+    #
     # sessionUrl: http://192.168.70.127.:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv6/2/mldHost/1
     # ipv6AddressList: 'all' or a list of IPv6 addresses that must be EXACTLY how it is configured on the GUI.
 
@@ -1407,7 +1407,7 @@ def sendMldJoinNgpf(sessionUrl, ipv6AddressList):
 
         for eachSpecifiedIpv6Addr in listOfGroupAddresses:
             if eachSpecifiedIpv6Addr in listOfConfiguredGroupIpAddresses:
-                # if 'values' match ipv4Address, do a join on: 
+                # if 'values' match ipv4Address, do a join on:
                 #      http://192.168.70.127.:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv6/2/mldHost/1/mldMcastIPv6GroupList/port/1/operations/mldjoingroup
                 #    arg1: port/1 object
                 url = sessionUrl+'/mldMcastIPv6GroupList/port/%s/operations/mldjoingroup' % currentPortId
@@ -1428,7 +1428,7 @@ def sendMldLeaveNgpf(sessionUrl, ipv6AddressList):
     #
     # This API will take the mld sessionUrl object and loop through all the configured ports
     # looking for the specified ipv6Address to send a leave.
-    # 
+    #
     # sessionUrl: http://192.168.70.127.:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv6/2/mldHost/1
     # ipv6AddressList: 'all' or a list of IPv6 addresses that must be EXACTLY how it is configured on the GUI.
 
@@ -1459,7 +1459,7 @@ def sendMldLeaveNgpf(sessionUrl, ipv6AddressList):
 
         for eachSpecifiedIpv6Addr in listOfGroupAddresses:
             if eachSpecifiedIpv6Addr in listOfConfiguredGroupIpAddresses:
-                # if 'values' match ipv4Address, do a join on: 
+                # if 'values' match ipv4Address, do a join on:
                 #      http://192.168.70.127.:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv6/2/mldHost/1/mldMcastIPv6GroupList/port/1/operations/mldjoingroup
                 #    arg1: port/1 object
                 url = sessionUrl+'/mldMcastIPv6GroupList/port/%s/operations/mldleavegroup' % currentPortId
@@ -1498,7 +1498,7 @@ serverUrl = 'http://'+py.ixTclServer+':'+str(py.ixRestPort)
 #    sys.exit()
 
 '''
-sendIgmpJoinOrLeaveNgpf(protocolObject='http://192.168.70.127:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/igmpHost/1', 
+sendIgmpJoinOrLeaveNgpf(protocolObject='http://192.168.70.127:11009/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/igmpHost/1',
                         groupRangeList=['225.0.0.2', '225.0.0.4'],
                         action='leave')
 
@@ -1507,7 +1507,7 @@ sys.exit()
 
 '''
 sendIgmpJoinOrLeaveNgpf(sessionUrl=sessionUrl,
-                        portName='my port1', 
+                        portName='my port1',
                         groupRangeList='all',
                         action='join')
 sys.exit()
@@ -1515,7 +1515,7 @@ sys.exit()
 
 '''
 sendIgmpJoinOrLeaveNgpf(sessionUrl=sessionUrl,
-                        hostIp='1.1.1.1', 
+                        hostIp='1.1.1.1',
                         groupRangeList=['225.0.0.2', '225.0.0.4'],
                         action='leave')
 '''
@@ -1523,28 +1523,28 @@ sendIgmpJoinOrLeaveNgpf(sessionUrl=sessionUrl,
 '''
 sendIgmpJoinOrLeaveNgpf(sessionUrl=sessionUrl,
                         hostIp='1.1.1.1',
-                        portName='my port1', 
+                        portName='my port1',
                         groupRangeList='all',
                         action='join')
 sys.exit()
 '''
 
 sendIgmpJoinOrLeaveNgpf(sessionUrl=sessionUrl,
-                        portName='my port1', 
+                        portName='my port1',
                         sourceRangeList='all',
                         action='join')
 
 #x enableDisableIMld
 #x Join/leave mld: simple join/leave for mld with only group specified
 #     Source Group specific join/leave: igmp, mld, and pim
-#  Join | Leave: 
+#  Join | Leave:
 #     1> By portName
 #     2> By host IP address
 #           Scenario #1: Host IP
 #           Scenario #2: Handle same host IP on multiple ports (VPN). Must filter by port parameter.
 #     3> Display the Group Range, Increment=#, and Last Group IP Address.
-#     4> Source Group join|leave 
-# 
+#     4> Source Group join|leave
+#
 #  Pim: join, prune
 #x  Igmp stats
 #x  Mld stats
@@ -1593,7 +1593,7 @@ sys.exit()
 #                     upTimeInSec=3,
 #                     downTimeInSec=4)
 
-    
+
 #stats = getStats(sessionUrl, csvFile='Flow_Statistics', csvEnableFileTimestamp=False)
 
 
@@ -1621,22 +1621,3 @@ stats = getStats(sessionUrl, viewName='Flow Statistics')
 print printDict(stats)
 
 print '--- tx frames:', stats[16]['Tx Frames']
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -14,7 +14,7 @@ Description:
 
     For frame loss accurate measurement:
       - This utility looks for "Lost Frames" counter first. If it doesn't exists, then it will fall on "Frames Delta".
-      - For most accurately real time frame loss, use cards that supports Advance Sequence Checking and enable 
+      - For most accurately real time frame loss, use cards that supports Advance Sequence Checking and enable
         "Advance Sequence Checking" in Traffic Options.
       - Otherwise, this utility will look at the "Frames Delta" counter for real time loss.
       - "Frames Delta" measurement will have Tx/Rx delays while taking a snapshot of running traffic.
@@ -68,9 +68,9 @@ Command Line Parameters:
 Output example:
    Time       TrafficItemName   TxRate          RxRate          TxFrames        RxFrames        LossDur(ms)     LossDelta    LossThreshold
    --------------------------------------------------------------------------------------------------------------------------------------------
-   18:31:49   traffic_1         31476.06        31476.06        185333          185333          0               0            100       
-   18:31:49   traffic_2         31476.06        31476.06        185333          185332          0.006           1            100       
-   18:31:49   traffic_3         31475.56        31475.56        185332          185331          0.006           1            100  
+   18:31:49   traffic_1         31476.06        31476.06        185333          185333          0               0            100
+   18:31:49   traffic_2         31476.06        31476.06        185333          185332          0.006           1            100
+   18:31:49   traffic_3         31475.56        31475.56        185332          185331          0.006           1            100
 
 """
 
@@ -260,7 +260,7 @@ def monitorTraffic():
                 framesLost = values['Lost Frames']
             except:
                 framesLost = values['Frames Delta']
-            
+
             try:
                 pktLossDuration = values['Packet Loss Duration (ms)']
             except:
@@ -672,7 +672,3 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
         print('\n%s' % traceback.format_exc())
     #sys.exit('\nTest aborted. Traceback: {0}\n'.format(errMsg))
     sys.exit('\nTest aborted. Traceback: {0}\n'.format(traceback.format_exc()))
-
-
-
-

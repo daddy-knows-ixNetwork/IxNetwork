@@ -71,13 +71,13 @@ sub assignPorts {
     my $port2    = $my_resource[6];
     my $vport1   = $my_resource[7];
     my $vport2   = $my_resource[8];
-    
+
     my $root = $ixNet->getRoot();
     my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-    
+
     my $chassisObj2 = '';
     if ($chassis1 ne $chassis2) {
         $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -87,7 +87,7 @@ sub assignPorts {
     } else {
         $chassisObj2 = $chassisObj1;
     }
-    
+
     my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -96,7 +96,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-        
+
     $ixNet->commit();
 }
 
@@ -104,7 +104,7 @@ sub assignPorts {
 my @ports       = (('10.216.108.96', '4', '3'), ('10.216.108.96', '4', '4'));
 my $ixTclServer = '10.216.108.113';
 my $ixTclPort   = '8074';
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 ################################################################################
@@ -164,7 +164,7 @@ $ixNet->commit();
 $ethernet1 = ($ixNet->remapIds($ethernet1))[0];
 my $macMv = $ixNet->getAttribute($ethernet1, '-mac');
 $ixNet->add($macMv, 'counter');
-$ixNet->setMultiAttribute($macMv.'/counter',  
+$ixNet->setMultiAttribute($macMv.'/counter',
              '-direction', 'increment',
              '-start'    , '00:11:01:00:00:01',
              '-step'     , '00:00:00:00:00:01');
@@ -205,7 +205,7 @@ $ixNet->commit();
 $pccGroup1 = ($ixNet->remapIds($pccGroup1))[0];
 my $pccIpv4AddressMv = $ixNet->getAttribute($pccGroup1, '-pccIpv4Address');
 $ixNet->add($pccIpv4AddressMv, 'counter');
-$ixNet->setMultiAttribute($pccIpv4AddressMv.'/counter',  
+$ixNet->setMultiAttribute($pccIpv4AddressMv.'/counter',
              '-direction', 'increment',
              '-start'    , '1.1.1.2',
              '-step'     , '0.0.0.1');
@@ -227,14 +227,14 @@ $ixNet->setAttribute($pccInit1, '-numberOfEroSubObjects', '1');
 $ixNet->commit();
 my $srcEndPointIpv4Mv = $ixNet->getAttribute($pccInit1, '-srcEndPointIpv4');
 $ixNet->add($srcEndPointIpv4Mv, 'counter');
-$ixNet->setMultiAttribute($srcEndPointIpv4Mv.'/counter',  
+$ixNet->setMultiAttribute($srcEndPointIpv4Mv.'/counter',
              '-direction', 'increment',
              '-start'    , '100.0.0.1',
              '-step'     , '0.0.0.1');
 $ixNet->commit();
 my $destEndPointIpv4Mv = $ixNet->getAttribute($pccInit1, '-destEndPointIpv4');
 $ixNet->add($destEndPointIpv4Mv, 'counter');
-$ixNet->setMultiAttribute($destEndPointIpv4Mv.'/counter',  
+$ixNet->setMultiAttribute($destEndPointIpv4Mv.'/counter',
              '-direction', 'increment',
              '-start'    , '200.0.0.1',
              '-step'     , '0.0.0.1');
@@ -256,7 +256,7 @@ $ixNet->commit();
 my $pccEro1 = $pccInit1.'/pcepEroSubObjectsList:1';
 my $mplsLabelMv = $ixNet->getAttribute($pccEro1, '-mplsLabel');
 $ixNet->add($mplsLabelMv, 'counter');
-$ixNet->setMultiAttribute($mplsLabelMv.'/counter',  
+$ixNet->setMultiAttribute($mplsLabelMv.'/counter',
              '-direction', 'increment',
              '-start'    , '16',
              '-step'     , '1');
@@ -310,7 +310,7 @@ $ixNet->commit();
 $ethernet2 = ($ixNet->remapIds($ethernet2))[0];
 my $macMv = $ixNet->getAttribute($ethernet2, '-mac');
 $ixNet->add($macMv, 'counter');
-$ixNet->setMultiAttribute($macMv.'/counter',  
+$ixNet->setMultiAttribute($macMv.'/counter',
              '-direction', 'increment',
              '-start'    , '00:12:01:00:00:01',
              '-step'     , '00:00:00:00:00:01');
@@ -323,7 +323,7 @@ $ixNet->commit();
 $ipv4Addr2 = ($ixNet->remapIds($ipv4Addr2))[0];
 my $addressMv = $ixNet->getAttribute($ipv4Addr2, '-address');
 $ixNet->add($addressMv, 'counter');
-$ixNet->setMultiAttribute($addressMv.'/counter',  
+$ixNet->setMultiAttribute($addressMv.'/counter',
              '-direction', 'increment',
              '-start'    , '1.1.1.2',
              '-step'     , '0.0.0.1');
@@ -384,7 +384,7 @@ $ixNet->setMultiAttribute($srcEndPointIpv6Mv.'/singleValue',
 my $preSr2 = $preLsp2.'/pcepEroSubObjectsList:1';
 my $mplsLabelMv = $ixNet->getAttribute($preSr2, '-mplsLabel');
 $ixNet->add($mplsLabelMv, 'counter');
-$ixNet->setMultiAttribute($mplsLabelMv.'/counter',  
+$ixNet->setMultiAttribute($mplsLabelMv.'/counter',
              '-direction', 'increment',
              '-start'    , '16',
              '-step'     , '1');
@@ -414,9 +414,9 @@ $ixNet->commit();
 # Assign ports
 ################################################################################
 print("Connect to IxNetwork Tcl server\n");
-$ixNet->connect($ixTclServer, 
-                '-port', $ixTclPort, 
-                '-version', '8.00', 
+$ixNet->connect($ixTclServer,
+                '-port', $ixTclPort,
+                '-version', '8.00',
                 '-setAttribute', 'strict');
 my @vPorts  = $ixNet->getList($ixNet->getRoot(), 'vport');
 my $vport1 = $vPorts[0];
@@ -460,7 +460,7 @@ print("***************************************************\n");
 print "Executing return delegation";
 for (my $i = 1; $i <=10; $i++) {
     $ixNet->execute('returnDelegation', $pccInit1, $i);
-} 
+}
 
 #################################################################################
 #  6. Check LSP state
@@ -521,4 +521,3 @@ print("***************************************************\n");
 ################################################################################
 print "Stopping all protocol\n";
 $ixNet->execute('stopAllProtocols');
-

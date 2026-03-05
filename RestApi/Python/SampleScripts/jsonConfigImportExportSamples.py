@@ -24,7 +24,7 @@ Description
                 2> Read the JSON config file into memory. Now you have an object variable containing the configuration.
                 3> Modify everything you need.
                 4> Use API to import the object to the IxNetwork API server.
-            
+
             Note: If the configuration is large, allow time for exporting and importing.
 
 Instructions

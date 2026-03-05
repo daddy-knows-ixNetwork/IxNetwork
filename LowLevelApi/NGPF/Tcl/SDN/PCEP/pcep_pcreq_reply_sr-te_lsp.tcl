@@ -43,8 +43,8 @@
 ################################################################################
 
 ################################################################################
-# Description: 
-# 1. PCC Requested SR LSPs are statically configured in PCC, with initial 
+# Description:
+# 1. PCC Requested SR LSPs are statically configured in PCC, with initial
 #	 delegation TRUE. When PCC starts, it sends PCRequest these LSPs with PCE.
 # 2. Assign ports
 # 3. Start all protocols

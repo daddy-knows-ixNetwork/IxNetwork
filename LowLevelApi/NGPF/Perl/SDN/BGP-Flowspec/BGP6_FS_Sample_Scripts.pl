@@ -53,8 +53,8 @@
 ################################################################################
 
 ################################################################################
-# Utils                                                                        #	
-################################################################################       
+# Utils                                                                        #
+################################################################################
 # Running from Linux:
 
 	# use lib ".";
@@ -67,7 +67,7 @@
        # use ixiahlt {IXIA_VERSION => $ENV{'IXIA_VERSION'}, TclAutoPath  => [$ENV{'PERL_IXOS_LIB_PATH'}, $ENV{'PERL_IXNET_LIB_PATH'}]};
 
 
-# Running from Windows: 
+# Running from Windows:
 
 	# use lib "C:/Program Files (x86)/Ixia/hltapi/4.95.117.44/TclScripts/lib/hltapi/library/common/ixia_hl_lib-7.40";
 	# use lib "C:/Program Files (x86)/Ixia/hltapi/4.95.117.44/TclScripts/lib/hltapi/library/common/ixiangpf/perl";
@@ -124,7 +124,7 @@ my @port_handles_list = split(/ /,$port_handles);
 # Creating topology and device group                                           #
 ################################################################################
 # Creating a topology on first port
-print "Adding Topology 1 on Port 1\n";    
+print "Adding Topology 1 on Port 1\n";
 my $topology_1_status = ixiangpf::topology_config ({
     topology_name      => "{BGP6 Topology 1}",
     port_handle        => $port_handles_list[0],
@@ -138,9 +138,9 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $topology_1_handle = $HashRef->{'topology_handle'};
- 
-# Creating a device group in topology 
-print "Creating device group 1 in topology 1\n";   
+
+# Creating a device group in topology
+print "Creating device group 1 in topology 1\n";
 my $device_group_1_status = ixiangpf::topology_config ({
     topology_handle              => "$topology_1_handle",
     device_group_name            => "{BGP6 Topology 1 Router}",
@@ -194,7 +194,7 @@ my $deviceGroup_2_handle = $HashRef->{'device_group_handle'};
 ################################################################################
 #  Configure protocol interfaces                                               #
 ################################################################################
-# Creating ethernet stack for the first Device Group 
+# Creating ethernet stack for the first Device Group
 my $ethernet_1_status = ixiangpf::interface_config ({
     protocol_name                => "{Ethernet 1}",
     protocol_handle              => "$deviceGroup_1_handle",
@@ -211,7 +211,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $ethernet_1_handle = $HashRef->{'ethernet_handle'};
-    
+
 # Creating ethernet stack for the second Device Group
 print "Creating ethernet for the second Device Group\n";
 my $ethernet_2_status = ixiangpf::interface_config ({
@@ -231,7 +231,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $ethernet_2_handle = $HashRef->{'ethernet_handle'};
 
-# Creating IPv6 Stack on top of Ethernet Stack for the first Device Group                                 
+# Creating IPv6 Stack on top of Ethernet Stack for the first Device Group
 print "Creating IPv6 Stack on top of Ethernet Stack for the first Device Group\n";
 my $ipv6_1_status = ixiangpf::interface_config ({
     protocol_name                     => "{IPv6 1}",
@@ -280,10 +280,10 @@ if ($command_status != $ixiangpf::SUCCESS) {
 my $ipv6_2_handle = $HashRef->{'ipv6_handle'};
 
 ################################################################################
-# Other protocol configurations                                                # 
+# Other protocol configurations                                                #
 ################################################################################
-# This will create BGP6 Stack on top of IPv6 stack @PEER1 side 
-print "Creating BGP6 Stack on top of IPv6 Stack in Topology 1 with AFI/SAFI Config\n";    
+# This will create BGP6 Stack on top of IPv6 stack @PEER1 side
+print "Creating BGP6 Stack on top of IPv6 Stack in Topology 1 with AFI/SAFI Config\n";
 my $bgp_v6_interface_1_status = ixiangpf::emulation_bgp_config ({
     mode                                         => "enable",
     active                                       => "1",
@@ -969,7 +969,7 @@ sleep(60);
 ############################################################################
 print "Fetching BGP aggregated statistics\n";
 my $protostats = ixiangpf::emulation_bgp_info({
-    handle => $bgpInterface_1_handle, 
+    handle => $bgpInterface_1_handle,
     mode   => 'stats_per_device_group'
 });
  $HashRef = ixiangpf::get_result_hash();
@@ -1025,6 +1025,5 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 sleep(2);
-print "!!! Test Script Ends !!!\n";           
-print "SUCCESS - $0\n";         
-
+print "!!! Test Script Ends !!!\n";
+print "SUCCESS - $0\n";

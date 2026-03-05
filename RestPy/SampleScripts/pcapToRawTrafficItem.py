@@ -43,7 +43,7 @@ from ixnetwork_restpy.assistants.statistics.statviewassistant import StatViewAss
 
 # Defaulting to windows
 # Options: windows|connection_manager|linux
-osPlatform = 'windows' 
+osPlatform = 'windows'
 
 apiServerIp = '192.168.70.3'
 
@@ -80,7 +80,7 @@ try:
     session = testPlatform.Sessions.add()
     ixNetwork = session.Ixnetwork
 
-    ixNetwork.NewConfig()    
+    ixNetwork.NewConfig()
 
     ixNetwork.info('\nConfiguring license server')
     ixNetwork.Globals.Licensing.LicensingServers = licenseServerIp
@@ -108,7 +108,7 @@ try:
             ipDstAddr  = packet[IP].dst
             tcpSrcPort = packet[TCP].sport
             tcpDstPort = packet[TCP].dport
-            
+
             ixNetwork.info('ethSrc: {} ethDst: {}'.format(ethSrc, ethDst))
             ixNetwork.info('ipSrc: {} ipDst: {}'.format(ipSrc, ipDst))
             ixNetwork.info('tcpSrcPort: {} tcpDstPort: {}'.format(tcpSrcPort, tcpDstPort))
@@ -125,7 +125,7 @@ try:
     ixNetwork.info('Add flow group')
     trafficItem.EndpointSet.add(Sources=vport1.Protocols.find(), Destinations=vport2.Protocols.find())
 
-    # Note: A Traffic Item could have multiple EndpointSets (Flow groups). 
+    # Note: A Traffic Item could have multiple EndpointSets (Flow groups).
     #       Therefore, ConfigElement is a list.
     ixNetwork.info('\tConfiguring config elements')
     configElement = trafficItem.ConfigElement.find()[0]
@@ -144,7 +144,7 @@ try:
     #for protocolHeader in ixNetwork.Traffic.ProtocolTemplate():
     #    ixNetwork.info('\n', protocolHeader.DisplayName)
 
-    # NOTE: If you are using virtual ports (IxVM), you must use the Destination MAC address of 
+    # NOTE: If you are using virtual ports (IxVM), you must use the Destination MAC address of
     #       the IxVM port from your virtual host (ESX-i host or KVM)
     ixNetwork.info('\nConfiguring Ethernet packet header')
     ethernetDstField = ethernetStackObj.Field.find(DisplayName='Destination MAC Address')
@@ -166,7 +166,7 @@ try:
     # 2> Append the IPv4 protocol header after the Ethernet stack.
     ethernetStackObj.Append(Arg2=ipv4ProtocolTemplate)
 
-    # 3> Get the new IPv4 packet header stack to use it for appending any protocol after IP layer such as 
+    # 3> Get the new IPv4 packet header stack to use it for appending any protocol after IP layer such as
     #    UDP/TCP.
     # Look for the IPv4 packet header object.
     ipv4StackObj = configElement.Stack.find(DisplayName='IPv4')
@@ -202,7 +202,7 @@ try:
     tcpDstPortFieldObj.SingleValue = tcpDstPort
 
     # This sample script does not expect traffic.
-    # It is only demonstrating how to parse a pcap file and insert the values into a 
+    # It is only demonstrating how to parse a pcap file and insert the values into a
     # Traffic Item.
 
     if debugMode == False:

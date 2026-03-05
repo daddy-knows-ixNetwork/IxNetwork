@@ -51,7 +51,7 @@
 #    About Topology:                                                            #
 #       Within topology both Label Switch Router(LSR) and Label Edge Router(LER)#
 #    are created. LSR is emulated in the front Device Group(DG), which consists #
-#    of both OSPF as routing protocol as well as RSVPTE-IF for Label            # 
+#    of both OSPF as routing protocol as well as RSVPTE-IF for Label            #
 #    Distribution Protocol. The chained DG act as LER, where RSVP-TE P2MP LSPs  #
 #    are configured. Unidirectional L2-L3 Traffic from Ingress to Egress is     #
 #    created.                                                                   #
@@ -251,7 +251,7 @@ ixNet setMultiAttribute $networkTopology1/simInterface:1/simInterfaceIPv4Config:
 ixNet setMultiAttribute $networkTopology1/simInterface:1/simInterfaceIPv4Config:1/ospfPseudoInterface:1 \
 	-name "OSPF\ Simulated\ Interface\ Configuration\ 1"
 
-puts "Enabling Traffic Engineering"	
+puts "Enabling Traffic Engineering"
 set TE_enabled [ixNet getAttribute $networkTopology1/simInterface:1/simInterfaceIPv4Config:1/ospfPseudoInterface:1 -enable]
 ixNet setMultiAttribute $TE_enabled \
 	-clearOverlays false
@@ -344,18 +344,18 @@ ixNet setMultiAttr $custom\
 		-start 1
 		ixNet commit
 set custom [lindex [ixNet remapIds $custom] 0]
-		
+
 set inc1 [ixNet add $custom "increment"]
 ixNet setMultiAttribute $inc1 \
 		-count 2 \
 		-value 1
 ixNet commit
 set inc1 [lindex [ixNet remapIds $inc1] 0]
-		
+
 ixNet commit
 
 puts "Editing P2MP Ingress SubLSPs counter"
-#Edit Ingress SubLSPs counter 
+#Edit Ingress SubLSPs counter
 ixNet setAttribute $rsvpteLsps1/rsvpP2mpIngressLsps -ingressP2mpSubLspRanges 5
 ixNet commit
 
@@ -525,8 +525,8 @@ set endpointSet1 [lindex [ixNet remapIds $endpointSet1] 0]
 
 ixNet setMultiAttribute $trafficItem1/tracking -trackBy \
     [list sourceDestEndpointPair0 mplsFlowDescriptor0 trackingenabled0 mplsMplsLabelValue0 ipv4DestIp0 ipv4SourceIp0]
-ixNet commit	
-	
+ixNet commit
+
 ###############################################################################
 # Step 8> Apply and start L2/L3 traffic.
 ###############################################################################

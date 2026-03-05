@@ -24,18 +24,17 @@ test
 	${vport_list} =  Get From Dictionary  ${result}  vport_list
 	${portHandles} =  Split String  ${vport_list}
 	Log Many  ${portHandles}[0]
-	
-	
-	
-	${filtered_handles_port_0} =  Get Dictionary Keys  ${result${portHandles}} 
-	
+
+
+
+	${filtered_handles_port_0} =  Get Dictionary Keys  ${result${portHandles}}
+
 	Run Keyword If  ${filtered_handles_port_0} != ['emulation_ancp_config', 'emulation_ancp_subscriber_lines_config']  FAIL  "Some ANCP keys returned are missing: EXPECTED -> emulation_ancp_config emulation_ancp_subscriber_lines_config; RETURNED -> ${filtered_handles_port_0}"  ELSE  Log  "ANCP keys returned are correct"
 
 	${filtered_handles_port_1} =  Set Variable  ${result${portHandles}['emulation_ancp_config']['handle']}
-	
+
 	Run Keyword If  '${filtered_handles_port_1}' != '::ixNet::OBJ-/vport:1/protocolStack/ethernet:\\"825aac4e-f94d-4867-9d65-de7d8ab98c69\\"/ipEndpoint:\\"77d4f1e6-05ca-4c82-b7c5-9cea2ce2aede\\"/range:\\"973e55d1-651b-490e-ba87-8aa2f7117e81\\"/ancpRange:1'  FAIL  "the ANCP config handle returned is wrong; EXPECTED ->"  ELSE  Log  "the ANCP config handle returned is correct"
-	
+
 	${filtered_handles_port_2} =  Set Variable  ${result${portHandles}['emulation_ancp_subscriber_lines_config']['handle']}
-	
+
 	Run Keyword If  '${filtered_handles_port_2}' != '::ixNet::OBJ-/globals/protocolStack/ancpGlobals:1/ancpDslProfile:\\"c23ad765-51eb-4411-a789-8de0b621a3cb\\"\' != \'::ixNet::OBJ-/globals/protocolStack/ancpGlobals:1/ancpDslProfile:"c23ad765-51eb-4411-a789-8de0b621a3cb\"'  FAIL  "the ANCP config handle returned is wrong; EXPECTED ->"  ELSE  Log  "the ANCP config handle returned is correct"
-	

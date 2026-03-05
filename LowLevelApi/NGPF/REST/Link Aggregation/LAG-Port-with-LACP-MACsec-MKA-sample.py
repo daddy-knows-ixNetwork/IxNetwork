@@ -66,7 +66,7 @@ forceTakePortOwnership = True
 
 try:
     # LogLevel: none, info, warning, request, request_response, all
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin', 
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin',
                                SessionName=None, SessionId=None, ApiKey=None,
                                ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
@@ -75,28 +75,28 @@ try:
     #  LAG configuration START
 
     ########################################################################################
-    # Add a LAG - lag1 with 4 vports & configure MKA properties 
+    # Add a LAG - lag1 with 4 vports & configure MKA properties
     ########################################################################################
-    
+
     # Add 4 vports
     lag1_portSet = ixNetwork.Vport.add().add().add().add()
     #print(vports_1)
     lag1 = ixNetwork.Lag.add(Name='Lag-1', Vports=lag1_portSet)
-    
+
     # Add Ethernet layer on LAG ProtocolStack
     lag1_ethernet = lag1.ProtocolStack.add().Ethernet.add()
 
     # Add LACP as the LAG protocol over LAG Ethernet
     lag1_lacp = lag1_ethernet.Lagportlacp.add()
-    
+
     # Configure lag1 -LACP Actor System ID, Actor System priority and Actor key
-    lag1_lacp.ActorSystemId.Single("aabbcc112233") 
+    lag1_lacp.ActorSystemId.Single("aabbcc112233")
     lag1_lacp.ActorSystemPriority.Single(100)
-    lag1_lacp.ActorKey.Single(100) 
+    lag1_lacp.ActorKey.Single(100)
 
     # Configure lag1-LACP  LACPDU periodic Interval = fast (value = 1 sec) & LACPDU Timeout = Short (value = 3 sec)
-    lag1_lacp.LacpduPeriodicTimeInterval.Single("fast") 
-    lag1_lacp.LacpduTimeout.Single("short")   
+    lag1_lacp.LacpduPeriodicTimeInterval.Single("fast")
+    lag1_lacp.LacpduTimeout.Single("short")
 
     # Add LAG L23 protocols - MACsec, MKA over LAG Ethernet
     lag1_macsec = lag1_ethernet.Macsec.add()
@@ -105,39 +105,39 @@ try:
     # Configure lag1-MKA properties
 
     # Set MKA-lag1 Rekey Mode and Rekey Behaviour
-    lag1_mka.RekeyMode = "timerBased" 
-    lag1_mka.RekeyBehaviour = "rekeyContinuous" 
+    lag1_mka.RekeyMode = "timerBased"
+    lag1_mka.RekeyBehaviour = "rekeyContinuous"
 
     #periodic rekey at every 30 sec interval
-    lag1_mka.PeriodicRekeyInterval = 30 
+    lag1_mka.PeriodicRekeyInterval = 30
 
-    # Set MKA Key derivation function = AES-CMAC-128  for all ports in lag1 
-    lag1_mka.KeyDerivationFunction.Single("aescmac128") 
-    # Set Cipher suite = GCM-AES-XPN-128 in MKA Key Server Attributes for all ports in lag1 
-    lag1_mka.CipherSuite.Single("aesxpn128") 
+    # Set MKA Key derivation function = AES-CMAC-128  for all ports in lag1
+    lag1_mka.KeyDerivationFunction.Single("aescmac128")
+    # Set Cipher suite = GCM-AES-XPN-128 in MKA Key Server Attributes for all ports in lag1
+    lag1_mka.CipherSuite.Single("aesxpn128")
 
     # Set MKA Key Server Priority = 11 for all ports in lag1 , so that these ports act as Key Server
-    lag1_mka.KeyServerPriority.Single("11") 
+    lag1_mka.KeyServerPriority.Single("11")
 
     # Set MKPDU Hello interval - 2 sec (default)
-    lag1_mka.MkaHelloTime.Single(2000) 
-    # Configure different MKA - Starting Distribute AN for all ports in lag1 
-    lag1_mka.StartingDistributedAN.Increment(start_value=0, step_value=1) 
-    
-    # Configure CAK, CKN values in MKA - PSK Chain , samme vales for all ports in lag1
-    lag1_mka.CakCache.CakName.Single("11112222") 
-    lag1_mka.CakCache.CakValue128.Single("00000000000000000000000011112222") 
+    lag1_mka.MkaHelloTime.Single(2000)
+    # Configure different MKA - Starting Distribute AN for all ports in lag1
+    lag1_mka.StartingDistributedAN.Increment(start_value=0, step_value=1)
 
-    
+    # Configure CAK, CKN values in MKA - PSK Chain , samme vales for all ports in lag1
+    lag1_mka.CakCache.CakName.Single("11112222")
+    lag1_mka.CakCache.CakValue128.Single("00000000000000000000000011112222")
+
+
     ########################################################################################
-    # Add another LAG - lag2 with 4 vports & configure MKA properties 
+    # Add another LAG - lag2 with 4 vports & configure MKA properties
     ########################################################################################
-    
+
     # Add 4 vports
     lag2_portSet = ixNetwork.Vport.add().add().add().add()
     #print(vports_1)
     lag2 = ixNetwork.Lag.add(Name='Lag-2', Vports=lag2_portSet)
-    
+
     # Add Ethernet layer on LAG ProtocolStack
     lag2_ethernet = lag2.ProtocolStack.add().Ethernet.add()
 
@@ -145,34 +145,34 @@ try:
     lag2_lacp = lag2_ethernet.Lagportlacp.add()
 
     # Configure lag2-LACP Actor System ID, Actor System priority and Actor key
-    lag2_lacp.ActorSystemId.Single("ddeeff445566") 
+    lag2_lacp.ActorSystemId.Single("ddeeff445566")
     lag2_lacp.ActorSystemPriority.Single(100)
-    lag2_lacp.ActorKey.Single(100) 
+    lag2_lacp.ActorKey.Single(100)
 
     # Configure lag2-LACP  LACPDU periodic Interval = fast (value = 1 sec) & LACPDU Timeout = Short (value = 3 sec)
-    lag2_lacp.LacpduPeriodicTimeInterval.Single("fast") 
-    lag2_lacp.LacpduTimeout.Single("short") 
+    lag2_lacp.LacpduPeriodicTimeInterval.Single("fast")
+    lag2_lacp.LacpduTimeout.Single("short")
 
     # Add LAG L23 protocols - MACsec, MKA over LAG Ethernet
     lag2_macsec = lag2_ethernet.Macsec.add()
     lag2_mka = lag2_ethernet.Mka.add()
-    
+
     # Configure lag2-MKA properties
 
-    # Set MKA Key derivation function = AES-CMAC-128  for all ports in lag1 
-    lag2_mka.KeyDerivationFunction.Single("aescmac128") 
-    # Set Cipher suite = GCM-AES-XPN-128 in MKA Key Server Attributes for all ports in lag1 
-    lag2_mka.CipherSuite.Single("aesxpn128") 
+    # Set MKA Key derivation function = AES-CMAC-128  for all ports in lag1
+    lag2_mka.KeyDerivationFunction.Single("aescmac128")
+    # Set Cipher suite = GCM-AES-XPN-128 in MKA Key Server Attributes for all ports in lag1
+    lag2_mka.CipherSuite.Single("aesxpn128")
 
     # Set MKPDU Hello interval - 2 sec (default)
-    lag2_mka.MkaHelloTime.Single(2000) 
-    # Configure different MKA - Starting Distribute AN for all ports in lag1 
-    lag2_mka.StartingDistributedAN.Increment(start_value=0, step_value=1)  
+    lag2_mka.MkaHelloTime.Single(2000)
+    # Configure different MKA - Starting Distribute AN for all ports in lag1
+    lag2_mka.StartingDistributedAN.Increment(start_value=0, step_value=1)
 
     # Configure CAK, CKN values in MKA - PSK Chain , samme vales for all ports in lag2
-    lag2_mka.CakCache.CakName.Single("11112222") 
-    lag2_mka.CakCache.CakValue128.Single("00000000000000000000000011112222") 
-    
+    lag2_mka.CakCache.CakName.Single("11112222")
+    lag2_mka.CakCache.CakValue128.Single("00000000000000000000000011112222")
+
     # LACP, MACsec, MKA is configured - LAG configuration END
 
     # Topology Configuration - START
@@ -227,17 +227,17 @@ try:
     if len(errs) > 0:
         raise Exception('configAssistant commit errors -  %s' % str(errs))
     config.AssignPorts(physicalPorts, [], vportSet, True)
- 
+
 
     ixNetwork.StartAllProtocols(Arg1='sync')
-    
+
     # Verify Statistics
     ixNetwork.info('Verify Protocol Summary Statictics\n')
     protocolSummary = session.StatViewAssistant('Protocols Summary')
     protocolSummary.CheckCondition('Sessions Not Started', protocolSummary.EQUAL, 0)
     protocolSummary.CheckCondition('Sessions Down', protocolSummary.EQUAL, 0)
-    ixNetwork.info(protocolSummary)  
-    
+    ixNetwork.info(protocolSummary)
+
     ixNetwork.info('Verify MACsec Per Port Statictics\n')
     macsecPerPort = session.StatViewAssistant('MACsec Per Port')
     macsecPerPort.CheckCondition('Bad Packet Rx', macsecPerPort.EQUAL, 0)
@@ -258,7 +258,7 @@ try:
     configElement.FrameRateDistribution.PortDistribution = 'splitRateEvenly'
     configElement.FrameSize.FixedSize = 1500
     trafficItem.Tracking.find()[0].TrackBy = ['flowGroup0']
-    
+
     trafficItem.Generate()
     ixNetwork.Traffic.Apply()
     ixNetwork.Traffic.StartStatelessTrafficBlocking()
@@ -292,12 +292,12 @@ try:
 
     time.sleep(30)
 
-    # Verify Statistics  
+    # Verify Statistics
     ixNetwork.info('Verify MACsec Per Port Statictics\n')
     macsecPerPort = session.StatViewAssistant('MACsec Per Port')
     macsecPerPort.CheckCondition('Bad Packet Rx', macsecPerPort.EQUAL, 0)
     macsecPerPort.CheckCondition('Invalid ICV Discarded', macsecPerPort.EQUAL, 0)
-    ixNetwork.info(macsecPerPort) 
+    ixNetwork.info(macsecPerPort)
 
     ixNetwork.Traffic.StopStatelessTrafficBlocking()
     ixNetwork.StopAllProtocols(Arg1='sync')
@@ -306,7 +306,7 @@ try:
     if debugMode == False:
         for vport in ixNetwork.Vport.find():
             vport.ReleasePort()
-            
+
         # For linux and connection_manager only
         if session.TestPlatform.Platform != 'windows':
             session.Session.remove()

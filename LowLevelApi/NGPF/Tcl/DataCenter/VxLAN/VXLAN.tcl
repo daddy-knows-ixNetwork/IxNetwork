@@ -46,7 +46,7 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#    This sample configures 10 VXLAN sessions on each of the two ports         # 
+#    This sample configures 10 VXLAN sessions on each of the two ports         #
 #                                                                              #
 ################################################################################
 
@@ -196,7 +196,7 @@ ixNet setMultiAttribute [ixNet getAttribute $ipv4_4 -resolveGateway]/singleValue
 ixNet commit
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 set vPorts [ixNet getList [ixNet getRoot] vport]
 puts "Assigning ports to $vPorts"

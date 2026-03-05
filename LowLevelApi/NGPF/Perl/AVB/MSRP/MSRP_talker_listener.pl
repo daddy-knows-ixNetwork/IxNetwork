@@ -113,7 +113,7 @@
 
 #   13. Stop L2-L3 traffic.                                                    #
 
-#   15. Stop all protocols.                                                    #                                                                                          
+#   15. Stop all protocols.                                                    #
 
 
 ################################################################################
@@ -122,7 +122,7 @@
 
 ################################################################################
 
-# Please ensure that PERL5LIB environment variable is set properly so that 
+# Please ensure that PERL5LIB environment variable is set properly so that
 
 # IxNetwork.pm module is available. IxNetwork.pm is generally available in
 
@@ -158,7 +158,7 @@ sub assignPorts {
 
 	my $vport2   = $my_resource[8];
 
-	
+
 
 	my $root = $ixNet->getRoot();
 
@@ -170,7 +170,7 @@ sub assignPorts {
 
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
 
-	
+
 
 	my $chassisObj2 = '';
 
@@ -190,7 +190,7 @@ sub assignPorts {
 
 	}
 
-	
+
 
 	my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
 
@@ -208,7 +208,7 @@ sub assignPorts {
 
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
 
-		
+
 
     $ixNet->commit();
 
@@ -230,7 +230,7 @@ my $ixTclPort   = '7777';
 
 my @ports       = (('10.205.28.65', '2', '1'), ('10.205.28.65', '2', '2'));
 
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 
 my $ixNet = new IxNetwork();
 
@@ -358,7 +358,7 @@ print("Configuring the mac addresses\n");
 
 $ixNet->setMultiAttribute($ixNet->getAttribute($mac1, '-mac').'/counter',
 
-    '-direction', 'increment',                        
+    '-direction', 'increment',
 
     '-start', '22:22:22:22:22:22',
 
@@ -368,7 +368,7 @@ $ixNet->setMultiAttribute($ixNet->getAttribute($mac1, '-mac').'/counter',
 
 $ixNet->setMultiAttribute($ixNet->getAttribute($mac2, '-mac').'/counter',
 
-    '-direction', 'increment',                        
+    '-direction', 'increment',
 
     '-start', '44:44:44:44:44:44',
 
@@ -488,7 +488,7 @@ foreach $statValueList (@rowvals) {
 
     foreach $statVal (@$statValueList) {
 
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 
 		$index = 0;
 
@@ -500,7 +500,7 @@ foreach $statValueList (@rowvals) {
 
         }
 
-    }    
+    }
 
 }
 
@@ -752,7 +752,7 @@ sleep(5);
 
 ################################################################################
 
-# 7. Configure L2-L3 traffic 
+# 7. Configure L2-L3 traffic
 
 ################################################################################
 
@@ -790,7 +790,7 @@ my $mcastReceiver = [[$listener1.'/subscribedStreams', '0', '0', '0'],
 
     [$listener1.'/subscribedStreams', '0', '1', '1']];
 
-          
+
 
 $ixNet->setMultiAttribute($endpointSet1,
 
@@ -870,7 +870,7 @@ foreach $statValueList (@rowvals) {
 
     foreach $statVal (@$statValueList) {
 
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 
 		$index = 0;
 
@@ -882,7 +882,7 @@ foreach $statValueList (@rowvals) {
 
         }
 
-    }    
+    }
 
 }
 

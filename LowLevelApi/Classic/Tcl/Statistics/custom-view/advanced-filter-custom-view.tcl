@@ -48,7 +48,7 @@
 #                                                                              #
 # Description:                                                                 #
 #    This script intends to demonstrate how to create a custom view with	   #
-#	 advanced filtering														   #	
+#	 advanced filtering														   #
 # Module:                                                                      #
 #    The sample was tested on an XMVDC16 module.                               #
 ################################################################################
@@ -88,9 +88,9 @@ after 5000
 # Set the custom view name, protocol used, grouping level, filter expression, filter sorting expression and what stats to be added in the custom view
 set viewName "DHCPv4Server-PerLease"
 set protocol "DHCPv4 Server"
-set grLevel "Per Lease" 
+set grLevel "Per Lease"
 set filExpr {Equals([Lease#], '2') Or Equals([Lease#], '4') Or Equals([Lease#], '6') Or Equals([Lease#], '8')}
-set sortExpr {[Lease#] = desc}  
+set sortExpr {[Lease#] = desc}
 set cvStats "all"
 
 puts "Creating advanced filtering custom view $viewName"
@@ -105,7 +105,7 @@ set mv [lindex [ixNet remapIds $mv] 0]
 puts "Add advanced filtering filter in $viewName"
 set trackingFilter [ixNet add $mv advancedCVFilters]
 
-puts "Verify protocol $protocol is available"		
+puts "Verify protocol $protocol is available"
 set fil [ixNet getL $mv layer23NextGenProtocolFilter]
 set afil [ixNet getL $mv availableProtocolFilter]
 # ixNet commit
@@ -115,7 +115,7 @@ if {$index == -1} {
 	error "Cannot find $protocol in the available protocol filters list"
 }
 
-puts "Protocol $protocol is available, selecting it for the filter"	
+puts "Protocol $protocol is available, selecting it for the filter"
 ixNet setA $trackingFilter -protocol $protocol
 ixNet commit
 
@@ -126,9 +126,9 @@ set avGrLev [ixNet getA $trackingFilter -availableGroupingOptions]
 set index [lsearch -regexp $avGrLev "$grLevel"]
 if {$index == -1} {
 	error "Cannot find $grLevel in the available grouping level list"
-}	
+}
 
-puts "Grouping level $grLevel is available, selecting it for the filter"	
+puts "Grouping level $grLevel is available, selecting it for the filter"
 ixNet setA $trackingFilter -grouping $grLevel
 ixNet commit
 
@@ -147,17 +147,17 @@ set statsList [ixNet getList $mv statistic]
 if {$cvStats == "all"} {
 	foreach stat $statsList {
 		ixNet setAttr $stat -enabled true
-	}	
+	}
 } else {
 	foreach stat $cvStats {
-		set index [lsearch -regexp $statsList $stat]	
+		set index [lsearch -regexp $statsList $stat]
 		if {$index== -1} {
 			error "Cannot find $stat statistic !"
-		}	
+		}
 		ixNet setAttr [lindex $statsList $index] -enabled true
 	}
-}	
-ixNet commit	
+}
+ixNet commit
 
 puts "Get the $viewName view going and start retrieveing stats"
 ixNet setAttribute $mv -enabled true

@@ -53,11 +53,11 @@
 #           6.getAssignedLabelCount
 #           7.getAssignedLabelInfo
 #           8.getReceivedLabelCount
-#           9.getReceivedLabelInfo 
+#           9.getReceivedLabelInfo
 #           10.matchAttributeValue
 #           11.setAndCheckAttributeValue
 #           12.verifyCapturedPackets
-# 
+#
 #Topology   :B2B
 #################################################################################
 
@@ -79,7 +79,7 @@ proc log {str} {
 # ARGUMENT  :
 #              1. neighborPair on a particular port
 #              2. List of the learnt info to be checked
-# DESCRIPTION: Check the assigned label info on a particular neighborPair 
+# DESCRIPTION: Check the assigned label info on a particular neighborPair
 #              according to value that is supplied
 # RETURN     : Returns 0 if success else return 1
 ################################################################################
@@ -109,12 +109,12 @@ proc getAssignedLabelInfo {neighborpair CheckLearnedLabelList} {
 
     # Get Assigned Label Learned Info List
     set receivedLearnedInfoList [ixNet getList $neighborpair assignedLabel]
-     
+
     if {[llength $receivedLearnedInfoList] == 0} {
         log "No Receive Label learnt info present ... "
         return $isError
     }
-    
+
     # Loop through expected list & search in learntinfo list
     set i 0
     foreach labelInfo $receivedLearnedInfoList {
@@ -134,7 +134,7 @@ proc getAssignedLabelInfo {neighborpair CheckLearnedLabelList} {
                 incr isFound
             }
         }
-        
+
         if {($isFound != 0) && ($mismatch == 0)} {
             log "Among all $isFound info are present in Assigned \
                  Label Learnt Info List"
@@ -165,7 +165,7 @@ proc checkAllRSVPStats_DefaultView { portdata stat } {
     set card1 [lindex $portData 1]
     set port1 [lindex $portData 2]
     set statView [concat ::ixNet::OBJ-/statistics/statViewBrowser:"RSVP Aggregated Statistics"]
-    
+
     if {[ixNet getAttribute $statView -enabled] == "false"} {
         ixNet setAttribute $statView -enabled true
         ixNet commit
@@ -239,4 +239,4 @@ proc matchAttributeValue {object attr expectedVal} {
     log "\t -$attr : $val (expected $expectedVal) ---> Match"
     set noMatch 0
     return $noMatch
-}    
+}

@@ -69,7 +69,7 @@
 #       when protocol is not started.                                          #
 #   13. Start protocol.                                                        #
 #   14. Retreive protocol statistics                                           #
-#   15. Stop all protocols.                                                    #                
+#   15. Stop all protocols.                                                    #
 # Ixia Softwares:                                                           #
 #    IxOS      6.80 EB (6.80.1101.95)                                          #
 #    IxNetwork 7.40 EB (7.40.0.336)                                            #
@@ -95,7 +95,7 @@ ixNet exec newConfig
 
 ################################################################################
 # protocol configuration section
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -183,7 +183,7 @@ ixNet setMultiAttr [ixNet getAttr $ip2 -resolveGateway]/singleValue -value true
 ixNet commit
 ################################################################################
 # adding IGMP over ipv4 stack
-################################################################################ 
+################################################################################
 puts "Adding IGMP over IP4 stack"
 ixNet add $ip1 igmpHost
 ixNet add $ip2 igmpQuerier
@@ -325,7 +325,7 @@ ixNet setMultiAttribute $endpointSet1\
 	-ngpfFilters           [list]\
 	-trafficGroups         [list]\
 	-sources               $source\
-	-destinations          $destination\	
+	-destinations          $destination\
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\
@@ -391,7 +391,7 @@ ixNet exec stop [ixNet getRoot]/traffic
 after 5000
 
 ################################################################################
-# stop protocol 
+# stop protocol
 ################################################################################
 puts "Stopping protocol"
 ixNet exec stopAllProtocols
@@ -410,7 +410,7 @@ ixNet commit
 # change number of source address count
 #(to be changed only when the protocol is not started)
 ################################################################################
-puts "Changing number of source address count" 
+puts "Changing number of source address count"
 set ipv4sourcelist1 [ixNet getList $ipv4grouplist1 igmpUcastIPv4SourceList]
 set ucastSrcAddrCnt [ixNet getAttr $ipv4sourcelist1 -ucastSrcAddrCnt]
 ixNet setAttr $ucastSrcAddrCnt/singleValue -value 2
@@ -428,7 +428,7 @@ ixNet commit
 ixNet setMultiAttr [ixNet add $gQResponseMode singleValue]\
 	-value false
 ixNet commit
-		
+
 ################################################################################
 # change group specific query responsemode
 ################################################################################
@@ -507,7 +507,7 @@ ixNet setMultiAttr $enableProxyReporting\
 ixNet setMultiAttr [ixNet add $enableProxyReporting singleValue]\
         -value true
 	ixNet commit
-	
+
 ################################################################################
 # change number of source ranges
 #(to be changed only when the protocol is not started)
@@ -551,4 +551,3 @@ puts "***************************************************"
 puts "Stopping protocol"
 ixNet exec stopAllProtocols
 puts "!!! Test Script Ends !!!"
-

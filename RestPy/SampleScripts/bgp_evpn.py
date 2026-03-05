@@ -1,8 +1,8 @@
 """
 bgpevpn.py:
-   It will create 2 BGP EVPN-VXLAN topologies, each having OSPFv2         
-   configured in connected Device Group .BGP EVPN VXLAN configured in chained  
-   device group along with Mac pools connected behind the chained             
+   It will create 2 BGP EVPN-VXLAN topologies, each having OSPFv2
+   configured in connected Device Group .BGP EVPN VXLAN configured in chained
+   device group along with Mac pools connected behind the chained
    Device Group.
 
    Tested with two back-2-back IxNetwork ports
@@ -11,8 +11,8 @@ bgpevpn.py:
    - Assign ports
    - Physical topology:                            Port1 ----- Port2
    - Configure two Topology Groups
-   - We will add an OSPF and LDP Router, with a Network Topology, dg chained to it 
-     with BGP over loopback. Further add EVPN VPWS EVI over BGP and add MAC 
+   - We will add an OSPF and LDP Router, with a Network Topology, dg chained to it
+     with BGP over loopback. Further add EVPN VPWS EVI over BGP and add MAC
      cloud associated with the IP Addresses.
    - Start all protocols
    - Verify all protocols
@@ -59,7 +59,7 @@ debugMode = False
 
 try:
     # LogLevel: none, info, warning, request, request_response, all
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=11219, UserName='admin', Password='admin', 
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=11219, UserName='admin', Password='admin',
                                SessionName=None, SessionId=None, ApiKey=None,
                                ClearConfig=True, LogLevel="info", LogFilename='restpy.log')
 
@@ -72,7 +72,7 @@ try:
         vport[portName] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name=portName)
 
     portMap.Connect(forceTakePortOwnership)
-    
+
     ixNetwork.info("Creating Topology 1")
     topology1 = ixNetwork.Topology.add(Name="EVPN Topology 1", Ports=vport['Port_1'])
 
@@ -116,7 +116,7 @@ try:
     bgp1.BgpIPv4EvpnEvi.add()
 
     ixNetwork.info("Configuring ESI value")
-    
+
     ethernetSegment1 = bgp1.BgpEthernetSegmentV4
     ethernetSegment1.EsiValue.Single("1")
 
@@ -126,7 +126,7 @@ try:
 
     ixNetwork.info("Configuring Ipv4 Address assicayed with CMAC addresses")
     ipv4PrefixPools1 = mac3.Ipv4PrefixPools.add()
-    
+
     mac3.Mac.Single("A0:11:01:00:00:03")
 
     ixNetwork.info("Changing default values of MAC Labels")
@@ -137,13 +137,13 @@ try:
     ipv4PrefixPools1.NetworkAddress.Single("11.11.11.1")
 
     ixNetwork.info("Creating Topology 1")
-    topology2 = ixNetwork.Topology.add(Name="EVPN Topology 2", Ports=vport['Port_2'])  
+    topology2 = ixNetwork.Topology.add(Name="EVPN Topology 2", Ports=vport['Port_2'])
 
     ixNetwork.info("Adding DeviceGroup 1")
-    dg2 = topology2.DeviceGroup.add(Name='LDP Router 2', Multiplier=1)  
+    dg2 = topology2.DeviceGroup.add(Name='LDP Router 2', Multiplier=1)
 
     ixNetwork.info("Adding Ethernet/AC Endpoints")
-    mac2 = dg2.Ethernet.add()   
+    mac2 = dg2.Ethernet.add()
     mac2.Mac.Single("44:01:01:01:01:01")
 
     ixNetwork.info("Adding IPv4 on Ethernet")
@@ -156,10 +156,10 @@ try:
 
     ixNetwork.info("Adding LDP Basic Router on Ipv4")
     ldp2 = ip2.LdpBasicRouter.add()
-    
+
     ixNetwork.info("Adding Network Group begind Device Group 1")
     networkGroup2 = dg2.NetworkGroup.add(Name="Network topology 2")
-    netTopo2= networkGroup2.NetworkTopology.add()    
+    netTopo2= networkGroup2.NetworkTopology.add()
     chainedDg2 = networkGroup2.DeviceGroup.add(Name="Edge Router 2", Multiplier=1)
 
     ixNetwork.info("Add IPv4 loopback for EVPN VXLAN Leaf Ranges")
@@ -187,9 +187,9 @@ try:
     networkGroup2 = chainedDg2.NetworkGroup.add(Name="MAC_Pool_2", Multiplier=1)
     mac4 = networkGroup2.MacPools.add()
 
-    ixNetwork.info("Configuring Ipv4 Adresses associated with CMAC addresses")   
-    ipv4PrefixPools2 = mac4.Ipv4PrefixPools.add() 
-    
+    ixNetwork.info("Configuring Ipv4 Adresses associated with CMAC addresses")
+    ipv4PrefixPools2 = mac4.Ipv4PrefixPools.add()
+
     mac4.Mac.Single("A0:12:01:00:00:03")
 
     ixNetwork.info("Changing default values of MAC Labels")
@@ -224,7 +224,7 @@ try:
             for word in values:
                 print(word)
 
-    
+
     ixNetwork.info("Stopping Protocols")
     ixNetwork.StopAllProtocols()
 
@@ -235,22 +235,3 @@ except Exception as errMsg:
     print(traceback.print_exception())
     if 'session' in locals():
         session.Session.remove()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

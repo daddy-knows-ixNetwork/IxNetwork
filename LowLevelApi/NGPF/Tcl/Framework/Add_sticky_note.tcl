@@ -113,19 +113,19 @@ set mac2 [ixNet getList $t2dev1 ethernet]
 puts "Adding note to topology 1"
 ixNet setAttribute $topo1 -note "Add a note to topology 1"
 ixNet commit
- 
-puts "Adding note to topology 1"   
+
+puts "Adding note to topology 1"
 ixNet setAttribute $topo2 -note "Add a note to topology 2"
 ixNet commit
 
 set note1 [ixNet getAttribute $topo1 -note]
 set note2 [ixNet getAttribute $topo2 -note]
-    
+
 if {$note1 == "Add a note to topology 1"} {
 	puts "Note added to topology 1 succesfully"
-	
+
 }
-        
+
 if {$note2 == "Add a note to topology 2"} {
         puts "Note added to topology 2 succesfully"
 }
@@ -139,4 +139,3 @@ puts "For more info please refer to the user manual or the built-in help"
 puts " "
 puts "ixNet help ::ixNet::OBJ-/topology"
 puts "[ixNet help ::ixNet::OBJ-/topology]"
-

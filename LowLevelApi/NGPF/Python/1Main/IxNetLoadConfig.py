@@ -66,7 +66,7 @@ if len(vPortList) != len(ixTopo.portList):
     sys.exit()
 else:
     print('\nvPortList is equal length with portList', '\n')
-    
+
 
 trafficItemList = ixNet.getList(getRoot+'/traffic', 'trafficItem')
 for x in trafficItemList:

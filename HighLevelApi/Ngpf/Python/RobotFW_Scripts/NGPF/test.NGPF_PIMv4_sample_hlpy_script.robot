@@ -25,9 +25,9 @@ test
 	Run Keyword If  '${connect_status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${vport_list} =  Get From Dictionary  ${result}  vport_list
 	@{portHandles} =  Split String  ${vport_list}
-	
+
 ################################################################################
-# Configure Topology, Device Group                                             # 
+# Configure Topology, Device Group                                             #
 ################################################################################
 # Creating a topology on first port
 	Log To Console  Adding topology 1 on port 1
@@ -35,64 +35,64 @@ test
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${topology_1_handle} =  Get From Dictionary  ${result}  topology_handle
-	
-# Creating a device group in topology 
+
+# Creating a device group in topology
 	Log To Console  Creating device group 1 in topology 1
 	${result} =  Topology Config  topology_handle=${topology_1_handle}  device_group_name="Device Group 1"  device_group_multiplier=1  device_group_enabled=1
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${deviceGroup_1_handle} =  Get From Dictionary  ${result}  device_group_handle
-	
+
 # Creating a topology on second port
 	Log To Console  Adding topology 2 on port 2
 	${result} =  Topology Config  topology_name="PIMv4 Topology 2"  port_handle=@{portHandles}[1]
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${topology_2_handle} =  Get From Dictionary  ${result}  topology_handle
-	
-# Creating a device group in topology 
+
+# Creating a device group in topology
 	Log To Console  Creating device group 2 in topology 2
 	${result} =  Topology Config  topology_handle=${topology_2_handle}  device_group_name="Device Group 2"  device_group_multiplier=1  device_group_enabled=1
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${deviceGroup_2_handle} =  Get From Dictionary  ${result}  device_group_handle
-	
+
 ################################################################################
 #  Configure protocol interfaces                                               #
 ################################################################################
-	
-# Creating ethernet stack for the first Device Group 
+
+# Creating ethernet stack for the first Device Group
 	Log To Console  Creating ethernet stack for the first Device Group
 	${result} =  Interface Config  protocol_name="Ethernet 1"  protocol_handle=${deviceGroup_1_handle}  mtu=1500  src_mac_addr=18.03.73.c7.6c.b1  src_mac_addr_step=00.00.00.00.00.00
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${ethernet_1_handle} =  Get From Dictionary  ${result}  ethernet_handle
-	
+
 # Creating ethernet stack for the second Device Group
 	Log To Console  Creating ethernet for the second Device Group
 	${result} =  Interface Config  protocol_name="Ethernet 2"  protocol_handle=${deviceGroup_2_handle}  mtu=1500  src_mac_addr=18.03.73.c7.6c.01  src_mac_addr_step=00.00.00.00.00.00
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${ethernet_2_handle} =  Get From Dictionary  ${result}  ethernet_handle
-	
-# Creating IPv4 Stack on top of Ethernet Stack for the first Device Group     
+
+# Creating IPv4 Stack on top of Ethernet Stack for the first Device Group
 	Log To Console  Creating IPv4 Stack on top of Ethernet Stack for the first Device Group
 	${result} =  Interface Config  protocol_name="IPv4 1"  protocol_handle=${ethernet_1_handle}  ipv4_resolve_gateway=1  ipv4_manual_gateway_mac=00.00.00.00.00.01  ipv4_manual_gateway_mac_step=00.00.00.00.00.00  gateway=20.20.20.1  gateway=0.0.0.0  intf_ip_addr=20.20.20.2  intf_ip_addr_step=0.0.0.0  netmask=255.255.255.0
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${ipv4_1_handle} =  Get From Dictionary  ${result}  ipv4_handle
-	
-# Creating IPv4 Stack on top of Ethernet Stack for the second Device Group 
+
+# Creating IPv4 Stack on top of Ethernet Stack for the second Device Group
 	Log To Console  Creating IPv4 2 stack on ethernet 2 stack for the second Device Group
 	${result} =  Interface Config  protocol_name="IPv4 2"  protocol_handle=${ethernet_2_handle}  ipv4_resolve_gateway=1  ipv4_manual_gateway_mac=00.00.00.00.00.01  ipv4_manual_gateway_mac_step=00.00.00.00.00.00  gateway=20.20.20.2  gateway=0.0.0.0  intf_ip_addr=20.20.20.1  intf_ip_addr_step=0.0.0.0  netmask=255.255.255.0
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${ipv4_2_handle} =  Get From Dictionary  ${result}  ipv4_handle
-	
+
 ################################################################################
-# Other protocol configurations                                                # 
+# Other protocol configurations                                                #
 ################################################################################
-	
+
 # This will Create PIMv4 Stack on top of IPv4 Stack of Topology1
 
 # Creating PIMv4 Stack on top of IPv4 1 stack
@@ -101,15 +101,15 @@ test
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${pimV4Interface_1_handle} =  Get From Dictionary  ${result}  pim_v4_interface_handle
-	
-	
+
+
 #Creating Multicast Group address
 	Log To Console  Creating Multicast Group address
 	${result} =  Emulation Multicast Group Config  mode=create  ip_addr_start=226.0.0.0  num_groups=1  active=1
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${pimV4JoinPruneList_1_handle_group} =  Get From Dictionary  ${result}  multicast_group_handle
-	
+
 #Creating Multicast Source address
 	Log To Console  Creating Multicast Source address
 	${result} =  Emulation Multicast Source Config  mode=create  ip_addr_start=0.0.0.1  num_sources=1
@@ -123,29 +123,29 @@ test
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${pimV4JoinPruneList_1_handle} =  Get From Dictionary  ${result}  pim_v4_join_prune_handle
-	
+
 #Creating Multicast Group address
 	Log To Console  Creating Multicast Group address
 	${result} =  Emulation Multicast Group Config  mode=create  ip_addr_start=225.0.0.0  num_groups=1  active=1
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${pimV4SourcesList_1_handle_group} =  Get From Dictionary  ${result}  multicast_group_handle
-	
+
 #Creating Multicast Source address
 	Log To Console  Creating Multicast Source address
 	${result} =  Emulation Multicast Source Config  mode=create  ip_addr_start=0.0.0.1  num_sources=1  active=1
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${pimV4SourcesList_1_handle_source} =  Get From Dictionary  ${result}  multicast_source_handle
-	
+
 #Creating PIM Source List
 	Log To Console  Creating PIM Source List
 	${result} =  Emulation Pim Group Config  mode=create  session_handle=${pimV4Interface_1_handle}  group_pool_handle=${pimV4SourcesList_1_handle_group}  source_pool_handle=${pimV4SourcesList_1_handle_source}  rp_ip_addr=0.0.0.0  group_pool_mode=register  register_tx_iteration_gap=30000  register_udp_destination_port=3000  register_udp_source_port=3000  switch_over_interval=0  send_null_register=0  discard_sg_join_states=true  multicast_data_length=64  supression_time=60  register_probe_time=5
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${pimV4SourcesList_1_handle} =  Get From Dictionary  ${result}  pim_v4_source_handle
-	
-#Creating Group Address for Candidate RP 
+
+#Creating Group Address for Candidate RP
 
 	Log To Console  Creating Group Address for Candidate RP
 	${result} =  Emulation Multicast Group Config  mode=create  ip_addr_start=225.0.0.0  num_groups=1  active=1
@@ -180,50 +180,50 @@ test
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${pimV4Interface_2_handle} =  Get From Dictionary  ${result}  pim_v4_interface_handle
-	
+
 #Creating Multicast Group address
 	Log To Console  Creating Multicast Group address
 	${result} =  Emulation Multicast Group Config  mode=create  ip_addr_start=226.0.0.0  num_groups=1  active=1
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${pimV4JoinPruneList_5_handle_group} =  Get From Dictionary  ${result}  multicast_group_handle
-	
+
 #Creating Multicast Source address
 	Log To Console  Creating Multicast Source address
 	${result} =  Emulation Multicast Source Config  mode=create  ip_addr_start=0.0.0.1  num_sources=1
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${pimV4JoinPruneList_5_handle_source} =  Get From Dictionary  ${result}  multicast_source_handle
-	
+
 #Creating PIM Join Prune List
 	Log To Console  Creating PIM Join Prune List
 	${result} =  Emulation Pim Group Config  mode=create  session_handle=${pimV4Interface_2_handle}  group_pool_handle=${pimV4JoinPruneList_5_handle_group}  source_pool_handle=${pimV4JoinPruneList_5_handle_source}  rp_ip_addr=60.60.60.1  group_pool_mode=send  join_prune_aggregation_factor=1  flap_interval=60  register_stop_trigger_count=10  source_group_mapping=fully_meshed  switch_over_interval=5  group_range_type=startogroup  enable_flap_info=false  prune_source_address=0.0.0.0  prune_source_mask_width=32  prune_source_address_count=0  join_prune_group_mask_width=32  join_prune_source_mask_width=32
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${pimV4JoinPruneList_2_handle} =  Get From Dictionary  ${result}  pim_v4_join_prune_handle
-	
-#Creating Group address for Join-Prune list 
+
+#Creating Group address for Join-Prune list
 	Log To Console  Creating Group address for Join-Prune list
 	${result} =  Emulation Multicast Group Config  mode=create  ip_addr_start=225.0.0.0  num_groups=1
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${pimV4SourcesList_5_handle_group} =  Get From Dictionary  ${result}  multicast_group_handle
-	
-#Creating Source address for Join-Prune list 
+
+#Creating Source address for Join-Prune list
 	Log To Console  Creating Source address for Join-Prune list
 	${result} =  Emulation Multicast Source Config  mode=create  ip_addr_start=0.0.0.1  num_sources=1  active=1
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${pimV4SourcesList_5_handle_source} =  Get From Dictionary  ${result}  multicast_source_handle
-	
+
 #Creating PIM Source List
 	Log To Console  Creating PIM Source List
 	${result} =  Emulation Pim Group Config  mode=create  session_handle=${pimV4Interface_2_handle}  group_pool_handle=${pimV4SourcesList_5_handle_group}  source_pool_handle=${pimV4SourcesList_5_handle_source}  rp_ip_addr=0.0.0.0  group_pool_mode=register  register_tx_iteration_gap=30000  register_udp_destination_port=3000  register_udp_source_port=3000  switch_over_interval=0  send_null_register=0  discard_sg_join_states=true  multicast_data_length=64  supression_time=60  register_probe_time=5
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${pimV4SourcesList_5_handle} =  Get From Dictionary  ${result}  pim_v4_source_handle
-	
-#Creating Group Address for Candidate RP 
+
+#Creating Group Address for Candidate RP
 
 	Log To Console  Creating Group Address for Candidate RP
 	${result} =  Emulation Multicast Group Config  mode=create  ip_addr_start=225.0.0.0  num_groups=1  active=1
@@ -251,7 +251,7 @@ test
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${networkGroup_2_handle} =  Get From Dictionary  ${result}  network_group_handle
 	${ipv4PrefixPools_2_handle} =  Get From Dictionary  ${result}  ipv4_prefix_pools_handle
-	
+
 	Log To Console  Waiting 5 seconds before starting protocol(s) ...
 	Sleep  5s
 ############################################################################
@@ -261,97 +261,97 @@ test
 	${result} =  Emulation Pim Control  mode=start  handle=${pimV4Interface_1_handle}
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
+
 	Log To Console  Starting PIM protocol ...
 	${result} =  Emulation Pim Control  mode=start  handle=${pimV4Interface_2_handle}
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
+
 	Log To Console  Starting all protocol(s) ...
 	${result} =  Test Control  action=start_all_protocols
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
+
 	Log To Console  Waiting for 30 seconds
 	Sleep  30s
-	
+
 ############################################################################
 # Retrieve protocol statistics                                             #
 ############################################################################
-	
+
 	Log To Console  Fetching pimv4 aggregated statistics
 	${result} =  Emulation Pim Info  handle=${pimV4Interface_2_handle}  mode=aggregate
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	Log  ${result}
-	
-	
+
+
 ############################################################################
 # Retrieve Learned Info                                                    #
 ############################################################################
-	
+
 	Log To Console  Fetching pim learned info
 	${result} =  Emulation Pim Info  handle=${pimV4Interface_1_handle}  mode=learned_crp
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	Log  ${result}
-	
+
 
 ############################################################################
 # Modifying the GroupRange Type from *G to SG and Enabling Bootstrap       #
 ############################################################################
-	
+
 #Modifying the GroupRange Type from *G to SG for Topology1
 	Log To Console  "Modifying the GroupRange Type from *G to SG for Topology1"
 	${result} =  Emulation Pim Group Config  handle=${pimV4JoinPruneList_1_handle}  mode=modify  group_range_type=sourcetogroup
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
+
 #Modifying the GroupRange Type from *G to SG for Topology2
 	Log To Console  Modifying the GroupRange Type from *G to SG for Topology2
 	${result} =  Emulation Pim Group Config  handle=${pimV4JoinPruneList_2_handle}  mode=modify  group_range_type=sourcetogroup
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
-#Enabling Bootstrap for Topology1   
+
+#Enabling Bootstrap for Topology1
 	Log To Console  Enabling Bootstrap for Topology1
 	${result} =  Emulation Pim Config  handle=${pimV4Interface_1_handle}  mode=modify  ip_version=4  bootstrap_enable=1
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
+
 #Enabling Bootstrap and Modifying Priority for Topology2
 	Log To Console  Enabling Bootstrap and Modifying Priority for Topology2
 	${result} =  Emulation Pim Config  handle=${pimV4Interface_2_handle}  mode=modify  ip_version=4  bootstrap_enable=1  bootstrap_priority=74
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
+
 #Applying changes on the fly
 	Log To Console  Applying changes on the fly
 	${result} =  Test Control  handle=${pimV4Interface_1_handle}  action=apply_on_the_fly_changes
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	Sleep  5s
-	
+
 	Log To Console  Applying changes on the fly
 	${result} =  Test Control  handle=${pimV4Interface_2_handle}  action=apply_on_the_fly_changes
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	Sleep  5s
-	
+
 	Log  Waiting for 20 seconds
 	Sleep  20s
-	
+
 ############################################################################
 # Retrieve protocol learned info again after RangeType modification        #
 ############################################################################
-	
+
 	Log To Console  Fetching pim learned info
 	${result} =  Emulation Pim Info  handle=${pimV4Interface_1_handle}  mode=learned_crp
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	Log  ${result}
-	
-############################################################################ 
+
+############################################################################
 # Configure L2-L3 traffic                                                  #
 # 1. Endpoints : Source->IPv4, Destination->Multicast group                #
 # 2. Type      : Multicast IPv4 traffic                                    #
@@ -360,51 +360,50 @@ test
 # 5. Frame Size: 512 bytes                                                 #
 # 6. Tracking  : IPv4 Destination Address                                  #
 ############################################################################
-	
+
 	Log To Console  Configuring L2-L3 traffic
 	${result} =  Traffic Config  mode=create  traffic_generator=ixnetwork_540  endpointset_count=1  emulation_src_handle=${ipv4PrefixPools_1_handle}  emulation_dst_handle=${ipv4PrefixPools_2_handle}  name=Traffic_Item_1  circuit_endpoint_type=ipv4  transmit_distribution=ipv4DestIp0  rate_pps=1000  frame_size=512  track_by=trackingenabled0 ipv4DestIp0
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
+
 ############################################################################
 #  Start L2-L3 traffic configured earlier                                  #
 ############################################################################
-	
+
 	Log To Console  Running Traffic...
 	${result} =  Traffic Control  action=run  traffic_generator=ixnetwork_540  type=l23
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
+
 	Log  Let the traffic run for 20 seconds ...
 	Sleep  20s
 
 ############################################################################
 # Retrieve L2-L3 traffic stats                                             #
 ############################################################################
-	
+
 	Log To Console  Retrieving L2-L3 traffic stats
 	${result} =  Traffic Stats  mode=all  traffic_generator=ixnetwork_540  measure_mode=mixed
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	Log  ${result}
-	
+
 ############################################################################
 # Stop L2-L3 traffic started earlier                                       #
 ############################################################################
-	
+
 	Log To Console  Stopping Traffic...
 	${result} =  Traffic Control  action=stop  traffic_generator=ixnetwork_540  type=l23
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	Sleep  5s
-	
+
 ############################################################################
 # Stop all protocols                                                       #
 ############################################################################
-	
+
 	Log To Console  Stopping all protocol(s) ...
 	${result} =  Test Control  action=stop_all_protocols
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	Log  Sleep !!! Test Script Ends !!!
-	

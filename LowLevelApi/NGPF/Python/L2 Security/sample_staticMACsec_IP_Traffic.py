@@ -43,7 +43,7 @@
 ################################################################################
 
 ################################################################################
-# Description: 
+# Description:
 # 1. Configuring macsec Hardware Based IP Data Traffic.
 # 2. Assign ports
 # 3. Start all protocols
@@ -132,7 +132,7 @@ ixNet.commit()
 ethernet1 = ixNet.remapIds(ethernet1)[0]
 macMv = ixNet.getAttribute(ethernet1, '-mac')
 ixNet.add(macMv, 'counter')
-ixNet.setMultiAttribute(macMv + '/counter',  
+ixNet.setMultiAttribute(macMv + '/counter',
              '-direction', 'increment',
              '-start'    , '00:11:01:00:00:01',
              '-step'     , '00:00:00:00:00:01')
@@ -207,7 +207,7 @@ ixNet.commit()
 ethernet2 = ixNet.remapIds(ethernet2)[0]
 macMv = ixNet.getAttribute(ethernet2, '-mac')
 ixNet.add(macMv, 'counter')
-ixNet.setMultiAttribute(macMv + '/counter',  
+ixNet.setMultiAttribute(macMv + '/counter',
              '-direction', 'increment',
              '-start'    , '00:12:01:00:00:01',
              '-step'     , '00:00:00:00:00:01')
@@ -387,14 +387,14 @@ for txStat, rxStat in zip(txFrames, rxFrames):
         raise TestFailedError('Fail the test')
     else:
         print ("No loss found: Rx Frames (%s) = Tx Frames (%s)" % (txStat, rxStat))
-		
+
 ##############################################################################
 # Stop traffic
 ################################################################################
 ixNet.execute('stop', r + '/traffic')
 print ("Sleep 10sec to send all traffic")
 time.sleep(10)
-		
+
 print("***************************************************")
 
 ################################################################################

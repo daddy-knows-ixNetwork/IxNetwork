@@ -48,7 +48,7 @@
 #                                                                              #
 # Description:                                                                 #
 #   This script intends to demonstrate how to configure VxLAN with DHCPv6      #
-#   Client and DHCPv6 Server. It configures one topology with one Device Group # 
+#   Client and DHCPv6 Server. It configures one topology with one Device Group #
 #   with VxLAN and a chained Device Group with the DHCPv6 Client stack         #
 #   and a corresponding topology containing one Device Group with VxLAN and a  #
 #   chained Device Group with DHCPv6 Server stack.                             #

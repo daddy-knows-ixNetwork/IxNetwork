@@ -86,7 +86,7 @@ from ixiaerror import IxiaError
 ixiatcl = IxiaTcl()
 ixiahlt = IxiaHlt(ixiatcl)
 ixiangpf = IxiaNgpf(ixiahlt)
-            
+
 try:
     ErrorHandler('', {})
 except (NameError,):
@@ -136,14 +136,14 @@ ports = connect_result['vport_list'].split()
 ################################################################################
 
 # Creating a topology in first port
-print ('Adding topology:1 in port 1')    
+print ('Adding topology:1 in port 1')
 _result_ = ixiangpf.topology_config(
         topology_name      = """RSVP-TE P2P Topology 1""",
         port_handle        = ports[0],
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', _result_)
-    
+
 topology_1_handle = _result_['topology_handle']
 
 # Creating a device group in topology
@@ -156,22 +156,22 @@ _result_ = ixiangpf.topology_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', _result_)
-    
+
 deviceGroup_1_handle = _result_['device_group_handle']
-    
+
 # Creating a topology in second port
-print "Adding topology 2 in port 2"    
+print "Adding topology 2 in port 2"
 _result_ = ixiangpf.topology_config(
         topology_name      = """RSVP-TE P2P Topology 2""",
         port_handle        = ports[1],
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', _result_)
-    
+
 topology_2_handle = _result_['topology_handle']
 
 # Creating a device group in topology
-print "Creating device group 2 in topology 2"    
+print "Creating device group 2 in topology 2"
 _result_ = ixiangpf.topology_config(
         topology_handle              = topology_2_handle,
         device_group_name            = """Device Group 2""",
@@ -180,7 +180,7 @@ _result_ = ixiangpf.topology_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', _result_)
-    
+
 deviceGroup_4_handle = _result_['device_group_handle']
 
 ################################################################################
@@ -197,7 +197,7 @@ _result_ = ixiangpf.interface_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', _result_)
-    
+
 ethernet_1_handle = _result_['ethernet_handle']
 
 # Creating ethernet stack in device group
@@ -213,7 +213,7 @@ if _result_['status'] != IxiaHlt.SUCCESS:
 
 ethernet_2_handle = _result_['ethernet_handle']
 
-    
+
 # Creating IPv4 Stack on top of Ethernet Stack
 print "Creating IPv4  stack on first ethernet stack"
 _result_ = ixiangpf.interface_config(
@@ -228,9 +228,9 @@ _result_ = ixiangpf.interface_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', _result_)
-    
+
 ipv4_1_handle = _result_['ipv4_handle']
-    
+
 # Creating IPv4 Stack on top of Ethernet Stack
 print "Creating IPv4  stack on second ethernet stack"
 _result_ = ixiangpf.interface_config(
@@ -304,7 +304,7 @@ _result_ = ixiangpf.network_group_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
 	ErrorHandler('network_group_config', _result_)
-	
+
 ipv4PrefixPools_1_handle = _result_['ipv4_prefix_pools_handle']
 networkGroup_1_handle = _result_['network_group_handle']
 
@@ -319,7 +319,7 @@ _result_ = ixiangpf.topology_config(
 if _result_['status'] != IxiaHlt.SUCCESS:
 	ErrorHandler('topology_config', _result_)
 deviceGroup_2_handle = _result_['device_group_handle']
-    
+
 # Adding ipv4 loopback in Second Device Group
 print "Adding ipv4 loopback in Second Device Group\n"
 _result_ = ixiangpf.interface_config(
@@ -346,7 +346,7 @@ _result_ = ixiangpf.emulation_rsvp_tunnel_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
 	ErrorHandler('emulation_rsvp_tunnel_config', _result_)
-	
+
 rsvpteLsps_1_handle = _result_['rsvpte_lsp_handle']
 
 # Configure RSVPTE LSP parameters in ingress side
@@ -533,9 +533,9 @@ print "Egress Side topology Configuration complete in port 2...\n"
 
 ############################################################################
 # Start All protocols                                                      #
-############################################################################    
+############################################################################
 print ('Starting all protocol(s) ...')
-   
+
 _result_ = ixiangpf.test_control(action='start_all_protocols')
 # Check status
 if _result_['status'] != IxiaHlt.SUCCESS:
@@ -545,7 +545,7 @@ time.sleep(60)
 ############################################################################
 # Retrieve protocol statistics                                             #
 ############################################################################
-print ('Fetching RSVP aggregated statistics')               
+print ('Fetching RSVP aggregated statistics')
 protostats = ixiangpf.emulation_rsvp_info(\
         handle = rsvpteIf_2_handle,
         mode   = 'stats')
@@ -560,7 +560,7 @@ print(protostats)
 ############################################################################
 
 print "Fetching RSVP-TE P2P learned info\n"
-# Check Learned Info in port1 
+# Check Learned Info in port1
 print "Check Learned Info in Port1 ...\n"
 linfostatus = ixiangpf.emulation_rsvp_info(
         handle = rsvpteIf_2_handle,
@@ -573,7 +573,7 @@ print('Fetched Linfo successfully...')
 assignedLinfo= linfostatus['/topology:2/deviceGroup:1/ethernet:1/ipv4:1/rsvpteIf:1']['learned_info']['assigned']
 print("----------------RSVP-TE P2P assigned learned info -----------------------")
 print(assignedLinfo)
-print("-------------------------------------------------------------------------")	
+print("-------------------------------------------------------------------------")
 
 linfostatus2 = ixiangpf.emulation_rsvp_info(
         handle = rsvpteIf_1_handle,
@@ -638,10 +638,10 @@ _result_ = ixiangpf.traffic_config(
         rate_pps                           = '1000',
         track_by                           = 'trackingenabled0 mplsFlowDescriptor0',
 )
-    
+
 config_elements = ixiatcl.convert_tcl_list(_result_['traffic_item'])
 current_config_element = config_elements[0]
-    
+
 print ('Configured L2-L3 IPv4 traffic item!!!')
 
 ############################################################################
@@ -687,13 +687,13 @@ if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('traffic_control', _result_)
 
 time.sleep(5)
-    
+
 ############################################################################
 # Stop all protocols                                                       #
 ############################################################################
 print ('Stopping all protocol(s) ...')
 stop = ixiangpf.test_control(action='stop_all_protocols')
-                  
+
 if stop['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('test_control', stop)
 

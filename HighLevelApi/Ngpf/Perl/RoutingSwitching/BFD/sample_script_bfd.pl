@@ -674,7 +674,7 @@ sleep(60);
 
 #############################################################################
 #Starting All Protocols
-#############################################################################   
+#############################################################################
 
 print(q(Starting all protocol(s) ...));
 ixiahlt::test_control({action => 'start_all_protocols'});
@@ -685,7 +685,7 @@ sleep(60);
 
 #############################################################################
 #Fetching aggregate stats using emulation_bfd_info
-#############################################################################    
+#############################################################################
 my $status  = ::ixiangpf::emulation_bfd_info({
 mode => "aggregate",
 handle => "/topology:1/deviceGroup:1/ethernet:1/ipv6:1/bfdv6Interface:1" });
@@ -710,7 +710,7 @@ print "Session Conigured Up : $conf_up";
 
 ##############################################################################
 #Fetching Learned Info using emulation_bfd_info
-##############################################################################   
+##############################################################################
 my $info_status  = ::ixiangpf::emulation_bfd_info({
     mode => "learned_info",
     handle => "/topology:1/deviceGroup:1/ethernet:1/ipv6:1/bfdv6Interface:1" });
@@ -741,7 +741,7 @@ sleep(10);
 
 ################################################################################
 #Starting BFD interface suing emulation_bfd_control
-################################################################################    
+################################################################################
 my $start_status  = ::ixiangpf::emulation_bfd_control({
 mode => "start",
 handle => "/topology:1/deviceGroup:1/ethernet:1/ipv6:1/bfdv6Interface:1" });

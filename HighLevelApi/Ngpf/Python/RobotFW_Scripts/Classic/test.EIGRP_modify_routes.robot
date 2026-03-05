@@ -33,7 +33,7 @@ test
 	${result} =  Interface Config  port_handle=@{portHandles}[0]  autonegotiation=1  duplex=auto  speed=auto
 	${interface_status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${interface_status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
+
 ################################################################################
 # Configure EIGRP routers
 ################################################################################
@@ -55,7 +55,7 @@ test
 ################################################################################
 # Modify EIGRP routes
 ################################################################################
-	
+
 	@{route_handles}=  Get Slice From List  ${route_handles}  1  4
 	${result} =  Emulation Eigrp Route Config  mode=modify  route_handle=@{route_handles}  next_hop=1.1.1.1
 	${eigrp_status} =  Get From Dictionary  ${result}  status

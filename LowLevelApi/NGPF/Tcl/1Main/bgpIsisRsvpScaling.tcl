@@ -42,7 +42,7 @@ proc VerifyPortState { {portList all} {expectedPortState up} } {
 	    set port [lindex [split [lindex $connectedTo 1] :] end]
 	    set port $card/$port
 
-	    if {[lsearch $portList $port] != -1} { 
+	    if {[lsearch $portList $port] != -1} {
 		lappend vPortList $vport
 	    }
 	}
@@ -58,7 +58,7 @@ proc VerifyPortState { {portList all} {expectedPortState up} } {
 	    set card [lindex [split [lindex $connectedTo 0] :] end]
 	    set port [lindex [split [lindex $connectedTo 1] :] end]
 	    set port $card/$port
-	    
+
 	    set portState [ixNet getAttribute $vport -state]
 
 	    # Expecting port state = UP
@@ -68,12 +68,12 @@ proc VerifyPortState { {portList all} {expectedPortState up} } {
 		    after 2000
 		    continue
 		}
-		
+
 		if {$portState != "up" && $timer == "60"} {
 		    puts "\nError VerifyPortState: $port seem to be stuck on $portState state. Expecting port up.\n"
 		    set portsAllUpFlag 1
 		}
-		
+
 		if {$portState == "up"} {
 		    puts "\nVerifyPortState: $port state is $portState"
 		    break
@@ -87,12 +87,12 @@ proc VerifyPortState { {portList all} {expectedPortState up} } {
 		    after 2000
 		    continue
 		}
-		
+
 		if {$portState == "up" && $timer == "60"} {
 		    puts "\nError VerifyPortState: $port seem to be stuck on the $portState state. Expecting port down."
 		    set portsAllUpFlag 1
 		}
-		
+
 		if {$portState == "down"} {
 		    puts "\nVerifyPortState: $port state is $portState as expected"
 		    break
@@ -117,7 +117,7 @@ proc GetVportMapping { Port } {
     if {$vportList == ""} {
 	return 0
     }
-    
+
     foreach vport $vportList {
 	set connectedTo [ixNet getAttribute $vport -connectedTo]
 	set card [lindex [split [lindex [split $connectedTo /] 3] :] end]
@@ -147,7 +147,7 @@ proc CreateDeviceGroupNgpf { topologyObj deviceGroupName multiplier } {
     ixNet setMultiAttribute $deviceGroupObj \
 	-name $deviceGroupName \
 	-multiplier $multiplier
-    
+
     ixNet commit
     return [lindex [ixNet remapIds $deviceGroupObj] 0]
 }
@@ -186,7 +186,7 @@ proc ConfigIpv4AddressNgpf { ipv4StackObj start {step 0.0.0.1} {direction increm
 	-step $step \
 	-direction $direction
     ixNet commit
-    
+
     return [lindex [ixNet remapIds $ipv4AddressObj2] 0]
 }
 
@@ -206,7 +206,7 @@ proc CreateIpv4GatewayIpObjNgpf { ipv4StackObj } {
 	-clearOverlays false \
 	-pattern counter
     ixNet commit
-    
+
     return [lindex [ixNet remapIds $ipv4GatewayIpObj] 0]
 }
 
@@ -229,10 +229,10 @@ proc ConfigIpv4GatewayIpOverlayNgpf { ipv4GatewayIpObj count index indexStep val
     #-start 1.1.1.4
     #-direction increment
     #
-    #-count 1 
-    #-index 2 
-    #-indexStep 0 
-    #-valueStep 1.1.1.5 
+    #-count 1
+    #-index 2
+    #-indexStep 0
+    #-valueStep 1.1.1.5
     #-value 1.1.1.5
     #
     #-count 1
@@ -240,7 +240,7 @@ proc ConfigIpv4GatewayIpOverlayNgpf { ipv4GatewayIpObj count index indexStep val
     #-indexStep 0
     #-valueStep 1.1.1.6
     #-value 1.1.1.6
-    
+
     puts "\nConfigIpv4GatewayIpOverlayNgpf: $ipv4GatewayIpObj : count=$count index=$index indexStep=$indexStep value=$value valueStep=$valueStep "
     set ipv4GatewayOverlayObj [ixNet add $ipv4GatewayIpObj "overlay"]
     ixNet setMultiAttribute $ipv4GatewayOverlayObj \
@@ -274,24 +274,24 @@ foreach {ixChassisIp ports} [array get portList *] {
 	set cardNumber [lindex $port 0]
 	set portNumber [lindex $port 1]
 	puts "Clearing port state on $ixChassisIp: $cardNumber/$portNumber ..."
-	
+
 	# ::ixNet::OBJ-/availableHardware/chassis:"10.205.4.35"/card:1/port:2
 	catch {ixNet execute clearOwnership "::ixNet::OBJ-/availableHardware/chassis:\"$ixChassisIp\"/card:$cardNumber/port:$portNumber"} errMsg
 	if {[regexp "Unable" $errMsg]} {
 	    puts "Failed to clear port ownership"
 	    exit
 	}
-	
+
 	set vPort [ixNet add [ixNet getRoot] vport]
 	ixNet commit
 	set vPort [lindex [ixNet remapIds $vPort] 0]
-	
+
 	ixNet setMultiAttribute $vPort \
 	    -connectedTo $ixChassis/card:$cardNumber/port:$portNumber \
 	    -name 1/$cardNumber/$portNumber
 
 	lappend vPortList $vPort
-	
+
 	set getVport($ixChassisIp:$cardNumber/$portNumber) $vPort
 	set getPort($vPort) $ixChassisIp:$cardNumber/$portNumber
     }

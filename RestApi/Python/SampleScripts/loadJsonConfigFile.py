@@ -177,7 +177,3 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt):
         if osPlatform == 'windowsConnectionMgr':
             if deleteSessionAfterTest:
                 mainObj.deleteSession()
-
-
-
-

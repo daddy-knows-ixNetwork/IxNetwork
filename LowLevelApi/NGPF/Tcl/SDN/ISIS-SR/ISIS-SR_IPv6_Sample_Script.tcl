@@ -2,7 +2,7 @@
 ################################################################################
 # Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright © 1997 - 2015 by IXIA                                           # 
+#    Copyright © 1997 - 2015 by IXIA                                           #
 #    All Rights Reserved.                                                      #
 #                                                                              #
 #    Revision Log:                                                             #
@@ -58,7 +58,7 @@
 #    2. Enable SR and SR IPv6 in ISIS Emulated Router.                         #
 #    3. Set IPv6 Node Prefix & IPv6 Adj-Sid.                                   #
 #    4. Enable Segment Routing in Simulated Router and                         #
-#       Set IPv6 Node Prefix & IPv6 Adj-Sid in Simulated Router.               #  
+#       Set IPv6 Node Prefix & IPv6 Adj-Sid in Simulated Router.               #
 #    5. Start protocol.                                                        #
 #    6. Retrieve protocol statistics.                                          #
 #    7. Retrieve protocol learned info in Port1.                               #
@@ -95,7 +95,7 @@ ixNet exec newConfig
 ################################################################################
 #  Protocol configuration section. Configure ISIS as per the description
 #  give above
-################################################################################ 
+################################################################################
 # Adding Virtual ports
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
@@ -399,7 +399,7 @@ puts "***************************************************\n"
 ###############################################################################
 
 puts "Fetching ISIS SR IPv6 Prefix Learned Info in Port 1"
-ixNet exec getLearnedInfo $isisL3_1 
+ixNet exec getLearnedInfo $isisL3_1
 after 5000
 set learnedInfoList [ixNet getList $isisL3_1 learnedInfo]
 set linfoList [ixNet getList $learnedInfoList table]
@@ -419,7 +419,7 @@ foreach table $IPv6SrLInfo {
 puts "***************************************************"
 
 puts "Fetching ISIS SR IPv6 Adjacency Learned Info in Port 1"
-ixNet exec getLearnedInfo $isisL3_1 
+ixNet exec getLearnedInfo $isisL3_1
 after 5000
 set IPv6SrAdjLInfo [lindex $linfoList 3]
 
@@ -459,7 +459,7 @@ after 5000
 ###############################################################################
 
 puts "Fetching ISIS SR IPv6 Adjacency Learned Info in Port 1"
-ixNet exec getLearnedInfo $isisL3_1 
+ixNet exec getLearnedInfo $isisL3_1
 after 5000
 set IPv6SrAdjLInfo [lindex $linfoList 3]
 
@@ -482,4 +482,3 @@ puts "***************************************************"
 ################################################################################
 ixNet exec stopAllProtocols
 puts "!!! Test Script Ends !!!"
-

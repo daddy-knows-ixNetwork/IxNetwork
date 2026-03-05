@@ -14,7 +14,7 @@ proc ConnectToIxia { connectParams } {
 
 proc PortConfigProtocolInt { portConfigParams } {
     set interfaceConfigStatus [eval ::ixia::interface_config $portConfigParams]
-    
+
     if {[keylget interfaceConfigStatus status] != $::SUCCESS} {
 	puts "\nError: PortConfigProtocolList failed:\n$interfaceConfigStatus\n"
     }
@@ -49,7 +49,7 @@ proc StartTrafficHlt {} {
     if {[keylget startTrafficStatus status] != $::SUCCESS} {
 	puts "\nError: Failed to start traffic: $startTrafficStatus\n"
 	return 1
-    } 
+    }
     puts "\n$startTrafficStatus"
 
     # By including VerifyTrafficState, it will wait up to 15 seconds until
@@ -110,7 +110,7 @@ proc VerifyTrafficState {} {
 		return 1
 	    }
 	}
-	
+
 	if {$trafficState == "started"} {
 	    puts "Traffic Started"
 	    break

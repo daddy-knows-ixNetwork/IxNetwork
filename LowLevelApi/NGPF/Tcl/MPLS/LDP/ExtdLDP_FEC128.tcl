@@ -100,7 +100,7 @@ ixNet exec newConfig
 
 ################################################################################
 # 1. Configuration of protocols as per above mentioned flow.
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -249,7 +249,7 @@ ixNet setAttr $networkGroup1 -multiplier "1"
 ixNet setAttr $networkGroup2 -multiplier "1"
 ixNet commit
 
-#Change IP address and Prefix Of Network Group 
+#Change IP address and Prefix Of Network Group
 set ipV4PrefixPools1 [lindex [ixNet getList $networkGroup1 ipv4PrefixPools] 0]
 set ipV4PrefixPools2 [lindex [ixNet getList $networkGroup2 ipv4PrefixPools] 0]
 set prefixLength1 [ixNet getAttribute $ipV4PrefixPools1 -prefixLength]
@@ -258,7 +258,7 @@ set prefixLength2 [ixNet getAttribute $ipV4PrefixPools2 -prefixLength]
 ixNet setMultiAttribute $prefixLength1\
     -clearOverlays false\
     -pattern singleValue
-	
+
 ixNet setMultiAttribute $prefixLength2\
     -clearOverlays false\
     -pattern singleValue
@@ -288,7 +288,7 @@ ixNet setMultiAttribute $addressSet1\
     -step 0.0.0.1\
     -start 200.1.0.1\
     -direction increment
-	
+
 ixNet setMultiAttribute $addressSet2\
     -step 0.0.0.1\
     -start 201.1.0.1\
@@ -486,7 +486,7 @@ puts "***************************************************"
 ###############################################################################
 puts "Fetching LDP Basic Learned Info"
 ixNet exec getIPv4FECLearnedInfo $ldp1 1
-#ixNet exec getAllLearnedInfo $ldp1 
+#ixNet exec getAllLearnedInfo $ldp1
 after 5000
 set linfo1 [ixNet getList $ldp1 learnedInfo]
 ixNet getAttr $linfo1 -columns
@@ -525,7 +525,7 @@ after 5000
 
 ###############################################################################
 # 8. Retrieve protocol learned info again and compare with
-#    previouly retrieved learned info.  
+#    previouly retrieved learned info.
 ###############################################################################
 
 puts "Fetching FEC 128 Learned Info"
@@ -536,7 +536,7 @@ set values [ixNet getAttribute $linfo2 -values]
 puts "***************************************************"
 
 ################################################################################
-# 9. Configure L2-L3 traffic 
+# 9. Configure L2-L3 traffic
 ################################################################################
 puts "Configuring L2-L3 Traffic Item"
 set trafficItem1 [ixNet add [ixNet getRoot]/traffic "trafficItem"]
@@ -562,7 +562,7 @@ ixNet setMultiAttribute $endpointSet1\
     -ngpfFilters           [list]\
     -trafficGroups         [list]\
     -sources               $source\
-    -destinations          $destination  
+    -destinations          $destination
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\

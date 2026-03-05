@@ -70,7 +70,7 @@ ixNet exec newConfig
 
 ################################################################################
 # protocol configuration section
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -156,7 +156,7 @@ ixNet commit
 
 ################################################################################
 # adding IGMP Host over ipv4 stack
-################################################################################ 
+################################################################################
 puts "Adding IGMP Host over IPv4 stack"
 ixNet add $ip1 igmpHost
 ixNet commit
@@ -169,7 +169,7 @@ ixNet setAttr $topo2  -name "IPv4 Topology 2"
 ixNet commit
 
 ################################################################################
-# Enabling IPTV in IGMP host 
+# Enabling IPTV in IGMP host
 ################################################################################
 puts "Enabling IPTV"
 set enableIptv [ixNet getAttr $igmpHost -enableIptv]
@@ -215,7 +215,7 @@ ixNet setAttr $singleValue -value zapandview
 ixNet commit
 
 ################################################################################
-# Start protocol 
+# Start protocol
 ################################################################################
 puts "Starting protocols and waiting for 20 seconds for protocols to come up"
 ixNet exec startAllProtocols
@@ -265,7 +265,7 @@ ixNet setMultiAttribute $endpointSet1\
 	-ngpfFilters           [list]\
 	-trafficGroups         [list]\
 	-sources               $source\
-	-destinations          $destination\	
+	-destinations          $destination\
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\
@@ -364,9 +364,8 @@ ixNet exec stop [ixNet getRoot]/traffic
 after 5000
 
 ################################################################################
-# Stop protocol 
+# Stop protocol
 ################################################################################
 puts "Stopping protocol"
 ixNet exec stopAllProtocols
 puts "!!! Test Script Ends !!!"
-

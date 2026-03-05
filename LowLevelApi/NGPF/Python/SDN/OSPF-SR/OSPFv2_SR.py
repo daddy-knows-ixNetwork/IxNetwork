@@ -49,8 +49,8 @@
 #    This script intends to demonstrate how to use NGPF OSPFv2 API.            #
 #                                                                              #
 #    1. It will create 2 OSPFv2 topologies, each having an ipv4 network        #
-#       topology and loopback device group behind the network group(NG) with   # 
-#       loopback interface on it. A loopback device group(DG) behind network   # 
+#       topology and loopback device group behind the network group(NG) with   #
+#       loopback interface on it. A loopback device group(DG) behind network   #
 #       group is needed to support applib traffic.                             #
 #    2. Start the ospfv2 protocol.                                             #
 #    3. Enabling Segment Routing in ospfv2                                     #
@@ -78,7 +78,7 @@
 #   21. Stop L2-L3 traffic.                                                    #
 #   22. Stop Application traffic.                                              #
 #   23. Stop all protocols.                                                    #
-#                                                                  			   #                                                                                          
+#                                                                  			   #
 ################################################################################
 import sys
 import time
@@ -425,7 +425,7 @@ sidIndexLabel2 =ixNet.getAttribute(ospfPseudoRouter1, '-sidIndexLabel')
 sidIndexLabelcounter1 =ixNet.add(sidIndexLabel2, 'counter')
 ixNet.setMultiAttribute (sidIndexLabelcounter1 ,
 '-step', '2' ,
- '-start', '11', 
+ '-start', '11',
  '-direction', 'increment')
 ixNet.commit()
 

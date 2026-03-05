@@ -65,7 +65,7 @@
 ################################################################################
 
 ################################################################################
-# Please ensure that PERL5LIB environment variable is set properly so that 
+# Please ensure that PERL5LIB environment variable is set properly so that
 # IxNetwork.pm module is available. IxNetwork.pm is generally available in
 # C:\<IxNetwork Install Path>\API\Perl
 ################################################################################
@@ -84,13 +84,13 @@ sub assignPorts {
 	my $port2    = $my_resource[6];
 	my $vport1   = $my_resource[7];
 	my $vport2   = $my_resource[8];
-	
+
 	my $root = $ixNet->getRoot();
 	my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-	
+
 	my $chassisObj2 = '';
 	if ($chassis1 ne $chassis2) {
 	    $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -100,7 +100,7 @@ sub assignPorts {
 	} else {
 	    $chassisObj2 = $chassisObj1;
 	}
-	
+
 	my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -109,7 +109,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-		
+
     $ixNet->commit();
 }
 # Script Starts
@@ -119,7 +119,7 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.216.108.100';
 my $ixTclPort   = '8009';
 my @ports       = (('10.216.108.53', '3', '11'), ('10.216.108.53', '3', '12'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
@@ -273,42 +273,42 @@ $ixNet->commit();
 
 print("Changing 1st Opaque TLV Value for Root Ranges\n");
 my $value_2_1 = $ixNet->getAttribute($rootRanges.'/ldpTLVList:1', '-value');
-$ixNet->setMultiAttribute($value_2_1.'/singleValue', '-value', '00000066');  
+$ixNet->setMultiAttribute($value_2_1.'/singleValue', '-value', '00000066');
 $ixNet->commit();
 
 print("Changing 1st Opaque TLV Value for Leaf Ranges\n");
 my $value_2_2 = $ixNet->getAttribute($leafRanges.'/ldpTLVList:1', '-value');
-$ixNet->setMultiAttribute($value_2_2.'/singleValue', '-value', '00000066');  
+$ixNet->setMultiAttribute($value_2_2.'/singleValue', '-value', '00000066');
 $ixNet->commit();
 
 print("Changing 2nd Opaque TLV Increment for Root Ranges\n");
 my $increment_2_1 = $ixNet->getAttribute($rootRanges.'/ldpTLVList:2', '-increment');
-$ixNet->setMultiAttribute($increment_2_1.'/singleValue', '-value', '0000000000000010');  
+$ixNet->setMultiAttribute($increment_2_1.'/singleValue', '-value', '0000000000000010');
 $ixNet->commit();
 
 print("Changing 2nd Opaque TLV Increment for Leaf Ranges\n");
 my $increment_2_2 = $ixNet->getAttribute($leafRanges.'/ldpTLVList:2', '-increment');
-$ixNet->setMultiAttribute($increment_2_2.'/singleValue', '-value', '0000000000000010');  
+$ixNet->setMultiAttribute($increment_2_2.'/singleValue', '-value', '0000000000000010');
 $ixNet->commit();
 
 print("Changing IPv4 Group Addresses under Leaf Ranges behind Egress Router\n");
 my $groupAddressV4 = $ixNet->getAttribute($leafRanges, '-groupAddressV4');
-$ixNet->setMultiAttribute($groupAddressV4.'/singleValue', '-value', '225.0.1.1'); 
+$ixNet->setMultiAttribute($groupAddressV4.'/singleValue', '-value', '225.0.1.1');
 $ixNet->commit();
 
 print("Changing IPv6 Group Addresses under Leaf Ranges behind Egress Router\n");
 my $groupAddressV6 = $ixNet->getAttribute($leafRanges, '-groupAddressV6');
-$ixNet->setMultiAttribute($groupAddressV6.'/singleValue', '-value', 'ff15:0:1::'); 
+$ixNet->setMultiAttribute($groupAddressV6.'/singleValue', '-value', 'ff15:0:1::');
 $ixNet->commit();
 
 print("Changing IPv4 Source Addresses under Root Ranges behind Ingress Router\n");
 my $sourceAddressV4 = $ixNet->getAttribute($rootRanges, '-sourceAddressV4');
-$ixNet->setMultiAttribute($sourceAddressV4.'/singleValue', '-value', '5.1.1.1'); 
+$ixNet->setMultiAttribute($sourceAddressV4.'/singleValue', '-value', '5.1.1.1');
 $ixNet->commit();
 
 print("Changing IPv6 Source Addresses under Root Ranges behind Ingress Router\n");
 my $sourceAddressV6 = $ixNet->getAttribute($rootRanges, '-sourceAddressV6');
-$ixNet->setMultiAttribute($sourceAddressV6.'/singleValue', '-value', '6001:1::1'); 
+$ixNet->setMultiAttribute($sourceAddressV6.'/singleValue', '-value', '6001:1::1');
 $ixNet->commit();
 
 print("Changing Group Addresses count under Leaf Ranges behind Egress Router\n");
@@ -336,13 +336,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -373,7 +373,7 @@ $ixNet->setMultiAttribute($lsp2.'/singleValue', '-value', '5');
 
 print("Changing Label value  On The Fly behind Egress Router on Topology 2\n");
 my $label = $ixNet->getAttribute($leafRanges, '-labelValueStart');
-$ixNet->setMultiAttribute($label.'/singleValue', '-value', '666'); 
+$ixNet->setMultiAttribute($label.'/singleValue', '-value', '666');
 $ixNet->commit();
 
 my $globals   = ($ixNet->getRoot()).'/globals';
@@ -384,7 +384,7 @@ sleep(5);
 
 ###############################################################################
 # 6. Retrieve protocol learned info again and compare with
-#    previously retrieved learned info.  
+#    previously retrieved learned info.
 ###############################################################################
 print("Fetching P2MP FEC Learned Info in Ingress Router on Topology 1\n");
 $ixNet->execute('getP2MPFECLearnedInfo', $ldp1, '1');
@@ -404,7 +404,7 @@ print("***************************************************\n");
 
 
 ################################################################################
-# 7. Configure L2-L3 traffic 
+# 7. Configure L2-L3 traffic
 ################################################################################
 print ("Congfiguring L2-L3 Traffic Item\n");
 my $trafficItem1 = $ixNet->add(($ixNet->getRoot()).'/traffic', 'trafficItem');
@@ -489,13 +489,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 #################################################################################

@@ -49,7 +49,7 @@ try:
 
     # Display debug loggings
     testPlatform.Trace = 'request_response'
-    
+
     # authenticate with username and password
     testPlatform.Authenticate('admin', 'admin')
 
@@ -59,7 +59,7 @@ try:
 
     # Delete a particular session ID
     #testPlatform.Sessions.find(Id=11).remove()
-    
+
     testPlatform.Sessions.find(Id=1).remove()
 
 except Exception as errMsg:

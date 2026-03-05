@@ -70,7 +70,7 @@ ixNet exec newConfig
 
 ################################################################################
 # protocol configuration section                                               #
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -267,7 +267,7 @@ foreach statValList [ixNet getAttr $viewPage -rowValues] {
 puts "***************************************************"
 
 ################################################################################
-# On the fly section                                                           #  
+# On the fly section                                                           #
 ################################################################################
 puts "Enabling IPv4 Unicast Learned Information for BGP Router"
 ixNet setAttr [ixNet getAttr $bgp1 -filterIpV4Unicast]/singleValue -value true
@@ -320,7 +320,7 @@ ixNet setMultiAttribute $endpointSet1\
 	-ngpfFilters           [list]\
 	-trafficGroups         [list]\
 	-sources               $source\
-	-destinations          $destination\	
+	-destinations          $destination\
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\
@@ -355,7 +355,7 @@ ixNet setMultiAttribute $endpointSet2\
 	-ngpfFilters           [list]     \
 	-trafficGroups         [list]     \
 	-sources               $source_app\
-	-destinations          $destin_app\	
+	-destinations          $destin_app\
 ixNet commit
 set endpointSet2 [lindex [ixNet remapIds $endpointSet2] 0]
 

@@ -53,8 +53,8 @@
 #    This script intends to demonstrate how to use NGPF ISIS API.              #
 #                                                                              #
 #    1. It will create 2 ISIS topologies, each having an ipv4 and ipv6 network #
-#       topology and loopback device group behind the network group(NG) with   # 
-#       loopback interface on it. A loopback device group(DG) behind network   # 
+#       topology and loopback device group behind the network group(NG) with   #
+#       loopback interface on it. A loopback device group(DG) behind network   #
 #       group is needed to support applib traffic.                             #
 #    2. Start the ISIS protocol.                                               #
 #    3. Retrieve protocol statistics.                                          #
@@ -75,7 +75,7 @@
 #   12. Retrieve L2-L3 traffic stats.                                          #
 #   13. Stop L2-L3 traffic.                                                    #
 #   14. Stop Application traffic.                                              #
-#   15. Stop all protocols.                                                    #                                                                                          
+#   15. Stop all protocols.                                                    #
 # Ixia Softwares:                                                              #
 #    IxOS      6.80 EB                                                         #
 #    IxNetwork 7.40 EB                                                         #
@@ -108,8 +108,8 @@ ixNet exec newConfig
 ################################################################################
 #  Protocol configuration section. Configure ISIS as per the description
 #  give above
-################################################################################ 
-# Adding Virtual ports 
+################################################################################
+# Adding Virtual ports
 puts "Adding 2 Vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -201,7 +201,7 @@ ixNet commit
 puts "ixNet help ::ixNet::OBJ-/topology/deviceGroup/ethernet/ipv4"
 puts "[ixNet help ::ixNet::OBJ-/topology/deviceGroup/ethernet/ipv4]"
 
-# Adding ISIS over Ethernet stack 
+# Adding ISIS over Ethernet stack
 puts "Adding ISISL3 over Ethernet stacks"
 ixNet add $mac1 isisL3
 ixNet add $mac2 isisL3
@@ -246,7 +246,7 @@ set networkTypeMultiValue2 [ixNet getAttr $isisL3_2 -networkType]
 ixNet setAttr $networkTypeMultiValue2 -pattern singleValue -clearOverlays False
 ixNet setAttr $networkTypeMultiValue2/singleValue -value pointpoint
 
-# Disable Discard Learned LSP 
+# Disable Discard Learned LSP
 puts "Disabling the Discard Learned Info CheckBox"
 
 set isisL3RouterDiscardLearnedLSP1 [ ixNet getAttr [ixNet getList [ixNet getList $topo1 deviceGroup] isisL3Router] -discardLSPs]
@@ -544,7 +544,7 @@ after 30000
 
 ###############################################################################
 # Retrieve protocol learned info again and compare with
-#  previouly retrieved learned info.  
+#  previouly retrieved learned info.
 ###############################################################################
 after 10000
 puts "Fetching ISISL3 learned info after enabling IPv4 & IPv6 Node Routes\n"
@@ -575,7 +575,7 @@ foreach v $values {
 puts "***************************************************"
 
 ################################################################################
-# Configure L2-L3 traffic 
+# Configure L2-L3 traffic
 ################################################################################
 #Configuring L2-L3 IPv4 Traffic Item"
 puts "Configuring L2-L3 IPv4 Traffic Item\n"
@@ -600,7 +600,7 @@ ixNet setMultiAttribute $endpointSet1\
     -ngpfFilters           [list]\
     -trafficGroups         [list]\
     -sources               $source1\
-    -destinations          $destination1\    
+    -destinations          $destination1\
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\
@@ -673,7 +673,7 @@ ixNet setMultiAttribute $endpointSet2\
     -ngpfFilters           [list]     \
     -trafficGroups         [list]     \
     -sources               $source_app\
-    -destinations          $destin_app\    
+    -destinations          $destin_app\
 ixNet commit
 set endpointSet2 [lindex [ixNet remapIds $endpointSet2] 0]
 

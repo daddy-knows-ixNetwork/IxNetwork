@@ -39,4 +39,3 @@ set saveStatus [::ixia::connect \
 		    ]
 
 puts "\n[KeylPrint saveStatus]"
-

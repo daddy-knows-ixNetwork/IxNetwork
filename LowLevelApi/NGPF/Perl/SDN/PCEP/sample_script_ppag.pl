@@ -66,13 +66,13 @@ sub assignPorts {
     my $port2    = $my_resource[6];
     my $vport1   = $my_resource[7];
     my $vport2   = $my_resource[8];
-    
+
     my $root = $ixNet->getRoot();
     my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-    
+
     my $chassisObj2 = '';
     if ($chassis1 ne $chassis2) {
         $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -82,7 +82,7 @@ sub assignPorts {
     } else {
         $chassisObj2 = $chassisObj1;
     }
-    
+
     my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -91,7 +91,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-        
+
     $ixNet->commit();
 }
 
@@ -99,7 +99,7 @@ sub assignPorts {
 my @ports       = (('10.216.108.96', '6', '3'), ('10.216.108.96', '6', '4'));
 my $ixTclServer = '10.216.108.113';
 my $ixTclPort   = '8074';
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 ################################################################################
@@ -165,7 +165,7 @@ $ethernet1 = ($ixNet->remapIds($ethernet1))[0];
 # setting -mac
 my $macMv = $ixNet->getAttribute($ethernet1, '-mac');
 $ixNet->add($macMv, 'counter');
-$ixNet->setMultiAttribute($macMv.'/counter',  
+$ixNet->setMultiAttribute($macMv.'/counter',
              '-direction', 'increment',
              '-start'    , '00:11:01:00:00:01',
              '-step'     , '00:00:00:00:00:01');
@@ -180,7 +180,7 @@ $ipv4Addr1 = ($ixNet->remapIds($ipv4Addr1))[0];
 # setting -address
 my $addressMv = $ixNet->getAttribute($ipv4Addr1, '-address');
 $ixNet->add($addressMv, 'counter');
-$ixNet->setMultiAttribute($addressMv.'/counter',  
+$ixNet->setMultiAttribute($addressMv.'/counter',
              '-direction', 'increment',
              '-start'    , '20.0.0.1',
              '-step'     , '0.0.0.1');
@@ -271,7 +271,7 @@ $ethernet2 = ($ixNet->remapIds($ethernet2))[0];
 # setting -mac
 my $macMv = $ixNet->getAttribute($ethernet2, '-mac');
 $ixNet->add($macMv, 'counter');
-$ixNet->setMultiAttribute($macMv.'/counter',  
+$ixNet->setMultiAttribute($macMv.'/counter',
              '-direction', 'increment',
              '-start'    , '00:12:01:00:00:01',
              '-step'     , '00:00:00:00:00:01');
@@ -292,7 +292,7 @@ $ixNet->commit();
 # setting -gatewayIp
 my $gatewayIpMv = $ixNet->getAttribute($ipv4Addr2, '-gatewayIp');
 $ixNet->add($gatewayIpMv, 'counter');
-$ixNet->setMultiAttribute($gatewayIpMv.'/counter',  
+$ixNet->setMultiAttribute($gatewayIpMv.'/counter',
              '-direction', 'increment',
              '-start'    , '0.0.0.0',
              '-step'     , '0.0.1.0');
@@ -318,7 +318,7 @@ $pccGroup2 = ($ixNet->remapIds($pccGroup2))[0];
 # setting -pccIpv4Address
 my $pccIpv4AddressMv = $ixNet->getAttribute($pccGroup2, '-pccIpv4Address');
 $ixNet->add($pccIpv4AddressMv, 'counter');
-$ixNet->setMultiAttribute($pccIpv4AddressMv.'/counter',  
+$ixNet->setMultiAttribute($pccIpv4AddressMv.'/counter',
              '-direction', 'increment',
              '-start'    , '20.0.0.1',
              '-step'     , '0.0.0.1');
@@ -8431,9 +8431,9 @@ $ixNet->commit();
 # Assign ports
 ################################################################################
 print("Connect to IxNetwork Tcl server\n");
-$ixNet->connect($ixTclServer, 
-                '-port', $ixTclPort, 
-                '-version', '8.00', 
+$ixNet->connect($ixTclServer,
+                '-port', $ixTclPort,
+                '-version', '8.00',
                 '-setAttribute', 'strict');
 my @vPorts  = $ixNet->getList($ixNet->getRoot(), 'vport');
 my $vport1 = $vPorts[0];
@@ -8461,13 +8461,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-        my $statIndiv = ''; 
+        my $statIndiv = '';
         $index = 0;
         foreach $statIndiv (@$statVal) {
             printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
             $index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 

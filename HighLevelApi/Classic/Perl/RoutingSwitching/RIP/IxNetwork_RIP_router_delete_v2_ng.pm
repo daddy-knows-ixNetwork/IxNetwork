@@ -65,7 +65,7 @@ use Carp;
 
 # use lib where the HLPAPI files are located
 # This can be moved to .pl files in the JT framework
-# It is typically: 
+# It is typically:
 # "/volume/labtools/ixia/<version_number>/lib/library/common/ixia_hl_lib-<version>"
 # For Ex:
 # use lib "/volume/labtools/ixia/6.30.850.7/lib";
@@ -82,8 +82,8 @@ my @port_list      = ("1/9", "1/10");
 my $ixNetTclServer = "10.64.99.7";
 my $user           = "ixiaHlpapiUser";
 my $speed           = "auto";
-my $autonegotiation = 1;           
-my $duplex          = "auto";         
+my $autonegotiation = 1;
+my $duplex          = "auto";
 my $phy_mode        = "copper";
 
 # Initialize values for HLPAPI scripts
@@ -201,8 +201,8 @@ $_result_ = ixiahlt::emulation_rip_config ({
 	receive_type           => 'store',
 	vlan_id                => '1000',
 	interface_metric       =>  2,
-	time_period            => 100,           
-	num_routes_per_period  => 10,           
+	time_period            => 100,
+	num_routes_per_period  => 10,
 	router_id              => 20,
 	router_id_step         => 10,
 	count                  => 3,

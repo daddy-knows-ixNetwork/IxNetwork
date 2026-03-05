@@ -43,7 +43,7 @@
 ################################################################################
 
 ################################################################################
-# Description: 
+# Description:
 # 1. Configuring macsec Hardware Based IP Data Traffic.
 # 2. Assign ports
 # 3. Start all protocols

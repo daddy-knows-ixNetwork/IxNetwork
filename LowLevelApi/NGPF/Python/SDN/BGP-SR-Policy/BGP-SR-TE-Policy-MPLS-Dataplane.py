@@ -127,7 +127,7 @@ ixNet.execute('newConfig')
 
 ################################################################################
 # protocol configuration section                                               #
-################################################################################ 
+################################################################################
 assignPorts(ixNet, ports[0], ports[1])
 time.sleep(5)
 
@@ -350,7 +350,7 @@ for statValList in ixNet.getAttribute(viewPage, '-rowValues') :
 print("***************************************************")
 
 ################################################################################
-# On the fly section                                                           #  
+# On the fly section                                                           #
 ################################################################################
 print("Changing the label Value on the Fly")
 ixNet.setAttribute(ixNet.getAttribute(bgp1 + '/bgpSRTEPoliciesListV4/bgpSRTEPoliciesTunnelEncapsulationListV4/bgpSRTEPoliciesSegmentListV4/bgpSRTEPoliciesSegmentsCollectionV4', '-label') + '/singleValue', '-value', '1000')
@@ -389,7 +389,7 @@ for value in values :
     print(value)
           #end for
       # end for
-# end for 
+# end for
 
 time.sleep(15)
 

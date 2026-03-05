@@ -1,6 +1,6 @@
 """
 Description
-   This script demonstrates how to use Python HLAPIs connecting to a 
+   This script demonstrates how to use Python HLAPIs connecting to a
    Linux API server that requires logging in and using an API-Key.
 
 Requirement
@@ -11,7 +11,7 @@ Requirement
    - yum install -y tcl-devel
    - yum group install -y "Development Tools"
    - Python tkinter
-   - IxOS and IxNetwork PIT installer for HLTAPI packages. 
+   - IxOS and IxNetwork PIT installer for HLTAPI packages.
 
 Supports Python 2 and Python 3
 
@@ -40,7 +40,7 @@ portList = '1/1 1/2'
 def VerifyProtocolSessionStatusUpNgpfHlPy(protocolHandle, totalTime=60):
     '''
     Pass in a protocol handle to verify for sessions status 'UP'.
-    
+
     '''
 
     for timer in range(0, totalTime):
@@ -58,7 +58,7 @@ def VerifyProtocolSessionStatusUpNgpfHlPy(protocolHandle, totalTime=60):
         if timer < totalTime and currentSessionUp != totalSessions:
             time.sleep(1)
             continue
-        
+
         if timer < totalTime and currentSessionUp == totalSessions:
             return 0
 
@@ -97,7 +97,7 @@ def print_dict(obj, nested_level=0, output=sys.stdout):
 
 def VerifyPortState( portList='', stopTime=120 ):
     for vPort in ixNet.getList(ixNet.getRoot(), 'vport'):
-        assignedPort = ixNet.getAttribute(vPort, '-assignedTo')        
+        assignedPort = ixNet.getAttribute(vPort, '-assignedTo')
         print('\nVerifying port state on port::', assignedPort)
 
         for timer in range(0, stopTime):
@@ -329,4 +329,3 @@ if traffic_stats['status'] != '1':
 print_dict(traffic_stats)
 
 print('\n--- RX:', traffic_stats['flow']['1']['rx']['total_pkts'])
-

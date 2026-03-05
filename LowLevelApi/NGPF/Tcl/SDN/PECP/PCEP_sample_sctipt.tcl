@@ -67,12 +67,12 @@
 #      7. Verify L2/L3 traffic statistics.                                     #
 #      8. Stop traffic.                                                        #
 #      9. Change the MPLS Label value in ERO1 of LSP1 at the PCE end in        #
-#         topology1.                                                           #      
+#         topology1.                                                           #
 #     10. Wait for a few seconds and verify learned info                       #
 #     11. Apply L2/L3 traffic.                                                 #
 #     12. Verify traffic L2/L3 statistics.                                     #
 #     13. Stop traiic.                                                         #
-#     14. Stop all protocols.                                                  # 
+#     14. Stop all protocols.                                                  #
 # Ixia Softwares:                                                              #
 #    IxOS      8.00 EA                                                         #
 #    IxNetwork 8.00 EA                                                         #
@@ -101,8 +101,8 @@ ixNet exec newConfig
 
 ################################################################################
 # 1. Protocol configuration section. Configure PCEP as per the description     #
-#    give above                                                                # 
-################################################################################ 
+#    give above                                                                #
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -198,7 +198,7 @@ set pcc [ixNet add $ip2 pcc]
 ixNet commit
 set pcc [lindex [ixNet remapIds $pcc] 0]
 
-# configured expectedInitiatedLspsForTraffic 
+# configured expectedInitiatedLspsForTraffic
 ixNet setAttr $pcc -expectedInitiatedLspsForTraffic 1
 ixNet commit
 
@@ -223,7 +223,7 @@ ixNet setAttr $ipVerisionMv/singleValue ipv4
 ixNet commit
 
 set Ipv4SrcEndpointsMv [ixNet getAttr $pccGroup/pceInitiateLspParameters\
-    -srcEndPointIpv4] 
+    -srcEndPointIpv4]
 ixNet setAttr $Ipv4SrcEndpointsMv/singleValue -value 2.0.0.1
 
 set Ipv4DestEndpointsMv [ixNet getAttr $pccGroup/pceInitiateLspParameters\
@@ -250,8 +250,8 @@ ixNet setAttr $includeLspMv/singleValue -value True
 
 set includeSymbolicPathMv [ixNet getAttr $pccGroup/pceInitiateLspParameters\
     -includeSymbolicPathNameTlv]
-ixNet setAttr $includeSymbolicPathMv/singleValue True    
-    
+ixNet setAttr $includeSymbolicPathMv/singleValue True
+
 set symbolicPathNameMv [ixNet getAttr $pccGroup/pceInitiateLspParameters\
     -symbolicPathName]
 ixNet setAttr $symbolicPathNameMv/singleValue -value "IXIA_SAMPLE_LSP_1"
@@ -265,7 +265,7 @@ ixNet commit
 
 ################################################################################
 # Set the properties of ERO1                                                   #
-# a. Active                                                                    # 
+# a. Active                                                                    #
 # b. Sid Type                                                                  #
 # c. MPLS Label                                                                #
 # d. TC                                                                        #
@@ -290,7 +290,7 @@ ixNet setAttr $ero1MplsLabelMv/singleValue -value 1111
 set ero1TcMv [ixNet getAttribute\
     $pccGroup/pceInitiateLspParameters/pcepEroSubObjectsList:1\
     -tc]
-ixNet setAttr $ero1TcMv/singleValue -value 1 
+ixNet setAttr $ero1TcMv/singleValue -value 1
 
 set ero1TtlMv [ixNet getAttribute\
     $pccGroup/pceInitiateLspParameters/pcepEroSubObjectsList:1\
@@ -373,7 +373,7 @@ set pccExpectedSymbolicPathMv [ixNet getAttribute $pcc/expectedInitiatedLspList\
     -symbolicPathName]
 ixNet setAttr $pccExpectedSymbolicPathMv/singleValue -value "IXIA_SAMPLE_LSP_1"
 ixNet commit
-      
+
 ################################################################################
 # 2. Start PCC and PCE and wait for 60 seconds                                 #
 ################################################################################
@@ -416,7 +416,7 @@ foreach learnedInfo $learnedInfoList {
         set colList [ixNet getAttr $t -columns]
         set rowList [ixNet getAttr $t -values]
         foreach valList $rowList {
-            set ndx 0  
+            set ndx 0
             foreach val $valList {
                 set name  [lindex $colList $ndx]
                 set value $val
@@ -457,7 +457,7 @@ ixNet setMultiAttribute $endpointSet1\
     -ngpfFilters           [list]\
     -trafficGroups         [list]\
     -sources               $source\
-    -destinations          $destination\    
+    -destinations          $destination\
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/transmissionDistribution\
@@ -516,7 +516,7 @@ after 5000
 ixNet setAtt $ero1MplsLabelMv/singleValue -value 6666
 ixNet commit
 ixNet exec applyOnTheFly {/globals/topology}
-after 5000 
+after 5000
 
 ################################################################################
 # 10. Retrieve protocol learned info                                           #
@@ -533,7 +533,7 @@ foreach learnedInfo $learnedInfoList {
         set colList [ixNet getAttr $t -columns]
         set rowList [ixNet getAttr $t -values]
         foreach valList $rowList {
-            set ndx 0  
+            set ndx 0
             foreach val $valList {
                 set name  [lindex $colList $ndx]
                 set value $val
@@ -590,4 +590,3 @@ after 5000
 ################################################################################
 ixNet exec stopAllProtocols
 puts "!!! Test Script Ends !!!"
-

@@ -4,12 +4,12 @@
 #
 #    ::ixia::ptp_over_ip_stats is only supported for NGPF.
 #    This script is a workaround to get PTP stats using UDS.
-# 
+#
 #    Load the ixncfg file /Temp/ptp_test1_jack.ixncfg.
 #    Enable global Protocols.
 #    Run the script to get the drill down per session stats for
 #    PTP OverIP stats.
-#    
+#
 #    NOTE: I used Theresa's Perl sample /Temp/script ptpoe_session_stats.pl.txt
 
 package req Ixia
@@ -52,7 +52,7 @@ set trafficStats [::ixia::traffic_stats \
 		      -uds_action get_available_protocol_stack_filters \
 		      -uds_type l23_protocol_stack \
 		     ]
-		  
+
 puts "\n--- trafficStatus: $trafficStats ----\n"
 # trafficStatus: {status 1} {waiting_for_stats 1} {filters {{//PTP/Ethernet - 001/PTP-R1} {//PTP/Ethernet - 002/PTP-R2}}}
 
@@ -187,4 +187,3 @@ CF Sync [ns]: 0
 IA Sync [ns]: 999999640
  Time t1 UTC: 09 March 2015 21:14:56.92055440
 row_count: 1
-

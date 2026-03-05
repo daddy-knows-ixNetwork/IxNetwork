@@ -2,25 +2,25 @@
 
 # This sample script only works for IxExplorer.
 # Because IxNetwork only supports CSV format.
-# 
+#
 # This script will log into the chassis without resetting
 # any ports and configure the receiving port for capturing
 # packets. Starts Traffic and capture packets.
 #
-# Note: 
-#    Use 
-#        -format txt 
+# Note:
+#    Use
+#        -format txt
 #        -filename packetCapture.txt
 #    to put all the packet captures into a txt file.
 #    There will be many files 3.27MB size files though.
 #
-#    Use 
-#        -format var 
-#    to put the first 20 packets into a keyed list 
+#    Use
+#        -format var
+#    to put the first 20 packets into a keyed list
 #
 # 100:00:09.11952566000 01 01 04 00 0100 01 01 03 00 0108
 # 045 00 00 4E 00 00 00 00 4F 3D 67 6F 01 01 01 01 01 01 01 02 CA CC 86 6C 26
-# D8 9C C8 49 78 69 60 00 0D 0E 0F 00 00 00 00 A9 78 0F 12 00 1E 1A 1B 1C 1D 1E 1F 
+# D8 9C C8 49 78 69 60 00 0D 0E 0F 00 00 00 00 A9 78 0F 12 00 1E 1A 1B 1C 1D 1E 1F
 # 0 21 22 23 24 25 26 27 28 29 2A 2B 2C 2D 2E 2F 30 31 32 33 34 35 36 37 74 E0 81 8
 # C2 7096Good Packet
 
@@ -63,7 +63,7 @@ set connectStatus [::ixia::connect \
 if {[keylget connectStatus status] != $::SUCCESS} {
     puts "Connecting to ixNetwork Tcl server failed\n\n$connectStatus\n"
     exit
-} 
+}
 after 5000
 }
 
@@ -213,5 +213,3 @@ if {[keylget stats_status status] != $::SUCCESS} {
 }
 
 puts \n[KeylPrint stats_status]\n
-
-

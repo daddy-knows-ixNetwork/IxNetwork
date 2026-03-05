@@ -53,8 +53,8 @@
 # This script is based on the following scenario:							   #
 #         - load an ixncfg containing a QuickTest                              #
 #         - retrieve and change the input parameters of the QT                 #
-#         - start the QT, retrieve statistics, stop the QT                     # 
-#                                                                              # 
+#         - start the QT, retrieve statistics, stop the QT                     #
+#                                                                              #
 # Module:                                                                      #
 #    The sample was tested on a 1GE LSM XMVDC16NG module.                      #
 #                                                                              #
@@ -67,7 +67,7 @@ from itertools import izip
 import pdb
 # Append paths to python APIs
 
-# sys.path.append('/path/to/hltapi/library/common/ixiangpf/python') 
+# sys.path.append('/path/to/hltapi/library/common/ixiangpf/python')
 # sys.path.append('/path/to/ixnetwork/api/python')
 
 
@@ -134,7 +134,7 @@ ports = connect_result['vport_list'].split()
 print "\nRetrieving all QuickTest handles present in the config ...\n"
 
 test_control_status = ixiahlt.test_control(action = 'get_all_qt_handles')
-    
+
 if test_control_status['status'] != '1':
     ErrorHandler('test_control', test_control_status)
 
@@ -152,7 +152,7 @@ test_control_status = ixiangpf.test_control(
     action = 'qt_get_input_params',
     qt_handle = qt_handle,
 )
-    
+
 if test_control_status['status'] != '1':
     ErrorHandler('test_control', test_control_status)
 
@@ -168,7 +168,7 @@ modified_params = dict(izip(i,i))
 print "\nModifying input parameters ...\n"
 lava_trial=2
 lava_init_load=15
-lava_iterations=02         
+lava_iterations=02
 
 modified_params['lava_trial']=lava_trial
 modified_params['lava_init_load'] = lava_init_load
@@ -182,7 +182,7 @@ test_control_status = ixiangpf.test_control(
     action    = 'qt_apply_config',
     qt_handle = qt_handle,
 )
-    
+
 if test_control_status['status'] != '1':
     ErrorHandler('test_control', test_control_status)
 
@@ -232,22 +232,22 @@ while running_qt:
         mode = 'qt_progress',
         qt_handle = new_qt_handle,
     )
-    
+
     if qt_progress['status'] != IxiaHlt.SUCCESS:
         ErrorHandler('test_stats', qt_progress)
-     
+
     if qt_progress[new_qt_handle]['progress'] == '':
         break
-    
+
     print " qt_progress : %s " % qt_progress
-    
+
     time.sleep(10)
-    
+
     test_stats_status=ixiangpf.test_stats(
         mode = 'qt_running_status',
         qt_handle = new_qt_handle,
     )
-            
+
     if test_stats_status['status'] != IxiaHlt.SUCCESS:
         ErrorHandler('test_stats', test_stats_status)
 
@@ -258,7 +258,7 @@ qt_result=ixiangpf.test_stats(
     mode = 'qt_result',
     qt_handle = new_qt_handle,
 )
-    
+
 if qt_result['status'] != IxiaHlt.SUCCESS :
     ErrorHandler('test_stats', qt_result)
 
@@ -286,5 +286,5 @@ if test_stats_status[aux1]['rx_frames'] != test_stats_status[aux1]['tx_frames'] 
     errors +=1
     print "FAIL - %s - rx and tx frame no doesn't match / loss_percentage is bigger than 0" % filename
 
-    
+
 print "\nSUCCESS!\n"

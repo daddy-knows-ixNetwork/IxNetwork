@@ -2,7 +2,7 @@
 
 # Description
 #     This script assumes that a configuration exists.
-#      
+#
 #     - Connect to an existing configuration
 #     - Set capture port to capture software and hardware
 #     - Set traffic type to continuous mode.
@@ -99,7 +99,3 @@ CopyFileFromLinuxApiServer \
     -pathExtension /captures/packetCapture \
     -srcFile port2_HW.cap \
     -dstFilePath ./port2_Hw.cap
-
-
-
-

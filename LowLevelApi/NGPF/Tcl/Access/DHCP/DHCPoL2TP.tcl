@@ -49,7 +49,7 @@
 #   This script intends to demonstrate how to configure DHCPv6 over L2TP in    #
 #   a back to back scenario. 						                           #
 #   It configures one topology with one Device Group with LAC and a device     #
-#   chained behind it with DHCPv6 Client over PPP 			                   # 
+#   chained behind it with DHCPv6 Client over PPP 			                   #
 #   The other topology contains a LNS with a PPP server and a DHCPv6 Server    #
 #   on top of it 							                                   #
 # Module:                                                                      #

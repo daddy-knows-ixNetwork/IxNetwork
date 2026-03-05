@@ -94,7 +94,7 @@ ixNet exec newConfig
 
 ################################################################################
 # 1. Configuration of protocols as per above mentioned flow.
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -275,8 +275,8 @@ set macPool2 [lindex [ixNet getList $netGroup4 macPools] 0]
 set mvMac1 [ixNet getAttribute $macPool1 -mac]
 set mvMac2 [ixNet getAttribute $macPool2 -mac]
 
-ixNet setAttribute $mvMac1 -pattern counter 
-ixNet setAttribute $mvMac2 -pattern counter 
+ixNet setAttribute $mvMac1 -pattern counter
+ixNet setAttribute $mvMac2 -pattern counter
 ixNet commit
 
 set mvCounter1 [ixNet getList $mvMac1 counter]
@@ -352,7 +352,7 @@ for {set index 0} {$index < [llength $values]} {incr index} {
      puts "\n"
 }
 puts "***************************************************"
- 
+
 set values [ixNet getAttribute $table3 -values]
 set column [ixNet getAttribute $table3 -columns]
 puts "***************************************************"
@@ -425,7 +425,7 @@ if {[catch {ixNet exec applyOnTheFly $topology}] == 1} {
 after 5000
 
 ################################################################################
-# 5. Configure L2-L3 traffic 
+# 5. Configure L2-L3 traffic
 ################################################################################
 puts "Congfiguring L2-L3 Traffic Item"
 set trafficItem1 [ixNet add [ixNet getRoot]/traffic "trafficItem"]
@@ -450,7 +450,7 @@ ixNet setMultiAttribute $endpointSet1\
     -ngpfFilters           [list]\
     -trafficGroups         [list]\
     -sources               $source\
-    -destinations          $destination  
+    -destinations          $destination
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\

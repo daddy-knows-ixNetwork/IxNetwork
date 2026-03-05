@@ -1,8 +1,8 @@
 """
 evpnvxlan.py:
-   It will create 2 BGP EVPN-VXLAN topologies, each having OSPFv2         
-   configured in connected Device Group .BGP EVPN VXLAN configured in chained  
-   device group along with Mac pools connected behind the chained             
+   It will create 2 BGP EVPN-VXLAN topologies, each having OSPFv2
+   configured in connected Device Group .BGP EVPN VXLAN configured in chained
+   device group along with Mac pools connected behind the chained
    Device Group.
 
    Tested with two back-2-back IxNetwork ports
@@ -11,8 +11,8 @@ evpnvxlan.py:
    - Assign ports
    - Physical topology:                            Port1 ----- Port2
    - Configure two Topology Groups
-   - We will add an OSPF Router, with a Network Topology, dg chained to it 
-     with BGP over loopback. Further add EVPN VXLAN over BGP and add MAC 
+   - We will add an OSPF Router, with a Network Topology, dg chained to it
+     with BGP over loopback. Further add EVPN VXLAN over BGP and add MAC
      cloud associated with the IP Addresses.
    - Start all protocols
    - Verify all protocols
@@ -64,7 +64,7 @@ debugMode = False
 
 try:
     # LogLevel: none, info, warning, request, request_response, all
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=11219, UserName='admin', Password='admin', 
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=11219, UserName='admin', Password='admin',
                                SessionName=None, SessionId=None, ApiKey=None,
                                ClearConfig=True, LogLevel="all", LogFilename='restpy.log')
 
@@ -77,17 +77,17 @@ try:
         vport[portName] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name=portName)
 
     portMap.Connect(forceTakePortOwnership)
-    
+
     ixNetwork.info("Creating Topology")
     topology1 = ixNetwork.Topology.add(Name="EVPN VXLAN Topology 1", Ports=vport['Port_1'])
-    
+
     ixNetwork.info("Adding Device Group")
     dg1 = topology1.DeviceGroup.add(Name='Label Switch Router 1', Multiplier=1)
 
     ixNetwork.info("Adding Ethernet/MAC endpoints")
     mac1 = dg1.Ethernet.add()
     mac1.Mac.Increment(start_value="22:01:01:01:01:01", step_value="00:00:00:00:00:01")
-  
+
     ixNetwork.info("Addding Ipv4")
     ip1 = mac1.Ipv4.add()
     ip1.Address.Single("51.51.51.2")
@@ -100,10 +100,10 @@ try:
 
     ixNetwork.info("Setting Network type to point-to-point")
     ospf1.NetworkType.Single("pointtopoint")
-    
+
     ixNetwork.info("Disabling the Discard learned Info")
     dg1.Ospfv2Router.find().DiscardLearnedLsa.Single(True)
-    
+
     ixNetwork.info("Adding Network Group")
     networkGroup1 = dg1.NetworkGroup.add(Name="Network Topology 1")
     netTopo1= networkGroup1.NetworkTopology.add()
@@ -112,38 +112,38 @@ try:
     chainedDg1 = networkGroup1.DeviceGroup.add(Name="Edge Router 1", Multiplier=1)
     loopback1 = chainedDg1.Ipv4Loopback.add(StackedLayers=[], Name = "IPv4 Loopback 2")
     addressSet1 = loopback1.Address
-    addressSet1.Increment(start_value = "2.1.1.1", step_value ="0.1.0.0") 
+    addressSet1.Increment(start_value = "2.1.1.1", step_value ="0.1.0.0")
 
     ixNetwork.info('Adding BGPv4 over IPv4 loopback in chained DG')
     bgpIpv4Peer1 = loopback1.BgpIpv4Peer.add()
     bgpIpv4Peer1.DutIp.Single("3.1.1.1")
-    
+
     ixNetwork.info("Enabling Learned Route Filters for EVPN VXLAN in BGP4 Peer")
     bgpIpv4Peer1.FilterEvpn.Single("1")
-    
+
     ixNetwork.info("Configuring Router\'s MAC Addresses for EVPN VXLAN in BGP4 Peer")
     bgpIpv4Peer1.RoutersMacOrIrbMacAddress.Increment(start_value = "aa:aa:aa:aa:aa:aa", step_value = "00:00:00:00:00:01")
-    
+
     ixNetwork.info("Changing Router Id of Network Topology to Loopback Address of Chained Device Group under Edge Router 1")
-    simRouter1 = netTopo1.SimRouter.find()[0] 
+    simRouter1 = netTopo1.SimRouter.find()[0]
     simRouter1.RouterId.Increment(start_value = "2.1.1.1", step_value = "0.0.0.1")
-    
+
     ixNetwork.info("Adding EVPN VXLAN over BGPv4 in chained DG")
     bgpIPv4EvpnVXLAN1 = bgpIpv4Peer1.BgpIPv4EvpnVXLAN.add()
-    
+
     ixNetwork.info("Disabling Import RT List same as Export RT List")
     bgpIPv4EvpnVXLAN1.ImportRtListSameAsExportRtList = 'false'
-    
+
     ixNetwork.info("Changing Import Route Target AS No.")
-    bgpImportRouteTargetList1 = bgpIPv4EvpnVXLAN1.BgpImportRouteTargetList.find()[0]  
+    bgpImportRouteTargetList1 = bgpIPv4EvpnVXLAN1.BgpImportRouteTargetList.find()[0]
     bgpImportRouteTargetList1.TargetAsNumber.Increment(start_value = "200", step_value = "0")
     bgpExportRouteTargetList1 = bgpIPv4EvpnVXLAN1.BgpExportRouteTargetList.find()[0]
     bgpExportRouteTargetList1.TargetAsNumber.Increment(start_value=200, step_value = "0")
-   
+
     ixNetwork.info("Adding Mac Pools beinhd EVPN VXLAn DG")
-    networkGroup1 = chainedDg1.NetworkGroup.add(Name="MAC_Pool_1", Multiplier=1)   
+    networkGroup1 = chainedDg1.NetworkGroup.add(Name="MAC_Pool_1", Multiplier=1)
     mac3 = networkGroup1.MacPools.add()
-    
+
     ixNetwork.info("Configuring Ipv4 Adresses associated with CMAC addresses")
     ipv4PrefixPools1 = mac3.Ipv4PrefixPools.add()
     mac3.NumberOfAddresses = "1"
@@ -152,16 +152,16 @@ try:
     ixNetwork.info("Enabling using of VLAN in CMAC Ranges")
     mac3.UseVlans = "true"
     cMacvlan1 = mac3.Vlan.find()[0]
-    
+
     ixNetwork.info("Configuring VLAN ID")
     cMacvlan1.VlanId.Increment(start_value = '501', step_value = '1')
-    
+
     ixNetwork.info("Configuring VLAN Priority")
     cMacvlan1.Priority.Single("7")
 
     ixNetwork.info("Changing VNI related Parameters under CMAC Properties")
     cMacProperties1 = mac3.CMacProperties.find()[0]
-    
+
 
     ixNetwork.info("Changing 1st Label(L2VNI)")
     cMacProperties1.FirstLabelStart.Increment(start_value = "1001", step_value = "10")
@@ -171,7 +171,7 @@ try:
 
     ixNetwork.info("Changing Increment Modes across all VNIs")
     cMacProperties1.LabelMode.Single("increment")
-    
+
 
     ixNetwork.info("Changing VNI step")
     cMacProperties1.LabelStep.Increment(start_value = "1", step_value = "0")
@@ -341,7 +341,7 @@ try:
     flowStatistics = session.StatViewAssistant('Flow Statistics')
     flowStatistics.AddRowFilter('Traffic Item', flowStatistics.REGEX, '^EVPN.*')
     flowStatistics.AddRowFilter('VXLAN:VNI', flowStatistics.EQUAL, "2001")
-    
+
 
     ixNetwork.info('{}\n'.format(flowStatistics))
 
@@ -358,4 +358,3 @@ except Exception as errMsg:
     print(traceback.print_exception())
     if 'session' in locals():
         session.Session.remove()
-

@@ -121,7 +121,7 @@ proc Action {portData1 portData2} {
         ixNet remove $c
         ixNet commit
     }
-    
+
     # Assign real ports to virtual ports
     puts "getting virtual ports ...."
     set vPorts [ixNet getList $root vport]
@@ -306,6 +306,3 @@ proc Action {portData1 portData2} {
 # Execute the Action procedure defined above                                  #
 #-----------------------------------------------------------------------------#
 Execute_Action
-
-
-

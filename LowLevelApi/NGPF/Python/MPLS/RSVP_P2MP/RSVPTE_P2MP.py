@@ -50,7 +50,7 @@
 #    About Topology:                                                            #
 #       Within topology both Label Switch Router(LSR) and Label Edge Router(LER)#
 #    are created. LSR is emulated in the front Device Group(DG), which consists #
-#    of both OSPF as routing protocol as well as RSVPTE-IF for Label            # 
+#    of both OSPF as routing protocol as well as RSVPTE-IF for Label            #
 #    Distribution Protocol. The chained DG act as LER, where RSVP-TE P2MP LSPs  #
 #    are configured. Unidirectional L2-L3 Traffic from Ingress to Egress is     #
 #    created.                                                                   #
@@ -419,7 +419,7 @@ print("***************************************************")
 for v in values :
     print(v)
 # end for
-print("***************************************************") 
+print("***************************************************")
 ################################################################################
 # Step 5> Apply changes on the fly.
 ################################################################################
@@ -454,7 +454,7 @@ print("***************************************************")
 for v in values :
     print(v)
 # end for
-print("***************************************************") 
+print("***************************************************")
 
 ################################################################################
 # Step 7> Configure L2-L3 traffic
@@ -523,4 +523,4 @@ time.sleep(5)
 ################################################################################
 print ('Stopping protocols')
 ixNet.execute('stopAllProtocols')
-print ('!!! Test Script Ends !!!') 
+print ('!!! Test Script Ends !!!')

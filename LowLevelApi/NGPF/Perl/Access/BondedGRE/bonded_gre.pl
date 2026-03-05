@@ -37,7 +37,7 @@
 # POSSIBILITY OF  SUCH DAMAGES IN ADVANCE.                                     #
 # Ixia Keysight will not be required to provide any software maintenance or    #
 # support services of any kind (e.g. any error corrections) in connection with #
-# script or any part thereof. The user acknowledges that although Ixia Keysight# 
+# script or any part thereof. The user acknowledges that although Ixia Keysight#
 # may     																	   #
 # from time to time and in its sole discretion provide maintenance or support  #
 # services for the script any such services are subject to the warranty and    #
@@ -90,7 +90,7 @@
 
 
 ################################################################################
-# Please ensure that PERL5LIB environment variable is set properly so that 
+# Please ensure that PERL5LIB environment variable is set properly so that
 # IxNetwork.pm module is available. IxNetwork.pm is generally available in
 # C:\<IxNetwork Install Path>\API\Perl
 ################################################################################
@@ -166,13 +166,13 @@ sub assignPorts {
     my $port2    = $my_resource[6];
     my $vport1   = $my_resource[7];
     my $vport2   = $my_resource[8];
-    
+
     my $root = $ixNet->getRoot();
     my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-    
+
     my $chassisObj2 = '';
     if ($chassis1 ne $chassis2) {
         $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -182,7 +182,7 @@ sub assignPorts {
     } else {
         $chassisObj2 = $chassisObj1;
     }
-    
+
     my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -191,7 +191,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-        
+
     $ixNet->commit();
 }
 
@@ -203,13 +203,13 @@ my $ixTclServer = '10.39.65.1';
 my $ixTclPort   = '9862';
 #my @ports       = (('10.39.64.117', '2', '9'), ('10.39.64.117', '2', '10'));
 my @ports       = (('10.39.64.117', '2', '5'), ('10.39.64.117', '2', '6'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
 $ixNet->connect($ixTclServer, '-port', $ixTclPort, '-version', '7.40',
     '-setAttribute', 'strict');
- 
+
 
 print("Creating a new config\n");
 $ixNet->execute('newConfig');
@@ -244,8 +244,8 @@ assignPorts($ixNet, @ports, $vportTx, $vportRx);
 print "\n.........Adding Bonded GRE LTE...............";
 my $lte_device = $ixNet->add($hg_topology, 'deviceGroup');
 $ixNet->commit();
-$ixNet->setMultiAttribute($lte_device, 
-    '-multiplier', '1', 
+$ixNet->setMultiAttribute($lte_device,
+    '-multiplier', '1',
     '-name', 'LTE Device Group');
 $ixNet->commit();
 
@@ -284,8 +284,8 @@ print "\n.........Adding Bonded GRE DSL ...............";
 
 my $dsl_device = $ixNet->add($hg_topology, 'deviceGroup');
 $ixNet->commit();
-$ixNet->setMultiAttribute($dsl_device, 
-    '-multiplier', '1', 
+$ixNet->setMultiAttribute($dsl_device,
+    '-multiplier', '1',
     '-name', 'DSL Device Group');
 $ixNet->commit();
 
@@ -314,9 +314,9 @@ $ixNet->commit();
 
 print "\n Modify tunnel type of DSL device group to DSL value";
 
-$ixNet->setMultiAttribute($bonded_gre_dsl, 
-'-tunnelType', 'dsl', 
-'-stackedLayers', [], 
+$ixNet->setMultiAttribute($bonded_gre_dsl,
+'-tunnelType', 'dsl',
+'-stackedLayers', [],
 '-name', 'DSL Bonded GRE');
 
 # Fetching HAAP device group details
@@ -480,13 +480,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-        my $statIndiv = ''; 
+        my $statIndiv = '';
         $index = 0;
         foreach $statIndiv (@$statVal) {
             printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
             $index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 sleep(1);
@@ -525,11 +525,11 @@ $ixNet->setMultiAttribute($endpointSet1,
     '-destinations',          $dhcpip);
 $ixNet->commit();
 
-$ixNet->setMultiAttribute($trafficItem1.'/tracking', 
+$ixNet->setMultiAttribute($trafficItem1.'/tracking',
 '-trackBy', ['ethernetIiSourceaddress0','trackingenabled0','ipv4DestIp0',
-             'ipv4SourceIp0','ethernetIiDestinationaddress0'], 
-'-values', [], 
-'-fieldWidth', 'thirtyTwoBits', 
+             'ipv4SourceIp0','ethernetIiDestinationaddress0'],
+'-values', [],
+'-fieldWidth', 'thirtyTwoBits',
 '-protocolOffset', 'Root.0');
 $ixNet->commit();
 
@@ -551,13 +551,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-        my $statIndiv = ''; 
+        my $statIndiv = '';
         $index = 0;
         foreach $statIndiv (@$statVal) {
             printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
             $index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 sleep(1);

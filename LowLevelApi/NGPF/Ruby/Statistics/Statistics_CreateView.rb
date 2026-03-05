@@ -45,7 +45,7 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#    This sample configures 10 IPv4 sessions on each of the two ports,         # 
+#    This sample configures 10 IPv4 sessions on each of the two ports,         #
 #    adds a traffic Item that uses IPv4 endpoints, sends traffic and           #
 #    create a new Advanced Filtering View for IPv4 statistics with             #
 #    Device Group Level Grouping                                               #
@@ -213,7 +213,7 @@ ti1 = @ixNet.getList(@ixNet.getRoot() + '/traffic', 'trafficItem')[0]
 @ixNet.commit()
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 vports = @ixNet.getList(@ixNet.getRoot(), 'vport')
 puts "Assigning ports to " + vports.to_s + " ..."

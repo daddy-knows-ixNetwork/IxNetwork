@@ -1,9 +1,9 @@
 #!/usr/bin/tclsh
 
 # Description:
-# 
+#
 #    Assuming that all ports are configured.
-#    
+#
 
 package req Ixia
 #package req IxTclNetwork
@@ -75,8 +75,8 @@ proc GetStatView { {getStatsBy trafficItem} } {
 	    break
 	}
     }
-    
-    # Iterrate through each page 
+
+    # Iterrate through each page
     set row 0
     for {set currPage 1} {$currPage <= $totalPages} {incr currPage} {
 	puts "\nGetStatView: Getting statistics on page: $currPage/$totalPages"
@@ -87,7 +87,7 @@ proc GetStatView { {getStatsBy trafficItem} } {
 	    return 1
 	}
 	ixNet commit
-	
+
 	# Wait for statistics to populate on current page
 	set whileLoopStopCounter 0
 	while {[ixNet getAttribute $view/page -isReady] != "true"} {
@@ -101,7 +101,7 @@ proc GetStatView { {getStatsBy trafficItem} } {
 	    }
 	    incr whileLoopStopCounter
 	}
-	
+
 	set pageList [ixNet getAttribute $view/page -rowValues] ;# first list of all rows in the page
 	set totalFlowStatistics [llength $pageList]
 
@@ -116,7 +116,7 @@ proc GetStatView { {getStatsBy trafficItem} } {
 
 		# cellList: 1/1/1 1/1/2 TI0-Flow_1 1.1.1.1-1.1.2.1 4000 4000 0 0 0 0 256000 0 0 0 0 0 0 0 0 0 0 0 00:00:00.684 00:00:00.700
 		set cellList [lindex $rowList $rowIndex] ;# third list of cell values
-		
+
 		puts "\n--- cellList $pageListIndex: $cellList ---\n"
 
 		# Get the Traffic Item name
@@ -129,7 +129,7 @@ proc GetStatView { {getStatsBy trafficItem} } {
 
 		set rxPortIndex [lsearch $columnList "Rx Port"]
 		set rxPort [lindex $cellList $rxPortIndex]
-		
+
 		foreach column $columnList item $cellList {
 		    if {[regexp "VLAN:VLAN Priority" $column]} {
 			set column "Vlan_Priority"

@@ -3,28 +3,28 @@ tapsettings_ApplicationSelect.py:
 
     - Connect to the API server
     - In this test, do the following:
-        - Add two real ports 
+        - Add two real ports
         - Add two vports
         - Assign two real ports in to vports
         - Find the transceiverOptions from vport tapsettings
         - Update reqAppSel attributes of transceiverOptions
 
-     
+
 Supports IxNetwork API servers:
    - Windows, Windows Connection Mgr and Linux
-   
+
 Requirements:
    - Minimum IxNetwork 10.00
    - Python 2.7 and 3+
    - pip install requests
    - pip install ixnetwork_restpy
-   
+
 RestPy Doc:
     https://openixia.github.io/ixnetwork_restpy/#/overview
 
 Usage:
    - Enter: python <script>
-   
+
 """
 
 from ixnetwork_restpy import SessionAssistant
@@ -54,7 +54,7 @@ vport2 = ixnetwork.Vport.find(Name="Port 2")
 vport1.GetTapSettings()
 tapsettings = vport1.TapSettings.find()
 
-# Transceiver Options Configuration 
+# Transceiver Options Configuration
 v1_trans = vport1.TapSettings.find().TransceiverOptions
 appselMatch = v1_trans.AppselMatch.find()
 availableApp = v1_trans.AvailableApplications.find()

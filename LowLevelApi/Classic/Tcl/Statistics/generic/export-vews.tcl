@@ -103,20 +103,20 @@ after 30000
 set viewList {{PPP General Statistics} {BGP Aggregated Statistics} {Traffic Item Statistics}}
 
 foreach view $viewList {
-	set index [lsearch -regexp [ixNet getL [ixNet getRoot]/statistics view] $view]	
+	set index [lsearch -regexp [ixNet getL [ixNet getRoot]/statistics view] $view]
 	if {$index== -1} {
 		error "Cannot find $view in view list !"
 	}
 	set usedView [lindex [ixNet getL [ixNet getRoot]/statistics view] $index]
 	set location "C:\\IxNetworkExports\\$view.html"
-	
+
 	puts "Apply the export data action on $view"
 	set status [ixNet exec exportData $usedView $location]
-	
+
     if { [string first "::ixNet::OK" $status] >= 0 } {
 		puts "Exporting data successful !"
     } else {
-		error "Exporting data failed !"	
+		error "Exporting data failed !"
 	}
 }
 
@@ -124,20 +124,20 @@ foreach view $viewList {
 set viewList {{PPP Setup Statistics - All Ports} {PPP Latency Statistics - All Ports}}
 
 foreach view $viewList {
-	set index [lsearch -regexp [ixNet getL [ixNet getRoot]/statistics view] $view]	
+	set index [lsearch -regexp [ixNet getL [ixNet getRoot]/statistics view] $view]
 	if {$index== -1} {
 		error "Cannot find $view in view list !"
 	}
 	set usedView [lindex [ixNet getL [ixNet getRoot]/statistics view] $index]
 	set location "C:\\IxNetworkExports\\$view.png"
-	
+
 	puts "Apply the export data action on $view"
 	set status [ixNet exec exportData $usedView $location]
-	
+
     if { [string first "::ixNet::OK" $status] >= 0 } {
 		puts "Exporting data successful !"
     } else {
-		error "Exporting data failed !"	
+		error "Exporting data failed !"
 	}
 }
 

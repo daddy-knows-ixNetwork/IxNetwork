@@ -55,7 +55,7 @@
 #                                                                              #
 #    1. It will create 2 OSPFv2 topologies. Topology-1 will have a Linear      #
 #       simulated topology.                                                    #
-#    2. Enable Traffic Engineering in OSPF Emulated Router                     # 
+#    2. Enable Traffic Engineering in OSPF Emulated Router                     #
 #    3. Enable Shared Risk Link Group(SRLG) in OSPF Emulated Router.           #
 #    4. Set SRLG Count and Provide SRLG Value in OSPF Emulated Router.         #
 #    5. Enable Link Protection in OSPF Emulated Router.                        #
@@ -68,7 +68,7 @@
 #   12. Start Protocol                                                         #
 #   13. Retrieve protocol statistics                                           #
 #   14. Retrieve protocol learned info.                                        #
-#   15. Stop all protocols.                                                    #                                                                                          
+#   15. Stop all protocols.                                                    #
 #                                                                              #
 # Ixia Softwares:                                                              #
 #    IxOS      8.10 EA (8.10.1046.6)                                           #
@@ -239,7 +239,7 @@ ixNet setAttr $networkGroup1 -name "OSPF Linear Topology 1"
 ixNet commit
 
 ################################################################################
-# 2. Enable Traffic Engineering in OSPF Emulated Router.                       #           
+# 2. Enable Traffic Engineering in OSPF Emulated Router.                       #
 ################################################################################
 puts "Enabling TE in OSPF Topology 1 Router"
 set ospf1TE [ixNet getList $ospf1 ospfTrafficEngineering]
@@ -256,7 +256,7 @@ ixNet setAttr $TE2_singleValue -value true
 ixNet commit
 
 ################################################################################
-# 3. Enable Shared Risk Link Group(SRLG) in OSPF Emulated Router.              #           
+# 3. Enable Shared Risk Link Group(SRLG) in OSPF Emulated Router.              #
 ################################################################################
 puts "Enabling SRLG in OSPF Topology 1 Router"
 set enSRLG1 [ixNet getAttribute $ospf1 -enableSRLG]
@@ -271,7 +271,7 @@ ixNet setAttr $SRLG2_singleValue -value True
 ixNet commit
 
 ################################################################################
-# 4. Set SRLG Count and Provide SRLG Value in OSPF Emulated Router.            #           
+# 4. Set SRLG Count and Provide SRLG Value in OSPF Emulated Router.            #
 ################################################################################
 puts "Setting SRLG Count 3 in OSPF Topology 1 Router"
 ixNet setAttr  $ospf1 -srlgCount 3
@@ -314,7 +314,7 @@ ixNet setAttr $SRLG2_Value1_singleValue -value 13
 ixNet commit
 
 ################################################################################
-# 5. Enable Link Protection in OSPF Emulated Router.                           #           
+# 5. Enable Link Protection in OSPF Emulated Router.                           #
 ################################################################################
 puts "Enabling Link Protection in OSPF Topology 1 Router"
 set enLinkProtection1 [ixNet getAttribute $ospf1 -enLinkProtection ]
@@ -329,7 +329,7 @@ ixNet setAttr $LinkProc2_singleValue -value True
 ixNet commit
 
 ################################################################################
-# 6. Set Link Protection Type in OSPF Emulated Router.                         #           
+# 6. Set Link Protection Type in OSPF Emulated Router.                         #
 ################################################################################
 puts "Enabling Extra Traffic Link Protection Type in OSPF Topology 1 Router"
 set extTraf [ixNet getAttribute $ospf1 -extraTraffic]
@@ -344,7 +344,7 @@ ixNet setMulA $sharedTraf_singleValue -value True
 ixNet commit
 
 ################################################################################
-# 7. Enable Traffic Engineering in OSPF Simulated Router.                      #           
+# 7. Enable Traffic Engineering in OSPF Simulated Router.                      #
 ################################################################################
 puts "Enabling TE in OSPF Linear Topology"
 set simInterface1 [lindex [ixNet getList $networkTopology1 simInterface] 0]
@@ -355,10 +355,10 @@ set ospfPseudoInterface1 [lindex [ixNet getList $simInterfaceIPv4Config1\
 set LinearST_TE [ixNet getAttribute $ospfPseudoInterface1 -enable]
 set TE1_singleValue [ixNet getList $LinearST_TE singleValue]
 ixNet setAttr $TE1_singleValue -value true
-ixNet commit   
-   
+ixNet commit
+
 ################################################################################
-# 8. Enable Shared Risk Link Group(SRLG) in OSPF Simulated Router.             #           
+# 8. Enable Shared Risk Link Group(SRLG) in OSPF Simulated Router.             #
 ################################################################################
 puts "Enabling SRLG in OSPF Linear Topology"
 set enSRLG_ST [ixNet getAttribute $ospfPseudoInterface1 -enableSRLG]
@@ -367,7 +367,7 @@ ixNet setAttr $SRLGST_singleValue -value True
 ixNet commit
 
 ################################################################################
-# 9. Set SRLG Count and Provide SRLG Value in OSPF Simulated Router.           #           
+# 9. Set SRLG Count and Provide SRLG Value in OSPF Simulated Router.           #
 ################################################################################
 puts "Setting SRLG Count 2 in OSPF Linear Topology"
 ixNet setAttr  $ospfPseudoInterface1 -srlgCount 2
@@ -387,7 +387,7 @@ ixNet setAttr $SRLGST_Value1_singleValue -value 255
 ixNet commit
 
 ################################################################################
-# 10. Enable Link Protection in OSPF Simulated Router.                         #           
+# 10. Enable Link Protection in OSPF Simulated Router.                         #
 ################################################################################
 puts "Enabling Link Protection in OSPF Linear Topology"
 set enLinkProtectionST [ixNet getAttribute $ospfPseudoInterface1 -enLinkProtection ]
@@ -396,7 +396,7 @@ ixNet setAttr $LinkProcST_singleValue -value True
 ixNet commit
 
 ################################################################################
-# 11. Set Link Protection Type in OSPF Simulated Router.                       #           
+# 11. Set Link Protection Type in OSPF Simulated Router.                       #
 ################################################################################
 puts "Enabling Dedicated 1:1 Link Protection Type in OSPF Linear Topology"
 set D_1to1_Traf [ixNet getAttribute $ospfPseudoInterface1 -dedicated1To1]
@@ -405,14 +405,14 @@ ixNet setMulA $D_1to1_singleValue -value True
 ixNet commit
 
 ################################################################################
-# 12. Start Protocol and wait for 60 seconds.                                  #           
+# 12. Start Protocol and wait for 60 seconds.                                  #
 ################################################################################
 puts "Starting protocols and waiting for 60 seconds for protocols to come up"
 ixNet exec startAllProtocols
 after 60000
 
 ################################################################################
-# 13. Retrieve protocol statistics.                                            #           
+# 13. Retrieve protocol statistics.                                            #
 ################################################################################
 puts "Fetching all Protocol Summary Stats\n"
 set viewPage {::ixNet::OBJ-/statistics/view:"Protocols Summary"/page}
@@ -447,7 +447,7 @@ foreach statValList1 [ixNet getAttr $viewPage1 -rowValues] {
 puts "***************************************************"
 
 ################################################################################
-# 14. Retrieve protocol learned info.                                          #           
+# 14. Retrieve protocol learned info.                                          #
 ################################################################################
 puts "Fetching OSPFv2 Basic Learned Info on OSPFv2 Topology 2 Router"
 ixNet exec getBasicLearnedInfo $ospf2 1
@@ -482,7 +482,7 @@ foreach valuelist $learnedInfoValuesList {
 }
 
 ################################################################################
-# 15. Stop all protocols.                                                      #           
+# 15. Stop all protocols.                                                      #
 ################################################################################
 ixNet exec stopAllProtocols
 puts "!!! Test Script Ends !!!"

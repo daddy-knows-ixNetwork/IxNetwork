@@ -1,7 +1,7 @@
 
 Description:
      Using Ansible to automation with the IxNetwork RESTPy Python client utility
-     
+
 Tested with:
     - Ansible version 2.7.6 and 2.8.1
     - Python 3.7.0
@@ -15,7 +15,7 @@ Requirements:
     - ixnetwork_restpy
     - Minimum IxNetwork version 8.50
     - https://github.com/ansible/ansible.git
- 
+
 Installation:
     This was tested using CentOS.  You could use other Linux distributions as well.
 
@@ -116,7 +116,7 @@ Playbook example below:
         licenseServerIp: 192.168.70.3
         licenseMode: subscription
         licenseTier: tier3
- 
+
 
 Running Ansible:
 
@@ -132,10 +132,10 @@ Running Ansible:
           -v, vvv: debugging verbosity
 
 
-    - Example 1: 
+    - Example 1:
           ansible-playbook Playbooks/bgpNgpf.yml -i Inventory/ixia --module-path Modules -c local -e ansible_python_interpreter=/usr/local/python3.7.0/bin/python3.7 -v"
 
-    - Example 2:  Run multiple playbooks 
+    - Example 2:  Run multiple playbooks
           ansible-playbook Playbooks/playBgp.yml Playbooks/bgpNgpfLinux.yml -i Inventory/ixia --module-path Modules -c local -e ansible_python_interpreter=/usr/local/python3.7.0/bin/python3.7 -v"
 
 
@@ -155,13 +155,13 @@ Output:
    }
 
    PLAY RECAP *******************************************************************************
-   192.168.70.3               : ok=2    changed=0    unreachable=0    failed=0 
+   192.168.70.3               : ok=2    changed=0    unreachable=0    failed=0
 
 
 
 To make Ansible display human readable debug:
 
-    - Clone the ansible repository to your home directory: 
+    - Clone the ansible repository to your home directory:
          git clone https://github.com/ansible/ansible.git
 	 - In this example, I put it in my /home/hgee directory
 
@@ -176,4 +176,3 @@ To make Ansible display human readable debug:
 To add additional modules to the module search paths:
 
     - export ANSIBLE_LIBRARY=/path_to_modules:/path2_to_modules
-

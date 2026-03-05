@@ -103,7 +103,7 @@ try:
     portObj.assignPorts(portList, createVports=False)
     portObj.verifyPortState()
 
-    quickTestObj = QuickTest(mainObj, fileMgmtObj) 
+    quickTestObj = QuickTest(mainObj, fileMgmtObj)
     quickTestHandle = quickTestObj.getQuickTestHandleByName(quickTestNameToRun)
     print('\nQuickTest Handle:', quickTestHandle)
 

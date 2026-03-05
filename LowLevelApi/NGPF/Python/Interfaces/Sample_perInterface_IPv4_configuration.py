@@ -216,7 +216,7 @@ ixNet.setMultiAttribute(ixNet.getAttribute(mac2, '-mac') + '/counter',
     '-direction', 'increment',
     '-start',     '18:03:73:C7:6C:01',
     '-step',      '00:00:00:00:00:01')
-    
+
 ixNet.commit()
 
 #print ('ixNet.help(\'::ixNet::OBJ-/topology/deviceGroup/ethernet\')')
@@ -260,27 +260,27 @@ indexGw2 = ixNet.remapIds(indexGw2)[0]
 print("configuring ipv4 addresses")
 
 for i in range(0,N) :
-    ixNet.setMultiAttribute(indexAdd1, 
-            '-count', '1', 
-            '-index', i+1, 
+    ixNet.setMultiAttribute(indexAdd1,
+            '-count', '1',
+            '-index', i+1,
             '-value', srcAddr[i])
     ixNet.commit()
 
-    ixNet.setMultiAttribute(indexAdd2, 
-            '-count', '1', 
-            '-index', i+1, 
-            '-value', destAddr[i])
-    ixNet.commit()
-    
-    ixNet.setMultiAttribute(indexGw1, 
-            '-count', '1', 
-            '-index', i+1, 
+    ixNet.setMultiAttribute(indexAdd2,
+            '-count', '1',
+            '-index', i+1,
             '-value', destAddr[i])
     ixNet.commit()
 
-    ixNet.setMultiAttribute(indexGw2, 
-            '-count', '1', 
-            '-index', i+1, 
+    ixNet.setMultiAttribute(indexGw1,
+            '-count', '1',
+            '-index', i+1,
+            '-value', destAddr[i])
+    ixNet.commit()
+
+    ixNet.setMultiAttribute(indexGw2,
+            '-count', '1',
+            '-index', i+1,
             '-value', srcAddr[i])
     ixNet.commit()
 

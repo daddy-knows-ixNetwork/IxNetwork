@@ -69,16 +69,16 @@ try:
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           verifySslCert=False,
                           serverOs=connectToApiServer)
-        
+
     if connectToApiServer in ['windows', 'windowsConnectionMgr']:
         mainObj = Connect(apiServerIp='192.168.70.3',
                           serverIpPort='11009',
                           serverOs=connectToApiServer,
                           deleteSessionAfterTest=deleteSessionAfterTest)
-        
+
     #---------- Preference Settings End --------------
 
-    mainObj.newBlankConfig()    
+    mainObj.newBlankConfig()
     portObj = PortMgmt(mainObj)
     portObj.connectIxChassis(ixChassisIp)
 
@@ -180,7 +180,7 @@ try:
                                                                     'frameRate': 88,
                                                                     'frameRateType': 'percentLineRate',
                                                                     'frameSize': 128}])
-    
+
     trafficItemObj   = trafficStatus[0]
     endpointObj      = trafficStatus[1][0]
     configElementObj = trafficStatus[2][0]
@@ -189,15 +189,15 @@ try:
     trafficObj.configTrafficItem(mode='modify',
                                  obj=trafficItemObj,
                                  trafficItem = {'name':'Topo1_mod_Topo2'})
-    
+
     trafficObj.configTrafficItem(mode='modify',
                                  obj=configElementObj,
                                  configElements = {'frameSize':'512'})
-    
+
     trafficObj.configTrafficItem(mode='modify',
                                  obj=endpointObj,
                                  endpoints = {'name':'Flow-Group-10'})
-    
+
     trafficObj.regenerateTrafficItems()
     trafficObj.startTraffic()
 

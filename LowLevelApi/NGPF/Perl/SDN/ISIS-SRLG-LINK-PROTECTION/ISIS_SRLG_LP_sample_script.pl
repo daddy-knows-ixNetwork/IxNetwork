@@ -55,14 +55,14 @@
 ##    1. It will create 2 ISIS topologies, topology1 will have a simulated      #
 ##       topology Linear behind Device Group1 and Mesh behind Device Group2     #
 ##    2. Enable Shared Risk Link Group(SRLG) in ISIS Emulated                   #
-##       Router in both Device Group.                                           # 
+##       Router in both Device Group.                                           #
 ##    3. Give SRLG count 2 with value 5 and 6 for ISIS Emulated router          #
 ##       Router in both Device Group.                                           #
 ##    4. Give SRLG count 1 with value 10 for all ISIS simulated routers         #
 ##       Router behind Device Group1 & with value 15 for all ISIS simulated     #
 ##       routers Router behind Device Group2 .                                  #
 ##    5. Enable Link Protection in ISIS Emulated Router in both Device Group    #
-##    6. Give Link Protection type Of Extra traffic,Unprotected and Dedicated   # 
+##    6. Give Link Protection type Of Extra traffic,Unprotected and Dedicated   #
 ##       :true for emulated Router in both device group.                        #
 ##    7. Give Link Protection type Of Dedicated 1:1 and shared:true for all     #
 ##       simulated Router behind  both device group.                            #
@@ -71,7 +71,7 @@
 ##    10. On the fly uncheck "Enable SRLG"  emulated router in Device group2 &  #
 ##        check  "Enable SRLG" for all simulated Routers behind device group1   #
 ##    11. On the fly do change on Link type i.e  make enhanced:true and         #
-##       unprotected:false for emulated router in Device group1 & disable"Enable# 
+##       unprotected:false for emulated router in Device group1 & disable"Enable#
 ##       Link Protection" for first 2 simulated Routers behind device group2    #
 ##                                                                              #
 ##    12. Stop all protocols.                                                   #
@@ -84,7 +84,7 @@
 
 
 ################################################################################
-# Please ensure that PERL5LIB environment variable is set properly so that 
+# Please ensure that PERL5LIB environment variable is set properly so that
 # IxNetwork.pm module is available. IxNetwork.pm is generally available in
 # C:\<IxNetwork Install Path>\API\Perl
 ################################################################################
@@ -102,13 +102,13 @@ sub assignPorts {
 	my $port2    = $my_resource[6];
 	my $vport1   = $my_resource[7];
 	my $vport2   = $my_resource[8];
-	
+
 	my $root = $ixNet->getRoot();
 	my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-	
+
 	my $chassisObj2 = '';
 	if ($chassis1 ne $chassis2) {
 	    $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -118,7 +118,7 @@ sub assignPorts {
 	} else {
 	    $chassisObj2 = $chassisObj1;
 	}
-	
+
 	my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -127,7 +127,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-		
+
     $ixNet->commit();
 }
 
@@ -139,7 +139,7 @@ my $ixTclServer = '10.216.104.58';
 my $ixTclPort   = '8919';
 my @ports       = (('10.216.108.99', '11', '3'), ('10.216.108.99', '11', '4'));
 
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
@@ -152,7 +152,7 @@ $ixNet->execute('newConfig');
 ################################################################################
 #  Protocol configuration section. Configure ISIS as per the description
 #  give above
-################################################################################ 
+################################################################################
 # Adding Virtual ports
 print("Adding 2 vports\n");
 $ixNet->add($ixNet->getRoot(), 'vport');
@@ -307,7 +307,7 @@ my $networkTypeMultiValue2 = ($ixNet->getAttribute($isisL3_2, '-networkType'));
 $ixNet->setAttribute($networkTypeMultiValue2, '-pattern', 'singleValue', '-clearOverlays', 'False');
 $ixNet->setAttribute($networkTypeMultiValue2.'/singleValue', '-value', 'pointpoint');
 
-# Disable Discard Learned LSP 
+# Disable Discard Learned LSP
 print("Disabling the Discard Learned Info CheckBox\n");
 my $isisL3RouterDiscardLearnedLSP1 = $ixNet->getAttribute(($ixNet->getList($t1devices[0], 'isisL3Router'))[0],'-discardLSPs');
 my $isisL3RouterDiscardLearnedLSP2 = $ixNet->getAttribute(($ixNet->getList($t2devices[0], 'isisL3Router'))[0],'-discardLSPs');
@@ -336,13 +336,13 @@ $ixNet->setAttribute($networkGroup2, '-multiplier', '1','-name', 'ISIS_Mesh Topo
 $ixNet->commit();
 
 ###############################################################################
-## Enable SRLG in Both emulated Router 
+## Enable SRLG in Both emulated Router
 ################################################################################
 
 print("Enabling SRLG in emulated router in both device group\n");
 
 #For DG1
-my $enableSrlg1 = ($ixNet->getAttribute($isisL3_1, '-enableSRLG')); 
+my $enableSrlg1 = ($ixNet->getAttribute($isisL3_1, '-enableSRLG'));
 $ixNet->setAttribute($enableSrlg1.'/singleValue', '-value', 'True');
 $ixNet->commit();
 
@@ -352,8 +352,8 @@ $ixNet->setAttribute($enableSrlg2.'/singleValue', '-value', 'True');
 $ixNet->commit();
 
 ##########################################################################################################
-##  Give SRLG count to 2 and SRLG value to 5 and 6 for ISIS Emulated  Router in both Device Group      
-###########################################################################################################       
+##  Give SRLG count to 2 and SRLG value to 5 and 6 for ISIS Emulated  Router in both Device Group
+###########################################################################################################
 
 print("Setting SRLG count to 2 and SRLG Value to 5 and 6 in emulated router in both Device Group\n");
 
@@ -521,13 +521,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -587,4 +587,3 @@ sleep(30);
 print("Stopping All Protocols\n");
 $ixNet->execute('stopAllProtocols');
 print("!!! Test Script Ends !!!\n");
-

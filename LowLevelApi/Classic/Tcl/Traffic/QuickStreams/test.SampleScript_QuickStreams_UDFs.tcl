@@ -74,18 +74,18 @@ proc checkDetailTrafficConfiguration {} {
     set error 1
 
 	# Checking various attributes of QFG 1
-    set top [ixNet getRoot]	
+    set top [ixNet getRoot]
 	set trafficItemList [ixNet getList $top/traffic trafficItem]
     set trafficItem1 [lindex $trafficItemList 0]
-    set hltList [ixNet getList $trafficItem1 highLevelStream] 
+    set hltList [ixNet getList $trafficItem1 highLevelStream]
 
-	log "Verifying various attributes of QFG 1" 	
+	log "Verifying various attributes of QFG 1"
     set hlt1 [lindex $hltList 0]
     set udfList [ixNet getList $hlt1 udf]
-	
+
 	# Checking UDF1 attributes of QFG 1
 	log "Verifying UDF1 attributes of QFG 1 ....."
-    set udf1 [lindex $udfList 0]  
+    set udf1 [lindex $udfList 0]
     if {[checkAttributeValue $udf1 {enabled True \
 	                                byteOffset 32 \
 									chainedFromUdf none \
@@ -103,10 +103,10 @@ proc checkDetailTrafficConfiguration {} {
         return $error
     }
     log "UDF1 attributes for QFG 1 are proper !!!"
-	
+
 	# Checking UDF2 attributes of QFG 1
 	log "Verifying UDF2 attributes of QFG 1 ....."
-    set udf2 [lindex $udfList 1]  
+    set udf2 [lindex $udfList 1]
     if {[checkAttributeValue $udf2 {enabled True \
 	                                byteOffset 36 \
 									type valueList}] == 1} {
@@ -119,10 +119,10 @@ proc checkDetailTrafficConfiguration {} {
         return $error
     }
     log "UDF2 attributes for QFG 1 are proper !!!"
-	
+
 	# Checking UDF3 attributes of QFG 1
 	log "Verifying UDF3 attributes of QFG 1 ....."
-    set udf3 [lindex $udfList 2]  
+    set udf3 [lindex $udfList 2]
     if {[checkAttributeValue $udf3 {enabled True \
 	                                byteOffset 40 \
                                     type rangeList}] == 1} {
@@ -135,10 +135,10 @@ proc checkDetailTrafficConfiguration {} {
         return $error
     }
     log "UDF3 attributes for QFG 1 are proper !!!"
-	
+
 	# Checking UDF4 attributes of QFG 1
 	log "Verifying UDF4 attributes of QFG 1 ....."
-    set udf4 [lindex $udfList 3]  
+    set udf4 [lindex $udfList 3]
     if {[checkAttributeValue $udf4 {enabled True \
 	                                byteOffset 44 \
                                     type nestedCounter}] == 1} {
@@ -156,10 +156,10 @@ proc checkDetailTrafficConfiguration {} {
         return $error
     }
     log "UDF4 attributes for QFG 1 are proper !!!"
-	
+
 	# Checking UDF5 attributes of QFG 1
 	log "Verifying UDF5 attributes of QFG 1 ....."
-    set udf5 [lindex $udfList 4]  
+    set udf5 [lindex $udfList 4]
     if {[checkAttributeValue $udf5 {enabled True \
 	                                byteOffset 52 \
                                     type ipv4}] == 1} {
@@ -176,14 +176,14 @@ proc checkDetailTrafficConfiguration {} {
         return $error
     }
     log "UDF5 attributes for QFG 1 are proper !!!"
-	
+
 	# Checking Table UDF attributes of QFG 1
-	log "Verifying Table UDF attributes of QFG 1 ....."   
+	log "Verifying Table UDF attributes of QFG 1 ....."
     if {[checkAttributeValue $hlt1/tableUdf {enabled True}] == 1} {
 		log "Table UDF attributes for QFG 1 are not proper !!!"
         return $error
     }
-	set columnList [ixNet getList $hlt1/tableUdf column] 
+	set columnList [ixNet getList $hlt1/tableUdf column]
 	set column1 [lindex $columnList 0]
     if {[checkAttributeValue $column1 {offset 448 \
 									   size 4 \
@@ -201,15 +201,15 @@ proc checkDetailTrafficConfiguration {} {
         return $error
     }
     log "Table UDF attributes for QFG 1 are proper !!!"
-	
-	# Checking various attributes of QFG 2     
-	log "Verifying various attributes of QFG 2" 	
+
+	# Checking various attributes of QFG 2
+	log "Verifying various attributes of QFG 2"
     set hlt2 [lindex $hltList 1]
     set udfList [ixNet getList $hlt2 udf]
-	
+
 	# Checking UDF1 attributes of QFG 2
 	log "Verifying UDF1 attributes of QFG 2 ....."
-    set udf1 [lindex $udfList 0]  
+    set udf1 [lindex $udfList 0]
     if {[checkAttributeValue $udf1 {enabled True \
 	                                byteOffset 48 \
                                     type random}] == 1} {
@@ -220,7 +220,7 @@ proc checkDetailTrafficConfiguration {} {
 		log "UDF1: Random attributes for QFG 2 are not proper !!!"
         return $error
     }
-    log "UDF1 attributes for QFG 2 are proper !!!"	
+    log "UDF1 attributes for QFG 2 are proper !!!"
 }
 
 #-------------------------------------------------------------------------------
@@ -231,9 +231,9 @@ proc checkDetailTrafficConfiguration {} {
 #-------------------------------------------------------------------------------
 proc checkDetailTrafficConfigurationInIxExplorer {chassisIp card port numStream} {
     set error 1
-	
+
 	log "Connecting to the Chassis $chassisIp ....."
-    if {[ixExplorerConnectChassis $chassisIp $card $port] == 1} {        
+    if {[ixExplorerConnectChassis $chassisIp $card $port] == 1} {
         ixExplorerDisconnectChassis $chassisIp
         return $error
     }
@@ -295,7 +295,7 @@ proc checkDetailTrafficConfigurationInIxExplorer {chassisIp card port numStream}
         return $error
     }
 
-    log "IxExplorer stream attributes configured from IxNetwork Quick Stream are correct !!!"  
+    log "IxExplorer stream attributes configured from IxNetwork Quick Stream are correct !!!"
 
     ixExplorerDisconnectChassis $chassisIp
 
@@ -307,24 +307,24 @@ proc Action {portData1 portData2} {
     # Initialize return value
     set FAILED 1
     set PASSED 0
-	
-	# Get IXIA Ports Info     
+
+	# Get IXIA Ports Info
     set chassisIp1 [lindex $portData1 0]
     set card1      [lindex $portData1 1]
     set port1      [lindex $portData1 2]
     set client1    [lindex $portData1 3]
     set tcpPort1   [lindex $portData1 4]
-    
+
     set chassisIp2 [lindex $portData2 0]
     set card2      [lindex $portData2 1]
     set port2      [lindex $portData2 2]
     set client2    [lindex $portData2 3]
     set tcpPort2   [lindex $portData2 4]
-	
+
 	set version "5.40"
 
     # Connect to IxNetwork TCL-Server/Client
-    if {$client1 == $client2} {  
+    if {$client1 == $client2} {
         log "Connecting to client $client1"
         if {[ixNet connect $client1 -port $tcpPort1 -version $version] != "::ixNet::OK"} {
             log "Unable to connect to IxNetwork Tcl Server !!!"
@@ -340,12 +340,12 @@ proc Action {portData1 portData2} {
 
     # Clean up all the existing configurations from the client
     log "Cleaning up the Client ....."
-    ixNetCleanUp    
+    ixNetCleanUp
 	log "Client is cleaned up successfully !!!"
 	after 5000
 
     # Load the Test Config
-    log "Now we configure the Ixia ports from the config file !!!"    
+    log "Now we configure the Ixia ports from the config file !!!"
     log "Loading ixncfg file ....."
 	set configFileName "config.SampleScript_QuickStreams_UDFs.ixncfg"
 	set configFile [ixNet readFrom "$::pwd/$configFileName"]
@@ -353,8 +353,8 @@ proc Action {portData1 portData2} {
         log "Loading IxNetwork config file : FAILED"
         ixNetCleanUp
         return $FAILED
-    } 
-    log "Loading IxNetwork config file : PASSED" 
+    }
+    log "Loading IxNetwork config file : PASSED"
 
     # Get Real Port List
     set realPortsList [list [list $chassisIp1 $card1 $port1] \
@@ -369,7 +369,7 @@ proc Action {portData1 portData2} {
     log "Virtual ports are = $vPorts"
 
     # Assign virtual ports to real ports
-    log "Assigning virtual ports to real ports ....."    
+    log "Assigning virtual ports to real ports ....."
     set assignStatus [ixTclNet::AssignPorts $realPortsList {} $vPorts force]
     log "Assigned: $assignStatus"
     if {[string equal [lindex $assignStatus 0] $vPort1] != 1 || \
@@ -377,43 +377,43 @@ proc Action {portData1 portData2} {
 		log "Ports are not assigned !!!"
         ixNetCleanUp
         return $FAILED
-    } 
-    log "Ports are assigned successfully !!!"	
-	
-	# Check if the ports are assigned; if un-assigned re-assign them   
+    }
+    log "Ports are assigned successfully !!!"
+
+	# Check if the ports are assigned; if un-assigned re-assign them
 	if {[ifUnassignedConnectAgain] == 1} {
 		log "Not able to re-assign the ports !!!"
 		ixNetCleanUp
 		return $FAILED
 	}
 	log "Ports are in assigned state !!!"
-	
+
 	# Check Ports Link Status
     log "Checking Port Link Status ....."
-    if {[ixTclNet::CheckLinkState $vPorts doneList]} {  
-        log "Ports Link is down !!!"	
+    if {[ixTclNet::CheckLinkState $vPorts doneList]} {
+        log "Ports Link is down !!!"
         ixNetCleanUp
         return $FAILED
-    }   
-    log "Ports Link is Up !!!"	
+    }
+    log "Ports Link is Up !!!"
 	after 5000
 
-    # Start Test Execution	
-	log "Test execution Starts !!!"		
-	
-    # Generate and Apply  Traffic 
+    # Start Test Execution
+	log "Test execution Starts !!!"
+
+    # Generate and Apply  Traffic
     if {[generateApplyTraffic] == 1} {
         log "Failed to start traffic !!!"
         #ixNetCleanUp
         return $FAILED
     }
-    log "Traffic applied successfully !!!"	
+    log "Traffic applied successfully !!!"
 
 	#--------------------------------------------#
 	#  Verification of Traffic Configuration
-	#--------------------------------------------# 
+	#--------------------------------------------#
 	log "Verifying Traffic configuration ....."
-	
+
 	# Check High Level Stream or Flow Groups Count
 	log "Verifying no. of HL Streams ....."
 	if {[checkHighLevelSteamCountForAllTrafficItem 1 {0 2}] == 1} {
@@ -421,8 +421,8 @@ proc Action {portData1 portData2} {
 		ixNetCleanUp
 		return $FAILED
 	}
-	log "No. of HL Streams generated is correct !!!"		
-	
+	log "No. of HL Streams generated is correct !!!"
+
 	# Check Traffic Config in IxNetwork
 	log "Verifying Traffic Configuration in IxNetwork ....."
 	if {[checkDetailTrafficConfiguration] == 1} {
@@ -443,7 +443,7 @@ proc Action {portData1 portData2} {
 
 	#-------------------------------------------------#
 	#  Test Part 4: Verification of Traffic Stats
-	#-------------------------------------------------#  
+	#-------------------------------------------------#
 	# Start Traffic
 	log "Starting Traffic ....."
 	set traffic [ixNet getRoot]/traffic
@@ -463,23 +463,23 @@ proc Action {portData1 portData2} {
 		log "Failed to stop traffic"
 		ixNetCleanUp
 		return $FAILED
-	}		
-	log "Traffic stopped successfully !!!"	
-	after 5000	
-	
+	}
+	log "Traffic stopped successfully !!!"
+	after 5000
+
 	set tolerance 5
-	
+
 	# Check Data Plane Port Statistics
-	log "Verifying Data Plane Port Statistics ....."        
+	log "Verifying Data Plane Port Statistics ....."
 	set txPortList [subst {{[ixNet getAttr $vPort1 -name]} }]
-	set rxPortList [subst {{[ixNet getAttr $vPort2 -name]} }]		
+	set rxPortList [subst {{[ixNet getAttr $vPort2 -name]} }]
 	if {[checkAllPortTrafficStats "Data Plane Port Statistics" $txPortList $rxPortList $tolerance] == 1} {
 		log "Did not get the expected value for Data Plane Port Statistics !!!"
 		ixNetCleanUp
 		return $FAILED
 	}
 	log "Data Plane Port Statistics is correct !!!"
-   
+
 	# Check Traffic Item Statistics
 	log "Verifying Traffic Item Statistics ....."
 	if {[checkAllTrafficStats "Traffic Item Statistics" $tolerance] == 1} {
@@ -496,25 +496,25 @@ proc Action {portData1 portData2} {
 		ixNetCleanUp
 		return $FAILED
 	}
-	log "Flow Statistics is correct !!!"   
-	
+	log "Flow Statistics is correct !!!"
+
 	#-------------------------------------------------#
 	#  Test Part 5: Verification of Packet Structure
-	#-------------------------------------------------#     
+	#-------------------------------------------------#
 	log "Verifying Captured Packets ....."
-	
+
 	# Disable Ingress Tracking
 	log "Disabling ingress tracking ....."
 	set top [ixNet getRoot]
-	set traffic $top/traffic 		
+	set traffic $top/traffic
 	set trafficItemList [ixNet getList $traffic trafficItem]
-	set trafficItem1 [lindex $trafficItemList 0]	
+	set trafficItem1 [lindex $trafficItemList 0]
 	if {[setAndCheckAttributeValue $trafficItem1/tracking trackBy {"" y}] == 1} {
 		ixNetCleanUp
 		return $FAILED
 	}
 	log "Disabled Ingress Tracking successfully !!!"
-	
+
 	# Enable Capture Mode
 	log "Enabling Capture Mode ....."
 	if {[enableCaptureMode $vPort2] == 1} {
@@ -524,8 +524,8 @@ proc Action {portData1 portData2} {
 	}
 	log "Capture Mode enabled successfully !!!"
 	after 5000
-	
-	# Traffic Apply	        
+
+	# Traffic Apply
 	if {[generateApplyTraffic] == 1} {
 		log "Failed to apply traffic !!!"
 		ixNetCleanUp
@@ -543,8 +543,8 @@ proc Action {portData1 portData2} {
 	}
 	log "Capture started successfully !!!"
 	after 5000
-	
-	# Start Traffic        
+
+	# Start Traffic
 	log "Starting Traffic ....."
 	if {[startTraffic $traffic] == 1} {
 		log "Failed to start the traffic"
@@ -552,12 +552,12 @@ proc Action {portData1 portData2} {
 		return $FAILED
 	}
 	log "Traffic started successfully !!!"
-	
+
 	log "Waiting for 15 secs for the traffic to flow ....."
 	after 15000
-	
+
 	# Stop Traffic
-	log "Stopping Traffic ....."		
+	log "Stopping Traffic ....."
 	if {[stopTraffic $traffic] == 1} {
 		log "Failed to stop the traffic"
 		ixNetCleanUp
@@ -565,7 +565,7 @@ proc Action {portData1 portData2} {
 	}
 	log "Traffic stopped successfully !!!"
 	after 5000
-	
+
 	# Stop Capture
 	log "Stopping the capture"
 	if {[ixNet exec stopCapture] != "::ixNet::OK"} {
@@ -575,19 +575,19 @@ proc Action {portData1 portData2} {
 	}
 	log "Capture stopped successfully !!!"
 	after 5000
-	
+
 	#---------------------------------------#
 	#       Verify Counter UDF
 	#---------------------------------------#
 	log "Verifying Counter UDF ....."
-	
-	# Get Timestamps of desired Captured Packets		
+
+	# Get Timestamps of desired Captured Packets
 	set j 17; # Decimal Value of Hex 11
 	for {set i 1} {$i <= 10} {incr i} {
 		set pattern [list 32 35 "11 11 11 [format %0.2X $j]"]
 		incr j 2
 		set timeStamp($i) [ReturnTimestamp $chassisIp2 $card2 $port2 $pattern]
-	}        
+	}
 
 	# Verify Sequence of Captured Packets
 	for {set i 1} {$i <= 9} {incr i} {
@@ -598,22 +598,22 @@ proc Action {portData1 portData2} {
 			ixNetCleanUp
 			return $FAILED
 		}
-	}	
+	}
 
 	log "Counter UDF is working properly !!!"
 
 	#---------------------------------------#
 	#       Verify Valuelist UDF
-	#---------------------------------------#		
+	#---------------------------------------#
 	log "Verifying Valuelist UDF ....."
-	
-	# Get Timestamps of desired Captured Packets	
+
+	# Get Timestamps of desired Captured Packets
 	set j 170; # Decimal Value of Hex AA
 	for {set i 1} {$i <= 3} {incr i} {
 		set pattern [list 36 39 "[format %0.2X $j] [format %0.2X $j] [format %0.2X $j] [format %0.2X $j]"]
 		incr j 17; # Decimal Value of Hex 11
 		set timeStamp($i) [ReturnTimestamp $chassisIp2 $card2 $port2 $pattern]
-	}        
+	}
 
 	# Verify Sequence of Captured Packets
 	for {set i 1} {$i <= 2} {incr i} {
@@ -624,23 +624,23 @@ proc Action {portData1 portData2} {
 			ixNetCleanUp
 			return $FAILED
 		}
-	}	
+	}
 
 	log "Valuelist UDF is working properly !!!"
 
 	#---------------------------------------#
 	#       Verify Rangelist UDF
-	#---------------------------------------#		
+	#---------------------------------------#
 	log "Verifying Rangelist UDF ....."
-	
+
 	# Verify the 1st List
-	# Get Timestamps of desired Captured Packets		
+	# Get Timestamps of desired Captured Packets
 	set j 17; # Decimal Value of Hex 11
 	for {set i 1} {$i <= 3} {incr i} {
 		set pattern [list 40 43 "11 11 11 [format %0.2X $j]"]
 		incr j 4
 		set timeStamp($i) [ReturnTimestamp $chassisIp2 $card2 $port2 $pattern]
-	}        
+	}
 
 	# Verify Sequence of UDF Patterns
 	for {set i 1} {$i <= 2} {incr i} {
@@ -651,16 +651,16 @@ proc Action {portData1 portData2} {
 			ixNetCleanUp
 			return $FAILED
 		}
-	}        
-	
+	}
+
 	# Verify the 2nd List
-	# Get Timestamps of desired Captured Packets	
+	# Get Timestamps of desired Captured Packets
 	set j 34; # Decimal Value of Hex 22
 	for {set i 1} {$i <= 4} {incr i} {
 		set pattern [list 40 43 "22 22 22 [format %0.2X $j]"]
 		incr j 3
 		set timeStamp($i) [ReturnTimestamp $chassisIp2 $card2 $port2 $pattern]
-	}        
+	}
 
 	# Verify Sequence of Captured Packets
 	for {set i 1} {$i <= 3} {incr i} {
@@ -671,22 +671,22 @@ proc Action {portData1 portData2} {
 			ixNetCleanUp
 			return $FAILED
 		}
-	}	
+	}
 
-	log "Rangelist UDF is working properly !!!"	       
+	log "Rangelist UDF is working properly !!!"
 
 	#---------------------------------------#
 	#       Verify Nested Counter UDF
-	#---------------------------------------#		
+	#---------------------------------------#
 	log "Verifying Nested Counter UDF ....."
-	
-	# Get Timestamps of desired Captured Packets		
+
+	# Get Timestamps of desired Captured Packets
 	set j 17; # Decimal Value of Hex 11
 	for {set i 1} {$i <= 6} {incr i} {
 		set pattern [list 44 47 "11 11 11 [format %0.2X $j]"]
 		incr j 2
 		set timeStamp($i) [ReturnTimestamp $chassisIp2 $card2 $port2 $pattern 2]
-	}        
+	}
 
 	# Verify Sequence of Captured Packets
 	for {set i 1} {$i <= 5} {incr i} {
@@ -697,22 +697,22 @@ proc Action {portData1 portData2} {
 			ixNetCleanUp
 			return $FAILED
 		}
-	}	
+	}
 
 	log "Nested Counter UDF is working properly !!!"
 
 	#---------------------------------------#
 	#          Verify IPv4 UDF
-	#---------------------------------------#		
+	#---------------------------------------#
 	log "Verifying IPv4 UDF ....."
-	
-	# Get Timestamps of desired Captured Packets		
+
+	# Get Timestamps of desired Captured Packets
 	set j 17; # Decimal Value of Hex 11
 	for {set i 1} {$i <= 5} {incr i} {
 		set pattern [list 52 55 "11 11 11 [format %0.2X $j]"]
 		incr j 2
 		set timeStamp($i) [ReturnTimestamp $chassisIp2 $card2 $port2 $pattern 2]
-	}        
+	}
 
 	# Verify Sequence of Captured Packets
 	for {set i 1} {$i <= 4} {incr i} {
@@ -721,26 +721,26 @@ proc Action {portData1 portData2} {
 			puts "break timeStamp($j) = $timeStamp($j) timeStamp($i) = $timeStamp($i)"
 			log "IPv4 UDF Patterns not in correct sequence !!!"
 			ixNetCleanUp
-			return $FAILED				 
+			return $FAILED
 		}
-	}	
+	}
 
 	log "IPv4 UDF is working properly !!!"
 
 	#---------------------------------------#
 	#          Verify Table UDF
-	#---------------------------------------#			
+	#---------------------------------------#
 	log "Verifying Table UDF ....."
-	
+
 	# Verify 1st Column of Table UDF
-	# Get Timestamps of desired Captured Packets		
+	# Get Timestamps of desired Captured Packets
 	set j 170; # Decimal Value of Hex AA
 	for {set i 1} {$i <= 3} {incr i} {
 		set pattern [list 56 59 "[format %0.2X $j] [format %0.2X $j] [format %0.2X $j] [format %0.2X $j]"]
 		incr j 17; # Decimal Value of Hex 11
 		set timeStamp($i) [ReturnTimestamp $chassisIp2 $card2 $port2 $pattern]
 	}
-	
+
 	# Verify Sequence of Captured Packets
 	for {set i 1} {$i <= 2} {incr i} {
 		set j [expr $i+1]
@@ -753,14 +753,14 @@ proc Action {portData1 portData2} {
 	}
 
 	# Verify 2nd Column Table UDF
-	# Get Timestamps of desired Captured Packets		
+	# Get Timestamps of desired Captured Packets
 	set j 11
 	for {set i 1} {$i <= 3} {incr i} {
 		set pattern [list 60 65 "$j $j $j $j $j $j"]
 		incr j 11
 		set timeStamp($i) [ReturnTimestamp $chassisIp2 $card2 $port2 $pattern]
 	}
-	
+
 	# Verify Sequence of Captured Packets
 	for {set i 1} {$i <= 2} {incr i} {
 		set j [expr $i+1]
@@ -770,27 +770,27 @@ proc Action {portData1 portData2} {
 			 ixNetCleanUp
 			 log "Table UDF Patterns not in correct sequence !!!"
 		}
-	}		
+	}
 
-	log "Table UDF is working properly !!!"	
-	
+	log "Table UDF is working properly !!!"
+
 	#---------------------------------------#
 	#          Verify Random UDF
-	#---------------------------------------#		
+	#---------------------------------------#
 	log "Verifying Random UDF ....."
-	
-	set pattern {48 48 "AB"}        
+
+	set pattern {48 48 "AB"}
 	if {[verifyCapturedPackets $chassisIp2 $card2 $port2 $pattern] == 1} {
 		log "Random UDF is not working properly !!!"
 		ixNetCleanUp
 		return $FAILED
-	}        
+	}
 
-	log "Random UDF is working properly !!!"    
+	log "Random UDF is working properly !!!"
 
 	# End Test Execution
-	log "Various UDF Modes for Quick Streams are working fine !!!"	
-	log "Test execution Ends !!!"  
+	log "Various UDF Modes for Quick Streams are working fine !!!"
+	log "Test execution Ends !!!"
 
     ixNetCleanUp
     return $PASSED

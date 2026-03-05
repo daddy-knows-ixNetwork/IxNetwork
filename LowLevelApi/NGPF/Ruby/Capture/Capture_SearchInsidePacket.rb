@@ -220,7 +220,7 @@ ti1 = @ixNet.getList(@ixNet.getRoot() + '/traffic', 'trafficItem')[0]
 @ixNet.commit()
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 
 vports = @ixNet.getList(@ixNet.getRoot(), 'vport')
@@ -342,6 +342,3 @@ puts "Sleep 5sec then stop traffic"
 sleep(5)
 puts "Stop Traffic"
 @ixNet.execute('stop', '/traffic')
-
-
-

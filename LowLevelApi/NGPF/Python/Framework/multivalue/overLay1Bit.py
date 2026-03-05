@@ -60,17 +60,17 @@
 
 import optparse, random, os, sys, time, pdb, csv
 
-class OneBitValue () : 
+class OneBitValue () :
     def __init__ (self, csvFile, peer, route) :
         self.peer  = peer
         self.route = route
         self.csvFile = csvFile
     # end def
-    
+
     def generate (self) :
         peers  = self.peer
         routes = self.route
-        nw_adv = 0 
+        nw_adv = 0
         try:
             with open(self.csvFile, "w") as csvFile:
                 csvWriter = csv.writer(csvFile, delimiter=',', lineterminator='\n')

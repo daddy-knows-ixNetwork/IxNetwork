@@ -46,16 +46,16 @@
 #                                                                              	#
 # Description:                                                                 	#
 #	The script below represents an end to end workflow for AppLibrary Traffic. 	#
-#	Steps:																	   	#			
-#	1. Chassis connection and TCL server connection							   	#	
-#	2. Scenario configuration at layer 2-3									   	#	
-#	3. Creation of Applibrary traffic										   	#	
-#	4. Per connection parameters configuration 								   	#	
+#	Steps:																	   	#
+#	1. Chassis connection and TCL server connection							   	#
+#	2. Scenario configuration at layer 2-3									   	#
+#	3. Creation of Applibrary traffic										   	#
+#	4. Per connection parameters configuration 								   	#
 #	5. Traffic apply and start 												   	#
-#	6. Statistics operations: drill down in a loop							   	#	
+#	6. Statistics operations: drill down in a loop							   	#
 #	7. Test criteria evaluation													#
 #	8. Stop traffic															   	#
-#													  	 						#		
+#													  	 						#
 #################################################################################
 
 print "\n\n\n#######################################\n";
@@ -109,11 +109,11 @@ sub _loadConfig {
 	$self->{_objRefs}->{1} = $self->{_ixNet}->getRoot();
 
 	$self->{_ixNet}->commit();
-	
+
 	#------------------------------------
 	# Adding chassis
 	#------------------------------------
-	
+
 	$self->{_objRefs}->{2} = $self->{_ixNet}->add($self->{_objRefs}->{1}.'/availableHardware', 'chassis');;
 	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{2},
 		'-hostname', $chassisIP); #adding a new chassis
@@ -121,170 +121,170 @@ sub _loadConfig {
 	$self->{_objRefs}->{2} = ($self->{_ixNet}->remapIds($self->{_objRefs}->{2}))[0];
 
 	#------------------------------------
-	# Adding 2 ports 
+	# Adding 2 ports
 	#------------------------------------
-	
+
 	$self->{_objRefs}->{3} = $self->{_ixNet}->add($self->{_objRefs}->{1}, 'vport');;
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{3},  
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{3},
 		'-connectedTo', $self->{_objRefs}->{2}.$port1); #adding port1
-		
-		
+
+
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{3} = ($self->{_ixNet}->remapIds($self->{_objRefs}->{3}))[0];
-	
+
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{4} = $self->{_ixNet}->add($self->{_objRefs}->{1}, 'vport');;
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{4}, 
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{4},
 		'-connectedTo', $self->{_objRefs}->{2}.$port2); #adding port2
-		
-		
+
+
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{4} = ($self->{_ixNet}->remapIds($self->{_objRefs}->{4}))[0];
-	
-	
+
+
 	print "Connected to ports\n";
-	
+
 	#------------------------------------
-	# Adding 1st topology, Device Group, Ethernet, IPv4 
+	# Adding 1st topology, Device Group, Ethernet, IPv4
 	#------------------------------------
-	
+
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{5} = $self->{_ixNet}->add($self->{_objRefs}->{1}, 'topology');;
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{5},  
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{5},
 		'-vports', [$self->{_objRefs}->{3}]); #create a new topology and map it to card 2 port 9
-		
-		
-	
+
+
+
 	#------------------------------------
 	# Configure 1st topology
 	#------------------------------------
-	
+
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{5} = ($self->{_ixNet}->remapIds($self->{_objRefs}->{5}))[0];
 
 	$self->{_objRefs}->{6} = $self->{_ixNet}->add($self->{_objRefs}->{5}, 'deviceGroup');; #adding a new device group to the first topology
-	
+
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{6} = ($self->{_ixNet}->remapIds($self->{_objRefs}->{6}))[0];
-	
+
 
 	$self->{_objRefs}->{7} = $self->{_ixNet}->add($self->{_objRefs}->{6}, 'ethernet');;
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{7} = ($self->{_ixNet}->remapIds($self->{_objRefs}->{7}))[0];
-	
-	
+
+
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{8} = $self->{_ixNet}->add($self->{_objRefs}->{7}, 'ipv4');;  #adding an IP stack to the first device group
-		
+
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{8} = ($self->{_ixNet}->remapIds($self->{_objRefs}->{8}))[0];
-	
+
 
 	$self->{_objRefs}->{9} = $self->{_ixNet}->getAttribute($self->{_objRefs}->{8}, '-gatewayIp');
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{9}, 
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{9},
 		'-pattern', 'counter');
 
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{10} = $self->{_ixNet}->add($self->{_objRefs}->{9}, 'counter');;
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{10}, 
-		'-step', '0.0.0.1', 
-		'-start', '100.2.0.1', 
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{10},
+		'-step', '0.0.0.1',
+		'-start', '100.2.0.1',
 		'-direction', 'increment'); #Configuring gateway IP addresses for first IP stack
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{10} = ($self->{_ixNet}->remapIds($self->{_objRefs}->{10}))[0];
 
-	
+
 	$self->{_objRefs}->{11} = $self->{_ixNet}->getAttribute($self->{_objRefs}->{8}, '-address');
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{11},  
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{11},
 		'-pattern', 'counter');
 
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{12} = $self->{_ixNet}->add($self->{_objRefs}->{11}, 'counter');;
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{12}, 
-		'-step', '0.0.0.1', 
-		'-start', '100.1.0.1', 
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{12},
+		'-step', '0.0.0.1',
+		'-start', '100.1.0.1',
 		'-direction', 'increment'); #Configuring IP addresses for first IP stack
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{12} = ($self->{_ixNet}->remapIds($self->{_objRefs}->{12}))[0];
 	$self->{_ixNet}->commit();
-	
+
 	print "Configured IP1\n";
 
 	#------------------------------------
-	# Adding 2nd topology, DG, ethernet, IPv4 
+	# Adding 2nd topology, DG, ethernet, IPv4
 	#------------------------------------
-	
+
 	$self->{_objRefs}->{13} = $self->{_ixNet}->add($self->{_objRefs}->{1}, 'topology');;
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{13},  
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{13},
 		'-vports', [$self->{_objRefs}->{4}]); #adding a second topology mapped to card 2 port 10
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{13} = ($self->{_ixNet}->remapIds($self->{_objRefs}->{13}))[0];
 
-	
+
 	#------------------------------------
 	# Configure 2nd topology
 	#------------------------------------
 
-	
+
 	$self->{_objRefs}->{14} = $self->{_ixNet}->add($self->{_objRefs}->{13}, 'deviceGroup');;
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{14},  
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{14},
 		'-name', 'Device Group 2'); #adding a second device group to the second topology
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{14} = ($self->{_ixNet}->remapIds($self->{_objRefs}->{14}))[0];
-	
-		
+
+
 	$self->{_objRefs}->{15} = $self->{_ixNet}->add($self->{_objRefs}->{14}, 'ethernet');;
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{15} = ($self->{_ixNet}->remapIds($self->{_objRefs}->{15}))[0];
-	
-	
+
+
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{16} = $self->{_ixNet}->add($self->{_objRefs}->{15}, 'ipv4');; #adding a second IP stack
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{16} = ($self->{_ixNet}->remapIds($self->{_objRefs}->{16}))[0];
-	
-	
+
+
 	$self->{_objRefs}->{17} = $self->{_ixNet}->getAttribute($self->{_objRefs}->{16}, '-gatewayIp');
 	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{17},
 		'-pattern', 'counter');
 
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{18} = $self->{_ixNet}->add($self->{_objRefs}->{17}, 'counter');;
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{18}, 
-		'-step', '0.0.0.1', 
-		'-start', '100.1.0.1', 
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{18},
+		'-step', '0.0.0.1',
+		'-start', '100.1.0.1',
 		'-direction', 'increment'); #Configuring gateway IP addresses for second IP stack
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{18} = ($self->{_ixNet}->remapIds($self->{_objRefs}->{18}))[0];
 
-	
+
 	$self->{_objRefs}->{19} = $self->{_ixNet}->getAttribute($self->{_objRefs}->{16}, '-address');
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{19},  
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{19},
 		'-pattern', 'counter');
 
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{20} = $self->{_ixNet}->add($self->{_objRefs}->{19}, 'counter');;
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{20}, 
-		'-step', '0.0.0.1', 
-		'-start', '100.2.0.1', 
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{20},
+		'-step', '0.0.0.1',
+		'-start', '100.2.0.1',
 		'-direction', 'increment'); #Configuring IP addresses for second IP stack
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{20} = ($self->{_ixNet}->remapIds($self->{_objRefs}->{20}))[0];
 
 	$self->{_ixNet}->commit();
-	
-	
+
+
 	print "Configured IP2\n";
-	
-	
+
+
 	#-------------------------------------------
 	# Create traffic item and add flows
 	#-------------------------------------------
-		
+
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{21} = $self->{_ixNet}->add($self->{_objRefs}->{1}.'/traffic', 'trafficItem');;
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{21},  
-		'-trafficItemType', 'applicationLibrary',   
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{21},
+		'-trafficItemType', 'applicationLibrary',
 		'-trafficType', 'ipv4ApplicationTraffic'); #adding an AppLibrary L4-7 traffic item
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{21} = ($self->{_ixNet}->remapIds($self->{_objRefs}->{21}))[0];
@@ -292,63 +292,63 @@ sub _loadConfig {
 	#-----------------------------------------------------
 	# Link the traffic item to the new topology set
 	#-----------------------------------------------------
-	
+
 	$self->{_objRefs}->{22} = $self->{_ixNet}->add($self->{_objRefs}->{21}, 'endpointSet');;
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{22},  
-		'-destinations', [$self->{_objRefs}->{13}],  
-		'-sources', [$self->{_objRefs}->{5}]); 
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{22},
+		'-destinations', [$self->{_objRefs}->{13}],
+		'-sources', [$self->{_objRefs}->{5}]);
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{22} = ($self->{_ixNet}->remapIds($self->{_objRefs}->{22}))[0];
 
 	#----------------------------------------------------------
 	# Edit traffic item parameters for the added traffic item
 	#----------------------------------------------------------
-	
+
 	$self->{_objRefs}->{23} = $self->{_ixNet}->add($self->{_objRefs}->{21}, 'appLibProfile');;
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{23}, 
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{23},
 		'-objectiveValue', '133',
 		'-enablePerIPStats', 'true',
-		'-objectiveType', 'throughputMbps',		
-		'-objectiveDistribution', 'applyFullObjectiveToEachPort', 
+		'-objectiveType', 'throughputMbps',
+		'-objectiveDistribution', 'applyFullObjectiveToEachPort',
 		'-configuredFlows', ['ActiveSync_Unencrypted','AIM6_Chat','AppleJuice']); #adding 3 flows to the AppLib profile, and enabling Per IP Statistics
 	$self->{_ixNet}->commit();
 	$self->{_objRefs}->{23} = ($self->{_ixNet}->remapIds($self->{_objRefs}->{23}))[0];
-	
+
 	print "Added AppLib with 3 flows\n";
-	
+
 	#----------------------------------------------------------
 	# Setting flow percentages and configuring flow parameters
 	#----------------------------------------------------------
 
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{23}.'/appLibFlow:"ActiveSync_Unencrypted"', 
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{23}.'/appLibFlow:"ActiveSync_Unencrypted"',
 		'-percentage', '65');
 
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{23}.'/appLibFlow:"ActiveSync_Unencrypted"/connection:1/parameter:"serverPort"', 
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{23}.'/appLibFlow:"ActiveSync_Unencrypted"/connection:1/parameter:"serverPort"',
 		'-option', 'value');
 
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{23}.'/appLibFlow:"ActiveSync_Unencrypted"/connection:1/parameter:"serverPort"/number', 
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{23}.'/appLibFlow:"ActiveSync_Unencrypted"/connection:1/parameter:"serverPort"/number',
 		'-value', '8080'); #modifying the server port for ActiveSync_Unencrypted flow to 8080
 
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{23}.'/appLibFlow:"AIM6_Chat"', 
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{23}.'/appLibFlow:"AIM6_Chat"',
 		'-percentage', '20');
 
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{23}.'/appLibFlow:"AppleJuice"', 
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{23}.'/appLibFlow:"AppleJuice"',
 		'-percentage', '15');
 
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{23}.'/appLibFlow:"AppleJuice"/connection:1/parameter:"enableTOS"', 
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{23}.'/appLibFlow:"AppleJuice"/connection:1/parameter:"enableTOS"',
 		'-option', 'value');
 
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{23}.'/appLibFlow:"AppleJuice"/connection:1/parameter:"enableTOS"/bool', 
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{23}.'/appLibFlow:"AppleJuice"/connection:1/parameter:"enableTOS"/bool',
 		'-value', 'true'); #enable parameter enableTOS for AppleJuice flow
 
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{23}.'/appLibFlow:"AppleJuice"/connection:1/parameter:"tosValue"', 
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{23}.'/appLibFlow:"AppleJuice"/connection:1/parameter:"tosValue"',
 		'-option', 'choice');
 
-	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{23}.'/appLibFlow:"AppleJuice"/connection:1/parameter:"tosValue"/choice', 
+	$self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{23}.'/appLibFlow:"AppleJuice"/connection:1/parameter:"tosValue"/choice',
 		'-value', '0xA0'); #setting the value for enableTOS to 0xA0
-		
+
 	print "Configured AppLib flows\n";
-		
+
 	$self->{_ixNet}->commit();
 	return '1';
 }
@@ -379,25 +379,25 @@ sub run {
 	$self->{_ixNet}->execute('clearAppLibraryStats');; #clearing statistics
 	print "Statistics have been cleared\n";
 	print "Drilling down to reveal per IP address flow activity\n";
-	
+
 	#----------------------------------------------------------
-	# Drilling down per IP 
+	# Drilling down per IP
 	#----------------------------------------------------------
-	
+
 	my @viewsList = $self->{_ixNet}->getList($self->{_objRefs}->{1}.'/statistics', 'view');;
 	my $want = "::ixNet::OBJ-/statistics/view:\"Application Traffic Item Statistics\"";
 	my $index = List::MoreUtils::first_index {$_ eq $want} @viewsList;;
-	
+
 	my $target = $viewsList[$index];
 	print "Configuring drill down per IP addresses\n";
-	
+
 	$self->{_ixNet}->setMultiAttribute($target.'/drillDown', '-targetRowIndex', '0');
 	$self->{_ixNet}->commit();
 	$self->{_ixNet}->setMultiAttribute($target.'/drillDown', '-targetDrillDownOption', '"Application Traffic:Per IPs"');
 	$self->{_ixNet}->commit();
 	$self->{_ixNet}->setMultiAttribute($target.'/drillDown', '-targetRow', '"Traffic Item=Traffic Item"'); #selecting which views to show
 	$self->{_ixNet}->commit();
-	
+
 	print "Launching the drill down per IP addresses view\n";
 	$self->{_ixNet}->execute('doDrillDown', $target.'/drillDown');
 	sleep(3);
@@ -412,34 +412,34 @@ sub run {
 		print "Statistics refreshed...\n";
 	}
 	sleep(20);
-	
-	
-	
+
+
+
 	#----------------------------------------------------------
 	# Pass Fail Evaluation
 	#----------------------------------------------------------
 
-	# selecting the "Application Traffic Item Statistics view from all the views"	
+	# selecting the "Application Traffic Item Statistics view from all the views"
 	@viewsList = $self->{_ixNet}->getList($self->{_objRefs}->{1}.'/statistics', 'view');;
 	$want = "::ixNet::OBJ-/statistics/view:\"Application Traffic Item Statistics\"";
 	$index = List::MoreUtils::first_index {$_ eq $want} @viewsList;;
-	
+
 	# selecting the columns based on the configured criteria
 	my $targetView = $viewsList[$index];
 	my @targetColumnForHigh = $self->{_ixNet}->getAttribute($targetView.'/page', '-columnCaptions');
 	my $want2 = $PFCriteria_Higher[0];
 	my $index2 = List::MoreUtils::first_index {$_ eq $want2} @targetColumnForHigh;;
-	
+
 	my @targetColumnForLow = $self->{_ixNet}->getAttribute($targetView.'/page', '-columnCaptions');
 	my $want3 = $PFCriteria_Lower[0];
 	my $index3 = List::MoreUtils::first_index {$_ eq $want3} @targetColumnForLow;;
-	
+
 	# measuring the selected statistic
 	my @measuredHigher = $self->{_ixNet}->getAttribute($targetView.'/page', '-rowValues');
 	my $mH = $measuredHigher[0][0][$index2];
 	my @measuredLower = $self->{_ixNet}->getAttribute($targetView.'/page', '-rowValues');
 	my $mL = $measuredLower[0][0][$index3];
-	
+
 	# comparing with pass fail condition - second item in the PFCriteria list
 	if(($mH>$PFCriteria_Higher[1])&&($mL<$PFCriteria_Lower[1]))
 	{
@@ -449,9 +449,9 @@ sub run {
 		my $testResult= "\n Test run is FAILED: pass fail conditions - $PFCriteria_Higher[0] and $PFCriteria_Lower[0] - configured in the start of the script are not met";
 		print "\n $testResult";
 	}
-	
+
 	#----------------------------------------------------------
-	# Stop traffic 
+	# Stop traffic
 	#----------------------------------------------------------
 	$self->{_ixNet}->execute('stopApplicationTraffic', $self->{_objRefs}->{1}.'/traffic');
 	return '1';

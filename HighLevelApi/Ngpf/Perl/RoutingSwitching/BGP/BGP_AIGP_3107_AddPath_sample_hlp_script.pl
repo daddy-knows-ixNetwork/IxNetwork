@@ -73,8 +73,8 @@
 ################################################################################
 
 ################################################################################
-# Utils                                                                        #	
-################################################################################       
+# Utils                                                                        #
+################################################################################
 # Running from Linux:
 
 	# use lib ".";
@@ -87,7 +87,7 @@
        # use ixiahlt {IXIA_VERSION => $ENV{'IXIA_VERSION'}, TclAutoPath  => [$ENV{'PERL_IXOS_LIB_PATH'}, $ENV{'PERL_IXNET_LIB_PATH'}]};
 
 
-# Running from Windows: 
+# Running from Windows:
 
 	# use lib "C:/Program Files (x86)/Ixia/hltapi/4.95.117.44/TclScripts/lib/hltapi/library/common/ixia_hl_lib-7.40";
 	# use lib "C:/Program Files (x86)/Ixia/hltapi/4.95.117.44/TclScripts/lib/hltapi/library/common/ixiangpf/perl";
@@ -144,7 +144,7 @@ my @port_handles_list = split(/ /,$port_handles);
 ################################################################################
 
 # Creating a topology on first port
-print "Adding Topology 1 on Port 1\n";    
+print "Adding Topology 1 on Port 1\n";
 my $topology_1_status = ixiangpf::topology_config ({
     topology_name      => "{BGP Topology 1}",
     port_handle        => $port_handles_list[0],
@@ -157,9 +157,9 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $topology_1_handle = $HashRef->{'topology_handle'};
- 
-# Creating a device group in topology 
-print "Creating device group 1 in topology 1\n";   
+
+# Creating a device group in topology
+print "Creating device group 1 in topology 1\n";
 my $device_group_1_status = ixiangpf::topology_config ({
     topology_handle              => "$topology_1_handle",
     device_group_name            => "{BGP Topology 1 Router}",
@@ -210,7 +210,7 @@ my $deviceGroup_2_handle = $HashRef->{'device_group_handle'};
 ################################################################################
 #  Configure protocol interfaces                                               #
 ################################################################################
-# Creating ethernet stack for the first Device Group 
+# Creating ethernet stack for the first Device Group
 my $ethernet_1_status = ixiangpf::interface_config ({
     protocol_name                => "{Ethernet 1}",
     protocol_handle              => "$deviceGroup_1_handle",
@@ -226,7 +226,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $ethernet_1_handle = $HashRef->{'ethernet_handle'};
-    
+
 # Creating ethernet stack for the second Device Group
 print "Creating ethernet for the second Device Group\n";
 my $ethernet_2_status = ixiangpf::interface_config ({
@@ -245,7 +245,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $ethernet_2_handle = $HashRef->{'ethernet_handle'};
 
-# Creating IPv4 Stack on top of Ethernet Stack for the first Device Group                                 
+# Creating IPv4 Stack on top of Ethernet Stack for the first Device Group
 print "Creating IPv4 Stack on top of Ethernet Stack for the first Device Group\n";
 my $ipv4_1_status = ixiangpf::interface_config ({
     protocol_name                     => "{IPv4 1}",
@@ -292,11 +292,11 @@ if ($command_status != $ixiangpf::SUCCESS) {
 my $ipv4_2_handle = $HashRef->{'ipv4_handle'};
 
 ################################################################################
-# Other protocol configurations                                                # 
+# Other protocol configurations                                                #
 ################################################################################
 
 # This will create BGP Stack on top of IPv4 stack
-print "Creating BGP Stack on top of IPv4 Stack in Topology 1\n"; 
+print "Creating BGP Stack on top of IPv4 Stack in Topology 1\n";
 my $bgp_ipv4_peer_1_status = ixiangpf::emulation_bgp_config ({
         mode                                    => "enable",
         active                                  => "1",
@@ -410,8 +410,8 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $multivalue_5_handle = $HashRef->{'multivalue_handle'};
 
-# Creating BGP Network Group 
-print "Creating BGP Network Group on Port 1\n";   
+# Creating BGP Network Group
+print "Creating BGP Network Group on Port 1\n";
 my $network_group_1_status = ixiangpf::network_group_config ({
     protocol_handle                      => "$deviceGroup_1_handle",
     protocol_name                        => "BGP_1_Network_Group1",
@@ -454,7 +454,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $networkGroup_3_handle = $HashRef->{'network_group_handle'};
 my $ipv4PrefixPools_2_handle = $HashRef->{'ipv4_prefix_pools_handle'};
-	
+
 # Creating multivalue for network group
 print "Creating multivalue pattern for BGP network group on Port 1\n";
 my $multivalue_6_status = ixiangpf::multivalue_config ({
@@ -474,7 +474,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $multivalue_6_handle = $HashRef->{'multivalue_handle'};
-    
+
 my $multivalue_7_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "1111",
@@ -492,7 +492,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $multivalue_7_handle = $HashRef->{'multivalue_handle'};
-    
+
 my $multivalue_8_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "1048575",
@@ -510,7 +510,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $multivalue_8_handle = $HashRef->{'multivalue_handle'};
-    
+
 my $multivalue_9_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "0",
@@ -528,7 +528,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $multivalue_9_handle = $HashRef->{'multivalue_handle'};
-    
+
 my $multivalue_10_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "0",
@@ -565,7 +565,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $multivalue_11_handle = $HashRef->{'multivalue_handle'};
-    
+
 # Creating BGP Network Group
 print "Creating BGP Network Group on Port 1\n";
 my $network_group_2_status = ixiangpf::emulation_bgp_route_config ({
@@ -648,8 +648,8 @@ sleep(45);
 ############################################################################
 print "Fetching BGP aggregated statistics on Port 1\n";
 my $protostats = ixiangpf::emulation_bgp_info({
-    handle => $bgpIpv4Peer_1_handle, 
-    mode   => 'stats'}); 
+    handle => $bgpIpv4Peer_1_handle,
+    mode   => 'stats'});
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
 if ($command_status != $ixiangpf::SUCCESS) {
@@ -858,4 +858,4 @@ if ($command_status != $ixiangpf::SUCCESS) {
 sleep(5);
 
 print "!!! Test Script Ends !!!\n";
-print "SUCCESS - $0\n";       
+print "SUCCESS - $0\n";

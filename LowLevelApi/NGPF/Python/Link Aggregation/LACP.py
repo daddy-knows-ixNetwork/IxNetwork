@@ -50,19 +50,19 @@
 #	 Script uses four ports to demonstrate LAG properties	                   #
 #                                                                              #
 #    1. It will create 2 LACP topologies, each having an two port which are    #
-#       LAG members. It will then modify the ActorSystemId and ActorKey	for    # 
+#       LAG members. It will then modify the ActorSystemId and ActorKey	for    #
 #       both the LAG systems                                                   #
 #    2. Start the LACP protocol                                                #
 #    3. Retrieve protocol statistics and LACP per port statistics              #
-#	 4. Disable Synchronization flag on port1 in System1-LACP-LHS              # 
+#	 4. Disable Synchronization flag on port1 in System1-LACP-LHS              #
 #	 5. Retrieve protocol statistics and LACP per port statistics              #
-#	 6. Re-enable Synchronization flag on port1 in System1-LACP-LHS            # 
+#	 6. Re-enable Synchronization flag on port1 in System1-LACP-LHS            #
 #	 7. Retrieve protocol statistics and LACP per port statistics              #
 #	 8. Perform StopPDU on port1 in System1-LACP-LHS                           #
 #	 9. Retrieve LACP global learned info              		                   #
-#	 10. Perform StopPDU on port1 in System1-LACP-LHS                          # 
+#	 10. Perform StopPDU on port1 in System1-LACP-LHS                          #
 #	 11. Retrieve LACP global learned info                                     #
-#	 12. Stop All protocols                                                    # 
+#	 12. Stop All protocols                                                    #
 #                                                                              #
 #                                                                              #
 ################################################################################
@@ -83,7 +83,7 @@ def assignPorts (ixNet, realPort1, realPort2, realPort3, realPort4) :
      card4    = realPort4[1]
      port3    = realPort3[2]
      port4    = realPort4[2]
-     
+
      root = ixNet.getRoot()
      vport1 = ixNet.add(root, 'vport')
      ixNet.commit()
@@ -92,11 +92,11 @@ def assignPorts (ixNet, realPort1, realPort2, realPort3, realPort4) :
      vport2 = ixNet.add(root, 'vport')
      ixNet.commit()
      vport2 = ixNet.remapIds(vport2)[0]
-	 
+
      vport3 = ixNet.add(root, 'vport')
      ixNet.commit()
      vport3 = ixNet.remapIds(vport3)[0]
-	 
+
      vport4 = ixNet.add(root, 'vport')
      ixNet.commit()
      vport4 = ixNet.remapIds(vport4)[0]
@@ -111,12 +111,12 @@ def assignPorts (ixNet, realPort1, realPort2, realPort3, realPort4) :
          ixNet.setAttribute(chassisObj2, '-hostname', chassis2)
          ixNet.commit()
          chassisObj2 = ixNet.remapIds(chassisObj2)[0]
-		 
+
          chassisObj3 = ixNet.add(root + '/availableHardware', 'chassis')
          ixNet.setAttribute(chassisObj3, '-hostname', chassis3)
          ixNet.commit()
          chassisObj3 = ixNet.remapIds(chassisObj3)[0]
-		 
+
          chassisObj4 = ixNet.add(root + '/availableHardware', 'chassis')
          ixNet.setAttribute(chassisObj4, '-hostname', chassis4)
          ixNet.commit()
@@ -125,7 +125,7 @@ def assignPorts (ixNet, realPort1, realPort2, realPort3, realPort4) :
          chassisObj2 = chassisObj1
          chassisObj3 = chassisObj1
          chassisObj4 = chassisObj1
-		 
+
      # end if
 
      cardPortRef1 = chassisObj1 + '/card:%s/port:%s' % (card1,port1)
@@ -137,7 +137,7 @@ def assignPorts (ixNet, realPort1, realPort2, realPort3, realPort4) :
      ixNet.setMultiAttribute(vport2, '-connectedTo', cardPortRef2,
          '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002')
      ixNet.commit()
-	 
+
      cardPortRef3 = chassisObj3 + '/card:%s/port:%s' % (card3,port3)
      ixNet.setMultiAttribute(vport3, '-connectedTo', cardPortRef3,
          '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 003')
@@ -157,7 +157,7 @@ def gererateLacpLearnedInfoView ( viewName ):
     root    = ixNet.getRoot()
     statistics = root + '/statistics'
     statsViewList = ixNet.getList(statistics, 'view')
-	
+
    # Add a StatsView
     view = ixNet.add(statistics, 'view')
     ixNet.setAttribute(view, '-caption', viewCaption)
@@ -166,14 +166,14 @@ def gererateLacpLearnedInfoView ( viewName ):
     ixNet.commit()
     view = ixNet.remapIds(view)[0]
 
-   # Set Filters        
+   # Set Filters
     trackingFilter = ixNet.add(view, 'advancedCVFilters')
     ixNet.setAttribute(trackingFilter, '-protocol', protocol)
     ixNet.commit()
-    #ixNet getAttr $trackingFilter -availableGroupingOptions        
+    #ixNet getAttr $trackingFilter -availableGroupingOptions
     ixNet.setAttribute(trackingFilter, '-grouping', drillDownType)
     ixNet.commit()
-    layer23NextGenProtocolFilter = view + '/' + 'layer23NextGenProtocolFilter'        
+    layer23NextGenProtocolFilter = view + '/' + 'layer23NextGenProtocolFilter'
     ixNet.setAttribute(layer23NextGenProtocolFilter, '-advancedCVFilter', trackingFilter)
     ixNet.commit()
 
@@ -187,7 +187,7 @@ def gererateLacpLearnedInfoView ( viewName ):
     # Enable Statsview
     ixNet.setAttribute(view, '-enabled', 'true')
     ixNet.commit()
-	
+
 ################################################################################
 # Either feed the ixNetwork library path in the sys.path as below, or put the
 # IxNetwork.pm file somewhere else where we python can autoload it.
@@ -484,7 +484,7 @@ viewPageName = '::ixNet::OBJ-/statistics/view:"LACP-global-learned-Info-TCLview"
 viewPage  = '::ixNet::OBJ-/statistics/view:"LACP-global-learned-Info-TCLview"/page'
 
 ixNet.execute('refresh', viewPageName)
-time.sleep(10)              
+time.sleep(10)
 statcap   = ixNet.getAttribute(viewPage, '-columnCaptions')
 for statValList in ixNet.getAttribute(viewPage, '-rowValues') :
     for  statVal in statValList :
@@ -513,7 +513,7 @@ viewPageName = '::ixNet::OBJ-/statistics/view:"LACP-global-learned-Info-TCLview"
 viewPage  = '::ixNet::OBJ-/statistics/view:"LACP-global-learned-Info-TCLview"/page'
 
 ixNet.execute('refresh', viewPageName)
-time.sleep(10)              
+time.sleep(10)
 statcap   = ixNet.getAttribute(viewPage, '-columnCaptions')
 for statValList in ixNet.getAttribute(viewPage, '-rowValues') :
     for  statVal in statValList :

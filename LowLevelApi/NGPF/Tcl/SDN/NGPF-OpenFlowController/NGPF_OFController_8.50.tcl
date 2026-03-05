@@ -47,13 +47,13 @@
 #                                                                              #
 # Description:                                                                 #
 #    This script intends to demonstrate how to use NGPF OF Controller API      #
-#    It will create one OF Controller topology , it will start the emulation   #       
+#    It will create one OF Controller topology , it will start the emulation   #
 #    and then it will retrieve and display few statistics .                    #
 #    It will send learned info trigger  for specified match crteria            #
 ################################################################################
 
 ################################################################################
-# Procedure for Adding Match Criteria & Instruction Action Example : adding    # 
+# Procedure for Adding Match Criteria & Instruction Action Example : adding    #
 # match criteria as IPv4, Ethernet                                             #
 ################################################################################
 
@@ -63,7 +63,7 @@ proc enableMatchesInstructions { flowProfile requiredMatchCriteriaList requiredI
     ixNet commit
     after 2000
     set matchActionList [ixNet getList $flowTemplates matchAction]
-    puts "matchActionList= $matchActionList " 
+    puts "matchActionList= $matchActionList "
     foreach matchAction $matchActionList {
         if { [regexp {Blank Template} [ixNet getA $matchAction -name] ] } {
             ixNet exec addFromTemplate $flowProfile $matchAction
@@ -99,7 +99,7 @@ proc enableMatchesInstructions { flowProfile requiredMatchCriteriaList requiredI
                            ixNet commit
                            set mask [lindex $EthernetFields 1]
                            set maskMulti [ixNet getAttr $mask -value]
-                           set EthernetMaskVal [ixNet add $maskMulti "singleValue"]                        
+                           set EthernetMaskVal [ixNet add $maskMulti "singleValue"]
                            ixNet setMultiAttribute $EthernetMaskVal -value "ff:ff:ff:ff:ff:fe"
                            ixNet commit
                         } else {
@@ -113,11 +113,11 @@ proc enableMatchesInstructions { flowProfile requiredMatchCriteriaList requiredI
                            ixNet commit
                            set mask [lindex $EthernetDestFields 1]
                            set maskMulti [ixNet getAttr $mask -value]
-                           set EthernetMaskVal [ixNet add $maskMulti "singleValue"]                        
+                           set EthernetMaskVal [ixNet add $maskMulti "singleValue"]
                            ixNet setMultiAttribute $EthernetMaskVal -value "ff:ff:ff:ff:ff:ff"
-                           ixNet commit                                                                                        
+                           ixNet commit
                         }
-                        
+
                     }
                 }
                 if { [string match $requiredMatchCriteria [ixNet getA $matchCriteria -name] ] } {
@@ -127,7 +127,7 @@ proc enableMatchesInstructions { flowProfile requiredMatchCriteriaList requiredI
                 if { [string match "IP" [ixNet getA $matchCriteria -name] ] } {
                     puts "Enabling IP match Criteria !!!"
                     set IPmatchCriteria [ixNet getList $matchCriteria matchCriteria]
-                    set Ipv4matchCriteria [lindex $IPmatchCriteria 0] 
+                    set Ipv4matchCriteria [lindex $IPmatchCriteria 0]
                     set IPv4List [ixNet getL $Ipv4matchCriteria matchCriteria]
                     foreach Ipv4Value $IPv4List {
                         if {[string match "IPv4 Source" [ixNet getA $Ipv4Value -name] ]} {
@@ -141,7 +141,7 @@ proc enableMatchesInstructions { flowProfile requiredMatchCriteriaList requiredI
                            ixNet commit
                            set mask [lindex $IPv4Fields 1]
                            set maskMulti [ixNet getAttr $mask -value]
-                           set IPMaskVal [ixNet add $maskMulti "singleValue"]                        
+                           set IPMaskVal [ixNet add $maskMulti "singleValue"]
                            ixNet setMultiAttribute $IPMaskVal -value "255.255.255.255"
                            ixNet commit
                         } else {
@@ -155,14 +155,14 @@ proc enableMatchesInstructions { flowProfile requiredMatchCriteriaList requiredI
                            ixNet commit
                            set mask [lindex $IPv4DestFields 1]
                            set maskMulti [ixNet getAttr $mask -value]
-                           set IPv4MaskVal [ixNet add $maskMulti "singleValue"]                        
+                           set IPv4MaskVal [ixNet add $maskMulti "singleValue"]
                            ixNet setMultiAttribute $IPv4MaskVal -value "255.255.255.255"
-                           ixNet commit                                                                                        
+                           ixNet commit
                         }
-                        
+
                     }
                 }
-              set fieldList [ixNet getList $matchCriteria field]                
+              set fieldList [ixNet getList $matchCriteria field]
               foreach field $fieldList {
                   if { [string match "Ethernet Type" [ixNet getA $field -name] ] } {
                     puts "Enabling Eternet Type match Criteria !!!"
@@ -172,15 +172,15 @@ proc enableMatchesInstructions { flowProfile requiredMatchCriteriaList requiredI
                     ixNet setAttr $EtherTypeMultiVal/singleValue -value 88E7
                     ixNet commit
                     }
-             }             
+             }
              break
             }
         }
     }
     }
     set flowProfileMatchAction [ixNet getList $flowProfile matchAction]
-    set flowProfileInstruction [ixNet getList $flowProfileMatchAction instructions]    
-    puts " Adding instruction"    
+    set flowProfileInstruction [ixNet getList $flowProfileMatchAction instructions]
+    puts " Adding instruction"
     ixNet exec addInstruction $flowProfileInstruction $requiredInstruction
     ixNet commit
     after 3000
@@ -192,15 +192,15 @@ proc enableMatchesInstructions { flowProfile requiredMatchCriteriaList requiredI
                 ixNet exec addAction $flowProfileInstructionAdded $action
                 ixNet commit
                 after 2000
-        
+
     }
-    after 5000 
+    after 5000
     # adding value in actions
     set actionsAdded [ixNet getList $flowProfileInstructionAdded actions]
     set actions [lindex $actionsAdded 0]
     set actionList [ixNet getList $actions action]
     puts $actionList
- 
+
     foreach action $actionList {
         if {[string match "Set Ethernet Source" [ixNet getA $action -name] ]} {
              puts "action is Set Ethernet Source"
@@ -208,7 +208,7 @@ proc enableMatchesInstructions { flowProfile requiredMatchCriteriaList requiredI
         } else {
              puts "action is Set Ethernet Destination"
              set val "7:7:4:8:1:7"
-        } 
+        }
         set field [ixNet getList $action field ]
         set actionValue [ixNet getAttr $field -value]
         ixNet setAttr $actionValue/singleValue -value $val
@@ -240,7 +240,7 @@ ixNet exec newConfig
 
 ################################################################################
 # protocol configuration section                                               #
-################################################################################ 
+################################################################################
 puts "Adding 1 vports"
 ixNet add [ixNet getRoot] vport
 ixNet commit
@@ -307,21 +307,21 @@ ixNet setMultiAttribute $channel_remote_ip \
 ixNet commit
 
 set openFlowChannel [ixNet getL $openFlowController1 openFlowChannel]
-puts "Set Number of Group Per Channel to 1"        
+puts "Set Number of Group Per Channel to 1"
 set groupNum [ixNet getAttribute $openFlowChannel -groupsPerChannel]
 ixNet setMultiAttribute $openFlowChannel -groupsPerChannel 1
 ixNet commit
 
-puts "Set Number of Meters Per Channel to 1"     
+puts "Set Number of Meters Per Channel to 1"
 set meterNum [ixNet getAttribute $openFlowChannel -metersPerChannel]
 ixNet setMultiAttribute $openFlowChannel -metersPerChannel 1
-ixNet commit      
+ixNet commit
 
 puts "Set Number of FlowSet Per Channel to 1"
 set table [ixNet getL $openFlowChannel tables]
 ixNet getAttr $table -numberOfFlowSet
 ixNet setMultiAttribute $table -numberOfFlowSet 1
-ixNet commit  
+ixNet commit
 
 puts "Set Number of Flows Per Channel to 1"
 set flowSet [ixNet getL $table flowSet]
@@ -379,10 +379,10 @@ foreach statValList [ixNet getAttr $viewPage -rowValues] {
 puts "***************************************************"
 
 ################################################################################
-# On the fly section  (Changing Instruction Action for Set Ethernet Source field)                                                         #  
+# On the fly section  (Changing Instruction Action for Set Ethernet Source field)                                                         #
 ################################################################################
 set flowProfileMatchAction [ixNet getList $flowProfile matchAction]
-set flowProfileInstruction [ixNet getList $flowProfileMatchAction instructions]    
+set flowProfileInstruction [ixNet getList $flowProfileMatchAction instructions]
 set flowProfileInstructionAdded [ixNet getList $flowProfileInstruction instruction]
 set First_action [lindex $flowProfileInstructionAdded 0]
 set actionsAdded [ixNet getList $First_action actions]

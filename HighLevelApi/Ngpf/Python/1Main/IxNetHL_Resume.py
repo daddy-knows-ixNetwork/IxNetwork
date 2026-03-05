@@ -24,7 +24,7 @@ user_name = 'hgee'
 
 def GetStatsNgpfHlPy(type_of_stats='flow'):
     print '\nGetStatsNgpfHlPy:', type_of_stats
-    status = ixia_ngpf.traffic_stats(mode = type_of_stats)    
+    status = ixia_ngpf.traffic_stats(mode = type_of_stats)
     if status['status'] != '1':
         print '\nGetStatsNgpfHlPy failed: ', status['log']
         sys.exit()
@@ -64,7 +64,7 @@ def PrintDict(obj, nested_level=0, output=sys.stdout):
 
 def StartTrafficNgpfHlPy():
     print '\nStartTrafficNgpfHlPy'
-    status = ixia_ngpf.traffic_control(action = 'run')    
+    status = ixia_ngpf.traffic_control(action = 'run')
     if status == 1:
         print '\nStartTrafficNgpfHlPy failed: ', status['log']
         return 1
@@ -73,12 +73,12 @@ def StartTrafficNgpfHlPy():
 
 
 # To Resume
-connect_result = ixia_ngpf.connect ( 
+connect_result = ixia_ngpf.connect (
     ixnetwork_tcl_server = ixnetwork_tcl_server,
     tcl_server = tcl_server,
     username = user_name,
     break_locks = '1'
-    ) 
+    )
 
 PrintDict(connect_result)
 
@@ -87,4 +87,3 @@ StartTrafficNgpfHlPy()
 stats = GetStatsNgpfHlPy('aggregate')
 
 PrintDict(stats)
-

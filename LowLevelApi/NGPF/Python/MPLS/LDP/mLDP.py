@@ -248,20 +248,20 @@ ixNet.commit()
 print("Changing Root Address in Root Ranges behind Topology 1")
 rootRanges= ixNet.getList(ldp1, 'ldpRootRangeV4')[0]
 rootRange_rootAddrCount =(ixNet.getAttribute(rootRanges, '-rootAddress'))
-ixNet.setMultiAttribute(rootRange_rootAddrCount + '/counter', '-start', '15.1.1.1') 
+ixNet.setMultiAttribute(rootRange_rootAddrCount + '/counter', '-start', '15.1.1.1')
 ixNet.commit()
 
 print("Changing Root Address in Leaf Ranges behind Topology 2")
 leafRanges= ixNet.getList(ldp2, 'ldpLeafRangeV4')[0]
 leafRange_rootAddrCount =(ixNet.getAttribute(leafRanges, '-rootAddress'))
-ixNet.setMultiAttribute(leafRange_rootAddrCount + '/counter', '-start', '15.1.1.1') 
+ixNet.setMultiAttribute(leafRange_rootAddrCount + '/counter', '-start', '15.1.1.1')
 ixNet.commit()
 
-print("Configuring 2 Opaque TLVs for Root Ranges")	
+print("Configuring 2 Opaque TLVs for Root Ranges")
 rootRange_numberOfTLV=(ixNet.setAttribute(rootRanges, '-numberOfTLVs', '2'))
 ixNet.commit()
 
-print("Configuring 2 Opaque TLVs for Leaf Ranges")	
+print("Configuring 2 Opaque TLVs for Leaf Ranges")
 leafRange_numberOfTLV=(ixNet.setAttribute(leafRanges, '-numberOfTLVs', '2'))
 ixNet.commit()
 
@@ -277,42 +277,42 @@ ixNet.commit()
 
 print("Changing 1st Opaque TLV Value for Root Ranges")
 value_2_1=(ixNet.getAttribute(rootRanges + '/ldpTLVList:1', '-value'))
-ixNet.setMultiAttribute(value_2_1 + '/singleValue', '-value', '00000066')  
+ixNet.setMultiAttribute(value_2_1 + '/singleValue', '-value', '00000066')
 ixNet.commit()
 
 print("Changing 1st Opaque TLV Value for Leaf Ranges")
 value_2_2=(ixNet.getAttribute(leafRanges + '/ldpTLVList:1', '-value'))
-ixNet.setMultiAttribute(value_2_2 + '/singleValue', '-value', '00000066')  
+ixNet.setMultiAttribute(value_2_2 + '/singleValue', '-value', '00000066')
 ixNet.commit()
 
 print("Changing 2nd Opaque TLV Increment for Root Ranges")
 increment_2_1 =(ixNet.getAttribute(rootRanges + '/ldpTLVList:2', '-increment'))
-ixNet.setMultiAttribute(increment_2_1 + '/singleValue', '-value', '0000000000000010')  
+ixNet.setMultiAttribute(increment_2_1 + '/singleValue', '-value', '0000000000000010')
 ixNet.commit()
 
 print("Changing 2nd Opaque TLV Increment for Leaf Ranges")
 increment_2_2 =(ixNet.getAttribute(leafRanges + '/ldpTLVList:2', '-increment'))
-ixNet.setMultiAttribute(increment_2_2 + '/singleValue', '-value', '0000000000000010')  
+ixNet.setMultiAttribute(increment_2_2 + '/singleValue', '-value', '0000000000000010')
 ixNet.commit()
 
 print("Changing IPv4 Group Addresses under Leaf Ranges behind Egress Router")
 groupAddressV4= (ixNet.getAttribute(leafRanges, '-groupAddressV4'))
-ixNet.setMultiAttribute(groupAddressV4 + '/singleValue', '-value', '225.0.1.1') 
+ixNet.setMultiAttribute(groupAddressV4 + '/singleValue', '-value', '225.0.1.1')
 ixNet.commit()
 
 print("Changing IPv6 Group Addresses under Leaf Ranges behind Egress Router")
 groupAddressV6= (ixNet.getAttribute(leafRanges, '-groupAddressV6'))
-ixNet.setMultiAttribute(groupAddressV6 + '/singleValue', '-value', 'ff15:0:1::') 
+ixNet.setMultiAttribute(groupAddressV6 + '/singleValue', '-value', 'ff15:0:1::')
 ixNet.commit()
 
 print("Changing IPv4 Source Addresses under Root Ranges behind Ingress Router")
 sourceAddressV4=(ixNet.getAttribute(rootRanges, '-sourceAddressV4'))
-ixNet.setMultiAttribute(sourceAddressV4 + '/singleValue', '-value', '5.1.1.1')   
+ixNet.setMultiAttribute(sourceAddressV4 + '/singleValue', '-value', '5.1.1.1')
 ixNet.commit()
 
 print("Changing IPv6 Source Addresses under Root Ranges behind Ingress Router")
 sourceAddressV6=(ixNet.getAttribute(rootRanges, '-sourceAddressV6'))
-ixNet.setMultiAttribute(sourceAddressV6 + '/singleValue', '-value', '6001:1::1')   
+ixNet.setMultiAttribute(sourceAddressV6 + '/singleValue', '-value', '6001:1::1')
 ixNet.commit()
 
 print("Changing Group Addresses count under Leaf Ranges behind Egress Router")
@@ -369,7 +369,7 @@ ixNet.setMultiAttribute(lsp2 + '/singleValue', '-value', '5')
 
 print("Changing Label value  On The Fly behind Egress Router on Topology 2")
 label=(ixNet.getAttribute(leafRanges, '-labelValueStart'))
-ixNet.setMultiAttribute(label + '/singleValue', '-value', '666') 
+ixNet.setMultiAttribute(label + '/singleValue', '-value', '666')
 ixNet.commit()
 
 globalObj = ixNet.getRoot() + '/globals'

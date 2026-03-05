@@ -67,7 +67,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
     set topology_1_status [::ixiangpf::topology_config \
         -topology_name      {Topology 1}                            \
         -port_handle        $port_handle1      ]
-    
+
     set topology_1_handle [keylget topology_1_status topology_handle]
 
     set device_group_1_status [::ixiangpf::topology_config \
@@ -77,7 +77,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -device_group_enabled         1                       \
     ]
     set deviceGroup_1_handle [keylget device_group_1_status device_group_handle]
-    
+
     set multivalue_1_status [::ixiangpf::multivalue_config \
         -pattern                counter                 \
         -counter_start          00.11.01.00.00.01       \
@@ -109,7 +109,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -site_id                      0                          \
     ]
     set ethernet_1_handle [keylget ethernet_1_status ethernet_handle]
-    
+
     set multivalue_2_status [::ixiangpf::multivalue_config \
         -pattern                counter                 \
         -counter_start          100.1.0.2               \
@@ -120,7 +120,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -nest_enabled           1                       \
     ]
     set multivalue_2_handle [keylget multivalue_2_status multivalue_handle]
-    
+
     set multivalue_3_status [::ixiangpf::multivalue_config \
         -pattern                counter                 \
         -counter_start          100.1.0.1               \
@@ -159,7 +159,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
     set multivalue_4_handle [keylget multivalue_4_status multivalue_handle]
 
 ##################################################
-##Configuring BFDv4 with mode create    
+##Configuring BFDv4 with mode create
 ##################################################
 
     set bfdv4_interface_1_status [::ixiangpf::emulation_bfd_config \
@@ -255,7 +255,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -mode                                                      create                    \
     ]
     set ospfv2_1_handle [keylget ospfv2_1_status ospfv2_handle]
-    
+
     set multivalue_5_status [::ixiangpf::multivalue_config \
         -pattern                counter                 \
         -counter_start          2000:0:0:1:0:0:0:2      \
@@ -266,7 +266,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -nest_enabled           1                       \
     ]
     set multivalue_5_handle [keylget multivalue_5_status multivalue_handle]
-    
+
     set multivalue_6_status [::ixiangpf::multivalue_config \
         -pattern                counter                 \
         -counter_start          2000:0:0:1:0:0:0:1      \
@@ -296,9 +296,9 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
     set ipv6_1_handle [keylget ipv6_1_status ipv6_handle]
 
 ###########################################################
-##Configuring BFDv6 using create    
+##Configuring BFDv6 using create
 ###########################################################
- 
+
     set bfdv6_interface_1_status [::ixiangpf::emulation_bfd_config \
         -count                          1                         \
         -echo_rx_interval               0                         \
@@ -328,7 +328,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
 
 ###############################################################
 ##Configuring OSPFv3
-###############################################################    
+###############################################################
     set ospfv3_1_status [::ixiangpf::emulation_ospf_config \
         -handle                                                    $ipv6_1_handle            \
         -area_id                                                   0.0.0.0                   \
@@ -373,7 +373,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
     set ospfv3_1_handle [keylget ospfv3_1_status ospfv3_handle]
 
 ##########################################################################
-##Configuration repeats for the other half of ixia ports    
+##Configuration repeats for the other half of ixia ports
 ##########################################################################
 
     set topology_2_status [::ixiangpf::topology_config \
@@ -381,7 +381,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -port_handle        $port_handle2      \
     ]
     set topology_2_handle [keylget topology_2_status topology_handle]
-    
+
     set device_group_2_status [::ixiangpf::topology_config \
         -topology_handle              $topology_2_handle      \
         -device_group_name            {Device Group 2}        \
@@ -389,7 +389,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -device_group_enabled         1                       \
     ]
     set deviceGroup_2_handle [keylget device_group_2_status device_group_handle]
-    
+
     set multivalue_7_status [::ixiangpf::multivalue_config \
         -pattern                counter                 \
         -counter_start          00.12.01.00.00.01       \
@@ -400,7 +400,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -nest_enabled           1                       \
     ]
     set multivalue_7_handle [keylget multivalue_7_status multivalue_handle]
-    
+
     set ethernet_2_status [::ixiangpf::interface_config \
         -protocol_name                {Ethernet 2}               \
         -protocol_handle              $deviceGroup_2_handle      \
@@ -417,7 +417,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -site_id                      0                          \
     ]
     set ethernet_2_handle [keylget ethernet_2_status ethernet_handle]
-    
+
     set multivalue_8_status [::ixiangpf::multivalue_config \
         -pattern                counter                 \
         -counter_start          100.1.0.1               \
@@ -428,7 +428,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -nest_enabled           1                       \
     ]
     set multivalue_8_handle [keylget multivalue_8_status multivalue_handle]
-    
+
     set multivalue_9_status [::ixiangpf::multivalue_config \
         -pattern                counter                 \
         -counter_start          100.1.0.2               \
@@ -439,7 +439,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -nest_enabled           1                       \
     ]
     set multivalue_9_handle [keylget multivalue_9_status multivalue_handle]
-    
+
     set ipv4_2_status [::ixiangpf::interface_config \
         -protocol_name                     {IPv4 2}                  \
         -protocol_handle                   $ethernet_2_handle        \
@@ -451,7 +451,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -netmask                           255.255.255.0             \
     ]
     set ipv4_2_handle [keylget ipv4_2_status ipv4_handle]
-    
+
     set multivalue_10_status [::ixiangpf::multivalue_config \
         -pattern                counter                 \
         -counter_start          193.0.0.1               \
@@ -462,7 +462,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -nest_enabled           1                       \
     ]
     set multivalue_10_handle [keylget multivalue_10_status multivalue_handle]
-    
+
     set bfdv4_interface_2_status [::ixiangpf::emulation_bfd_config \
         -count                          1                          \
         -echo_rx_interval               0                          \
@@ -489,7 +489,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -ip_version                     4                          \
     ]
     set bfdv4Interface_2_handle [keylget bfdv4_interface_2_status bfd_v4_interface_handle]
-    
+
     set ospfv2_2_status [::ixiangpf::emulation_ospf_config \
         -handle                                                    $ipv4_2_handle             \
         -area_id                                                   0.0.0.0                    \
@@ -553,7 +553,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -mode                                                      create                     \
     ]
     set ospfv2_2_handle [keylget ospfv2_2_status ospfv2_handle]
-    
+
     set multivalue_11_status [::ixiangpf::multivalue_config \
         -pattern                counter                 \
         -counter_start          2000:0:0:1:0:0:0:1      \
@@ -564,7 +564,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -nest_enabled           1                       \
     ]
     set multivalue_11_handle [keylget multivalue_11_status multivalue_handle]
-    
+
     set multivalue_12_status [::ixiangpf::multivalue_config \
         -pattern                counter                 \
         -counter_start          2000:0:0:1:0:0:0:2      \
@@ -575,7 +575,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -nest_enabled           1                       \
     ]
     set multivalue_12_handle [keylget multivalue_12_status multivalue_handle]
-    
+
     set ipv6_2_status [::ixiangpf::interface_config \
         -protocol_name                     {IPv6 2}                   \
         -protocol_handle                   $ethernet_2_handle         \
@@ -588,7 +588,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -ipv6_prefix_length                64                         \
     ]
     set ipv6_2_handle [keylget ipv6_2_status ipv6_handle]
-    
+
     set bfdv6_interface_2_status [::ixiangpf::emulation_bfd_config \
         -count                          1                          \
         -echo_rx_interval               0                          \
@@ -615,7 +615,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -ip_version                     6                          \
     ]
     set bfdv6Interface_2_handle [keylget bfdv6_interface_2_status bfd_v6_interface_handle]
-    
+
     set ospfv3_2_status [::ixiangpf::emulation_ospf_config \
         -handle                                                    $ipv6_2_handle             \
         -area_id                                                   0.0.0.0                    \
@@ -658,7 +658,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -ospfv3_lsa_flood_rate_control                             1000                       \
     ]
     set ospfv3_2_handle [keylget ospfv3_2_status ospfv3_handle]
-    
+
     set ipv4_3_status [::ixiangpf::interface_config \
         -protocol_handle                    /globals      \
         -arp_on_linkup                      0             \
@@ -677,7 +677,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -ipv4_disconnect_scale_mode         port          \
         -ipv4_re_send_arp_on_link_up        true          \
     ]
-    
+
     set ipv6_3_status [::ixiangpf::interface_config \
         -protocol_handle                   /globals      \
         -ns_on_linkup                      0             \
@@ -696,7 +696,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -ipv6_disconnect_scale_mode        port          \
         -ipv6_re_send_ns_on_link_up        true          \
     ]
-    
+
     set ethernet_3_status [::ixiangpf::interface_config \
         -protocol_handle                     /globals      \
         -ethernet_attempt_enabled            0             \
@@ -708,7 +708,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -ethernet_disconnect_interval        1000          \
         -ethernet_disconnect_scale_mode      port          \
     ]
-    
+
     set ospfv2_router_1_status [::ixiangpf::emulation_ospf_config \
         -handle                            /globals      \
         -enable_dr_bdr                     0             \
@@ -730,7 +730,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
         -mode               create        \
         -session_type       ospfv3        \
     ]
-   
+
 ##########################################Configuration Ends#################################
 
 
@@ -742,12 +742,12 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
 
     ::ixia::test_control -action start_all_protocols
     #wait 60 seconds
-    after 60000 
- 
+    after 60000
+
 ########################################################################################
 #Fetching BFDv4 and BFDv6 stats, and will print number of autocreated session for each
 ########################################################################################
-    
+
     set v4Stats [::ixiangpf::emulation_bfd_info \
     	-mode aggregate	\
 	-handle $bfdv4Interface_1_handle ]
@@ -765,7 +765,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
 
     after 10000
 
-#######################################################################    
+#######################################################################
 ##Fetching Learned Info and displaying field Protocol_used_by
 #######################################################################
 
@@ -779,8 +779,8 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
 
     puts $v4Learned
 
-    set prot_used_by_v4 [keylget v4Learned $bfdv4Interface_1_handle.bfd_learned_info.session_used_by_protocol] 
-    set prot_used_by_v6 [keylget v6Learned $bfdv6Interface_1_handle.bfd_learned_info.session_used_by_protocol] 
+    set prot_used_by_v4 [keylget v4Learned $bfdv4Interface_1_handle.bfd_learned_info.session_used_by_protocol]
+    set prot_used_by_v6 [keylget v6Learned $bfdv6Interface_1_handle.bfd_learned_info.session_used_by_protocol]
 
     puts "Protocol Used by \nBFDv6 : $prot_used_by_v6 \nBFDv4 : $prot_used_by_v4"
 
@@ -831,7 +831,7 @@ set port_handle2 [keylget connect port_handle.$chassis_ip.[lindex $port_list 1]]
 	-ip_version 6 \
 	-tx_interval 3000 ]
 
-   ixNet commit 
+   ixNet commit
    ixNet exec applyOnTheFly $otf
 
 ########################################################################

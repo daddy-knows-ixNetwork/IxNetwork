@@ -50,18 +50,18 @@
 #    This script intends to demonstrate how to use NGPF LAG API.               #
 #	 Script uses four ports for demonstration.                                 #
 #                                                                              #
-#    1. It will create 2 LAGs as RED-LAG & BLUE-LAG with LACP as LAG protocol, # 
+#    1. It will create 2 LAGs as RED-LAG & BLUE-LAG with LACP as LAG protocol, #
 #       each LAG having two member ports . It will then modify  the            #
 #       ActorSystemId and ActorKey for both the LAG systems.                   #
 #    2. Start the LAG.                                                         #
 #    3. Retrieve protocol statistics and LACP per port statistics.             #
-#	 4. Disable Synchronization flag on RED-LAG-port1 in RED-LAG.              # 
+#	 4. Disable Synchronization flag on RED-LAG-port1 in RED-LAG.              #
 #	 5. Retrieve protocol statistics and LACP per port statistics.             #
-#	 6. Re-enable Synchronization flag on RED-LAG-port1 in RED-LAG.            # 
+#	 6. Re-enable Synchronization flag on RED-LAG-port1 in RED-LAG.            #
 #	 7. Retrieve protocol statistics and LACP per port statistics.             #
-#	 8. Perform StopPDU on RED-LAG-port1 in RED-LAG.                           # 
+#	 8. Perform StopPDU on RED-LAG-port1 in RED-LAG.                           #
 #	 9. Retrieve LACP global learned info.                                     #
-#	 10. Perform StartPDU on RED-LAG-port1 in RED-LAG.                         # 
+#	 10. Perform StartPDU on RED-LAG-port1 in RED-LAG.                         #
 #	 11. Retrieve LACP global learned info.                                    #
 #	 12. Stop All protocols.                                                   #
 ################################################################################
@@ -76,9 +76,9 @@ variable currentStatView
 	set drillDownType "Global Learned Info"
 	set root [ixNet getRoot]
 	set statsViewList [ixNet getList $root/statistics view]
-	
+
 	# Add a StatsView
-	
+
 	set statistics $root/statistics
     set view [ixNet add $statistics view]
     ixNet setAttribute $view -caption $viewCaption
@@ -87,14 +87,14 @@ variable currentStatView
 	ixNet commit
 	set view [ixNet remapIds $view]
 
-	# Set Filters        
+	# Set Filters
     set trackingFilter [ixNet add $view advancedCVFilters]
     ixNet setAttribute $trackingFilter -protocol $protocol
 	ixNet commit
-	#ixNet getAttr $trackingFilter -availableGroupingOptions        
+	#ixNet getAttr $trackingFilter -availableGroupingOptions
 	ixNet setAttribute $trackingFilter -grouping $drillDownType
 	ixNet commit
-	set layer23NextGenProtocolFilter $view/layer23NextGenProtocolFilter        
+	set layer23NextGenProtocolFilter $view/layer23NextGenProtocolFilter
 	ixNet setAttribute $layer23NextGenProtocolFilter -advancedCVFilter $trackingFilter
 	ixNet commit
 
@@ -127,7 +127,7 @@ ixNet exec newConfig
 
 ################################################################################
 # 1. Protocol configuration section. Configure LACP as per the description     #
-################################################################################ 
+################################################################################
 puts "Add 4 virtual ports"
 set root [ixNet getRoot]
 ixNet add $root vport
@@ -399,7 +399,7 @@ foreach statValList [ixNet getAttr $viewPage -rowValues] {
 after 5000
 
 ################################################################################
-# 10. Perform LACPDU start on RED-LAG-LACP                                 # 
+# 10. Perform LACPDU start on RED-LAG-LACP                                 #
 ################################################################################
 puts "\n\nPerform LACPDU start on RED-LAG-LACP-Port1"
 set RedLAGlacpPort1 [lindex [ixNet getList $RedLAGlacp port] 0]

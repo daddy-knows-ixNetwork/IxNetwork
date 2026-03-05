@@ -281,7 +281,7 @@ set ospfRouterId [::ixiangpf::multivalue_config \
 		  -overlay_count 1 \
 		 ]
 
-set ospfRouterId [keylget ospfRouterId multivalue_handle]	      
+set ospfRouterId [keylget ospfRouterId multivalue_handle]
 puts "\n----- ospf routerId: $ospfRouterId ----\n"
 
 set ospfTopo1(-mode) create
@@ -357,7 +357,7 @@ set ospfNetworkGroupTopo1Keys [ConfigNetworkGroupNgpfHlt ospfNetworkGroupTopo1]
 # /topology:1/deviceGroup:1/networkGroup:1
 set ospfNetworkGroupTopo1Handle [keylget ospfNetworkGroupTopo1Keys network_group_handle]
 #set ospfNetworkGroupTopo1Endpoints [keylget ospfNetworkGroupTopo1Keys ipv4_prefix_pools_handle]
- 
+
 puts "\n---- ospfNetworkGroupTopo1Handle: $ospfNetworkGroupTopo1Handle ----\n"
 # ospfNetworkGroupTopo1Handle: {status 1} {network_group_handle /topology:1/deviceGroup:1/networkGroup:1} {ipv4_prefix_pools_handle /topology:1/deviceGroup:1/networkGroup:1/ipv4PrefixPools:1}
 
@@ -378,7 +378,7 @@ set ospfNssa(-mode) modify
 set ospfNssa(-ipv4_prefix_metric) 0
 set ospfNssa(-ipv4_prefix_active) 1
 set ospfNssa(-ipv4_prefix_allow_propagate) 0
-set ospfNssa(-ipv4_prefix_route_origin) $ospfNssaRouteOrigin 
+set ospfNssa(-ipv4_prefix_route_origin) $ospfNssaRouteOrigin
 
 # ::ixiangpf::emulation_ospf_network_group_config
 set ospfNssaHandle [ConfigOspfNetworkGroupNgpfHlt ospfNssa]
@@ -416,7 +416,7 @@ set ospfRouterId2 [::ixiangpf::multivalue_config \
 		  -overlay_count 1 \
 		 ]
 
-set ospfRouterId2 [keylget ospfRouterId2 multivalue_handle]	      
+set ospfRouterId2 [keylget ospfRouterId2 multivalue_handle]
 puts "\n----- ospf routerId: $ospfRouterId ----\n"
 
 set ospfTopo2(-mode) create
@@ -490,7 +490,7 @@ set ospfNetworkGroupTopo2Keys [ConfigNetworkGroupNgpfHlt ospfNetworkGroupTopo2]
 # /topology:1/deviceGroup:1/networkGroup:1
 set ospfNetworkGroupTopo2Handle [keylget ospfNetworkGroupTopo2Keys network_group_handle]
 #set ospfNetworkGroupTopo2Endpoints [keylget ospfNetworkGroupTopo2Keys ipv4_prefix_pools_handle]
- 
+
 puts "\n---- ospfNetworkGroupTopo2Handle: $ospfNetworkGroupTopo2Handle ----\n"
 # ospfNetworkGroupTopo2Handle: {status 1} {network_group_handle /topology:1/deviceGroup:1/networkGroup:1} {ipv4_prefix_pools_handle /topology:1/deviceGroup:1/networkGroup:1/ipv4PrefixPools:1}
 

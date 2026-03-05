@@ -63,7 +63,7 @@
 #    2. Start the ESMC protocol.                                               #
 #    3. Retrieve protocol statistics.                                          #
 #    4. Stop all protocols.                                                    #
-#                                                                              #                                                                                
+#                                                                              #
 # Ixia Software:                                                               #
 #    IxOS      9.10 EB                                                         #
 #    IxNetwork 9.10 EB                                                         #
@@ -93,7 +93,7 @@ ixNet exec newConfig
 ################################################################################
 # 1. Protocol configuration section. Configure ESMC as per the description
 #    give above
-################################################################################ 
+################################################################################
 puts "Adding 1 vport"
 ixNet add [ixNet getRoot] vport
 ixNet commit

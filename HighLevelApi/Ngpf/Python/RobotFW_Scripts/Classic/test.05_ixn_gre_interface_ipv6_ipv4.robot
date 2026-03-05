@@ -36,18 +36,3 @@ test
 	${result} =  Interface Config  mode=config  port_handle=@{portHandles}[1]  gre_count=2  gre_dst_ip_addr=2001::1:1  gre_dst_ip_addr_step=::1  gre_ip_addr=9.9.10.2  gre_ip_addr_step=0.0.0.1  gre_ip_prefix_length=24  ipv6_intf_addr=2001::1:2  ipv6_intf_addr_step=::1  ipv6_gateway=2001::1:1  l23_config_type=protocol_interface
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	

@@ -85,7 +85,7 @@ set vport2 [lindex $vPorts 1]
 puts "Add 1 Topologies"
 ixNet add [ixNet getRoot] topology -name testTpg
 ixNet commit
-set topology [ixNet getList [ixNet getRoot] topology] 
+set topology [ixNet getList [ixNet getRoot] topology]
 
 
 puts "Add 1 device groups with multipliers (number of sessions) as 10"

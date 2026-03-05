@@ -62,7 +62,7 @@
 ################################################################################
 
 ################################################################################
-# Please ensure that PERL5LIB environment variable is set properly so that 
+# Please ensure that PERL5LIB environment variable is set properly so that
 # IxNetwork.pm module is available. IxNetwork.pm is generally available in
 # C:\<IxNetwork Install Path>\API\Perl
 ################################################################################
@@ -81,13 +81,13 @@ sub assignPorts {
 	my $port2    = $my_resource[6];
 	my $vport1   = $my_resource[7];
 	my $vport2   = $my_resource[8];
-	
+
 	my $root = $ixNet->getRoot();
 	my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-	
+
 	my $chassisObj2 = '';
 	if ($chassis1 ne $chassis2) {
 	    $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -97,7 +97,7 @@ sub assignPorts {
 	} else {
 	    $chassisObj2 = $chassisObj1;
 	}
-	
+
 	my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -106,7 +106,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-		
+
     $ixNet->commit();
 }
 # Script Starts
@@ -116,7 +116,7 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.216.104.58';
 my $ixTclPort   = '8350';
 my @ports       = (('10.216.108.82', '2', '7'), ('10.216.108.82', '2', '8'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
@@ -339,8 +339,8 @@ print("Adding Mac Pools behind EVPN DG\n");
 $ixNet->execute('createDefaultStack', $chainedDg1, 'macPools');
 $ixNet->execute('createDefaultStack', $chainedDg2, 'macPools');
 
-my $networkGroup3 = ($ixNet->getList($chainedDg1, 'networkGroup'))[0]; 
-my $networkGroup4 = ($ixNet->getList($chainedDg2, 'networkGroup'))[0]; 
+my $networkGroup3 = ($ixNet->getList($chainedDg1, 'networkGroup'))[0];
+my $networkGroup4 = ($ixNet->getList($chainedDg2, 'networkGroup'))[0];
 
 $ixNet->setAttribute($networkGroup3, '-name', 'MAC_Pool_1');
 $ixNet->setAttribute($networkGroup4, '-name', 'MAC_Pool_2');
@@ -394,13 +394,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -438,7 +438,7 @@ foreach $table (@linfoList) {
 print("\n***************************************************\n");
 
 ################################################################################
-# 5. Configure L2-L3 traffic 
+# 5. Configure L2-L3 traffic
 ################################################################################
 print ("Congfiguring L2-L3 Traffic Item\n");
 my $trafficItem1 = $ixNet->add(($ixNet->getRoot()).'/traffic', 'trafficItem');
@@ -494,13 +494,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 #################################################################################
@@ -515,4 +515,3 @@ sleep(5);
 ################################################################################
 $ixNet->execute('stopAllProtocols');
 print("!!! Test Script Ends !!!");
-

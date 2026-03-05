@@ -6,10 +6,10 @@
 #   A sample script using Tkinter to call TCL APIs.
 #   This script sources an API file and the APIs are a combination
 #   of low level and high level APIs.
-#   
+#
 #   This script can load a saved config file or resume from an existing
 #   configuration.
-#   
+#
 #   This script was created to test ModifyProtocolInterfaces.
 
 import Tkinter
@@ -99,15 +99,15 @@ for x in range(11,21):
 # Create new interfaces on a port. This will also append to existing interfaces
 # Two ways to create interfaces:
 #    1> Enter one value and let step do the incrementings.
-#    2> Provide a list of values. 
-#      
+#    2> Provide a list of values.
+#
 #       ports       = {1/1/1    1/1/1    1/1/1}
 #       ipList      = {1.1.1.1  1.1.1.2  1.1.1.3}
 #       gatewayList = {1.1.1.4  1.1.1.5  1.1.1.6}
 #       vlanList    = {1001     1002     1003}
 #       macList     = {align with above}
 
-# This example shows how to pass in a list custom list of 
+# This example shows how to pass in a list custom list of
 # IP, Macs, vlan IDs
 tcl.eval('set portConfig($port1,-mode) config')
 tcl.eval('set portConfig($port1,-port_handle) {%s}' % ' '.join(ports))

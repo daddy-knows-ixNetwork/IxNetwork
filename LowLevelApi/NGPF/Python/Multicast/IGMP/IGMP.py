@@ -57,15 +57,15 @@
 #    5. Start IGMP protocol.                                                   #
 #    6. Configure L2-L3 traffic.                                               #
 #    7. Start L2/L3 protocol.                                                  #
-#    8. Retrieve protocol statistics                                           #                                                  
+#    8. Retrieve protocol statistics                                           #
 #    9. Retrieve  L2/L3 protocol statistics.                                   #
-#   10. Change igmpstart group address and applyOnTheFly                       #                                               
+#   10. Change igmpstart group address and applyOnTheFly                       #
 #   11. Stop protocol and L2/L3 traffic.                                       #
 #   12. Configure few parameters of IGMP host and querier which can be changed #
 #       when protocol is not started.                                          #
 #   13. Start protocol.                                                        #
 #   14. Retrieve protocol statistics                                           #
-#   15. Stop all protocols.                                                    #                
+#   15. Stop all protocols.                                                    #
 ################################################################################
 import os
 import sys
@@ -224,7 +224,7 @@ ixNet.commit()
 
 ################################################################################
 # adding IGMP over ipv4 stack
-################################################################################ 
+################################################################################
 print ("Adding IGMP over IP4 stack")
 ixNet.add(ip1, 'igmpHost')
 ixNet.add(ip2, 'igmpQuerier')
@@ -246,9 +246,9 @@ ixNet.setMultiAttribute (gqueryi,
 	 '-pattern', 'counter')
 ixNet.commit()
 ixNet.setMultiAttribute(ixNet.add(gqueryi, 'counter'),
-        '-step', '1', 
+        '-step', '1',
 	'-start', '140',
-	'-direction', 'increment')                        
+	'-direction', 'increment')
 ixNet.commit()
 
 ################################################################################
@@ -273,7 +273,7 @@ print ("Changing version of IGMP HOST to v3")
 igmpport1 = ixNet.getList(igmphost, 'port')[0]
 vesriontypehost = ixNet.getAttribute(igmpport1, '-versionType')
 versionvaluehost = ixNet.getList(vesriontypehost, 'singleValue')[0]
-ixNet.setAttribute(versionvaluehost, '-value', 'version3')                                
+ixNet.setAttribute(versionvaluehost, '-value', 'version3')
 ixNet.commit()
 
 ################################################################################
@@ -449,7 +449,7 @@ ixNet.commit()
 print ("Changing number of source address count")
 ipv4sourcelist1 = ixNet.getList(ipv4grouplist1, 'igmpUcastIPv4SourceList')[0]
 ucastSrcAddrCnt = ixNet.getAttribute(ipv4sourcelist1, '-ucastSrcAddrCnt')
-singleValue = ixNet.getList(ucastSrcAddrCnt, 'singleValue')[0] 
+singleValue = ixNet.getList(ucastSrcAddrCnt, 'singleValue')[0]
 ixNet.setAttribute(singleValue,
         '-value', '2')
 ixNet.commit()

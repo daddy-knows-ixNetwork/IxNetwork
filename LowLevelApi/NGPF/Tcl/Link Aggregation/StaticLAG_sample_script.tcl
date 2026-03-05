@@ -54,17 +54,17 @@
 #	 Script uses four ports to demonstrate LAG properties					   #
 #                                                                              #
 #    1. It will create 2 StaticLag topologies, each having two ports which are #
-#       LAG members. It will then modify the Lag Id	for	both the LAG systems   # 
+#       LAG members. It will then modify the Lag Id	for	both the LAG systems   #
 #    2. Start the StaticLag protocol.                                          #
 #    3. Retrieve protocol statistics and StaticLag per port statistics         #
-#	 4. Perform Simulate Link Down on port1 in System1-StaticLag-LHS           # 
+#	 4. Perform Simulate Link Down on port1 in System1-StaticLag-LHS           #
 #	 5. Retrieve protocol statistics, StaticLag per port statistics		       #
 #    6. Retrieve StaticLag global learned info                                 #
-#	 7. Perform Simulate Link Up on port1 in System1-StaticLag-LHS             # 
+#	 7. Perform Simulate Link Up on port1 in System1-StaticLag-LHS             #
 #	 8. Retrieve protocol statistics and StaticLag per port statistics         #
 #    9. Retrieve StaticLag global learned info                                 #
 #	 10. Stop All protocols                                                    #
-#                                                                              # 
+#                                                                              #
 # 	Ixia Software:                                                             #
 #    IxOS      6.90 EA                                                         #
 #    IxNetwork 7.50 EA                                                         #
@@ -81,7 +81,7 @@ variable currentStatView
 	set protocol "Static LAG"
 	set drillDownType "Global Learned Info"
 	set statsViewList [ixNet getList [ixNet getRoot]/statistics view]
-	
+
 	# Add a StatsView
 	set root [ixNet getRoot]
 	set statistics $root/statistics
@@ -92,14 +92,14 @@ variable currentStatView
 	ixNet commit
 	set view [ixNet remapIds $view]
 
-	# Set Filters        
+	# Set Filters
     set trackingFilter [ixNet add $view advancedCVFilters]
     ixNet setAttribute $trackingFilter -protocol $protocol
 	ixNet commit
-	#ixNet getAttr $trackingFilter -availableGroupingOptions        
+	#ixNet getAttr $trackingFilter -availableGroupingOptions
 	ixNet setAttribute $trackingFilter -grouping $drillDownType
 	ixNet commit
-	set layer23NextGenProtocolFilter $view/layer23NextGenProtocolFilter        
+	set layer23NextGenProtocolFilter $view/layer23NextGenProtocolFilter
 	ixNet setAttribute $layer23NextGenProtocolFilter -advancedCVFilter $trackingFilter
 	ixNet commit
 
@@ -134,7 +134,7 @@ ixNet exec newConfig
 
 ################################################################################
 # 1. Protocol configuration section. Configure StaticLag as per the description#
-################################################################################ 
+################################################################################
 puts "Adding 4 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport

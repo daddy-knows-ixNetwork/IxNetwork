@@ -114,7 +114,7 @@ set availableTrafficItemFilter [ixNet getList $custom_view availableTrafficItemF
 set availableStatisticFilter   [ixNet getList $custom_view availableStatisticFilter]
 
 puts "Configure the filter selection area"
-ixNet setAttr $custom_view/layer23TrafficFlowDetectiveFilter -flowFilterType        allFlows                                                  
+ixNet setAttr $custom_view/layer23TrafficFlowDetectiveFilter -flowFilterType        allFlows
 ixNet setAttr $custom_view/layer23TrafficFlowDetectiveFilter -portFilterIds         $availablePortFilter
 ixNet setAttr $custom_view/layer23TrafficFlowDetectiveFilter -trafficItemFilterIds  $availableTrafficItemFilter
 ixNet commit

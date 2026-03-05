@@ -230,7 +230,7 @@ proc Action {portData1 portData2} {
     log "Enable & Start Capture..."
     ixNet exec startCapture
     after 5000
-	
+
     # Repeat twice - once for floodLinkStateUpdatesPerInterval = 10 and once
     # for floodLinkStateUpdatesPerInterval = 12
     foreach floodLinkStateUpdatesPerInterval  {10  12 } {
@@ -337,7 +337,7 @@ proc Action {portData1 portData2} {
 
         # Verify ospf LS Update in captured packet
         log "Checking for ospf LS Update in Captured Pkt..."
-        
+
 		#Match field List for Port1
 		set matchFieldList1 [list "Open Shortest Path First" {"Message Type" "4"}\
                                   "Open Shortest Path First" {"Link-State Advertisement Type" "3"}\
@@ -350,7 +350,7 @@ proc Action {portData1 portData2} {
 			#ixNetCleanUp
             return $FAILED
         }
-		
+
 		#Match field List for Port2
 		set matchFieldList2 [list "Open Shortest Path First" {"Message Type" "4"}\
                                   "Open Shortest Path First" {"Link-State Advertisement Type" "3"}\
@@ -363,7 +363,7 @@ proc Action {portData1 portData2} {
 			ixNetCleanUp
             return $FAILED
         }
-		
+
         set rateList [subst {$floodLinkStateUpdatesPerInterval \
                              [expr $rateControlInterval/1000]}]
 

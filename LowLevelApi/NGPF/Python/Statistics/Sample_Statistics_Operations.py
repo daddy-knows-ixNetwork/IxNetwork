@@ -47,7 +47,7 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#    This sample configures 10 IPv4 sessions on each of the two ports,         # 
+#    This sample configures 10 IPv4 sessions on each of the two ports,         #
 #    adds a traffic Item that uses IPv4 endpoints, sends traffic,              #
 #    using statistics, the performs the following actions:                     #
 #    - enable/disable CSV Logging                                              #
@@ -203,7 +203,7 @@ ixNet.setMultiAttribute(ti1 + "/tracking", '-trackBy', ['ipv4SourceIp0'])
 ixNet.commit()
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 vports = ixNet.getList(ixNet.getRoot(), 'vport')
 print "Assigning ports to " + str(vports) + " ..."
@@ -275,7 +275,7 @@ def takeViewCSVSnapshot(ixNet, viewName, csvPath="c:\\Regression\\Snapshot CSVs"
     print "- take Snapshot CSV"
     SnapSettingList = [ 'Snapshot.View.Csv.Location: "' + csvPath + '"',
                         'Snapshot.View.Csv.GeneratingMode: "kOverwriteCSVFile"',
-                        'Snapshot.Settings.Name: ' + viewName, 
+                        'Snapshot.Settings.Name: ' + viewName,
                         'Snapshot.View.Contents: ' + csvType ]
     ixNet.execute('TakeViewCSVSnapshot',str('"' + viewName + '"'),SnapSettingList)
     print "- snapshot CSV complete"
@@ -325,11 +325,11 @@ def compareTwoStats(ixNet, viewName, statA, statB):
     for ip, st1, st2 in zip(ipv4source, statsA, statsB):
         if int(st1) == int(st2):
             print "\t- Source IP: %s --> OK " % ip
-        else: 
+        else:
             print "\t- Source IP: %s --> Failed: %s = %s, %s = %s " % (ip, statA, st1, statB, st2)
 
 ################################################################################
-# Enable CSV Logging across all views 
+# Enable CSV Logging across all views
 ################################################################################
 
 print "Enable CSV Logging across all views"

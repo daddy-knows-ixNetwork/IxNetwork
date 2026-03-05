@@ -45,15 +45,15 @@
 #------------------------------------------------------------------------------
 # Name     : test.6.1.10_bgp_ospf.traffic.tcl
 # Purpose  : Checking imported routes in BGP and verify protocols and traffic
-# Steps    : 
+# Steps    :
 #           1. Configuring IXIA Ports using ixncfg file
-#           2. Verifying the importing routes in bgp by importing bgp routes in 
+#           2. Verifying the importing routes in bgp by importing bgp routes in
 #              the first port and verifying learned routed in the second port.
 #           3. Starting the Protocols
 #           4. Applying the Traffic
 #           5. Starting the Traffic
 #           6. Stopping the Traffic
-#           7. Verify the Traffic Statistics in IXNetwork Client and also verify 
+#           7. Verify the Traffic Statistics in IXNetwork Client and also verify
 #              Learned info.
 #           8. Stopping the Protocols
 #           9. Cleaning the IXIA ports
@@ -62,7 +62,7 @@
 source $env(IXNETWORK_SAMPLE_SCRIPT_DIR)/IxNetwork/Classic/Tcl/TestRun/config.tcl
 
 proc Action {portData1 portData2} {
-    
+
     source $::pwd/BGPRouteImportUtils.tcl
 
     # Initializing return value
@@ -73,7 +73,7 @@ proc Action {portData1 portData2} {
     set chassisIp1 [getChassisIp $portData1]
     set card1      [getCardNumber $portData1]
     set port1      [getPortNumber $portData1]
-    
+
     # Get the second port info
     set chassisIp2 [getChassisIp $portData2]
     set card2      [getCardNumber $portData2]
@@ -158,10 +158,10 @@ proc Action {portData1 portData2} {
     set bgp1 $vPort1/protocols/bgp
     set bgpNeighbor        [lindex [ixNet getList $bgp1 neighborRange] 0]
     set importRouteOptions [ixNet add $bgpNeighbor routeImportOptions]
-    
+
     # Setting the path of the filename to be imported
-    set fileName $::pwd/[getTestId].csv 
-   
+    set fileName $::pwd/[getTestId].csv
+
     # Checking bgp import functionality
     if {[bgpImportFunctionality $importRouteOptions $fileName 1] != 0} {
         log "FAILURE : Could not import routes"
@@ -232,7 +232,7 @@ proc Action {portData1 portData2} {
         return $FAILED
     }
     log "Learned info verification successfull for first peer.."
-   
+
     log "Verify Protocol Stats ....."
 
     set BGPStatsList {"Established State Count" 1 \
@@ -319,7 +319,7 @@ proc Action {portData1 portData2} {
         ixNetCleanUp
         return $FAILED
     }
-  
+
     # Stoping all the configured protocol
     log "!!!Stopping All Protocol Operation!!!"
     set ret [ixNet exec stopAllProtocols]
@@ -328,7 +328,7 @@ proc Action {portData1 portData2} {
         ixNetCleanUp
         return $FAILED
     }
-    
+
     # Unassigning all the ports and removing the same
     ixNetCleanUp
     return $PASSED

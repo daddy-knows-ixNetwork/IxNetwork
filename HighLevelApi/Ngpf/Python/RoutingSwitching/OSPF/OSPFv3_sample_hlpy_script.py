@@ -59,7 +59,7 @@
 #    6. Configure L2-L3 & Applib traffic items.                                #
 #    7. Start the L2-L3 & Applib traffics.                                     #
 #    8. Retrieve L2-L3 traffic stats.                                          #
-#    9. Make on the fly changes of Inter-Area Prefix attributes                #    
+#    9. Make on the fly changes of Inter-Area Prefix attributes                #
 #   10. Retrieve protocol statistics.                                          #
 #   11. Stop L2-L3 traffic.                                                    #
 #   12. Stop all protocols.                                                    #
@@ -71,7 +71,7 @@
 ################################################################################
 
 ################################################################################
-# Utils                                                                        #    
+# Utils                                                                        #
 ################################################################################
 
 # Libraries to be included
@@ -84,7 +84,7 @@ import time, re
 
 # Append paths to python APIs (Linux and Windows)
 
-# sys.path.append('/path/to/hltapi/library/common/ixiangpf/python') 
+# sys.path.append('/path/to/hltapi/library/common/ixiangpf/python')
 # sys.path.append('/path/to/ixnetwork/api/python')
 
 from ixiatcl import IxiaTcl
@@ -95,7 +95,7 @@ from ixiaerror import IxiaError
 ixiatcl = IxiaTcl()
 ixiahlt = IxiaHlt(ixiatcl)
 ixiangpf = IxiaNgpf(ixiahlt)
-    
+
 try:
     ErrorHandler('', {})
 except (NameError,):
@@ -104,7 +104,7 @@ except (NameError,):
         err = ixiatcl.tcl_error_info()
         log = retval['log']
         additional_info = '> command: %s\n> tcl errorInfo: %s\n> log: %s' % (cmd, err, log)
-        raise IxiaError(IxiaError.COMMAND_FAIL, additional_info)        
+        raise IxiaError(IxiaError.COMMAND_FAIL, additional_info)
 
 ################################################################################
 # Connection to the chassis, IxNetwork Tcl Server                              #
@@ -133,7 +133,7 @@ connect_result = ixiangpf.connect(
 
 if connect_result['status'] != '1':
     ErrorHandler('connect', connect_result)
-    
+
 print " Printing connection result"
 pprint(connect_result)
 
@@ -142,22 +142,22 @@ ports = connect_result['vport_list'].split()
 time.sleep(2)
 
 ################################################################################
-# Configure Topology, Device Group                                             # 
+# Configure Topology, Device Group                                             #
 ################################################################################
 
 # Creating a topology on first port
-print "Adding topology 1 on port 1" 
+print "Adding topology 1 on port 1"
 _result_ = ixiangpf.topology_config(
     topology_name      = """OSPFv3 Topology 1""",
     port_handle        = ports[0],
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', _result_)
-    
+
 topology_1_handle = _result_['topology_handle']
 
-# Creating a device group in topology 
-print "Creating device group 1 in topology 1"    
+# Creating a device group in topology
+print "Creating device group 1 in topology 1"
 _result_ = ixiangpf.topology_config(
     topology_handle              = topology_1_handle,
     device_group_name            = """OSPFv3 Router 1""",
@@ -166,7 +166,7 @@ _result_ = ixiangpf.topology_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', _result_)
-    
+
 deviceGroup_1_handle = _result_['device_group_handle']
 
 # Creating a topology on second port
@@ -197,7 +197,7 @@ time.sleep(2)
 #  Configure protocol interfaces                                               #
 ################################################################################
 
-# Creating ethernet stack for the first Device Group 
+# Creating ethernet stack for the first Device Group
 print "Creating ethernet stack for the first Device Group"
 _result_ = ixiangpf.interface_config(
     protocol_name                = """Ethernet 1""",
@@ -206,7 +206,7 @@ _result_ = ixiangpf.interface_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', _result_)
-    
+
 ethernet_1_handle = _result_['ethernet_handle']
 
 # Creating ethernet stack for the second Device Group
@@ -221,7 +221,7 @@ if _result_['status'] != IxiaHlt.SUCCESS:
 
 ethernet_2_handle = _result_['ethernet_handle']
 
-# Creating IPv6 Stack on top of Ethernet Stack for the first Device Group                                 
+# Creating IPv6 Stack on top of Ethernet Stack for the first Device Group
 print "Creating IPv6 Stack on top of Ethernet Stack for the first Device Group"
 _result_ = ixiangpf.interface_config(
     protocol_name                = """IPv6 1""",
@@ -231,10 +231,10 @@ _result_ = ixiangpf.interface_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', _result_)
-    
+
 ipv6_1_handle = _result_['ipv6_handle']
 
-# Creating IPv6 Stack on top of Ethernet Stack for the second Device Group 
+# Creating IPv6 Stack on top of Ethernet Stack for the second Device Group
 print "Creating IPv6 2 stack on ethernet 2 stack for the second Device Group"
 _result_ = ixiangpf.interface_config(
     protocol_name                = """IPv6 2""",
@@ -247,9 +247,9 @@ if _result_['status'] != IxiaHlt.SUCCESS:
 
 ipv6_2_handle = _result_['ipv6_handle']
 time.sleep(2)
- 
+
 # ###############################################################################
-# Configure OSPFv3 protocol                                                     # 
+# Configure OSPFv3 protocol                                                     #
 # ###############################################################################
 
 # Creating OSPFv3 Stack on top of IPv6 Stack for the first Device Group
@@ -266,7 +266,7 @@ _result_ = ixiangpf.emulation_ospf_config(
     session_type                                              = "ospfv3",
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
-    ErrorHandler('emulation_ospf_config', _result_)    
+    ErrorHandler('emulation_ospf_config', _result_)
 ospfv3_1_handle = _result_['ospfv3_handle']
 
 # Creating OSPFv3 Stack on top of IPv6 Stack for the second Device Group
@@ -283,12 +283,12 @@ _result_ = ixiangpf.emulation_ospf_config(
     session_type                                              = "ospfv3",
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
-    ErrorHandler('emulation_ospf_config', _result_)    
+    ErrorHandler('emulation_ospf_config', _result_)
 ospfv3_2_handle = _result_['ospfv3_handle']
 time.sleep(2)
 
 # ###############################################################################
-# Configure Network Topology & Loopback Device Groups                           # 
+# Configure Network Topology & Loopback Device Groups                           #
 # ###############################################################################
 
 # Creating Tree Network Topology in Topology 1
@@ -481,14 +481,14 @@ if protostats['status'] != IxiaHlt.SUCCESS:
 pprint(protostats)
 time.sleep(2)
 
-# ########################################################################### 
+# ###########################################################################
 # Configure L2-3 & L4-7 traffic                                             #
 # 1. Endpoints : Source->IPv6, Destination->IPv6                            #
 # 2. Type      : Unicast IPv6 traffic                                       #
 # 3. Flow Group: On IPv6 Destination Address                                #
 # 4. Rate      : 2000 pps                                                   #
 # 5. Frame Size: 500 bytes                                                  #
-# 6. Tracking  : Source Destination EndpointPair                            #    
+# 6. Tracking  : Source Destination EndpointPair                            #
 # ###########################################################################
 # Configuring L2-L3 traffic item
 print "Configuring L2-L3 traffic"
@@ -500,7 +500,7 @@ _result_ = ixiangpf.traffic_config(
     emulation_dst_handle                        = interAreaPrefix_2_handle,
     name                                        = 'Traffic_Item_1',
     circuit_endpoint_type                       = 'ipv6',
-    rate_pps                                    = 2000,                                    
+    rate_pps                                    = 2000,
     frame_size                                  = 500,
     track_by                                    = 'sourceDestEndpointPair0 trackingenabled0'
 )
@@ -568,7 +568,7 @@ if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('traffic_control', _result_)
 
 time.sleep(2)
-    
+
 ############################################################################
 # Stop all protocols                                                       #
 ############################################################################
@@ -577,5 +577,5 @@ _result_ = ixiangpf.test_control(action='stop_all_protocols')
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('test_control', _result_)
 time.sleep(2)
-       
+
 print "!!! Test Script Ends !!!"

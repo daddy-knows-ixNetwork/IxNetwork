@@ -57,7 +57,7 @@
 #    6. Start the L2-L3 traffic.                                               #
 #    7. Retrieve L2-L3 traffic stats.                                          #
 #    8. Stop L2-L3 traffic.                                                    #
-#    9. Stop all protocols.                                                    #                                                              
+#    9. Stop all protocols.                                                    #
 # ###############################################################################
 
 def assignPorts (ixNet, realPort1, realPort2)

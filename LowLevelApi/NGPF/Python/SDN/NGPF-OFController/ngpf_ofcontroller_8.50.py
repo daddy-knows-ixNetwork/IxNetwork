@@ -384,4 +384,3 @@ if __name__ == "__main__":
     version = '8.10'
     controller = NgpfOpenFlowController(ixTclServer, ixTclPort, version)
     controller.main()
-

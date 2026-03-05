@@ -81,7 +81,7 @@ try:
                           )
 
     #---------- Preference Settings End --------------
-    
+
     # Only need to blank the config for Windows because osPlatforms such as Linux and
     # Windows Connection Mgr supports multiple sessions and a new session always come up as a blank config.
     if osPlatform == 'windows':
@@ -89,7 +89,7 @@ try:
 
     mainObj.configLicenseServerDetails([licenseServerIp], licenseModel)
     portObj = PortMgmt(mainObj)
-    
+
     portObj.assignPorts(portList, forceTakePortOwnership)
 
     protocolObj = Protocol(mainObj)
@@ -98,7 +98,7 @@ try:
     deviceGroupObj1 = protocolObj.createDeviceGroupNgpf(topologyObj1,
                                                         multiplier=1,
                                                         deviceGroupName='DG1')
-                                                  
+
     topologyObj2 = protocolObj.createTopologyNgpf(portList=[portList[1]], topologyName='Topo2')
 
     deviceGroupObj2 = protocolObj.createDeviceGroupNgpf(topologyObj2,

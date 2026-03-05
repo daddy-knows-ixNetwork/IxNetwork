@@ -46,7 +46,7 @@ set topology1(portHandle) [keylget topology1Keys topology_handle]
 set topology2(portHandle) [keylget topology2Keys topology_handle]
 
 # 2> Create Device Group(s) to a Topology Group
-#    
+#
 set deviceGroup1(topo1,-topology_handle) $topology1(portHandle)
 set deviceGroup1(topo1,-device_group_multiplier) 3
 set deviceGroup1(topo1,-device_group_name) "IGMP Host"
@@ -285,7 +285,7 @@ set igmpHostGroupAddrStatus [::ixiangpf::multivalue_config \
 				   -overlay_value 228.0.0.1,229.0.0.1,230.0.0.1 \
 				   -overlay_index 1,2,3 \
 				  ]
-    
+
 puts "\ngroupAddrMultiValue: [KeylPrint igmpHostGroupAddrStatus]\n"
 set igmpHostGroupAddr [keylget igmpHostGroupAddrStatus multivalue_handle]
 
@@ -382,7 +382,7 @@ puts "\nigmpQuerierStatus:: [KeylPrint igmpQuerierStatus]\n"
 set igmpQuerierHandle [keylget igmpQuerierStatus igmp_querier_handle]
 # igmpQuerierStatus:: status: 1
 #igmp_querier_handle: /topology:2/deviceGroup:1/ethernet:1/ipv4:1/igmpQuerier:1
-#igmp_querier_handles: /topology:2/deviceGroup:1/ethernet:1/ipv4:1/igmpQuerier:1/item:1 /topology:2/deviceGroup:1/ethernet:1/ipv4:1/igmpQuerier:1/item:2 /topology:2/deviceGroup:1/ethernet:1/ipv4:1/igmpQuerier:1/item:	
+#igmp_querier_handles: /topology:2/deviceGroup:1/ethernet:1/ipv4:1/igmpQuerier:1/item:1 /topology:2/deviceGroup:1/ethernet:1/ipv4:1/igmpQuerier:1/item:2 /topology:2/deviceGroup:1/ethernet:1/ipv4:1/igmpQuerier:1/item:
 
 set ret [::ixiangpf::test_control -action start_all_protocols]
 if {[keylget ret status] != $::SUCCESS} {
@@ -426,11 +426,11 @@ puts "\nQuerierAggregatedStats:\n[KeylPrint querierAggregatedStats]\n"
 # Querier Aggregated Stats: /topology:2/deviceGroup:1/ethernet:1/ipv4:1/igmpQuerier:1 = {aggregate {{status started} {sessions_total 1} {sessions_up 1} {sessions_down 0} {sessions_notstarted 0}}}
 
 
-#Querier Learned Info: /topology:2/deviceGroup:1/ethernet:1/ipv4:1/igmpQuerier:1/item:1 = {learned_info {{{"IGMP Querier" "1/1/2" "Interface-IP - 100.1.0.1"} {{id {"IGMP Querier" "1/1/2" "Interface-IP - 100.1.0.1"}} {{Querier Working Version} {v2 v2 v2 v2 v2}} {{Elected Querier Address} {100.1.0.1 100.1.0.1 100.1.0.1 100.1.0.1 100.1.0.1}} {{Group Address} {228.0.0.2 228.0.0.1 228.0.0.4 228.0.0.3 228.0.0.5}} {{Group Timer (sec)} {259 259 259 259 259}} {{Filter Mode} {N/A N/A N/A N/A N/A}} {{Compatibility Mode} {v2 v2 v2 v2 v2}} {{Compatibility Timer (sec)} {0 0 0 0 0}} {{Source Address} {removePacket[N/A] removePacket[N/A] removePacket[N/A] removePacket[N/A] removePacket[N/A]}} {{Source Timer (sec)} {0 0 0 0 0}}}}}}	
+#Querier Learned Info: /topology:2/deviceGroup:1/ethernet:1/ipv4:1/igmpQuerier:1/item:1 = {learned_info {{{"IGMP Querier" "1/1/2" "Interface-IP - 100.1.0.1"} {{id {"IGMP Querier" "1/1/2" "Interface-IP - 100.1.0.1"}} {{Querier Working Version} {v2 v2 v2 v2 v2}} {{Elected Querier Address} {100.1.0.1 100.1.0.1 100.1.0.1 100.1.0.1 100.1.0.1}} {{Group Address} {228.0.0.2 228.0.0.1 228.0.0.4 228.0.0.3 228.0.0.5}} {{Group Timer (sec)} {259 259 259 259 259}} {{Filter Mode} {N/A N/A N/A N/A N/A}} {{Compatibility Mode} {v2 v2 v2 v2 v2}} {{Compatibility Timer (sec)} {0 0 0 0 0}} {{Source Address} {removePacket[N/A] removePacket[N/A] removePacket[N/A] removePacket[N/A] removePacket[N/A]}} {{Source Timer (sec)} {0 0 0 0 0}}}}}}
 
 
 # This is example on how to select the receiving multicast group
-# Note: 
+# Note:
 #    - The amount of 'none' needs to be same amount of igmp host groups for -emulation_multicast_dst_handle_type
 # -emulation_multicast_dst_handle [list [list 228.0.0.1/0.0.0.0/1 229.0.0.1/0.0.0.0/0 230.0.0.1/0.0.0.0/1]]
 # -emulation_multicast_dst_handle_type [list [list none none none]]
@@ -465,7 +465,7 @@ puts "\nTrafficItemStatus:\n[KeylPrint trafficItem1]\n"
 #     -emulation_dst_handle [list [list]] or {{}}
 #   If there are three endpoints, then 3 [list[ inside a list.
 #     [list [list][list][list]] or { {} {} {} }
-# 
+#
 # As for the array keys. Each endpoint uses the same key name
 #
 

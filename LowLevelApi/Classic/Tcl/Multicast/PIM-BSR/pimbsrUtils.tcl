@@ -155,7 +155,7 @@ proc getBSRInfo {interface checkLearnedBSRList {exactMatch 1}} {
 
     puts "\t Time elapsed since last BSM send/recv : \
             [ixNet getAtt $bsrInfo -lastBsmSendRecv]"
-            
+
     puts "All info are present in BSR Learnt Info List"
     set isError 0
     return $isError
@@ -232,10 +232,10 @@ proc getRPInfo {interface checkLearnedRPList {exactMatch 1}} {
 
     set expectedNumLearntInfo [expr [llength $checkLearnedRPList] / \
             ($numAttrToBeMatched * 2)]
-    
+
     puts "All $isFound info (Expected $expectedNumLearntInfo)present \
             in RP Learnt Info List"
-    
+
     set isError 0
     return $isError
 }
@@ -319,7 +319,7 @@ proc checkAllPIMStats { portList stat } {
         logMsg "Error in establishing PIM sessions... Check the configuration"
         return 1
     }
-    
+
     if {$returnFlag == 1} {
         return 0
     } else {
@@ -363,7 +363,7 @@ proc verifyCapturedPackets {chassis card port matchFieldList {expPktCnt 1} \
     if {$numCapturedPkts < $expPktCnt} {
         return $isError
     }
-    
+
     captureBuffer get $chassisId $card $port 1 $numCapturedPkts
     set cnt 0
     set matchedCapFrame 0
@@ -401,4 +401,3 @@ proc verifyCapturedPackets {chassis card port matchFieldList {expPktCnt 1} \
         return $matchedCapFrame
     }
 }
-

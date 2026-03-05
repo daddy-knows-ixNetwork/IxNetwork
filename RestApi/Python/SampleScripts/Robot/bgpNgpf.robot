@@ -2,10 +2,10 @@
 # Description
 #    Configure IxNetwork BGP in NGPF.
 #
-#    This script is the same script from SampleScripts/bgpNgpf.py. 
+#    This script is the same script from SampleScripts/bgpNgpf.py.
 #    If this Robot script is difficult to understand, you could have a side-by-side look to get a better understanding.
 #
-#    This script uses object oriented programming techniques.  The first thing you see in the *** Test Case *** is 
+#    This script uses object oriented programming techniques.  The first thing you see in the *** Test Case *** is
 #    that it will extend the main ${ixnObj} object to all the instantiated classes.
 #    The reason is because all the common functions like GET, POST, PATCH, and many more are located in IxNetRestApi.Connect.
 
@@ -13,13 +13,13 @@
 Documentation  Configure IxNetwork BGP protocol in NGPF
 Metadata  Script_Author  Hubert Gee
 Metadata  Script_Date    3/10/2018
- 
+
 Library  BuiltIn
 Library  Collections
 
 # Must add the ../../Modules path to PYTHONPATH.
 Library  IxNetRestApi.Connect  ${apiServerIp}  ${apiServerPort}  ${apiServerOs}  robotFrameworkStdout=True  WITH NAME  ixnObj
-Library  IxNetRestApiPortMgmt.PortMgmt      WITH NAME  portMgmtObj  
+Library  IxNetRestApiPortMgmt.PortMgmt      WITH NAME  portMgmtObj
 Library  IxNetRestApiTraffic.Traffic        WITH NAME  trafficObj
 Library  IxNetRestApiProtocol.Protocol      WITH NAME  protocolObj
 Library  IxNetRestApiStatistics.Statistics  WITH NAME  statisticObj
@@ -34,7 +34,7 @@ ${deleteSessionAfterTest} =  True
 ${licenseIsInChassis} =  False
 @{licenseServerIp} =  192.168.70.3
 ${licenseModel} =  subscription
-${licenseTier} =  tier3  
+${licenseTier} =  tier3
 
 ${ixChassisIp} =  192.168.70.120
 
@@ -44,7 +44,7 @@ ${ixChassisIp} =  192.168.70.120
 @{portList} =  ${port_1_1}  ${port_2_1}
 @{topology1Port} =  ${port_1_1}
 @{topology2Port} =  ${port_2_1}
-@{trackBy} =  flowGroup0  
+@{trackBy} =  flowGroup0
 
 # Create a dictionary
 &{ethMacAddr1} =  start=00:01:01:00:00:01  direction=increment  step=00:00:00:00:00:01
@@ -58,7 +58,7 @@ ${ixChassisIp} =  192.168.70.120
 &{networkGroup1Address} =  start=160.0.0.0  direction=increment  step=0.0.0.1
 &{networkGroup2Address} =  start=180.0.0.0  direction=increment  step=0.0.0.1
 
-&{trafficItem1} =  name=Topo1-to-Topo2  trafficType=ipv4  biDirectional=True  srcDestMesh=one-to-one 
+&{trafficItem1} =  name=Topo1-to-Topo2  trafficType=ipv4  biDirectional=True  srcDestMesh=one-to-one
 		   ...  routeMesh=oneToOne  allowSelfDestined=False  trackBy=${trackBy}
 
 # Sample configElement for continuous traffic
@@ -73,7 +73,7 @@ Configuring BGP in NGPF
     ${ixnObj} =  ixnObj.getSelfObject
     portMgmtObj.setMainObject    ${ixnObj}
     protocolObj.setMainObject    ${ixnObj}
-    trafficObj.setMainObject     ${ixnObj}   
+    trafficObj.setMainObject     ${ixnObj}
     statisticObj.setMainObject   ${ixnObj}
 
     Log To Console  Connecting to chassis ...
@@ -97,23 +97,23 @@ Configuring BGP in NGPF
     ...  AND  ixnObj.Config License Server Details  ${licenseServerIp}  ${licenseModel}  ${licenseTier}
 
     Log To Console  Assigning ports ...
-    portMgmtObj.assignPorts  ${portList}  
+    portMgmtObj.assignPorts  ${portList}
 
     ${topology1Obj} =     protocolObj.Create Topology Ngpf  portList=${topology1Port}  topologyName=Topo1
     ${topology2Obj} =     protocolObj.Create Topology Ngpf  portList=${topology2Port}  topologyName=Topo2
-    ${deviceGroup1Obj} =  protocolObj.Create Device Group Ngpf  ${topology1Obj}  multiplier=1  deviceGroupName=DG1  
-    ${deviceGroup2Obj} =  protocolObj.Create Device Group Ngpf  ${topology2Obj}  multiplier=1  deviceGroupName=DG2  
+    ${deviceGroup1Obj} =  protocolObj.Create Device Group Ngpf  ${topology1Obj}  multiplier=1  deviceGroupName=DG1
+    ${deviceGroup2Obj} =  protocolObj.Create Device Group Ngpf  ${topology2Obj}  multiplier=1  deviceGroupName=DG2
     ${ethernet1Obj} =     protocolObj.Create Ethernet Ngpf  ${deviceGroup1Obj}  ethernetName=Eth1  macAddress=${ethMacAddr1}
     ${ethernet2Obj} =     protocolObj.Create Ethernet Ngpf  ${deviceGroup2Obj}  ethernetName=Eth2  macAddress=${ethMacAddr2}
     ${ipv41Obj} =         protocolObj.Create Ipv4 Ngpf  ${ethernet1Obj}  ipv4Address=${ipv41}  gateway=${ipv4Gateway1}  prefix=24
     ${ipv42Obj} =         protocolObj.Create Ipv4 Ngpf  ${ethernet2Obj}  ipv4Address=${ipv42}  gateway=${ipv4Gateway2}  prefix=24
-    ${bgp1Obj} =          protocolObj.Config Bgp  ${ipv41Obj}  name=BGP_1  holdTimer=90  dutIp=${bgp1DutIp}  localAs2Bytes=101  
+    ${bgp1Obj} =          protocolObj.Config Bgp  ${ipv41Obj}  name=BGP_1  holdTimer=90  dutIp=${bgp1DutIp}  localAs2Bytes=101
     	       		  ...  type=internal
-    ${bgp2Obj} =          protocolObj.Config Bgp  ${ipv42Obj}  name=BGP_2  holdTimer=90  dutIp=${bgp2DutIp}  localAs2Bytes=101  
+    ${bgp2Obj} =          protocolObj.Config Bgp  ${ipv42Obj}  name=BGP_2  holdTimer=90  dutIp=${bgp2DutIp}  localAs2Bytes=101
     	       		  ...  type=internal
-    ${networkGroup1Obj} =  protocolObj.Config Network Group  create=${deviceGroup1Obj}  name=NG-1  multipler=100  
+    ${networkGroup1Obj} =  protocolObj.Config Network Group  create=${deviceGroup1Obj}  name=NG-1  multipler=100
     			   ...  networkAddress=${networkGroup1Address}  prefixLength=32
-    ${networkGroup2Obj} =  protocolObj.Config Network Group  create=${deviceGroup2Obj}  name=NG-2  multipler=100  
+    ${networkGroup2Obj} =  protocolObj.Config Network Group  create=${deviceGroup2Obj}  name=NG-2  multipler=100
     			   ...  networkAddress=${networkGroup2Address}  prefixLength=32
 
     Log To Console  Starting all protocols
@@ -129,17 +129,17 @@ Configuring BGP in NGPF
     @{configElements}  Create List  ${configElements}
 
     Log To Console  Configuring Traffic Item
-    ${trafficItemStatus} =  trafficObj.Config Traffic Item  mode=create  trafficItem=${trafficItem1}  endpoints=${endpoint1}  
+    ${trafficItemStatus} =  trafficObj.Config Traffic Item  mode=create  trafficItem=${trafficItem1}  endpoints=${endpoint1}
     ...  configElements=${configElements}
 
     Log To Console  Starting traffic
-    trafficObj.Start Traffic   applyTraffic=True  regenerateTraffic=True 
+    trafficObj.Start Traffic   applyTraffic=True  regenerateTraffic=True
 
     # Get the Traffic Item and ConfigElement objects incase you need to modify something.
     ${trafficItemObj} =  Get From List  ${trafficItemStatus}  0
     ${configElementObj} =  Get From List  ${trafficItemStatus}  2
     ${configElementObj} =  Get From List  ${configElementObj}  0
-    
+
     # Check the traffic state before checking stats
     ${result} =  trafficObj.Get Transmission Type  ${configElementObj}
     @{expectedTrafficState}  Create List  stopped
@@ -149,8 +149,5 @@ Configuring BGP in NGPF
     ${stats} =  statisticObj.Get Stats  viewName=Flow Statistics
 
     Log To Console  ${stats}
-    #${txFrames} =  Get From Dictionary  ${stats}  1  
+    #${txFrames} =  Get From Dictionary  ${stats}  1
     #Log To Console  txFrames ${txFrames}
-
-    
-    

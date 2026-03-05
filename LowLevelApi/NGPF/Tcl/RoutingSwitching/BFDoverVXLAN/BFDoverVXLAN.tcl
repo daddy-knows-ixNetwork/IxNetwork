@@ -70,7 +70,7 @@ ixNet exec newConfig
 
 ################################################################################
 # protocol configuration section                                               #
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -152,7 +152,7 @@ ixNet setMultiAttr [ixNet getAttr $ip2 -resolveGateway]/singleValue -value true
 ixNet commit
 
 ###########################################################################
-#Add and Configure VXLAN Interface 
+#Add and Configure VXLAN Interface
 ###########################################################################
 puts "Add VXLAN Interface"
 ixNet add $ip1 vxlan
@@ -168,7 +168,7 @@ ixNet setAttr $ipv4multicast2/singleValue -value 225.0.1.1
 ixNet commit
 
 ###########################################################################
-#Add and Configure BFDv4 Interface 
+#Add and Configure BFDv4 Interface
 ###########################################################################
 puts "Add BFDv4 Interface"
 ixNet add $vxlan1 bfdv4Interface

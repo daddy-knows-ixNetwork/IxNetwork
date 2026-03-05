@@ -82,7 +82,7 @@ try:
     config_mgmt = IxnConfigManagement(ixnhttp)
     config_mgmt.new_config()
 
-    # CONNECT CHASSIS: 
+    # CONNECT CHASSIS:
     #     Query for the chassis IP to get the chassis state value.
     query_result = ixnhttp.root.query.node('availableHardware').go()
     query_result.availableHardware.create_chassis(payload={'hostname': chassis_ip})
@@ -109,7 +109,7 @@ try:
             raise Exception('connect_chassis: {0} failed'.format(chassis_ip))
         if current_status == 'ready' and counter < timeout:
             break
-    
+
     # ARE PORTS AVAILABLE?
     #   Verify if ports are owned.  If not owned, ports are released and available.
     #                               If owned, ports are connected. You could verify port ownership.
@@ -182,7 +182,7 @@ try:
                 print('\t{0} is down'.format(down_state_query.vport[x].attributes.assignedTo.value))
 
         print('\tWaiting %s/%s seconds' % (counter, timeout))
-        # If the state_query on any vport object is 'up', the vport will get listed. 
+        # If the state_query on any vport object is 'up', the vport will get listed.
         if len(query_port.vport) == vport_count:
             break
         if int(time.time()) - start > timeout:
@@ -203,7 +203,7 @@ try:
     device_group_1 = topology_1.create_deviceGroup()
     device_group_1.attributes.multiplier.value = '1'
     device_group_1.update()
-  
+
     # CREATE ETHERNET STACK
     ethernet_1 = device_group_1.create_ethernet()
 
@@ -242,7 +242,7 @@ try:
     device_group_2 = topology_2.create_deviceGroup()
     device_group_2.attributes.multiplier.value = '1'
     device_group_2.update()
-  
+
     # CREATE ETHERNET STACK
     ethernet_2 = device_group_2.create_ethernet()
 
@@ -273,7 +273,7 @@ try:
 
     # START ALL PROTOCOLS
     ixnhttp.root.operations.startallprotocols()
-    
+
     print('\nVerify IPv4 ARP')
     ipv4 = IxnIpv4Emulation(ixnhttp)
     ipv4.find(vport_name=port_1_name)
@@ -296,14 +296,14 @@ try:
                                                                     'routeMesh':' oneToOne',
                                                                     'allowSelfDestined': False})
     # 3> Add source and destination Endpoints
-    #    QUERY FOR ALL CONFIGURED TOPOLOGY GROUPS 
+    #    QUERY FOR ALL CONFIGURED TOPOLOGY GROUPS
     #        To use the topology groups as src/dst endpoints
     query_topology = IxnQuery(ixnhttp, '/').node('topology').go()
     topology_1_obj = query_topology.topology[0].href
     topology_2_obj = query_topology.topology[1].href
     endpoing_obj = traffic_item_obj.create_endpointSet(payload={'sources': [topology_1_obj],
                                                                 'destinations': [topology_2_obj]})
-    
+
     query_config_elements = IxnQuery(ixnhttp, '/traffic') \
         .node('trafficItem', properties=['name'], where=[{'property': 'name', 'regex': 'Topo1 to Topo2'}]) \
         .node('tracking', properties=['trackBy']) \
@@ -331,14 +331,14 @@ try:
     track_by = query_config_elements.trafficItem[0].tracking[0]
     track_by.attributes.trackBy.value = ['flowGroup0']
     track_by.update()
-    
+
     # REGENERATE:  All Traffic Items
     query_traffic = IxnQuery(ixnhttp, '/traffic').node('trafficItem', properties=['name']).go()
     for each_traffic_item in query_traffic.trafficItem:
         print('\nRegenerating Traffic Item:', each_traffic_item.attributes.name.value)
         # arg1: /api/v1/sessions/1/ixnetwork/traffic/trafficItem/1
         each_traffic_item.operations.generate({'arg1': each_traffic_item.href})
-  
+
     # APPLY TRAFFIC
     print('\nApplying traffic')
     # arg1: /api/v1/sessions/1/ixnetwork/traffic
@@ -349,7 +349,7 @@ try:
     # arg1: /api/v1/sessions/1/ixnetwork/traffic
     query_traffic.operations.start({'arg1': query_traffic.href})
 
-    # CHECK TRAFFIC STATE:  
+    # CHECK TRAFFIC STATE:
     #   To ensure traffic stats are shown before checking statistics.
     #   Options: started | stopped | startedWaitingForStats | stoppedWaitingForStats
     #       For continuous traffic, set expected_state=['started', 'startedWaitingForStats']

@@ -52,12 +52,12 @@
 #       router with 1 route-range per router.							       #
 #    2. Start the ospfv2 protocol.                                             #
 #    3. Retrieve protocol statistics.                                          #
-#    4. Retrieve protocol learned info.                                        #                                      
+#    4. Retrieve protocol learned info.                                        #
 #    5. Configure L2-L3 traffic.                                               #
 #    6. Start the L2-L3 traffic.                                               #
 #    7. Retrieve L2-L3 traffic stats.                                          #
 #    8. Stop L2-L3 traffic.                                                    #
-#    9. Stop all protocols.                                                    #                                                                       
+#    9. Stop all protocols.                                                    #
 ################################################################################
 import os
 import sys
@@ -137,7 +137,7 @@ ixNet.execute('newConfig')
 ################################################################################
 # 1. Protocol configuration section. Configure OSPFv2 as per the description
 #    given above
-################################################################################ 
+################################################################################
 # Assign real ports
 assignPorts(ixNet, ports[0], ports[1])
 time.sleep(5)
@@ -149,7 +149,7 @@ vPort2 = ixNet.getList(root, 'vport')[1]
 ################################################################################
 # Set ipv4 interfaces
 ################################################################################
-print ("Set ipv4 interfaces") 
+print ("Set ipv4 interfaces")
 ixNet.add(vPort1, 'interface')
 ixNet.add(vPort2, 'interface')
 ixNet.commit()
@@ -220,7 +220,7 @@ ixNet.setAttribute(router2, '-discardLearnedLsa', 'false')
 ixNet.commit()
 
 ################################################################################
-# Configure interfaces on OSPFv2 routers 
+# Configure interfaces on OSPFv2 routers
 ################################################################################
 ixNet.add(router1, 'interface')
 ixNet.commit()

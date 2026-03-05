@@ -11,7 +11,7 @@ gRIBI-NGPF.py:
    - Assign ports
    - Start all protocols
    - Verify all protocols
-   - Verify Protocol statistics 
+   - Verify Protocol statistics
 Supports IxNetwork API servers:
    - Windows, Windows Connection Mgr and Linux
 Requirements:
@@ -91,16 +91,16 @@ try:
     #gRIBINextHopGroup1.Type.Single('internal')
     gRIBINextHopGroup1.numberOfNextHops(value='3')
     gRIBINextHopGroup1.Type.Single('internal')
-   
+
 
     config.info('Configuring Network Group 1')
     networkGroup1 = gRIBINextHopGroup.NetworkGroup.add(Name="IPv4 Entries", Multiplier='3')
     ipv4PrefixPool = networkGroup1.Ipv4PrefixPools.add(NumberOfAddresses='10')
     ipv4PrefixPool.NetworkAddress.Increment(start_value='201.10.0.1', step_value='0.0.0.1')
     ipv4PrefixPool.PrefixLength.Single(32)
-   
-    
-    
+
+
+
     config.info('creating vport 2')
     vport2 = config.Vport.add()[-1]
 
@@ -148,7 +148,7 @@ try:
         config.info('Starting NGPF protocols')
         config.StartAllProtocols(Arg1='sync')
 
-        
+
         protocolsSummary = StatViewAssistant(ixnetwork, 'Protocols Summary')        print(protocolsSummary)
         protocolsSummary.AddRowFilter('Protocol Type', protocolsSummary.REGEX, '(?i)^gRIBI?')
         config.info('Verify protocol sessions\n')

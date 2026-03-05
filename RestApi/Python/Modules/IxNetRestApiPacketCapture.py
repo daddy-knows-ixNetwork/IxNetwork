@@ -1,4 +1,4 @@
-import sys, re 
+import sys, re
 from IxNetRestApiFileMgmt import FileMgmt
 from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApi import IxNetRestApiException
@@ -14,7 +14,7 @@ class PacketCapture(object):
         Parameters
             ixnObj: The main ixnObj object
             portMgmtObj: (Optional):  The PortMgmt object.
-                         If you already have the portMgmt object, then pass it in. 
+                         If you already have the portMgmt object, then pass it in.
                          Otherwise, leave portMgmtObj=None
 
         Example:
@@ -101,11 +101,11 @@ class PacketCapture(object):
         """
         Description
            Packet Capturing in wireshark style details. By default, it saved 7209 packet counts.
-           It takes a long time to save all the packet header details into a file. 
+           It takes a long time to save all the packet header details into a file.
            This API will default saving 20 packet counts. You could increase the packet count.
 
         Parameters
-            getUpToPacketNumber: None|The last packet number to get. 
+            getUpToPacketNumber: None|The last packet number to get.
                                  Always starts at 1. If you state 10, then this function will get 1-10 packets.
             capturePacketsToFile: True|False
         """
@@ -123,7 +123,7 @@ class PacketCapture(object):
 
             if self.enableDataPlane == False and self.enableControlPlane == False:
                 raise IxNetRestApiException('\nPacketCapture Error: You must enable one of the options: enableDataPlane|enableControlPlane')
-        
+
         vport = self.portMgmtObj.getVports([self.captureRxPort])[0]
         response = self.ixnObj.get(self.ixnObj.httpHeader+vport+'/capture')
         totalDataCapturedPackets = response.json()['dataPacketCounter']
@@ -204,13 +204,13 @@ class PacketCapture(object):
     def packetCaptureGetCurrentPacketsHex(self, getUpToPacketNumber=20):
         """
         Description
-           Returns captured packets in hex format.   
+           Returns captured packets in hex format.
            This API will default return 20 packet hex. You could increase the packet count.
 
         Parameters
-            getUpToPacketNumber: None|The last packet number to get. 
+            getUpToPacketNumber: None|The last packet number to get.
                                  Always starts at 1. If you state 10, then this function will get 1-10 packets.
-            
+
         Return
             capturedData:  dictionary.   key is 'data' and/or 'control'
                 capturedData['data']  is dictionary of packet hex data for Data Capture Buffer
@@ -255,13 +255,13 @@ class PacketCapture(object):
                                                 data=data, silentMode=False)
 
                     self.ixnObj.waitForComplete(response, self.ixnObj.sessionUrl+'/vport/capture/currentPacket/operations/getpacketfromcontrolcapture/'+response.json()['id'])
-                
+
                 data = {'arg1': '-packetHex'}
                 response = self.ixnObj.get(self.ixnObj.httpHeader+vport+'/capture/currentPacket', data=data, silentMode=False)
                 packetHex = response.json()['packetHex']
                 capturedData[eachTypeOfCaptures][packetIndex]=packetHex
             return capturedData
-                                    
+
     def getCapFile(self, port, typeOfCapture='data', saveToTempLocation='c:\\Temp', localLinuxLocation='.', appendToSavedCapturedFile=None):
         """
         Get the latest captured .cap file from ReST API server to local Linux drive.
@@ -273,12 +273,12 @@ class PacketCapture(object):
             typeOfCapture: data|control
 
             saveToTempLocation: For Windows:
-                                    Where to temporary save the .cap file on the ReST API server: 
+                                    Where to temporary save the .cap file on the ReST API server:
                                     Provide any path with double backslashes: C:\\Temp.
                                     The folder will be created if it doesn't exists.
 
                                 For Linux, value= 'linux'.
- 
+
             localLinuxLocation: Where to save the .cap file on the local Linux machine.
 
             appendToSavedCapturedFile: Add a text string to the captured file.
@@ -292,7 +292,7 @@ class PacketCapture(object):
 
                PATCH: /vport/2/capture
                DATA: {'softwareEnabled': False, 'hardwareEnabled': True}
- 
+
                # Set traffic item to send continuous packets
                PATCH: /traffic/trafficItem/1/configElement/<id>/transmissionControl
                DATA: {'type': 'continuous'}
@@ -325,7 +325,7 @@ class PacketCapture(object):
                   DATA: {"arg1": "captures/packetCaptureFolder/port2_HW.cap", "arg2": "/api/v1/sessions/<id>/ixnetwork/files/port2_HW.cap"}
                   GET: /ixnetwork/files?filename=captures/packetCaptureFolder/port2_HW.cap
         """
-        
+
         # For Linux API server
         if '\\' not in saveToTempLocation:
             # For Linux API server, need to give a name for a temporary folder
@@ -378,4 +378,3 @@ class PacketCapture(object):
 
             fileMgmtObj.copyFileLinuxToLocalLinux(linuxApiServerPathAndFileName=capFileToGet, localPath=localLinuxLocation,
                                                   renameDestinationFile=None, linuxApiServerPathExtension=pathExtension)
-            

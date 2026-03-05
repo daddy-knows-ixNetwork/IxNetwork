@@ -7,7 +7,7 @@
 #                                                                              #
 ################################################################################
 
-####################################################################################    
+####################################################################################
 #                                                                                  #
 #                                LEGAL  NOTICE:                                    #
 #                                ==============                                    #
@@ -42,7 +42,7 @@
 # damages limitations set forth herein and will not obligate Keysight to provide   #
 # any additional maintenance or support services.                                  #
 #                                                                                  #
-####################################################################################   
+####################################################################################
 
 ################################################################################################
 #                                                                                              #
@@ -57,8 +57,8 @@
 #		and SID.                                                                               #
 #    2. Start the OSPFV3 protocol.                                                             #
 #    3. Retrieve protocol statistics.                                                          #
-#    4. Stop all protocols.                                                                    #                                                                                          
-################################################################################################   
+#    4. Stop all protocols.                                                                    #
+################################################################################################
 
 # Script Starts
 puts "!!! Test Script Starts !!!"
@@ -83,7 +83,7 @@ ixNet exec newConfig
 ################################################################################
 # 1. Protocol configuration section. Configure ISISL3/BGP+ as per the description
 #    give above
-################################################################################ 
+################################################################################
 set Root [ixNet getRoot]
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
@@ -220,7 +220,7 @@ set single_value_1 [ixNet add $ipv6Srh_1 "singleValue"]
 ixNet setMultiAttribute $single_value_1 -value true
 ixNet commit
 
-#Change the value flagOfSRv6Cap 
+#Change the value flagOfSRv6Cap
 puts "Change the value flagOfSRv6Cap"
 set flagOfSRv6Cap_1 [ixNet getAttribute $ospfv3Rtr_1 -flagOfSRv6Cap]
 set single_value_1 [ixNet add $flagOfSRv6Cap_1 "singleValue"]
@@ -231,7 +231,7 @@ set single_value_1 [ixNet add $flagOfSRv6Cap_1 "singleValue"]
 ixNet setMultiAttribute $single_value_1 -value 4000
 ixNet commit
 
-#Change the value reservedInsideSRv6Cap 
+#Change the value reservedInsideSRv6Cap
 puts "Change the value reservedInsideSRv6Cap"
 set reservedInsideSRv6Cap_1 [ixNet getAttribute $ospfv3Rtr_1 -reservedInsideSRv6Cap]
 set single_value_1 [ixNet add $reservedInsideSRv6Cap_1 "singleValue"]
@@ -242,7 +242,7 @@ set single_value_1 [ixNet add $reservedInsideSRv6Cap_1 "singleValue"]
 ixNet setMultiAttribute $single_value_1 -value 3fff
 ixNet commit
 
-#Change the value sRv6NodePrefix 
+#Change the value sRv6NodePrefix
 puts "Change the value sRv6NodePrefix"
 set sRv6NodePrefix_1 [ixNet getAttribute $ospfv3Rtr_1 -sRv6NodePrefix]
 set single_value_1 [ixNet add $sRv6NodePrefix_1 "singleValue"]
@@ -253,7 +253,7 @@ set single_value_1 [ixNet add $sRv6NodePrefix_1 "singleValue"]
 ixNet setMultiAttribute $single_value_1 -value 2000:0:0:1:0:0:0:2
 ixNet commit
 
-#Change the value srv6PrefixOptions 
+#Change the value srv6PrefixOptions
 puts "Change the value srv6PrefixOptions"
 set srv6PrefixOptions_1 [ixNet getAttribute $ospfv3Rtr_1 -srv6PrefixOptions]
 set single_value_1 [ixNet add $srv6PrefixOptions_1 "singleValue"]
@@ -318,7 +318,7 @@ ixNet setMultiAttribute $single_value_1 -value true
 ixNet commit
 
 
-#Change the value of maxSlMsd 
+#Change the value of maxSlMsd
 puts "Change the value of maxSlMsd"
 set maxSlMsd_1 [ixNet getAttribute $ospfv3Rtr_1 -maxSlMsd]
 set single_value_1 [ixNet add $maxSlMsd_1 "singleValue"]
@@ -329,7 +329,7 @@ set single_value_1 [ixNet add $maxSlMsd_1 "singleValue"]
 ixNet setMultiAttribute $single_value_1 -value 5
 ixNet commit
 
-#Change the value of maxEndPopMsd 
+#Change the value of maxEndPopMsd
 puts "Change the value of maxEndPopMsd"
 set maxEndPopMsd_1 [ixNet getAttribute $ospfv3Rtr_1 -maxEndPopMsd]
 set single_value_1 [ixNet add $maxEndPopMsd_1 "singleValue"]
@@ -340,7 +340,7 @@ set single_value_1 [ixNet add $maxEndPopMsd_1 "singleValue"]
 ixNet setMultiAttribute $single_value_1 -value 5
 ixNet commit
 
-#Change the value of maxHEncapsMsd 
+#Change the value of maxHEncapsMsd
 puts "Change the value of maxHEncapsMsd"
 set maxHEncapsMsd_1 [ixNet getAttribute $ospfv3Rtr_1 -maxHEncapsMsd]
 set single_value_1 [ixNet add $maxHEncapsMsd_1 "singleValue"]
@@ -351,7 +351,7 @@ set single_value_1 [ixNet add $maxHEncapsMsd_1 "singleValue"]
 ixNet setMultiAttribute $single_value_1 -value 5
 ixNet commit
 
-#Change the value of maxEndDMsd 
+#Change the value of maxEndDMsd
 puts "Change the value of maxEndDMsd"
 set maxEndDMsd_1 [ixNet getAttribute $ospfv3Rtr_1 -maxEndDMsd]
 set single_value_1 [ixNet add $maxEndDMsd_1 "singleValue"]
@@ -363,14 +363,14 @@ ixNet setMultiAttribute $single_value_1 -value 5
 ixNet commit
 
 
-#Change the value of locatorCount 
+#Change the value of locatorCount
 puts "Change the value of locatorCount"
 ixNet setAttribute $ospfv3Rtr_1 -locatorCount 1
 ixNet commit
 ixNet setAttribute $ospfv3Rtr_2 -locatorCount 1
 ixNet commit
 
-#Change the value of metric 
+#Change the value of metric
 puts "Change the value of metric"
 set metric_1 [ixNet getAttribute $ospfv3Rtr_1/ospfv3SRv6LocatorEntryList -metric]
 set single_value_1 [ixNet add $metric_1 "singleValue"]
@@ -382,7 +382,7 @@ ixNet setMultiAttribute $single_value_1 -value 1
 ixNet commit
 
 
-#Change the value of algorithm 
+#Change the value of algorithm
 puts "Change the value of algorithm"
 set algorithm_1 [ixNet getAttribute $ospfv3Rtr_1/ospfv3SRv6LocatorEntryList -algorithm]
 set single_value_1 [ixNet add $algorithm_1 "singleValue"]
@@ -471,7 +471,7 @@ set Single_Value_1 [ixNet add $prefixMetric_1 "singleValue"]
 ixNet setMultiAttribute $Single_Value_1 -value 64
 ixNet commit
 
-#Change the value of sidCount 
+#Change the value of sidCount
 puts "Change the value of sidCount"
 ixNet setAttribute $ospfv3Rtr_1 -sidCount 1
 ixNet commit
@@ -554,7 +554,7 @@ set functionLength_1 [ixNet getAttribute $ospfv3Rtr_2/ospfv3SRv6LocatorEntryList
 set Single_Value_1 [ixNet add $functionLength_1 "singleValue"]
 ixNet setMultiAttribute $Single_Value_1 -value 16
 ixNet commit
- 
+
 #Change the value of argumentLength
 puts "Change the value of argumentLength"
 set argumentLength_1 [ixNet getAttribute $ospfv3Rtr_1/ospfv3SRv6LocatorEntryList/ospfv3SRv6EndSIDList -argumentLength]
@@ -566,7 +566,7 @@ set Single_Value_1 [ixNet add $argumentLength_1 "singleValue"]
 ixNet setMultiAttribute $Single_Value_1 -value 0
 ixNet commit
 
-#Change the value of adjSidCount 
+#Change the value of adjSidCount
 puts "Change the value of adjSidCount"
 ixNet setAttribute $ospfv3Rtr_1 -adjSidCount 1
 ixNet commit
@@ -663,7 +663,7 @@ set Single_Value_1 [ixNet add $reserved2_1 "singleValue"]
 ixNet setMultiAttribute $Single_Value_1 -value 0001
 ixNet commit
 
-    
+
 #Change the value of endPointFunction
 puts "Change the value of endPointFunction"
 set endPointFunction_1 [ixNet getAttribute $ospfv3_1/ospfv3SRv6AdjSIDList -endPointFunction]
@@ -718,7 +718,7 @@ set functionLength_1 [ixNet getAttribute $ospfv3_2/ospfv3SRv6AdjSIDList -functio
 set Single_Value_1 [ixNet add $functionLength_1 "singleValue"]
 ixNet setMultiAttribute $Single_Value_1 -value 16
 ixNet commit
- 
+
 #Change the value of argumentLength
 puts "Change the value of argumentLength"
 set argumentLength_1 [ixNet getAttribute $ospfv3_1/ospfv3SRv6AdjSIDList -argumentLength]
@@ -729,7 +729,7 @@ set argumentLength_1 [ixNet getAttribute $ospfv3_2/ospfv3SRv6AdjSIDList -argumen
 set Single_Value_1 [ixNet add $argumentLength_1 "singleValue"]
 ixNet setMultiAttribute $Single_Value_1 -value 0
 ixNet commit
-		
+
 set networkGroup_P2 [ixNet add $t2dev1 "networkGroup"]
 ixNet setMultiAttribute $networkGroup_P2 \
 	-name "Routers"
@@ -753,7 +753,7 @@ ixNet setMultiAttribute $single_value_1 -value true
 ixNet commit
 
 
-#Change the value flagOfSRv6Cap 
+#Change the value flagOfSRv6Cap
 puts "Change the value flagOfSRv6Cap"
 set flagOfSRv6Cap_1 [ixNet getAttribute $Network_Topology/simRouter:1/ospfv3PseudoRouter:1 -flagOfSRv6Cap]
 set single_value_1 [ixNet add $flagOfSRv6Cap_1 "singleValue"]
@@ -761,7 +761,7 @@ ixNet setMultiAttribute $single_value_1 -value 4000
 ixNet commit
 
 
-#Change the value reservedInsideSRv6Cap 
+#Change the value reservedInsideSRv6Cap
 puts "Change the value reservedInsideSRv6Cap"
 set reservedInsideSRv6Cap_1 [ixNet getAttribute $Network_Topology/simRouter:1/ospfv3PseudoRouter:1 -reservedInsideSRv6Cap]
 set single_value_1 [ixNet add $reservedInsideSRv6Cap_1 "singleValue"]
@@ -769,7 +769,7 @@ ixNet setMultiAttribute $single_value_1 -value 3fff
 ixNet commit
 
 
-#Change the value sRv6NodePrefix 
+#Change the value sRv6NodePrefix
 puts "Change the value sRv6NodePrefix"
 set sRv6NodePrefix_1 [ixNet getAttribute $Network_Topology/simRouter:1/ospfv3PseudoRouter:1 -sRv6NodePrefix]
 set single_value_1 [ixNet add $sRv6NodePrefix_1 "singleValue"]
@@ -777,7 +777,7 @@ ixNet setMultiAttribute $single_value_1 -value 2000:0:0:1:0:0:0:1
 ixNet commit
 
 
-#Change the value srv6PrefixOptions 
+#Change the value srv6PrefixOptions
 puts "Change the value srv6PrefixOptions"
 set srv6PrefixOptions_1 [ixNet getAttribute $Network_Topology/simRouter:1/ospfv3PseudoRouter:1 -srv6PrefixOptions]
 set single_value_1 [ixNet add $srv6PrefixOptions_1 "singleValue"]
@@ -822,7 +822,7 @@ set single_value_1 [ixNet add $includeMaximumEndDMsd_1 "singleValue"]
 ixNet setMultiAttribute $single_value_1 -value true
 ixNet commit
 
-#Change the value of maxSlMsd 
+#Change the value of maxSlMsd
 puts "Change the value of maxSlMsd"
 set maxSlMsd_1 [ixNet getAttribute $Network_Topology/simRouter:1/ospfv3PseudoRouter:1 -maxSlMsd]
 set single_value_1 [ixNet add $maxSlMsd_1 "singleValue"]
@@ -830,7 +830,7 @@ ixNet setMultiAttribute $single_value_1 -value 5
 ixNet commit
 
 
-#Change the value of maxEndPopMsd 
+#Change the value of maxEndPopMsd
 puts "Change the value of maxEndPopMsd"
 set maxEndPopMsd_1 [ixNet getAttribute $Network_Topology/simRouter:1/ospfv3PseudoRouter:1 -maxEndPopMsd]
 set single_value_1 [ixNet add $maxEndPopMsd_1 "singleValue"]
@@ -838,7 +838,7 @@ ixNet setMultiAttribute $single_value_1 -value 5
 ixNet commit
 
 
-#Change the value of maxHEncapsMsd 
+#Change the value of maxHEncapsMsd
 puts "Change the value of maxHEncapsMsd"
 set maxHEncapsMsd_1 [ixNet getAttribute $Network_Topology/simRouter:1/ospfv3PseudoRouter:1 -maxHEncapsMsd]
 set single_value_1 [ixNet add $maxHEncapsMsd_1 "singleValue"]
@@ -846,7 +846,7 @@ ixNet setMultiAttribute $single_value_1 -value 5
 ixNet commit
 
 
-#Change the value of maxEndDMsd 
+#Change the value of maxEndDMsd
 puts "Change the value of maxEndDMsd"
 set maxEndDMsd_1 [ixNet getAttribute $Network_Topology/simRouter:1/ospfv3PseudoRouter:1 -maxEndDMsd]
 set single_value_1 [ixNet add $maxEndDMsd_1 "singleValue"]
@@ -854,21 +854,21 @@ ixNet setMultiAttribute $single_value_1 -value 5
 ixNet commit
 
 
-#Change the value of locatorCount 
+#Change the value of locatorCount
 puts "Change the value of locatorCount"
 ixNet setAttribute $Network_Topology/simRouter:1/ospfv3PseudoRouter:1 -locatorCount 1
 ixNet commit
 ixNet setAttribute $ospfv3Rtr_2 -locatorCount 1
 ixNet commit
 
-#Change the value of metric 
+#Change the value of metric
 puts "Change the value of metric"
 set metric_1 [ixNet getAttribute $Network_Topology/simRouter:1/ospfv3PseudoRouter:1/ospfv3PseudoSRv6LocatorEntryList -metric]
 set single_value_1 [ixNet add $metric_1 "singleValue"]
 ixNet setMultiAttribute $single_value_1 -value 1
 ixNet commit
 
-#Change the value of algorithm 
+#Change the value of algorithm
 puts "Change the value of algorithm"
 set algorithm_1 [ixNet getAttribute $Network_Topology/simRouter:1/ospfv3PseudoRouter:1/ospfv3PseudoSRv6LocatorEntryList -algorithm]
 set single_value_1 [ixNet add $algorithm_1 "singleValue"]
@@ -929,7 +929,7 @@ ixNet setMultiAttribute $Single_Value_1 -value 64
 ixNet commit
 
 
-#Change the value of sidCount 
+#Change the value of sidCount
 puts "Change the value of sidCount"
 ixNet setAttribute $Network_Topology/simRouter:1/ospfv3PseudoRouter:1 -sidCount 1
 ixNet commit
@@ -997,7 +997,7 @@ set Single_Value_1 [ixNet add $argumentLength_1 "singleValue"]
 ixNet setMultiAttribute $Single_Value_1 -value 0
 ixNet commit
 
-#Change the value of adjSidCount 
+#Change the value of adjSidCount
 puts "Change the value of adjSidCount"
 ixNet setAttribute $Network_Topology/simRouter:1/ospfv3PseudoRouter:1 -adjSidCount 1
 ixNet commit
@@ -1068,12 +1068,12 @@ set reserved2_1 [ixNet getAttribute $Network_Topology/simInterface:1/simInterfac
 set Single_Value_1 [ixNet add $reserved2_1 "singleValue"]
 ixNet setMultiAttribute $Single_Value_1 -value 0001
 ixNet commit
-    
+
 #Change the value of endPointFunction
 puts "Change the value of endPointFunction"
 set endPointFunction_1 [ixNet getAttribute $Network_Topology/simInterface:1/simInterfaceIPv6Config:1/ospfv3PseudoInterface:1/ospfv3PseudoSRv6AdjSIDList -endPointFunction]
 set Single_Value_1 [ixNet add $endPointFunction_1 "singleValue"]
-ixNet setMultiAttribute $Single_Value_1 -value endt_nopsp_nousp 
+ixNet setMultiAttribute $Single_Value_1 -value endt_nopsp_nousp
 ixNet commit
 
 
@@ -1104,7 +1104,7 @@ set functionLength_1 [ixNet getAttribute $Network_Topology/simInterface:1/simInt
 set Single_Value_1 [ixNet add $functionLength_1 "singleValue"]
 ixNet setMultiAttribute $Single_Value_1 -value 16
 ixNet commit
- 
+
 #Change the value of argumentLength
 puts "Change the value of argumentLength"
 set argumentLength_1 [ixNet getAttribute $Network_Topology/simInterface:1/simInterfaceIPv6Config:1/ospfv3PseudoInterface:1/ospfv3PseudoSRv6AdjSIDList -argumentLength]

@@ -86,7 +86,7 @@ set clientPort 8920
 namespace eval statsOperation {
     variable snapShotData
     variable pageSize
-    variable pageNum 
+    variable pageNum
     #--------------------------------------------------------------------------#
     # PURPOSE    : to get the caption from the stat view object                #
     # ASSUMPTION : for internal use in this name space                         #
@@ -101,7 +101,7 @@ namespace eval statsOperation {
     proc pageSize {size} {
         variable pageSize
         set pageSize $size
-    } 
+    }
 
     #--------------------------------------------------------------------------#
     # PURPOSE    : gett the given page from a given stat view                  #
@@ -127,7 +127,7 @@ namespace eval statsOperation {
         set card Card[format "%0.2d" [lindex $chassisCardPortList 1]]
         set port Port[format "%0.2d" [lindex $chassisCardPortList 2]]
         set myCardPort "$chassis/$card/$port"
-        
+
         set connectionList [lindex $snapShotData 1]
         set statNameList   [lindex $snapShotData 2]
         set statRowList    [lindex $snapShotData 3]
@@ -171,7 +171,7 @@ namespace eval statsOperation {
     proc getTrafficStatFromSnapshotData {trafficItem statName} {
         variable snapShotData
         if {[info exists snapShotData] == 0} {
-             puts "Error in getting snapshot of stats for $statName" 
+             puts "Error in getting snapshot of stats for $statName"
              return -1
         }
 
@@ -237,7 +237,7 @@ namespace eval statsOperation {
            foreach statview $statsViewList {
                 puts "[getCaption $statview]"
            }
-           puts "----------------------------------------------" 
+           puts "----------------------------------------------"
            return {}
         }
 
@@ -269,7 +269,7 @@ namespace eval statsOperation {
     #--------------------------------------------------------------------------#
     # PURPOSE : Print the content of the snapshot data                         #
     #           May be used for debugging                                      #
-    #--------------------------------------------------------------------------#                    
+    #--------------------------------------------------------------------------#
     proc printSnapShotData {} {
         variable snapShotData
         if {[info exists snapShotData]} {
@@ -280,7 +280,7 @@ namespace eval statsOperation {
     #--------------------------------------------------------------------------#
     # Return the unparsed snapshot data for those who wants to used it for     #
     # their self-defined parsing                                               #
-    #--------------------------------------------------------------------------#    
+    #--------------------------------------------------------------------------#
     proc returnRawSnapshotDataObj {} {
         variable snapShotData
         if {[info exists snapShotData]} {
@@ -288,13 +288,13 @@ namespace eval statsOperation {
         } else {
             return ""
         }
-    } 
+    }
 }
 namespace export statsOperation *
 
 ixNet connect $client -version 7.11 -port $clientPort
 ixNet exec newConfig
- 
+
 set root [ixNet getRoot]
 ixNet commit
 set root [lindex [ixNet remapIds $root] 0]
@@ -308,7 +308,7 @@ set vport1 [lindex [ixNet remapIds $vport1] 0]
 
 # add interface
 set interface [ixNet add $vport1 "interface"]
-ixNet setAttribute $interface -enabled true 
+ixNet setAttribute $interface -enabled true
 ixNet commit
 set interface [lindex [ixNet remapIds $interface] 0]
 
@@ -346,7 +346,7 @@ set ofInterface [lindex [ixNet remapIds $ofInterface] 0]
 set ofChannel [ixNet add $ofInterface "ofChannel"]
 ixNet setMultiAttribute $ofChannel \
             -enabled true \
-            -remoteIp 4.1.1.2 
+            -remoteIp 4.1.1.2
 ixNet commit
 set ofChannel [lindex [ixNet remapIds $ofChannel] 0]
 
@@ -375,11 +375,11 @@ set controllerTableFlowRanges1 [lindex [ixNet remapIds $controllerTableFlowRange
 
 # add instructions
 set instruction1 [ixNet add $controllerTableFlowRanges1 "instructions"]
-ixNet setAttribute $instruction1 -instructionType applyActions 
+ixNet setAttribute $instruction1 -instructionType applyActions
 ixNet commit
 set instruction1 [lindex [ixNet remapIds $instruction1] 0]
 
-# add first action 
+# add first action
 set instructionAction11 [ixNet add $instruction1 "instructionActions"]
 ixNet setMultiAttribute $instructionAction11 \
             -actionType setEthernetDestination \
@@ -404,7 +404,7 @@ ixNet setMultiAttribute $controllerTableFlowRanges2 \
             -ethernetSourceMask {FF FF FF FF FF FF} \
             -ethernetType {startValue = 8847,stepValue = 0,repeatCount = 1,wrapCount = 65535,incrementMode = increment} \
             -mplsLabel {startValue = 10,stepValue = 1,repeatCount = 1,wrapCount = 4294967295,incrementMode = increment} \
-            -enabled true 
+            -enabled true
 ixNet commit
 set controllerTableFlowRanges2 [lindex [ixNet remapIds $controllerTableFlowRanges2] 0]
 
@@ -418,7 +418,7 @@ set instruction2 [lindex [ixNet remapIds $instruction2] 0]
 set instructionAction21 [ixNet add $instruction2 "instructionActions"]
 ixNet setMultiAttribute $instructionAction21 \
             -actionType setMplsLabel \
-            -mplsLabel 20 
+            -mplsLabel 20
 ixNet commit
 set instructionAction21 [lindex [ixNet remapIds $instructionAction21] 0]
 
@@ -453,13 +453,13 @@ after 30000
 # 2. OF Channel Configured Up                                              #
 # 3. OF Channel Learned Up                                                 #
 # 4. Hellos Tx                                                             #
-# 5. Hellos Rx                                                             # 
+# 5. Hellos Rx                                                             #
 # 6. Echo Requests Tx                                                      #
 # 7. Echo Replies Rx                                                       #
 # 8. Echo Requests Rx                                                      #
 # 9. Echo Replies Tx                                                       #
 #10. Feature Requests Tx                                                   #
-#11. Feature Replies Rx                                                    # 
+#11. Feature Replies Rx                                                    #
 #--------------------------------------------------------------------------#
 set {statValArray(OF Channel Configured)}    [list "1" "=="]
 set {statValArray(OF Channel Configured Up)} [list "1" "=="]
@@ -473,7 +473,7 @@ set {statValArray(Echo Replies Tx)}          [list "0" ">="]
 set {statValArray(Feature Requests Tx)}      [list "1" "=="]
 set {statValArray(Feature Replies Rx)}       [list "1" "=="]
 set {statValArray(Flow Adds Tx)}             [list "2" "=="]
-    
+
 puts "checking statistics"
 statsOperation::getSnapShotData {"OpenFlow Controller Aggregated Statistics"}
 foreach stat [array names statValArray] {
@@ -514,7 +514,7 @@ after 10000
 #--------------------------------------------------------------------------#
 # Check Flow Stat learned info                           #
 #--------------------------------------------------------------------------#
-    
+
 puts "Checking Flow Stat Learned Info"
 set flowStatLearnedInformation [ixNet getList $learnedInfo flowStatLearnedInformation]
 set flowStatLearnedInformationFirst [lindex $flowStatLearnedInformation 0]
@@ -533,4 +533,3 @@ if {[ixNet getAttr $flowStatLearnedInformationLast -ethernetSource] != "00:03:00
     || [ixNet getAttr $flowStatLearnedInformationLast -mplsLabel] != "10"} {
     puts "Flows not learned properly for last flow"
 }
-

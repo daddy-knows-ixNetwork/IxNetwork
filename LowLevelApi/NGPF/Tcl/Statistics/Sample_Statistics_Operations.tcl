@@ -47,7 +47,7 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#    This sample configures 10 IPv4 sessions on each of the two ports,         # 
+#    This sample configures 10 IPv4 sessions on each of the two ports,         #
 #    adds a traffic Item that uses IPv4 endpoints, sends traffic,              #
 #    using statistics, the performs the following actions:                     #
 #    - enable/disable CSV Logging                                              #
@@ -201,7 +201,7 @@ ixNet setMultiAttribute $ti1/tracking -trackBy {{ipv4SourceIp0}}
 ixNet commit
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 set vPorts [ixNet getList [ixNet getRoot] vport]
 puts "Assigning ports to $vPorts"
@@ -340,8 +340,8 @@ proc compareTwoStats {viewName statA statB} {
     set ipv4source1 [extractKString $ipv4source]
     foreach ip $ipv4source1 st1 $statsA st2 $statsB {
         if {$st1 == $st2} {
-            puts "Source IP: $ip --> OK"        
-        } else { 
+            puts "Source IP: $ip --> OK"
+        } else {
             puts "Source IP: $ip --> Failed $statA = $st1, $statB = $st2"
         }
     }
@@ -350,7 +350,7 @@ proc compareTwoStats {viewName statA statB} {
 
 
 ################################################################################
-# Enable CSV Logging across all views 
+# Enable CSV Logging across all views
 ################################################################################
 
 puts "Enable CSV Logging across all views"
@@ -393,4 +393,3 @@ compareTwoStats "$viewName" "Tx Frames" "Rx Frames"
 
 puts "Disable CSV Logging across all views"
 setEnableCsvLogging "False"
-

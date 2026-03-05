@@ -62,13 +62,13 @@ test
 	${result} =  Emulation Dhcp Server Control  port_handle=@{portHandles}[1]  action=collect
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
+
 	${result} =  Emulation Dhcp Control  port_handle=@{portHandles}[0]  action=bind
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 
 	Sleep  30s
-	
+
 ##################################################
 #             GET DHCP STATISTICS                #
 ##################################################
@@ -76,7 +76,7 @@ test
 	${dhcp_stats_0} =  Emulation Dhcp Stats  port_handle=@{portHandles}[0]  version=ixnetwork
 	${status} =  Get From Dictionary  ${dhcp_stats_0}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
+
 	${dhcp_stats_1} =  Emulation Dhcp Server Stats  port_handle=@{portHandles}[1]  action=collect
 	${status} =  Get From Dictionary  ${dhcp_stats_1}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
@@ -89,7 +89,7 @@ test
 	Log  ${dhcp_stats_0}
 	Log To Console  "--------------DHCP SERVER stats-------------"
 	Log  ${dhcp_stats_1}
-	
+
 ################################################################################
 # Retrieve per session stats
 ################################################################################
@@ -101,8 +101,3 @@ test
 	${result} =  Emulation Dhcp Stats  handle=${dhcp_client_group_handle}  mode=session  version=ixnetwork
 	Log To Console  "--------------Pers Session stats-------------"
 	Log  ${result}
-
-
-
-
-

@@ -99,14 +99,14 @@ class Protocol(object):
         response = self.ixnObj.post(self.ixnObj.httpHeader+ethernetObj+'/lacp')
         lacpObj = response.json()['links'][0]['href']
         self.configuredProtocols.append(lacpObj)
-        
+
         lacpResponse = self.ixnObj.get(self.ixnObj.httpHeader+lacpObj)
         if actorSystemId:
             print('\nlacp actorSystemId:', actorSystemId)
             actorSystemIdMultivalue = lacpResponse.json()['actorSystemId']
             print('actorSystemId multivalue:', actorSystemIdMultivalue)
             self.ixnObj.configMultivalue(actorSystemIdMultivalue, 'singleValue', data={'value': actorSystemId})
- 
+
         if actorKey:
             actorKeyMultivalue = lacpResponse.json()['actorKey']
             self.ixnObj.configMultivalue(actorKeyMultivalue, 'singleValue', data={'value': actorKey})
@@ -172,7 +172,7 @@ class Protocol(object):
             else:
                 self.ixnObj.patch(self.ixnObj.httpHeader+multivalue+'/singleValue', data={'value': macAddress})
 
-            # Config Mac Address Port Step        
+            # Config Mac Address Port Step
             portStepMultivalue = self.ixnObj.httpHeader + multivalue+'/nest/1'
             if macAddressPortStep is not 'disabled':
                 self.ixnObj.patch(portStepMultivalue, data={'step': macAddressPortStep})
@@ -506,7 +506,7 @@ class Protocol(object):
     def configRsvpTeLsps(self, ipv4Obj):
         """
         Description
-            Create new RSVP-TE LSPS Tunnel. A RSVP-TE interface is created automatically if there 
+            Create new RSVP-TE LSPS Tunnel. A RSVP-TE interface is created automatically if there
             is no RSVR-TE configured.
 
         Parameter
@@ -514,7 +514,7 @@ class Protocol(object):
         """
         response = self.ixnObj.post(self.ixnObj.httpHeader+ipv4Obj+'/rsvpteLsps')
         return response.json()['links'][0]['href']
-        
+
     def deleteRsvpTeLsps(self, rsvpTunnelObj):
         """
         Description
@@ -934,7 +934,7 @@ class Protocol(object):
                 if timer == timerStop:
                     if 'notStarted' in protocolSessionStatus:
                         raise IxNetRestApiException('\nverifyProtocolSessions: {0} session failed to start'.format(protocolName))
-                        
+
                     if protocolSessionStatus == 'started' and 'down' in sessionStatus:
                         # Show ARP failures
                         if protocolName == 'ipv4':
@@ -1341,7 +1341,7 @@ class Protocol(object):
                If not, then arp is not resolved.
 
         Requires
-           self.deviceGroupProtocolStacksNgpf() 
+           self.deviceGroupProtocolStacksNgpf()
            self.verifyNgpfProtocolStarted()
 
         Parameter
@@ -1445,7 +1445,7 @@ class Protocol(object):
                     self.ixnObj.logInfo('\tGatewayIpMultivalue: %s' % gatewayIpMultivalue)
                     response = self.ixnObj.getMultivalueValues(gatewayIpMultivalue)
                     valueList = response
-                    
+
                     self.ixnObj.logInfo('gateway IP: %s' % valueList)
                     if gatewayIp in valueList:
                         gatewayIpIndex = valueList.index(gatewayIp)
@@ -1466,7 +1466,7 @@ class Protocol(object):
                         if 'Unresolved' in gatewayMacAddress:
                             raise IxNetRestApiException('Gateway Mac Address is unresolved.')
                         return gatewayMacAddress[0]
-                        
+
                 except:
                     pass
         return 0
@@ -2777,7 +2777,7 @@ class Protocol(object):
         NOTE:
            Current support:  Each IP host multicast group address must be unique. IP hosts could send the same
                              multicast group address, but this API only supports unique multicast group address.
-  
+
         Parameters
             routerId: The Device Group Router ID address.
             pimObj: '/api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1/pimV4Interface/1/pimV4JoinPruneList'
@@ -2813,7 +2813,7 @@ class Protocol(object):
         # Based on the list of multicastIpAddress, get all their indexes.
         response = self.ixnObj.get(self.ixnObj.httpHeader+pimObj+'/pimV4JoinPruneList')
 
-        startMcastAddrMultivalue = response.json()['groupV4Address']        
+        startMcastAddrMultivalue = response.json()['groupV4Address']
         listOfConfiguredMcastIpAddresses = self.ixnObj.getMultivalueValues(startMcastAddrMultivalue)
 
         self.ixnObj.logInfo('\nsendPimV4JoinNgpf: List of configured Mcast IP addresses: %s' % listOfConfiguredMcastIpAddresses)
@@ -2990,7 +2990,7 @@ class Protocol(object):
                     for mac,vlan,ipv4,ipv6 in zip(ethernet['mac'], ethernet['vlan'], ethernet['ipv4'], ethernet['ipv6']):
                         ipv4Obj = ipv4['href']
                         ipv4SessionStatus = self.getSessionStatus(ipv4Obj)
-                        
+
                         self.ixnObj.logInfo('\tIPv4:{0} Status: {1}'.format(ipv4['id'], ipv4['status']))
                         macResponse = self.ixnObj.get(self.ixnObj.httpHeader+ethernet['mac'], silentMode=True)
                         macAddress = self.ixnObj.getMultivalueValues(macResponse.json()['links'][0]['href'], silentMode=True)
@@ -3113,7 +3113,7 @@ class Protocol(object):
                     startingAddressMultivalue = response.json()['links'][0]['href']
                     startingAddress = self.ixnObj.getMultivalueValues(startingAddressMultivalue, silentMode=True)[0]
                     endingAddress = self.ixnObj.getMultivalueValues(startingAddressMultivalue, silentMode=True)[-1]
-                                        
+
                     prefixPoolResponse = self.ixnObj.get(self.ixnObj.httpHeader+prefixPoolHref, silentMode=True)
                     self.ixnObj.logInfo('\t    StartingAddress:{0}  EndingAddress:{1}  Prefix:{2}'.format(startingAddress,
                                                                                                           endingAddress,
@@ -3343,10 +3343,10 @@ class Protocol(object):
             Set the total number of BGP AS # List.
             In the GUI, under NetworkGroup, BGP Route Range tab, bottom tab ASPathSegments, enter number of AS # Segments.
 
-            NOTE! 
+            NOTE!
                 Currently, this API will get the first Network Group object even if there are multiple
-                Network Groups. Network Groups could be filtered by the name or by the first route range 
-                address.  Haven't decided yet. Don't want to filter by name because in a situation 
+                Network Groups. Network Groups could be filtered by the name or by the first route range
+                address.  Haven't decided yet. Don't want to filter by name because in a situation
                 where customers are also using Spirent, Spirent doesn't go by name.
 
         Parameters
@@ -3383,16 +3383,16 @@ class Protocol(object):
     def configBgpAsPathSegmentListNumber(self, routerId, asNumber, indexAndAsNumber):
         """
         Description
-            Set BGP AS numbers in the route range. 
+            Set BGP AS numbers in the route range.
             If there are 5 AS# created under "Number of AS# In Segment-1", the asNumberList is
-            the AS# that you want to modify for all route ranges (Device Group multiplier). 
+            the AS# that you want to modify for all route ranges (Device Group multiplier).
             The indexAndAsNumber is the route range index and value: [3, 300].
             3 = the 2nd route range (zero based) and 300 is the value.
 
-            NOTE! 
+            NOTE!
                 Currently, this API will get the first Network Group object even if there are multiple
-                Network Groups. Network Groups could be filtered by the name or by the first route range 
-                address.  Haven't decided yet. Don't want to filter by name because in a situation 
+                Network Groups. Network Groups could be filtered by the name or by the first route range
+                address.  Haven't decided yet. Don't want to filter by name because in a situation
                 where customers are also using Spirent, Spirent doesn't go by name.
 
         Parameters
@@ -3441,7 +3441,7 @@ class Protocol(object):
                 asNumberValueList[index] = str(asNumber)
         except:
             raise IxNetRestApiException('The index that you indicated is out of range for the current AS list')
- 
+
         self.ixnObj.logInfo('\nConfiguruing: %s' % bgpRouteObj)
         self.ixnObj.configMultivalue(asNumberMultivalue, 'valueList', {'values': asNumberValueList})
 
@@ -3476,7 +3476,7 @@ class Protocol(object):
             return IxNetRestApiException('No ipv4PrefixPools bgpIPRouteProperty object found.')
 
         bgpRouteObj = bgpStack[0]['href']
-        response = self.ixnObj.get(self.ixnObj.httpHeader+bgpRouteObj)        
+        response = self.ixnObj.get(self.ixnObj.httpHeader+bgpRouteObj)
         asSetModeMultivalue = response.json()['asSetMode']
         count = response.json()['count']
         newList = [asSetMode for counter in range(0,count)]

@@ -6,7 +6,7 @@ The first thing you do after entering the Python shell is entering setpreference
    python
    from ixnetCli import *
    setpreferences('your preference file')
-   
+
    connecttowindows() or connecttolinux()
 
 

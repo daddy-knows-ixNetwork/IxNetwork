@@ -50,11 +50,11 @@
 # Arguments: realPortList      - A list of real ports in the format of or wildcards
 #            sourceType        - Stat source type. That can be obtained from doc or catalog API
 #            statNameList      - Stat name list. They can be obtained from doc or catalog API.
-#                                It can be '*'. Then all stats for the selected sourceType available 
+#                                It can be '*'. Then all stats for the selected sourceType available
 #                                in the catalog would be added.
 #
-#        
-#                         
+#
+#
 # Returns: The objRef of created userStatView.
 ########################################################################################
 
@@ -62,13 +62,13 @@
 proc SetupUserStats { realPortList sourceType statNameList} {
 
     set userStatViewObjRef ""
-    
+
     set viewCaptionString "UserStatView $sourceType"
     #Create filterValues for the realPortList
     set filterValueList {}
-    
+
     foreach realPort $realPortList {
-        scan [join $realPort] "%s %d %d" hostname card_id port_id 
+        scan [join $realPort] "%s %d %d" hostname card_id port_id
         lappend filterValueList "$hostname/Card$card_id/Port$port_id"
 		puts  "$hostname/Card$card_id/Port$port_id"
     }
@@ -76,8 +76,8 @@ proc SetupUserStats { realPortList sourceType statNameList} {
 
     #Verify filters
     set catalogList [ixNet getList [ixNet getRoot]/statistics catalog]
-   	puts "Catalog List is $catalogList" 
-    set i 1 
+   	puts "Catalog List is $catalogList"
+    set i 1
     foreach catalog $catalogList {
         #log "catalog$i $catalog"
         if {[ixNet getAttribute $catalog -sourceType] == $sourceType} {
@@ -99,7 +99,7 @@ proc SetupUserStats { realPortList sourceType statNameList} {
         return $userStatViewObjRef
     }
 
-    #If the statName list is in form of wild card get all stats name for 
+    #If the statName list is in form of wild card get all stats name for
     #for the sourceType from catalog.
 
     if {$statNameList == "*"} {
@@ -124,19 +124,19 @@ proc SetupUserStats { realPortList sourceType statNameList} {
 
     #Create userStatView
     #First search whether we have already added a userStatView for that sourceType.
-    
+
     set existFlag false
     set userStatViewList [ixNet getList [ixNet getRoot]/statistics userStatView]
     foreach userView $userStatViewList {
-        
+
         if {[ixNet getAttribute $userView -viewCaption] == $viewCaptionString} {
             set userStatViewObjRef $userView
             set existFlag true
             break
         }
-        
-    } 
-        
+
+    }
+
     if {$existFlag == "true"} {
         ixNet setAttribute $userStatViewObjRef -enabled false
         ixNet commit
@@ -154,7 +154,7 @@ proc SetupUserStats { realPortList sourceType statNameList} {
         #ixNet setAttribute $stat -aggregationType kNone
         ixNet setAttribute $stat -aggregationType none
         ixNet setAttribute $stat -filterValueList $filterValueList
-        ixNet setAttribute $stat -filterName "Port" 
+        ixNet setAttribute $stat -filterName "Port"
         ixNet commit
     }
 
@@ -169,18 +169,18 @@ proc SetupUserStats { realPortList sourceType statNameList} {
 # Procedure: ixTclNet::BrowseStatView
 #
 # Description: Browse statView with selected caption and store current values in StatValueArray.
-#              
-# Arguments: 
+#
+# Arguments:
 #            viewCaption       - View caption.
-#                                
-#        
-#                         
+#
+#
+#
 # Returns: returns StatValueArray
 ########################################################################################
 
 
 proc BrowseStatView {viewCaption StatValueArray} {
-    
+
     upvar $StatValueArray statValueArray
     set statViewList [ixNet getList [ixNet getRoot]/statistics statViewBrowser]
     set statViewObjRef ""
@@ -204,7 +204,7 @@ proc BrowseStatView {viewCaption StatValueArray} {
         error "Error in getting $viewCaption"
     }
 
-    
+
     set timeout 5
     set pageNumber 1
     set totalPages [ixNet getAttribute $statViewObjRef -totalPages]
@@ -216,7 +216,7 @@ proc BrowseStatView {viewCaption StatValueArray} {
          ixNet setAttribute $statViewObjRef -currentPageNumber $pageNumber
          ixNet commit
     }
-    
+
     while {$continueFlag == "true"} {
         if {[ixNet getAttribute $statViewObjRef -isReady] == true} {
             set rowList [ixNet getList $statViewObjRef row]
@@ -234,7 +234,7 @@ proc BrowseStatView {viewCaption StatValueArray} {
             set currentPage [ixNet getAttribute $statViewObjRef -currentPageNumber]
             if {$totalPages > 0 && $currentPage < $localTotalPages} {
                 incr totalPages -1
-        
+
                 incr pageNumber
                 ixNet setAttribute $statViewObjRef -currentPageNumber $pageNumber
                 ixNet commit
@@ -252,26 +252,26 @@ proc BrowseStatView {viewCaption StatValueArray} {
     }
     return 0
 }
-     
+
 
 ########################################################################################
 # Procedure: ixTclNet::GetStatValue
 #
 # Description: Collects current values for the selected statName.
-#              
-# Arguments: 
+#
+# Arguments:
 #            sourceType        - Stat source type. That can be obtained from doc or catalog API
 #            statName          - Stat name list. They can be obtained from doc or catalog API.
-#                                
-#        
-#                         
-# Returns: Returns the stat values for the configured filters in an array. In the form of 
+#
+#
+#
+# Returns: Returns the stat values for the configured filters in an array. In the form of
 #           StatValueArray($ip,cardId,portId)
 ########################################################################################
 
 
 proc GetStatValue {viewCaption statName StatValueArray} {
-    
+
     upvar $StatValueArray statValueArray
     set statViewList [ixNet getList [ixNet getRoot]/statistics statViewBrowser]
     set statViewObjRef ""
@@ -286,10 +286,10 @@ proc GetStatValue {viewCaption statName StatValueArray} {
             break
         }
     }
-   
+
     if {[info exists statValueArray]} {
         unset statValueArray
-    } 
+    }
 
     if {$statViewObjRef == ""} {
         logMsg "Error in getting stat View $viewCaption"
@@ -317,7 +317,7 @@ proc GetStatValue {viewCaption statName StatValueArray} {
                     #puts "This is the cell $cell"
 					#puts "Compared values are [ixNet getAttribute $cell -catalogStatName] and $statName"
                     if {[ixNet getAttribute $cell -catalogStatName] == $statName} {
-						
+
                         set rowName [ixNet getAttribute $cell -rowName]
                         set statValue [ixNet getAttribute $cell -statValue]
                         set splitString [split $rowName /]
@@ -334,7 +334,7 @@ proc GetStatValue {viewCaption statName StatValueArray} {
             set currentPage [ixNet getAttribute $statViewObjRef -currentPageNumber]
             if {$totalPages > 0 && $currentPage < $localTotalPages} {
                 incr totalPages -1
-    
+
                 incr pageNumber
                 ixNet setAttribute $statViewObjRef -currentPageNumber $pageNumber
                 ixNet commit
@@ -353,29 +353,29 @@ proc GetStatValue {viewCaption statName StatValueArray} {
     return 0
 }
 
-     
+
 proc PrintArray { StatValueArray} {
      upvar $StatValueArray statValueArray
-     
+
      foreach {key value} [array get statValueArray] {
         set mystring [format "%-60s = %s" $key $value]
         logMsg $mystring
      }
-}        
+}
 
 
 ########################################################################################
 # Procedure: GetLabelString
 #
 # Description: Finds Label string for the specified catalog statName.
-#              
-# Arguments: 
-#            viewObjRef       
+#
+# Arguments:
+#            viewObjRef
 #            statName          - Stat name list. They can be obtained from doc or catalog API.
-#                                
-#        
-#                         
-# Returns: Returns the stat values for the configured filters in an array. In the form of 
+#
+#
+#
+# Returns: Returns the stat values for the configured filters in an array. In the form of
 #           StatValueArray($ip,cardId,portId)
 ########################################################################################
 
@@ -400,7 +400,7 @@ proc GetLabelString {viewObjRef catalogStatName} {
             }
         }
     }
-       
+
     return $labelString
 }
 
@@ -465,23 +465,23 @@ proc logMsg {args} \
 }
 
 ########################################################################################
-# Procedure: GetTrafficStatValue 
+# Procedure: GetTrafficStatValue
 #
 # Description: Collects current values for the selected statName.
-#              
-# Arguments: 
+#
+# Arguments:
 #            viewCaption        - view caption.
 #            statName          - Stat name list. They can be obtained from doc or catalog API.
-#                                
-#        
-#                         
-# Returns: Returns the stat values for the configured filters in an array. In the form of 
+#
+#
+#
+# Returns: Returns the stat values for the configured filters in an array. In the form of
 #           StatValueArray($rowObjRef)
 ########################################################################################
 
 
 proc GetTrafficStatValue {viewCaption statName StatValueArray} {
-    
+
     upvar $StatValueArray statValueArray
     set statViewList [ixNet getList [ixNet getRoot]/statistics statViewBrowser]
     set viewObjRef ""
@@ -495,11 +495,11 @@ proc GetTrafficStatValue {viewCaption statName StatValueArray} {
             break
         }
     }
-   
-   
+
+
     if {[info exists statValueArray]} {
         unset statValueArray
-    } 
+    }
 
     if {$viewObjRef == ""} {
         logMsg "Error in getting view $viewCaption"
@@ -535,7 +535,7 @@ proc GetTrafficStatValue {viewCaption statName StatValueArray} {
             set currentPage [ixNet getAttribute $viewObjRef -currentPageNumber]
             if {$totalPages > 0 && $currentPage < $localTotalPages} {
                 incr totalPages -1
-    
+
                 incr pageNumber
                 ixNet setAttribute $viewObjRef -currentPageNumber $pageNumber
                 ixNet commit
@@ -551,4 +551,4 @@ proc GetTrafficStatValue {viewCaption statName StatValueArray} {
             }
         }
     }
-}     
+}

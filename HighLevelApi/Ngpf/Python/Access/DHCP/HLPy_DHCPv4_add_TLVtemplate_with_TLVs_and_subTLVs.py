@@ -292,7 +292,7 @@ tlv_result = ixiangpf.tlv_config(
 
 if tlv_result['status'] != IxiaHlt.SUCCESS:
    ixnHLT_errorHandler('tlv_config', tlv_result)
-   
+
 print ('''
 # #############################################################################
 #                              3.  Modify the TLVs type
@@ -328,14 +328,14 @@ if tlv_result['status'] != IxiaHlt.SUCCESS:
 
 field_handle = tlv_result['tlv_field_handle']
 
-	
-print ('''  
+
+print ('''
 # #############################################################################
 #                             4.   Modify length
 # #############################################################################
 ''')
 
- 
+
 print("modify the parameters for the length and check the new values")
 tlv_result = ixiangpf.tlv_config(
 	mode 				= "modify",
@@ -380,7 +380,7 @@ print('''
 # #############################################################################
 #                             6.  Create a new container
 # #############################################################################
-''') 
+''')
 
 print ("Create a new container under the value node.")
 
@@ -392,7 +392,7 @@ tlv_result = ixiangpf.tlv_config(
 	container_description	= 'container description',
 	container_is_required	= 1,
 	container_is_editable	= 1,
-	container_is_repeatable	= 1,	
+	container_is_repeatable	= 1,
 )
 
 if tlv_result['status'] != IxiaHlt.SUCCESS:
@@ -427,7 +427,7 @@ tlv_result = ixiangpf.tlv_config(
 
 if tlv_result['status'] != IxiaHlt.SUCCESS:
     ixnHLT_errorHandler('tlv_config', tlv_result)
-	
+
 subtlv_handle 			= tlv_result['subtlv_template_handle']
 subtlv_type_handle 		= tlv_result['tlv_type_handle']
 subtlv_length_handle	= tlv_result['tlv_length_handle']
@@ -458,7 +458,7 @@ if tlv_result['status'] != IxiaHlt.SUCCESS:
 
 field_handle = tlv_result['tlv_field_handle']
 
-   
+
 print('''
 # #############################################################################
 #                            9.   remove the tlv
@@ -499,5 +499,3 @@ if cleanup_status['status'] != IxiaHlt.SUCCESS:
 
 print('\n\nIxNetwork session is closed...\n\n')
 print('!!! TEST is PASSED !!!')
-
-

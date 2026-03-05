@@ -1,5 +1,5 @@
 ---
-- name: Configure NGPF BGP 
+- name: Configure NGPF BGP
   hosts: localhost
   gather_facts: False
   ignore_errors: False
@@ -20,4 +20,3 @@
 
       register: result
       failed_when: result.rc == 1
-

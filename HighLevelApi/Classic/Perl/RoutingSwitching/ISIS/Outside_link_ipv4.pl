@@ -97,7 +97,7 @@ my $status                 = '';
 my @portHandleList         = ();
 
 # Connect to the chassis, reset to factory defaults and take ownership
-# When using P2NO HLTSET, for loading the IxTclNetwork package please 
+# When using P2NO HLTSET, for loading the IxTclNetwork package please
 # provide –ixnetwork_tcl_server parameter to ::ixia::connect
 $_result_ = ixiahlt::connect( {
     reset                => 1,
@@ -122,7 +122,7 @@ my $port_1 = $portHandleList[1];
 $_result_ = ixiahlt::vport_info( {
     mode               => 'set_info',
     port_list          => \@portHandleList,
-    port_name_list     => \@port_names         
+    port_name_list     => \@port_names
 });
 &catch_error();
 
@@ -244,7 +244,7 @@ $_result_ = ixiahlt::emulation_isis_topology_route_config ( {
     grid_router_metric             => $grid_router_metric_1 ,
     grid_router_up_down_bit        => $grid_router_up_down_bit_1 ,
     grid_router_origin             => $grid_router_origin_1 ,
-    grid_user_wide_metric          => $grid_user_wide_metric_1 ,              
+    grid_user_wide_metric          => $grid_user_wide_metric_1 ,
 });
 &catch_error();
 
@@ -351,7 +351,7 @@ $_result_ = ixiahlt::emulation_isis_topology_route_config ( {
     grid_router_metric             => $grid_router_metric_2,
     grid_router_up_down_bit        => $grid_router_up_down_bit_2,
     grid_router_origin             => $grid_router_origin_2,
-    grid_user_wide_metric          => $grid_user_wide_metric_2              
+    grid_user_wide_metric          => $grid_user_wide_metric_2
 });
 &catch_error();
 
@@ -360,15 +360,15 @@ $_result_ = ixiahlt::emulation_isis_topology_route_config ( {
 ################################################################################
 $_result_ = ixiahlt::emulation_isis_control ( {
     port_handle              => $port_0,
-    mode                     => 'start',                                  
+    mode                     => 'start',
 });
-&catch_error();     
+&catch_error();
 
 $_result_ = ixiahlt::emulation_isis_control ( {
     port_handle           => $port_1,
     mode                  => 'start',
 });
-&catch_error();    
+&catch_error();
 ########################>>>>>>>>
 
 

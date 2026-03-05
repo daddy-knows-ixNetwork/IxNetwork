@@ -52,7 +52,7 @@
 # Description:                                                                 #
 #This script includes a section to configure a basic OpenFlow Controller in a  #
 #back-to-back Ixia port.                                                       #
-#This part can be used to bring up OpenFlow channel in the absence of real DUT #                                                                              
+#This part can be used to bring up OpenFlow channel in the absence of real DUT #
 #    1. It will create Openflow Switch .                                       #
 #       The switch has hosts configured.                                       #
 #    2. Start the openflow protocol.                                           #
@@ -81,7 +81,7 @@
 #                                                                              #
 ################################################################################
 
-					
+
 # Script Starts
 puts "!!! Test Script Starts !!!"
 
@@ -104,7 +104,7 @@ ixNet exec newConfig
 ################################################################################
 # 1. Protocol configuration section. Configure Openflow as per the description #
 #   given above                                                                #
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -247,7 +247,7 @@ ixNet setMultiAttribute $sw1Ports_1 \
 		-enabled true \
 		-ethernetAddress "startValue\ =\ 00:00:11:00:00:01,stepValue\ =\ 00:00:00:00:00:01,repeatCount\ =\ 1,wrapCount\ =\ 1000000,incrementMode\ =\ increment" \
 		-portName "startValue\ =\ port1,stepValue\ =\ 1,repeatCount\ =\ 1,wrapCount\ =\ 4294967295,incrementMode\ =\ increment" \
-		-portNumber "startValue\ =\ 1,stepValue\ =\ 1,repeatCount\ =\ 1,wrapCount\ =\ 4294967295,incrementMode\ =\ increment" 
+		-portNumber "startValue\ =\ 1,stepValue\ =\ 1,repeatCount\ =\ 1,wrapCount\ =\ 4294967295,incrementMode\ =\ increment"
 ixNet commit
 
 set sw1Host_1 [ixNet add $sw1Ports_1 switchHostRanges]
@@ -284,7 +284,7 @@ ixNet commit
 
 
 set sw2Ports_1 [ixNet getList $Sw2 switchPorts]
-ixNet commit			
+ixNet commit
 ixNet setMultiAttribute $sw2Ports_1 \
 			-connectionType internalSwitch \
 			-enabled true \
@@ -338,7 +338,7 @@ ixNet setMultiAttribute $sw3Ports_2 \
 			-enabled true \
 			-ethernetAddress "startValue\ =\ 00:00:1a:00:00:01,stepValue\ =\ 00:00:00:00:00:01,repeatCount\ =\ 1,wrapCount\ =\ 1000000,incrementMode\ =\ increment" \
 			-portName "startValue\ =\ port2,stepValue\ =\ 1,repeatCount\ =\ 1,wrapCount\ =\ 4294967295,incrementMode\ =\ increment" \
-			-portNumber "startValue\ =\ 2,stepValue\ =\ 1,repeatCount\ =\ 1,wrapCount\ =\ 4294967295,incrementMode\ =\ increment" 			
+			-portNumber "startValue\ =\ 2,stepValue\ =\ 1,repeatCount\ =\ 1,wrapCount\ =\ 4294967295,incrementMode\ =\ increment"
 ixNet commit
 
 set sw3Host_1 [ixNet add $sw3Ports_2 switchHostRanges]
@@ -379,20 +379,20 @@ ixNet commit
 
 ixNet setMultiAttribute $sw1Ports_2 \
             -remoteSwitch $Sw2 \
-			-remoteSwitchPort $sw2Ports_1 
-	
+			-remoteSwitchPort $sw2Ports_1
+
 ixNet setMultiAttribute $sw1Ports_3 \
             -remoteSwitch $Sw3 \
-			-remoteSwitchPort $sw3Ports_3 
+			-remoteSwitchPort $sw3Ports_3
 
 ixNet setMultiAttribute $sw2Ports_2 \
             -remoteSwitch $Sw3 \
 			-remoteSwitchPort $sw3Ports_1
-			
+
 ixNet setMultiAttribute $sw2Ports_3 \
             -remoteSwitch $Sw3 \
-			-remoteSwitchPort $sw3Ports_4 
-ixNet commit 
+			-remoteSwitchPort $sw3Ports_4
+ixNet commit
 
 
 ########################################################################################
@@ -446,9 +446,9 @@ ixNet setAttribute $ofch3 -remoteIp $switchIp3
 ixNet setAttribute $ofch3 -enabled true
 ixNet commit
 
- 
+
 ##########################################################
-#adding tables and flow ranges 
+#adding tables and flow ranges
 set controllerTable1 [ixNet add $ofch1 controllerTables]
 set controllerTable2 [ixNet add $ofch2 controllerTables]
 set controllerTable3 [ixNet add $ofch3 controllerTables]
@@ -456,15 +456,15 @@ ixNet commit
 
 ixNet setAttribute $controllerTable1 \
      -enabled true \
-	 -tableId 0 
+	 -tableId 0
 ixNet commit
 ixNet setAttribute $controllerTable2 \
      -enabled true \
-	 -tableId 0 
+	 -tableId 0
 ixNet commit
 ixNet setAttribute $controllerTable3 \
      -enabled true \
-	 -tableId 0 
+	 -tableId 0
 ixNet commit
 
 #########################################################
@@ -475,56 +475,56 @@ set ctrTableFlowRanges2 [ixNet add $controllerTable1 controllerTableFlowRanges]
 ixNet commit
 #puts "ixNet help ::::ixNet::OBJ-/vport:1/protocols/openFlow/device:1/interface:1/ofChannel:1/controllerTables:1/controllerTableFlowRanges:1"
 #puts "[ixNet help ::::ixNet::OBJ-/vport:1/protocols/openFlow/device:1/interface:1/ofChannel:1/controllerTables:1/controllerTableFlowRanges:1]"
-ixNet setAttribute $ctrTableFlowRanges1 -enabled true 
+ixNet setAttribute $ctrTableFlowRanges1 -enabled true
 ixNet setMultiAttribute $ctrTableFlowRanges1 \
      -ethernetDestination "startValue\ =\ 00:00:00:00:05:01,stepValue\ =\ 00:00:00:00:00:00,repeatCount\ =\ 1,wrapCount\ =\ 1000000,incrementMode\ =\ increment"  \
 	 -ethernetSource "\"*\"" \
-	 -ethernetSourceMask "FF\ FF\ FF\ FF\ FF\ FF\ " 
+	 -ethernetSourceMask "FF\ FF\ FF\ FF\ FF\ FF\ "
 ixNet commit
-ixNet setAttribute $ctrTableFlowRanges2 -enabled true 
+ixNet setAttribute $ctrTableFlowRanges2 -enabled true
 ixNet setMultiAttribute $ctrTableFlowRanges2 \
      -ethernetDestination "startValue\ =\ 00:00:00:00:05:02,stepValue\ =\ 00:00:00:00:00:00,repeatCount\ =\ 1,wrapCount\ =\ 1000000,incrementMode\ =\ increment" \
 	 -ethernetSource "\"*\"" \
 	 -ethernetSourceMask "FF\ FF\ FF\ FF\ FF\ FF\ " \
 	 -vlanId "startValue\ =\ 4096,stepValue\ =\ 0,repeatCount\ =\ 1,wrapCount\ =\ 65535,incrementMode\ =\ increment" \
-	 -vlanMatchType withVlanTag 
+	 -vlanMatchType withVlanTag
 ixNet commit
 
 set ctrTableFlowRanges3 [ixNet add $controllerTable2 controllerTableFlowRanges]
 set ctrTableFlowRanges4 [ixNet add $controllerTable2 controllerTableFlowRanges]
 ixNet commit
-ixNet setAttribute $ctrTableFlowRanges3 -enabled true 
+ixNet setAttribute $ctrTableFlowRanges3 -enabled true
 ixNet setMultiAttribute $ctrTableFlowRanges3 \
      -ethernetDestination "startValue\ =\ 00:00:00:00:05:01,stepValue\ =\ 00:00:00:00:00:00,repeatCount\ =\ 1,wrapCount\ =\ 1000000,incrementMode\ =\ increment" \
 	 -ethernetSource "\"*\"" \
-	 -ethernetSourceMask "FF\ FF\ FF\ FF\ FF\ FF\ " 
+	 -ethernetSourceMask "FF\ FF\ FF\ FF\ FF\ FF\ "
 ixNet commit
-ixNet setAttribute $ctrTableFlowRanges4 -enabled true 
+ixNet setAttribute $ctrTableFlowRanges4 -enabled true
 ixNet setMultiAttribute $ctrTableFlowRanges4 \
      -ethernetDestination "startValue\ =\ 00:00:00:00:05:02,stepValue\ =\ 00:00:00:00:00:00,repeatCount\ =\ 1,wrapCount\ =\ 1000000,incrementMode\ =\ increment" \
 	 -ethernetSource "\"*\"" \
-	 -ethernetSourceMask "FF\ FF\ FF\ FF\ FF\ FF\ " 
+	 -ethernetSourceMask "FF\ FF\ FF\ FF\ FF\ FF\ "
 ixNet commit
 
 set ctrTableFlowRanges5 [ixNet add $controllerTable3 controllerTableFlowRanges]
 set ctrTableFlowRanges6 [ixNet add $controllerTable3 controllerTableFlowRanges]
 ixNet commit
-ixNet setAttribute $ctrTableFlowRanges5 -enabled true 
+ixNet setAttribute $ctrTableFlowRanges5 -enabled true
 ixNet setMultiAttribute $ctrTableFlowRanges5 \
      -ethernetDestination "startValue\ =\ 00:00:00:00:05:02,stepValue\ =\ 00:00:00:00:00:00,repeatCount\ =\ 1,wrapCount\ =\ 1000000,incrementMode\ =\ increment" \
 	 -ethernetSource "\"*\"" \
-	 -ethernetSourceMask "FF\ FF\ FF\ FF\ FF\ FF\ " 
+	 -ethernetSourceMask "FF\ FF\ FF\ FF\ FF\ FF\ "
 ixNet commit
-ixNet setAttribute $ctrTableFlowRanges6 -enabled true 
+ixNet setAttribute $ctrTableFlowRanges6 -enabled true
 ixNet setMultiAttribute $ctrTableFlowRanges6 \
      -ethernetDestination "startValue\ =\ 00:00:00:00:05:01,stepValue\ =\ 00:00:00:00:00:00,repeatCount\ =\ 1,wrapCount\ =\ 1000000,incrementMode\ =\ increment" \
 	 -ethernetSource "\"*\"" \
 	 -ethernetSourceMask "FF\ FF\ FF\ FF\ FF\ FF\ " \
-	 -vlanMatchType specificVlanTag  
+	 -vlanMatchType specificVlanTag
 ixNet commit
 ixNet setMultiAttribute $ctrTableFlowRanges6 \
      -vlanId "startValue\ =\ 301,stepValue\ =\ 0,repeatCount\ =\ 1,wrapCount\ =\ 65535,incrementMode\ =\ increment" \
-     -vlanIdMask "FF\ FF\ " 
+     -vlanIdMask "FF\ FF\ "
 ixNet commit
 
 #############################################
@@ -535,14 +535,14 @@ set instruction1 [ixNet add $ctrTableFlowRanges1 instructions]
 ixNet setMultiAttribute $instruction1 \
 			-experimenterData {} \
 			-instructionType applyActions \
-			-metadataInHex 0 
+			-metadataInHex 0
 ixNet commit
 
 set instructionActions1_1 [ixNet add $instruction1 instructionActions]
 ixNet setAttribute $instructionActions1_1 -actionType setVlanId
 ixNet setAttribute $instructionActions1_1 -vlanId 201
 ixNet commit
-			
+
 set instructionActions1_2 [ixNet add $instruction1 instructionActions]
 ixNet setAttribute $instructionActions1_2 -actionType output
 ixNet commit
@@ -553,7 +553,7 @@ set instruction2 [ixNet add $ctrTableFlowRanges2 instructions]
 ixNet setMultiAttribute $instruction2 \
 			-experimenterData {} \
 			-instructionType applyActions \
-			-metadataInHex 0 
+			-metadataInHex 0
 ixNet commit
 
 set instructionActions2_1 [ixNet add $instruction2 instructionActions]
@@ -566,7 +566,7 @@ set instruction3 [ixNet add $ctrTableFlowRanges3 instructions]
 ixNet setMultiAttribute $instruction3 \
 			-experimenterData {} \
 			-instructionType applyActions \
-			-metadataInHex 0 
+			-metadataInHex 0
 ixNet commit
 
 set instructionActions3_1 [ixNet add $instruction3 instructionActions]
@@ -580,7 +580,7 @@ set instruction4 [ixNet add $ctrTableFlowRanges4 instructions]
 ixNet setMultiAttribute $instruction4 \
 			-experimenterData {} \
 			-instructionType applyActions \
-			-metadataInHex 0 
+			-metadataInHex 0
 ixNet commit
 set instructionActions4_1 [ixNet add $instruction4 instructionActions]
 ixNet setAttribute $instructionActions4_1 -actionType output
@@ -592,7 +592,7 @@ set instruction5 [ixNet add $ctrTableFlowRanges5 instructions]
 ixNet setMultiAttribute $instruction5 \
 			-experimenterData {} \
 			-instructionType applyActions \
-			-metadataInHex 0 
+			-metadataInHex 0
 ixNet commit
 
 set instructionActions5_1 [ixNet add $instruction5 instructionActions]
@@ -610,7 +610,7 @@ set instruction6 [ixNet add $ctrTableFlowRanges6 instructions]
 ixNet setMultiAttribute $instruction6 \
 			-experimenterData {} \
 			-instructionType applyActions \
-			-metadataInHex 0 
+			-metadataInHex 0
 ixNet commit
 
 set instructionActions6_1 [ixNet add $instruction6 instructionActions]

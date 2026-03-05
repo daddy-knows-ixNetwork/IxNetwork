@@ -67,7 +67,7 @@ import time, re
 
 # Append paths to python APIs
 
-# sys.path.append('/path/to/hltapi/library/common/ixiangpf/python') 
+# sys.path.append('/path/to/hltapi/library/common/ixiangpf/python')
 # sys.path.append('/path/to/ixnetwork/api/python')
 
 from ixiatcl import IxiaTcl

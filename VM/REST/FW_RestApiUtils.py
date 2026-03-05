@@ -599,7 +599,7 @@ def getAttFromResponse(response, att):
 #####################################################
 def ixNetLoadConfig(ixNetSessionUrl, configName):
     urlHeadersJson = {'content-type': 'application/json'}
-    
+
     print ("Uploading IxNetwork config to server.")
 
     # read the config as binary
@@ -628,7 +628,7 @@ def ixNetLoadConfig(ixNetSessionUrl, configName):
         print ("Config not uploaded correctly to server!")
         return False
     print ("IxNetwork config uploaded correctly, now loading the config.")
-    
+
     # actually loading the config
     try:
         loadConfigUrl = ixNetSessionUrl + '/operations/loadConfig'
@@ -641,7 +641,7 @@ def ixNetLoadConfig(ixNetSessionUrl, configName):
         waitForComplete(ixNetSessionUrl, content)
     except Exception as e:
         raise Exception('Got an error code: ', e)
-     
+
     print ('Loading %s was completed!' % configName)
     return True
 
@@ -682,14 +682,14 @@ class RestProtocols:
         print ("Set the DG multiplier to " + str(multiplier) + " for " + dgUrl)
         attributes = {"multiplier": multiplier}
         ixNetSetAtt(dgUrl, attributes)
-        
+
     @staticmethod
     def startProtocols_restartDown(sessionUrl, expectedStats , wait=600 ,waitRestartDown=90):
         print ("Starting protocols ...")
         ixNetExec(sessionUrl,"startAllProtocols")
 
         time.sleep(10)
-        
+
         #Expected stats for Protocols Summary
         sec = 1
         while (RestStatistics.verifyAllSessionsAre(sessionUrl ,expectedStats) and sec < wait) :
@@ -705,12 +705,12 @@ class RestProtocols:
                                     args = {'args1':[topoUrl]}
                                     ixNetExec(sessionUrl+'/topology',"restartDown",args)
                                     print ("Restart Down action triggered...")
-                                    
+
         if (sec == wait) :
             raise TestFailedError( "Protocols NOT negotiated successfully after " + str(sec) + " seconds of waiting.")
         else :
             print ("Protocols negotiated successfully in " + str(sec) + " seconds. PASSED")
-            
+
         return 0
 
 class RestTraffic:
@@ -871,7 +871,7 @@ class RestStatistics:
                     a.append((stat, val))
                 retList.append([cols[0] + ' ' + row[0], a])
         return retList
-        
+
     @staticmethod
     def verifyAllSessionsAre (sessionUrl , expectedStats):
         view = "Protocols Summary"

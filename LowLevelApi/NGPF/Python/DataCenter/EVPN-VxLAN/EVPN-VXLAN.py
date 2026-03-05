@@ -49,8 +49,8 @@
 #    This script intends to demonstrate how to use NGPF EVPN VXLAN API          #
 #    About Topology:                                                            #
 #        It will create 2 BGP EVPN-VXLAN topologies, each having OSPFv2         #
-#    configured in connected Device Group .BGP EVPN VXLAN configured in chained # 
-#    device group along with Mac pools connected behind the chained             # 
+#    configured in connected Device Group .BGP EVPN VXLAN configured in chained #
+#    device group along with Mac pools connected behind the chained             #
 #    Device Group.                                                              #
 #         Script Flow:                                                          #
 #        Step 1. Configuration of protocols.                                    #

@@ -120,14 +120,14 @@ try:
                                                                     'frameRate': 88,
                                                                     'frameRateType': 'percentLineRate',
                                                                     'frameSize': 128}])
-    
+
     trafficItem1Obj  = trafficStatus[0]
     endpointObj      = trafficStatus[1][0]
     configElementObj = trafficStatus[2][0]
 
     # This will show you all the available protocol header options to create
     trafficObj.showProtocolTemplates(configElementObj)
-    
+
     # Show the configured packet headers in sequential order to get the stack ID.
     trafficObj.showTrafficItemPacketStack(configElementObj)
     # 1: Ethernet II
@@ -153,7 +153,7 @@ try:
                                              'startValue': '00:0c:29:aa:86:e0',
                                              'stepValue': '00:00:00:00:00:01',
                                              'countValue': 1})
-    
+
     stackObj = trafficObj.addTrafficItemPacketStack(configElementObj, protocolStackNameToAdd='MPLS', stackNumber=1, action='append')
     # Just an example to show a list of field names in order to know which field to configure the IP addresses.
     trafficObj.showPacketHeaderFieldNames(stackObj)
@@ -164,7 +164,7 @@ try:
                                              'stepValue': '1',
                                              'countValue': 2,
                                              'auto': False})
-    
+
     stackObj = trafficObj.addTrafficItemPacketStack(configElementObj, protocolStackNameToAdd='MPLS', stackNumber=2, action='append')
     trafficObj.configPacketHeaderField(stackObj,
                                        fieldName='Label Value',
@@ -173,7 +173,7 @@ try:
                                              'stepValue': '1',
                                              'countValue': 2,
                                              'auto': False})
-    
+
     stackObj = trafficObj.addTrafficItemPacketStack(configElementObj, protocolStackNameToAdd='MPLS', stackNumber=3, action='append')
     trafficObj.configPacketHeaderField(stackObj,
                                        fieldName='Label Value',
@@ -182,7 +182,7 @@ try:
                                              'stepValue': '1',
                                              'countValue': 2,
                                              'auto': False})
-    
+
     stackObj = trafficObj.addTrafficItemPacketStack(configElementObj, protocolStackNameToAdd='MPLS', stackNumber=4, action='append')
     trafficObj.configPacketHeaderField(stackObj,
                                        fieldName='Label Value',
@@ -191,7 +191,7 @@ try:
                                              'stepValue': '1',
                                              'countValue': 2,
                                              'auto': False})
-    
+
     stackObj = trafficObj.addTrafficItemPacketStack(configElementObj, protocolStackNameToAdd='IPv4',
                                                     stackNumber=5, action='append')
     #stackObj = getPacketHeaderStackIdObj(configElementObjList[0], stackId=6)
@@ -203,7 +203,7 @@ try:
                                              'startValue': '1.1.1.1',
                                              'stepValue': '0.0.0.1',
                                              'countValue': 1})
-    
+
     trafficObj.configPacketHeaderField(stackObj,
                                        fieldName='Destination Address',
                                        data={'valueType': 'increment',
@@ -215,7 +215,7 @@ try:
     trafficObj.configPacketHeaderField(stackObj,
                                        fieldName='Class selector PHB',
                                        data={'activeFieldChoice': True})
-    
+
     stackObj = trafficObj.addTrafficItemPacketStack(configElementObj, protocolStackNameToAdd='UDP',
                                                     stackNumber=6, action='append')
     #stackObj = getPacketHeaderStackIdObj(configElementObjList[0], stackId=7)
@@ -233,7 +233,7 @@ try:
                                              'countValue': 2,
                                              'auto': False
                                          })
-    
+
     trafficObj.configPacketHeaderField(stackObj,
                                        fieldName='UDP-Dest-Port',
                                        data={'valueType': 'increment',
@@ -242,7 +242,7 @@ try:
                                              'countValue': 2,
                                              'auto': False
                                          })
-    
+
     trafficObj.showTrafficItemPacketStack(configElementObj)
     trafficObj.startTraffic(regenerateTraffic=True, applyTraffic=True)
 

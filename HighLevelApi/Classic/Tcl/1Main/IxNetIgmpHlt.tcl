@@ -1,11 +1,11 @@
 #!/opt/ActiveTcl-8.5/bin/tclsh
 
 ################################################################################
-#                                                                            
-# Description:                                                               
+#
+# Description:
 #    This script creates an IGMP v2 host and adds multicast group pool to the host.
-#    Starts IGMP protocol emulation.  Streams are generated using ixnetwork 
-#    traffic_generator. Traffic statistics are collected for each flow.  
+#    Starts IGMP protocol emulation.  Streams are generated using ixnetwork
+#    traffic_generator. Traffic statistics are collected for each flow.
 #
 ################################################################################
 #

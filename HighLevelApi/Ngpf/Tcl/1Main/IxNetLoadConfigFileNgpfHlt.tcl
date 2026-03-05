@@ -13,7 +13,7 @@
 #   DebugHlt
 #       Call this API to create a log file of HLT commands executed for debugging.
 #
-#   Connect <remapPorts | useConfigFilePorts> 
+#   Connect <remapPorts | useConfigFilePorts>
 #       remapPorts         = Use different ports other than the saved config ports.
 #       useConfigFilePorts = Use the Ixia chassis and ports in the saved config file.
 #
@@ -24,7 +24,7 @@
 #   StartAllProtocolsHlt
 #   StopAllProtocolsHlt
 #
-#   SendArpOnAllActiveIntNgpf  
+#   SendArpOnAllActiveIntNgpf
 #   VerifyArpNgpf
 #   StartTrafficHlt
 #   GetStatsHlt
@@ -157,16 +157,16 @@ proc SendArpOnAllActiveIntNgpf {} {
 proc VerifyArpNgpf { {ipType ipv4} {maxRetry 3} } {
     # ipType:  ipv4 or ipv6
 
-    # This API will verify for ARP session resolvement on 
+    # This API will verify for ARP session resolvement on
     # every TopologyGroup/DeviceGroup and/or
     #       TopologyGroup/DeviceGroup/DeviceGroup that has protocol "enabled".
-    # 
+    #
     # How it works?
     #    Each device group has a list of $sessionStatus: up or notStarted.
     #    If the deviceGroup has sessionStatus as "up", then ARP will be verified.
     #    It also has a list of $resolvedGatewayMac: MacAddress or removePacket[Unresolved]
     #    These two lists are aligned.
-    #    If lindex 0 on $sessionSatus is up, then the API expects lindex 0 on $resolvedGatewayMac 
+    #    If lindex 0 on $sessionSatus is up, then the API expects lindex 0 on $resolvedGatewayMac
     #    to have a mac address.
     #    If not, then arp is not resolved.
     #    This script will wait up to the $maxRetry before it declares failed.
@@ -182,7 +182,7 @@ proc VerifyArpNgpf { {ipType ipv4} {maxRetry 3} } {
 	    foreach ipProtocol [ixNet getList $ethernet $ipType] {
 		puts "\nVerifyArpNgpf: Protocol is started: $ipProtocol"
 		set flag 0
-		
+
 		set sessionStatus [ixNet getAttribute $ipProtocol -sessionStatus]
 		set resolvedGatewayMac [ixNet getAttribute $ipProtocol -resolvedGatewayMac]
 
@@ -199,12 +199,12 @@ proc VerifyArpNgpf { {ipType ipv4} {maxRetry 3} } {
 			    set topologyDeviceGroupSource [ixNet getAttribute [ixNet getRoot]$multiValueNumber -source]
 			    regexp "(topology:\[0-9]+)/deviceGroup:(\[0-9]+).*" $topologyDeviceGroupSource - topologyNum deviceGroupNum
 			    set vport [ixNet getAttribute [ixNet getRoot]$topologyNum -vports]
-			    set realPortNumber [GetVportConnectedToPort $vport]				    
+			    set realPortNumber [GetVportConnectedToPort $vport]
 			    puts "\t$topologyNum $realPortNumber $ipAddrNotResolved did not resolve ARP yet. Verifying $timer/$maxRetry tries ..."
-			    
+
 			    after 250
 			}
-			
+
 			if {[regexp "Unresolved" [lindex $resolvedGatewayMac $index]] == 1 && \
 				[lindex $sessionStatus $index] != "notStarted" && $timer == $maxRetry} {
 			    puts "\t$topologyNum $realPortNumber $ipAddrNotResolved cannot resolve ARP after $timer/$maxRetry retries"
@@ -212,7 +212,7 @@ proc VerifyArpNgpf { {ipType ipv4} {maxRetry 3} } {
 			}
 		    }
 		}
-		
+
 		if {$unresolvedArpList == ""} {
 		    puts "\n\tARP is resolved"
 		    return ""
@@ -222,13 +222,13 @@ proc VerifyArpNgpf { {ipType ipv4} {maxRetry 3} } {
 	    }
 	}
     }
-    
+
 
     set unresolvedArpList {}
     foreach topology [ixNet getList [ixNet getRoot] topology] {
 	set currentTopologyName [ixNet getAttribute $topology -name]
 	set topologyPorts [GetTopologyPorts $currentTopologyName]
-	
+
 	foreach deviceGroup [ixNet getList $topology deviceGroup] {
 	    if {[ixNet getAttribute $deviceGroup -status] == "started"} {
 		set arpResult [deviceGroupProtocolStacks $deviceGroup $ipType $maxRetry]
@@ -283,7 +283,7 @@ proc GetVportConnectedToPort { vport } {
     set connectedTo [lrange [split $connectedTo /] 3 4]
     set card [lindex [split [lindex $connectedTo 0] :] end]
     set port [lindex [split [lindex $connectedTo 1] :] end]
-    return $card/$port    
+    return $card/$port
 }
 
 proc EnableTrafficItem { Name } {
@@ -300,7 +300,7 @@ proc EnableTrafficItem { Name } {
 	    ixNet commit
 	    puts "\nEnableTrafficItemByName: $Name : Done\n"
 	    return 0
-	} 
+	}
     }
 
     puts "\nEnableTrafficItemByName: No such traffic item name: $Name\n"
@@ -343,7 +343,7 @@ proc StartAllProtocolsHlt {} {
 proc StartTrafficHlt {} {
     puts "\nStarting IxNetwork traffic ..."
     set status [ixia::traffic_control -action run]
-    
+
     if {[keylget status status] != $::SUCCESS} {
 	puts "\nIxia traffic failed to start: $status"
     } else {
@@ -356,7 +356,7 @@ proc StartTrafficHlt {} {
 proc GetStatsHlt { {type flow} } {
     puts "\nGetStatsHlt"
     set flowStats [::ixia::traffic_stats -mode $type]
-    
+
     if {[keylget flowStats status] != $::SUCCESS} {
 	puts "GetStatsHlt failed: $status"
 	return 0
@@ -378,7 +378,7 @@ proc DebugHlt { {debugFileName ixiaHltDebug.log} } {
 proc Connect { {type useConfigFilePorts} } {
     # Options:
     #    type = useConfigFilePorts | remapPorts
-    #   
+    #
     #    Defaults to using ports in the saved config file
 
     if {[file exists $::ixncfgFile] == 0} {
@@ -411,7 +411,7 @@ proc Connect { {type useConfigFilePorts} } {
 			       -tcl_server $::ixiaChassisIp \
 			       -session_resume_keys 1 \
 			       -connect_timeout 120 \
-			       -break_locks 1 
+			       -break_locks 1
 			  ]
     }
 
@@ -421,7 +421,7 @@ proc Connect { {type useConfigFilePorts} } {
     } else {
 	puts "Successfully connected to IxNetwork Tcl server"
     }
-    
+
     puts "\n[KeylPrint connectStatus]\n"
     return $connectStatus
 }
@@ -471,8 +471,8 @@ for {set flowNumber 1} {$flowNumber <= [llength [keylget flowStats flow]]} {incr
     set rxPort [keylget flowStats flow.$flowNumber.rx.port]
     set txFrames [keylget flowStats flow.$flowNumber.tx.total_pkts]
     set rxFrames [keylget flowStats flow.$flowNumber.rx.total_pkts]
-    
+
     set flowName [keylget flowStats flow.$flowNumber.flow_name]
-  
+
     puts "[format %5s $flowNumber][format %15s $txPort][format %10s $rxPort][format %14s $txFrames][format %14s $rxFrames]"
 }

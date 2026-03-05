@@ -44,20 +44,20 @@
 #                                                                              #
 ################################################################################
 
-#####################################################################################################        
+#####################################################################################################
 #                                                                                                   #
 # Description:                                                                                      #
-#    This script intends to demonstrate how to use Flex-Algo Over  ISIS-SRv6 Using TCL APIs.        #  
+#    This script intends to demonstrate how to use Flex-Algo Over  ISIS-SRv6 Using TCL APIs.        #
 #                                                                                                   #
-#    1. It will create 2 ISISL3 topologies with Flex Algorithm enabled, each having an ipv6 network #                    
+#    1. It will create 2 ISISL3 topologies with Flex Algorithm enabled, each having an ipv6 network #
 #       topology and loopback devicegroup behind the network group(NG) with loopback interface.     #
 #    2. Configure ISIS with SRv6.                                                                   #
 #    3. Configure Flex-Algo related fields one by one.                                              #
 #    4. Start protocols                                                                             #
 #    5. Retrieve protocol statistics.                                                               #
 #    6. Retrieve protocol learned info.                                                             #
-#    7. Stop all protocols.                                                                         #                                                                                          
-##################################################################################################### 
+#    7. Stop all protocols.                                                                         #
+#####################################################################################################
 
 # Script Starts
 print "!!! Test Script Starts !!!"
@@ -136,7 +136,7 @@ ixNet.execute('newConfig')
 ################################################################################
 # 1. Protocol configuration section. Configure OSPFv3 as per the description
 #    give above
-################################################################################ 
+################################################################################
 root = ixNet.getRoot()
 assignPorts(ixNet, ports[0], ports[1])
 time.sleep(5)
@@ -251,16 +251,16 @@ ixNet.setMultiAttribute(ipv6Srh_1, '-clearOverlays', 'false')
 ixNet.commit()
 
 single_value_1 = ixNet.add(ipv6Srh_1, 'singleValue')
-ixNet.setMultiAttribute(single_value_1, 
+ixNet.setMultiAttribute(single_value_1,
 	'-value', 'true')
 ixNet.commit()
-		
+
 ipv6Srh_2 = ixNet.getAttribute(t2dev1+'/isisL3Router:1', '-ipv6Srh')
 ixNet.setMultiAttribute(ipv6Srh_2, '-clearOverlays', 'false')
 ixNet.commit()
 
 single_value_2 = ixNet.add(ipv6Srh_2, 'singleValue')
-ixNet.setMultiAttribute(single_value_2, 
+ixNet.setMultiAttribute(single_value_2,
 	'-value', 'true')
 ixNet.commit()
 
@@ -294,21 +294,21 @@ isisFlexAlgorithmList12 = isisFlexAlgorithmList2 [0]
 
 print "Setting Metric Type"
 metricType1 = ixNet.getAttribute(t1dev1+'/isisL3Router:1/isisFlexAlgorithmList', '-metricType')
-ixNet.setMultiAttribute(metricType1, 
+ixNet.setMultiAttribute(metricType1,
 	'-clearOverlays', 'false')
 ixNet.commit()
 singleValuemetricType1 = ixNet.add(metricType1, 'singleValue')
-ixNet.setMultiAttribute(singleValuemetricType1, 
+ixNet.setMultiAttribute(singleValuemetricType1,
 	'-value', '1')
 ixNet.commit()
 
 print "Setting Calc Type"
 calcType1 = ixNet.getAttribute(t2dev1+'/isisL3Router:1/isisFlexAlgorithmList', '-calcType')
-ixNet.setMultiAttribute(calcType1, 
+ixNet.setMultiAttribute(calcType1,
 	'-clearOverlays', 'false')
 ixNet.commit()
 singleValuecalcType1 = ixNet.add(metricType1, 'singleValue')
-ixNet.setMultiAttribute(singleValuecalcType1, 
+ixNet.setMultiAttribute(singleValuecalcType1,
 	'-value', '1')
 ixNet.commit()
 
@@ -326,21 +326,21 @@ ixNet.commit()
 
 print "Setting enable Exclude Ag"
 enableExcludeAg1 = ixNet.getAttribute(t1dev1+'/isisL3Router:1/isisFlexAlgorithmList', '-enableExcludeAg')
-ixNet.setMultiAttribute(enableExcludeAg1, 
+ixNet.setMultiAttribute(enableExcludeAg1,
 	'-clearOverlays', 'false')
 ixNet.commit()
 singleValueenableExcludeAg1 = ixNet.add(enableExcludeAg1, 'singleValue')
-ixNet.setMultiAttribute(singleValueenableExcludeAg1, 
+ixNet.setMultiAttribute(singleValueenableExcludeAg1,
 	'-value', 'true')
 ixNet.commit()
 
 print "Setting Ext Ag Len"
 excludeAgExtAgLen1 = ixNet.getAttribute(t1dev1+'/isisL3Router:1/isisFlexAlgorithmList', '-excludeAgExtAgLen')
-ixNet.setMultiAttribute(excludeAgExtAgLen1, 
+ixNet.setMultiAttribute(excludeAgExtAgLen1,
 	'-clearOverlays', 'false')
 ixNet.commit()
 singleValueexcludeAgExtAgLen1 = ixNet.add(excludeAgExtAgLen1, 'singleValue')
-ixNet.setMultiAttribute(singleValueexcludeAgExtAgLen1, 
+ixNet.setMultiAttribute(singleValueexcludeAgExtAgLen1,
 	'-value', '2')
 ixNet.commit()
 
@@ -387,59 +387,59 @@ ixNet.commit()
 
 print "Setting enable Include Any Ag"
 enableIncludeAnyAg1 = ixNet.getAttribute(isisFlexAlgorithmList11, '-enableIncludeAnyAg')
-ixNet.setMultiAttribute(enableIncludeAnyAg1, 
+ixNet.setMultiAttribute(enableIncludeAnyAg1,
 	'-clearOverlays', 'false')
 ixNet.commit()
 singleValueenableIncludeAnyAg1= ixNet.add(enableIncludeAnyAg1, 'singleValue')
-ixNet.setMultiAttribute(singleValueenableIncludeAnyAg1, 
+ixNet.setMultiAttribute(singleValueenableIncludeAnyAg1,
 	'-value', 'true')
 ixNet.commit()
 
 enableIncludeAnyAg2 = ixNet.getAttribute(isisFlexAlgorithmList12, '-enableIncludeAnyAg')
-ixNet.setMultiAttribute(enableIncludeAnyAg2, 
+ixNet.setMultiAttribute(enableIncludeAnyAg2,
 	'-clearOverlays', 'false')
 ixNet.commit()
 singleValueenableIncludeAnyAg2 = ixNet.add(enableIncludeAnyAg2, 'singleValue')
-ixNet.setMultiAttribute(singleValueenableIncludeAnyAg2, 
+ixNet.setMultiAttribute(singleValueenableIncludeAnyAg2,
 	'-value', 'true')
 ixNet.commit()
 
 print "Setting Ext Ag Len"
 includeAnyAgExtAgLen1 = ixNet.getAttribute(isisFlexAlgorithmList11, '-includeAnyAgExtAgLen')
-ixNet.setMultiAttribute(includeAnyAgExtAgLen1, 
+ixNet.setMultiAttribute(includeAnyAgExtAgLen1,
 	'-clearOverlays', 'false')
 ixNet.commit()
 singleValueincludeAnyAgExtAgLen1 = ixNet.add(includeAnyAgExtAgLen1, 'singleValue')
-ixNet.setMultiAttribute(singleValueincludeAnyAgExtAgLen1, 
+ixNet.setMultiAttribute(singleValueincludeAnyAgExtAgLen1,
 	'-value', '1')
 ixNet.commit()
 
 print "Setting include AnyAgExt"
 includeAnyAgExtAg1 = ixNet.getAttribute(isisFlexAlgorithmList11, '-includeAnyAgExtAg')
-ixNet.setMultiAttribute(includeAnyAgExtAg1, 
+ixNet.setMultiAttribute(includeAnyAgExtAg1,
 	'-clearOverlays', 'false')
 ixNet.commit()
 singleValueincludeAnyAgExtAg1 = ixNet.add(includeAnyAgExtAg1, 'singleValue')
-ixNet.setMultiAttribute(singleValueincludeAnyAgExtAg1, 
+ixNet.setMultiAttribute(singleValueincludeAnyAgExtAg1,
 	'-value', 'BB000001')
 ixNet.commit()
 
 includeAnyAgExtAg2 = ixNet.getAttribute(isisFlexAlgorithmList12, '-includeAnyAgExtAg')
-ixNet.setMultiAttribute(includeAnyAgExtAg2, 
+ixNet.setMultiAttribute(includeAnyAgExtAg2,
 	'-clearOverlays', 'false')
 ixNet.commit()
 singleValueincludeAnyAgExtAg2 = ixNet.add(includeAnyAgExtAg2, 'singleValue')
-ixNet.setMultiAttribute(singleValueincludeAnyAgExtAg2, 
+ixNet.setMultiAttribute(singleValueincludeAnyAgExtAg2,
 	'-value', 'CD000001')
 ixNet.commit()
 
 print "Setting enable Include All Ag"
 enableIncludeAllAg1 = ixNet.getAttribute(isisFlexAlgorithmList11, '-enableIncludeAllAg')
-ixNet.setMultiAttribute(enableIncludeAllAg1, 
+ixNet.setMultiAttribute(enableIncludeAllAg1,
 	'-clearOverlays', 'false')
 ixNet.commit()
 singleValueenableIncludeAllAg1 = ixNet.add(enableIncludeAllAg1, 'singleValue')
-ixNet.setMultiAttribute(singleValueenableIncludeAllAg1, 
+ixNet.setMultiAttribute(singleValueenableIncludeAllAg1,
 	'-value', 'true')
 ixNet.commit()
 
@@ -457,11 +457,11 @@ ixNet.setMultiAttribute(IncludeAllAgExtAgLencounter,
 ixNet.commit()
 
 includeAllAgExtAgLen2 = ixNet.getAttribute(isisFlexAlgorithmList12, '-includeAllAgExtAgLen')
-ixNet.setMultiAttribute(includeAllAgExtAgLen2, 
+ixNet.setMultiAttribute(includeAllAgExtAgLen2,
 	'-clearOverlays', 'false')
 ixNet.commit()
 singleValueincludeAllAgExtAgLen = ixNet.add(includeAllAgExtAgLen2, 'singleValue')
-ixNet.setMultiAttribute(singleValueincludeAllAgExtAgLen, 
+ixNet.setMultiAttribute(singleValueincludeAllAgExtAgLen,
 	'-value', '1')
 ixNet.commit()
 
@@ -519,23 +519,23 @@ ixNet.commit()
 
 
 enableFadfTlv1 = ixNet.getAttribute(isisFlexAlgorithmList12, '-enableFadfTlv')
-ixNet.setMultiAttribute(enableFadfTlv1, 
+ixNet.setMultiAttribute(enableFadfTlv1,
 	'-clearOverlays', 'false')
 ixNet.commit()
 
 singleValueenableFadfTlv1 = ixNet.add(enableFadfTlv1, 'singleValue')
-ixNet.setMultiAttribute(singleValueenableFadfTlv1, 
+ixNet.setMultiAttribute(singleValueenableFadfTlv1,
 	'-value', 'true')
 ixNet.commit()
 
 print "Setting FAD Len"
 fadfLen1 = ixNet.getAttribute(isisFlexAlgorithmList11, '-fadfLen')
-ixNet.setMultiAttribute(fadfLen1, 
+ixNet.setMultiAttribute(fadfLen1,
 	'-clearOverlays', 'false')
 ixNet.commit()
 
 singleValuefadfLen1 = ixNet.add(fadfLen1, 'singleValue')
-ixNet.setMultiAttribute(singleValuefadfLen1, 
+ixNet.setMultiAttribute(singleValuefadfLen1,
 	'-value', '1')
 ixNet.commit()
 
@@ -553,12 +553,12 @@ ixNet.commit()
 
 print "Setting include mFlag"
 mFlag1 = ixNet.getAttribute(isisFlexAlgorithmList11, '-mFlag')
-ixNet.setMultiAttribute(mFlag1, 
+ixNet.setMultiAttribute(mFlag1,
 	'-clearOverlays', 'false')
 ixNet.commit()
 
 singleValuEmFlag1 = ixNet.add(mFlag1, 'singleValue')
-ixNet.setMultiAttribute(singleValuEmFlag1, 
+ixNet.setMultiAttribute(singleValuEmFlag1,
 	'-value', 'true')
 ixNet.commit()
 

@@ -73,7 +73,7 @@ try:
                           serverOs=osPlatform,
                           generateLogFile='ixiaDebug.log'
                       )
-        
+
     if osPlatform in ['windows', 'windowsConnectionMgr']:
         mainObj = Connect(apiServerIp='192.168.70.3',
                           serverIpPort='11009',
@@ -81,13 +81,13 @@ try:
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           generateLogFile='ixiaDebug.log'
                       )
-        
+
     #---------- Preference Settings End --------------
 
     # Only need to blank the config for Windows because osPlatforms such as Linux and
     # Windows Connection Mgr supports multiple sessions and a new session always come up as a blank config.
     if osPlatform == 'windows':
-        mainObj.newBlankConfig() 
+        mainObj.newBlankConfig()
 
     mainObj.configLicenseServerDetails([licenseServerIp], licenseModel)
 
@@ -160,13 +160,13 @@ try:
     #       For example:
     #            scalableSources = [{"arg1": ipv4Obj1, "arg2": 1, "arg3": 1, "arg4": 2, "arg5": 1},
     #                               {"arg1": ipv4Obj1, "arg2": 1, "arg3": 1, "arg4": 5, "arg5": 1}],
-    # 
+    #
     # arg1: The ipv4 object handle: /api/v1/sessions/1/ixnetwork/topology/1/deviceGroup/1/ethernet/1/ipv4/1
     # arg2: Base port index
     # arg3: Port count
     # arg4: Starting device index
     # arg5: Device count
-    
+
 
     # For all parameter options, please go to the API configTrafficItem
     # mode = create or modify
@@ -192,7 +192,7 @@ try:
                            'frameRate': 10,
                            'frameRateType': 'percentLineRate',
                            'frameSize': 128}])
-    
+
     trafficItemObj   = trafficStatus[0]
     endpointObj      = trafficStatus[1][0]
     configElementObj = trafficStatus[2][0]

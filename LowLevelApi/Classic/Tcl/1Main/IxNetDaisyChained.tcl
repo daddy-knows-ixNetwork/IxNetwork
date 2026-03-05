@@ -1,27 +1,27 @@
 #!/opt/ActiveTcl-8.5/bin/tclsh
 
-# This script creates a new traffic item and 
-# creates the total number of endpoints based on the 
+# This script creates a new traffic item and
+# creates the total number of endpoints based on the
 # total number of the array entries on "endpoint".
 #
 # For each endpoint, create a mpls and ipv4 header
 # mpls value = 0
 # source IP is the primary link.
 #     Primary link means for each source IP address, it
-#     will send to every destination hosts. Then it 
+#     will send to every destination hosts. Then it
 #     goes to the next src IP and send to every destination
-#     host and round robins until it is done with all the 
+#     host and round robins until it is done with all the
 #     src ip addresses.
 #
 # About daisy chaining Ixia chassis's:
-# 
-# There's nothing that needs to be done. IxNetwork and IxExplorer 
+#
+# There's nothing that needs to be done. IxNetwork and IxExplorer
 # will recognize which are the Master and Slave (and actually, they don't care).
-# Turn on the Master chassis first, and bring up IxServer. Once IxServer says it's 
-# master, you can turn up the Slave chassis and bring up IxServer on that chassis. 
+# Turn on the Master chassis first, and bring up IxServer. Once IxServer says it's
+# master, you can turn up the Slave chassis and bring up IxServer on that chassis.
 # Make sure IxServer on that chassis recognizes it's a slave.
 
-# Add the chassis and  ports to the IxNetwork config (slave or master doesn't matter). 
+# Add the chassis and  ports to the IxNetwork config (slave or master doesn't matter).
 # In IxExplorer, just connect to both the chassis. Again master or slave doesn't matter.
 
 
@@ -63,19 +63,19 @@ foreach {ixChassisIp ports} [array get portList *] {
 	set cardNumber [lindex $port 0]
 	set portNumber [lindex $port 1]
 	puts "Clearing port state on $ixChassisIp: $cardNumber/$portNumber ..."
-	
+
 	# ::ixNet::OBJ-/availableHardware/chassis:"10.205.4.35"/card:1/port:2
 	catch {ixNet execute clearOwnership "::ixNet::OBJ-/availableHardware/chassis:\"$ixChassisIp\"/card:$cardNumber/port:$portNumber"} errMsg
 	if {[regexp "Unable" $errMsg]} {
 	    puts "Failed to clear port ownership"
 	    exit
 	}
-	
+
 	set vPort [ixNet add [ixNet getRoot] vport]
 	ixNet commit
 	set vPort [lindex [ixNet remapIds $vPort] 0]
 	lappend vPortList $vPort
-	
+
 	set getVport($ixChassisIp:$cardNumber/$portNumber) $vPort
 	set getPort($vPort) $ixChassisIp:$cardNumber/$portNumber
     }
@@ -153,8 +153,8 @@ foreach {srcDstEndpoints properties} [array get endpoint *] {
 	# ::ixNet::OBJ-/vport:2/protocols <-- Need to trim off ::ixNet::OBJ-
 	lappend listOfPhyDstPorts $dstPort
 	regexp "::ixNet::OBJ-(.*)" $getVport($dstPortIxChassisIp:$dstPort)/protocols - dstVportProtocol
-	lappend dstPortVportList $dstVportProtocol 
-    }	
+	lappend dstPortVportList $dstVportProtocol
+    }
 
     puts "\nsrcVportProtocol: [list $srcVportProtocol]"
     puts "\ndstPortVportList: [list $dstPortVportList]"
@@ -174,23 +174,23 @@ if 0 {
     foreach {srcDstEndpoints properties} [array get endpoint *] {
 	set srcPortInfo [lindex [split $srcDstEndpoints ,] 0] ;# $ixChassisIp1:1/1
 	set dstPortInfo [lindex [split $srcDstEndpoints ,] 1] ;# $ixChassisIp1:1/2
-	
+
 	set srcPortIxChassisIp [lindex [split $srcPortInfo :] 0]
 	set srcPort [lindex [split $srcPortInfo :] 1]
 	set srcPortVport $getVport($srcPortIxChassisIp:$srcPort)
-	
+
 	set dstPortIxChassisIp [lindex [split $dstPortInfo :] 0]
 	set dstPort [lindex [split $dstPortInfo :] 1]
 	set dstPortVport $getVport($dstPortIxChassisIp:$dstPort)
-	
+
 	set endPointObject [ixNet add $trafficItem endpointSet]
-	
+
 	puts "Creating an endpoint: srcPort=$srcPort : dstPort=$dstPort"
 	ixNet setMultiAttrs $endPointObject \
 	    -destinations $dstPortVport/protocols \
 	    -sources $getVport($srcPortIxChassisIp:$srcPort)/protocols
 	ixNet commit
-	
+
 	set endpointObject [lindex [ixNet remapIds $endPointObject] 0]
     }
 }
@@ -258,9 +258,9 @@ foreach configElement [ixNet getList $trafficItem configElement] {
     set dstIp [lindex $endpointProperties 2]
     set dstTotalIpCount [lindex $endpointProperties 3]
 
-    set ethernetStack [lindex [ixNet getList $configElement stack] 0]	
+    set ethernetStack [lindex [ixNet getList $configElement stack] 0]
     ixNet exec append $ethernetStack $mplsProtocolTemplate
-    
+
     puts "\tConfiguring MPLS value to 0 ..."
     ixNet setAttribute $configElement/stack:\"mpls-2\"/field:\"mpls.label.value-1\" \
 	-fieldValue 0 \
@@ -292,7 +292,7 @@ foreach configElement [ixNet getList $trafficItem configElement] {
 	-randomMask 0.0.0.0
 
     ixNet commit
-    
+
     puts "\tConfiguring starting destIp: $dstIp : TotalCount= $dstTotalIpCount"
     ixNet setAttribute $configElement/stack:\"ipv4-3\"/field:\"ipv4.header.dstIp-28\" \
 	-fieldValue 0.0.0.0 \
@@ -316,4 +316,3 @@ foreach configElement [ixNet getList $trafficItem configElement] {
 	-linkedTo ::ixNet::OBJ-null
     ixNet commit
 }
-

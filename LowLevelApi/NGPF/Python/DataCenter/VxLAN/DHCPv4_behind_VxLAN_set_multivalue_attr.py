@@ -457,4 +457,3 @@ print ("\n\nCleaning up IxNetwork...")
 ixNet.execute('newConfig')
 ixNet.disconnect()
 print ("Done: IxNetwork session is closed...")
-

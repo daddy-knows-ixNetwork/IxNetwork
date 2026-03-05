@@ -45,7 +45,7 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#    This sample configures 10 IPv4 sessions on each of the two ports,         # 
+#    This sample configures 10 IPv4 sessions on each of the two ports,         #
 #    and performs the following traffic actions                                #
 #    - Creating 2 Traffic Items for IPv4                                       #
 #    - Add 2 new Endpoint sets to TI 1 IPv4                                    #
@@ -172,7 +172,7 @@ def setIngressTrackingForTI(ixNet, ti, trackingList)
 end
 ################################################################################
 # Defining the Egress Tracking for Traffic Item set function
-################################################################################    
+################################################################################
 def setFirstEgressTrackingForTI(ixNet, ti, stack, field)
     tiName = @ixNet.getAttribute(ti, '-name')
     puts("--- Traffic Item: "+tiName+" setting eggress tracking to field "+field+" for stack"+stack)
@@ -301,7 +301,7 @@ puts "Setting multi values for ipv4 addresses"
 @ixNet.commit()
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 vports = @ixNet.getList(@ixNet.getRoot(), 'vport')
 puts "Assigning ports to " + vports.to_s + " ..."

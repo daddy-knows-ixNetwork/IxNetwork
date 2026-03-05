@@ -29,7 +29,7 @@ ixNet commit
 
 set view [lindex [ixNet remapIds $view] 0]
 
-#setting Attributes to make it visible, setting Port filter ID and Traffic Filter ID 
+#setting Attributes to make it visible, setting Port filter ID and Traffic Filter ID
 ixNet setAttr $view -visible true
 ixNet commit
 
@@ -42,36 +42,36 @@ set av_Traffic_Item_Filter [ixNet getList $view availableTrafficItemFilter]
 ixNet setAttr $view/layer23TrafficItemFilter -trafficItemFilterIds $av_Traffic_Item_Filter
 ixNet commit
 
-set av_Traffic_Item_Filter [ixNet getAttr $view/layer23TrafficItemFilter -trafficItemFilterIds] 
+set av_Traffic_Item_Filter [ixNet getAttr $view/layer23TrafficItemFilter -trafficItemFilterIds]
 
 
-#Adding the column to the created view 
+#Adding the column to the created view
 ixNet setAttr "$view/statistic:\"Tx Frames\"" -enabled true
 ixNet setAttr "$view/statistic:\"Rx Frames\"" -enabled true
 ixNet setAttr "$view/statistic:\"Loss %\"" -enabled true
 ixNet setAttr "$view/statistic:\"Frames Delta\"" -enabled true
 
 #setting the view type as the Flat View
-ixNet setAttr $view/layer23TrafficFlowFilter -egressLatencyBinDisplayOption showEgressRows  
+ixNet setAttr $view/layer23TrafficFlowFilter -egressLatencyBinDisplayOption showEgressRows
 if {[catch {set status [ixNet commit]} error]} {
      log "unable to create Flat View"
      ixNetCleanUp
      return $flag
      }
 
-#setting the enumeration field to track by means of the VLAN ID 
+#setting the enumeration field to track by means of the VLAN ID
 set enumerationFilter [ixNet add $view/layer23TrafficFlowFilter enumerationFilter]
 ixNet setAttribute $enumerationFilter -trackingFilterId [lindex [ixNet getList \
                    $view availableTrackingFilter] [lsearch [ixNet getList $view \
                    availableTrackingFilter] {::ixNet::OBJ-/statistics/view:"EgressFlatView"/availableTrackingFilter:"Ethernet:Outer VLAN ID (10 bits) at offset 118"}]]
 
-#seting the sorting order 
+#seting the sorting order
 
 set sort_order "ascending"
 ixNet setAttribute $enumerationFilter -sortDirection $sort_order
 ixNet commit
 
-#sets the view to be enabled to collect the data 
+#sets the view to be enabled to collect the data
 ixNet setAttr $view -enabled true
 ixNet commit
 

@@ -57,9 +57,9 @@
 #    4. Retrieve protocol statistics.                                          #
 #    5. Configure L2-L3 traffic.                                               #
 #    6. Start the L2-L3 traffic.                                               #
-#    7. Stat IPTV.                                                             #  
+#    7. Stat IPTV.                                                             #
 #    8. Retrieve L2-L3 traffic stats.                                          #
-#    9. Make on the fly changes of IPTV attributes                             #	
+#    9. Make on the fly changes of IPTV attributes                             #
 #   10. Retrieve protocol statistics.                                          #
 #   11. Stop IPTV.                                                             #
 #   12. Stop L2-L3 traffic.                                                    #
@@ -72,7 +72,7 @@
 ################################################################################
 
 ################################################################################
-# Utils                                                                        #	
+# Utils                                                                        #
 ################################################################################
 
 # Libraries to be included
@@ -85,7 +85,7 @@ import time, re
 
 # Append paths to python APIs (Linux and Windows)
 
-# sys.path.append('/path/to/hltapi/library/common/ixiangpf/python') 
+# sys.path.append('/path/to/hltapi/library/common/ixiangpf/python')
 # sys.path.append('/path/to/ixnetwork/api/python')
 
 from ixiatcl import IxiaTcl
@@ -96,7 +96,7 @@ from ixiaerror import IxiaError
 ixiatcl = IxiaTcl()
 ixiahlt = IxiaHlt(ixiatcl)
 ixiangpf = IxiaNgpf(ixiahlt)
-    
+
 try:
 	ErrorHandler('', {})
 except (NameError,):
@@ -105,7 +105,7 @@ except (NameError,):
 		err = ixiatcl.tcl_error_info()
 		log = retval['log']
 		additional_info = '> command: %s\n> tcl errorInfo: %s\n> log: %s' % (cmd, err, log)
-		raise IxiaError(IxiaError.COMMAND_FAIL, additional_info)        
+		raise IxiaError(IxiaError.COMMAND_FAIL, additional_info)
 
 ################################################################################
 # Connection to the chassis, IxNetwork Tcl Server                              #
@@ -134,7 +134,7 @@ connect_result = ixiangpf.connect(
 
 if connect_result['status'] != '1':
     ErrorHandler('connect', connect_result)
-    
+
 print " Printing connection result"
 pprint(connect_result)
 
@@ -142,22 +142,22 @@ pprint(connect_result)
 ports = connect_result['vport_list'].split()
 
 ################################################################################
-# Configure Topology, Device Group                                             # 
+# Configure Topology, Device Group                                             #
 ################################################################################
 
 # Creating a topology on first port
-print "Adding topology 1 on port 1" 
+print "Adding topology 1 on port 1"
 _result_ = ixiangpf.topology_config(
     topology_name      = """IGMP Topology 1""",
     port_handle        = ports[0],
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', _result_)
-    
+
 topology_1_handle = _result_['topology_handle']
 
-# Creating a device group in topology 
-print "Creating device group 1 in topology 1"    
+# Creating a device group in topology
+print "Creating device group 1 in topology 1"
 _result_ = ixiangpf.topology_config(
     topology_handle              = topology_1_handle,
     device_group_name            = """IGMP HOST""",
@@ -166,7 +166,7 @@ _result_ = ixiangpf.topology_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', _result_)
-    
+
 deviceGroup_1_handle = _result_['device_group_handle']
 
 # Creating a topology on second port
@@ -197,7 +197,7 @@ deviceGroup_2_handle = _result_['device_group_handle']
 #  Configure protocol interfaces                                               #
 ################################################################################
 
-# Creating ethernet stack for the first Device Group 
+# Creating ethernet stack for the first Device Group
 print "Creating ethernet stack for the first Device Group"
 _result_ = ixiangpf.interface_config(
     protocol_name                = """Ethernet 1""",
@@ -208,7 +208,7 @@ _result_ = ixiangpf.interface_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', _result_)
-    
+
 ethernet_1_handle = _result_['ethernet_handle']
 
 # Creating ethernet stack for the second Device Group
@@ -225,7 +225,7 @@ if _result_['status'] != IxiaHlt.SUCCESS:
 
 ethernet_2_handle = _result_['ethernet_handle']
 
-# Creating IPv4 Stack on top of Ethernet Stack for the first Device Group                                 
+# Creating IPv4 Stack on top of Ethernet Stack for the first Device Group
 print "Creating IPv4 Stack on top of Ethernet Stack for the first Device Group"
 _result_ = ixiangpf.interface_config(
     protocol_name                     = """IPv4 1""",
@@ -241,10 +241,10 @@ _result_ = ixiangpf.interface_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', _result_)
-    
+
 ipv4_1_handle = _result_['ipv4_handle']
 
-# Creating IPv4 Stack on top of Ethernet Stack for the second Device Group 
+# Creating IPv4 Stack on top of Ethernet Stack for the second Device Group
 print "Creating IPv4 2 stack on ethernet 2 stack for the second Device Group"
 _result_ = ixiangpf.interface_config(
     protocol_name                     = """IPv4 2""",
@@ -262,9 +262,9 @@ if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', _result_)
 
 ipv4_2_handle = _result_['ipv4_handle']
- 
+
 ################################################################################
-# Other protocol configurations                                                # 
+# Other protocol configurations                                                #
 ################################################################################
 
 # This will create IGMP v3 Host Stack with IPTV enabled on top of IPv4 stack having zap behavior as zap and view, zapping type as multicast to leave and zap direction as down.
@@ -291,12 +291,12 @@ _result_ = ixiangpf.emulation_igmp_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_igmp_config', _result_)
-    
+
 igmpHost_1_handle = _result_['igmp_host_handle']
 igmp_host_iptv_handle = _result_['igmp_host_iptv_handle']
-    
-# Creating IGMP Group Ranges 
-print "Creating IGMP Group Ranges"  
+
+# Creating IGMP Group Ranges
+print "Creating IGMP Group Ranges"
 _result_ = ixiangpf.emulation_multicast_group_config(
     mode               = "create",
     ip_addr_start      = "226.0.0.1",
@@ -306,11 +306,11 @@ _result_ = ixiangpf.emulation_multicast_group_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_multicast_group_config', _result_)
-    
+
 igmpMcastIPv4GroupList_1_handle = _result_['multicast_group_handle']
 
-# Creating IGMP Source Ranges 
-print "Creating IGMP Source Ranges"    
+# Creating IGMP Source Ranges
+print "Creating IGMP Source Ranges"
 _result_ = ixiangpf.emulation_multicast_source_config(
     mode               = "create",
     ip_addr_start      = "10.10.10.1",
@@ -320,9 +320,9 @@ _result_ = ixiangpf.emulation_multicast_source_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_multicast_source_config', _result_)
-    
+
 igmpUcastIPv4SourceList_1_handle = _result_['multicast_source_handle']
-    
+
 # Creating IGMP Group and Source Ranges in IGMP Host stack
 print "Creating IGMP Group and Source Ranges in IGMP Host stack"
 _result_ = ixiangpf.emulation_igmp_group_config(
@@ -338,7 +338,7 @@ if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_igmp_group_config', _result_)
 
 # Configuring inter stb delay and rate control for IGMP Host global settings
-print "Configuring inter stb delay and rate control for IGMP host"    
+print "Configuring inter stb delay and rate control for IGMP host"
 _result_ = ixiangpf.emulation_igmp_config(
     handle                      = "/globals",
     mode                        = "create",
@@ -349,13 +349,13 @@ _result_ = ixiangpf.emulation_igmp_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_igmp_config', _result_)
-    
+
 print "Waiting 5 seconds before starting protocol(s) ..."
 time.sleep(5)
 
 ############################################################################
 # Start IGMP protocol                                                      #
-############################################################################    
+############################################################################
 print "Starting IGMP on topology1"
 _result_ = ixiangpf.emulation_igmp_control(
     handle = igmpHost_1_handle,
@@ -389,14 +389,14 @@ if protostats['status'] != IxiaHlt.SUCCESS:
 
 pprint(protostats)
 
-############################################################################ 
+############################################################################
 # Configure L2-L3 traffic                                                  #
 # 1. Endpoints : Source->IPv4, Destination->Multicast group                #
 # 2. Type      : Multicast IPv4 traffic                                    #
 # 3. Flow Group: On IPv4 Destination Address                               #
 # 4. Rate      : 1000 packets per second                                   #
 # 5. Frame Size: 512 bytes                                                 #
-# 6. Tracking  : IPv4 Destination Address                                  #	
+# 6. Tracking  : IPv4 Destination Address                                  #
 ############################################################################
 print "Configuring L2-L3 traffic"
 _result_ = ixiangpf.traffic_config(
@@ -413,8 +413,8 @@ _result_ = ixiangpf.traffic_config(
     emulation_multicast_rcvr_mcast_index        = 0,
     name                                        = 'TI0-Traffic_Item_1',
     circuit_endpoint_type                       = 'ipv4',
-    transmit_distribution                       = 'ipv4DestIp0',                             
-    rate_pps                                    = 1000,                                    
+    transmit_distribution                       = 'ipv4DestIp0',
+    rate_pps                                    = 1000,
     frame_size                                  = 512,
     track_by                                    = 'trackingenabled0 ipv4DestIp0'
 )
@@ -464,7 +464,7 @@ if trafficStats['status'] != IxiaHlt.SUCCESS:
 pprint(trafficStats)
 
 ############################################################################
-# Making on the fly changes for zapDirection, zapIntervalType, zapInterval,#    
+# Making on the fly changes for zapDirection, zapIntervalType, zapInterval,#
 # numChannelChangesBeforeView and viewDuration in IPTV tab of IGMP host    #
 ############################################################################
 print "Making on the fly chnages for zapDirection, zapIntervalType, zapInterval,\
@@ -533,15 +533,15 @@ if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('traffic_control', _result_)
 
 time.sleep(5)
-    
+
 ############################################################################
 # Stop all protocols                                                       #
 ############################################################################
 print "Stopping all protocol(s) ..."
 stop = ixiangpf.test_control(action='stop_all_protocols')
 if stop['status'] != IxiaHlt.SUCCESS:
-    ErrorHandler('test_control', stop)	
+    ErrorHandler('test_control', stop)
 
 time.sleep(2)
-       
+
 print "!!! Test Script Ends !!!"

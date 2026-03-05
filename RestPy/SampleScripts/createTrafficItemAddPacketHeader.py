@@ -2,10 +2,10 @@
 createTrafficItemAddPacketHeader.py
 
 Description
-   Configure custom packet headers in raw Traffic Item. 
-  
-   - Create a Raw Traffic Items. 
-   - Example to show how to add packet header: Ethernet, PFC queue, PFC pause 802.1QBB, VLAN, IPv4 + DSCP, UDP, TCP and ICMP  
+   Configure custom packet headers in raw Traffic Item.
+
+   - Create a Raw Traffic Items.
+   - Example to show how to add packet header: Ethernet, PFC queue, PFC pause 802.1QBB, VLAN, IPv4 + DSCP, UDP, TCP and ICMP
    - Enable tracking to track the packet headers in Flow Statistics
 
 Requirements
@@ -44,7 +44,7 @@ forceTakePortOwnership = True
 
 
 try:
-    def createPacketHeader(trafficItemObj, packetHeaderToAdd=None, appendToStack=None): 
+    def createPacketHeader(trafficItemObj, packetHeaderToAdd=None, appendToStack=None):
         configElement = trafficItemObj.ConfigElement.find()[0]
 
         # Do the followings to add packet headers on the new traffic item
@@ -65,11 +65,11 @@ try:
         # 3> Get the new packet header stack to use it for appending an IPv4 stack after it.
         # Look for the packet header object and stack ID.
         packetHeaderStackObj = configElement.Stack.find(StackTypeId=packetHeaderToAdd)
-        
+
         # 4> In order to modify the fields, get the field object
         packetHeaderFieldObj = packetHeaderStackObj.Field.find()
         ixNetwork.info('packetHeaderFieldObj: {}'.format(packetHeaderFieldObj))
-        
+
         # 5> Save the above configuration to the base config file.
         #ixNetwork.SaveConfig(Files('baseConfig.ixncfg', local_file=True))
 
@@ -77,7 +77,7 @@ try:
 
 
     # LogLevel: none, info, warning, request, request_response, all
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin', 
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin',
                                SessionName=None, SessionId=None, ApiKey=None,
                                ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
@@ -87,7 +87,7 @@ try:
     portMap = session.PortMapAssistant()
     vport = dict()
     for index,port in enumerate(portList):
-        portName = 'Port_{}'.format(index+1) 
+        portName = 'Port_{}'.format(index+1)
         vport[portName] = portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name=portName)
 
     portMap.Connect(forceTakePortOwnership)
@@ -102,12 +102,12 @@ try:
     configElement.FrameRate.update(Type='percentLineRate', Rate=50)
     configElement.TransmissionControl.update(Type='fixedFrameCount', FrameCount=10000)
     configElement.FrameSize.FixedSize = 128
-  
+
     # The Ethernet packet header doesn't need to be created.
     # It is there by default. Just do a find for the Ethernet stack object.
     ethernetStackObj = ixNetwork.Traffic.TrafficItem.find(Name='Raw packet').ConfigElement.find()[0].Stack.find(StackTypeId='ethernet$')
 
-    # NOTE: If you are using virtual ports (IxVM), you must use the Destination MAC address of 
+    # NOTE: If you are using virtual ports (IxVM), you must use the Destination MAC address of
     #       the IxVM port from your virtual host (ESX-i host or KVM)
     ixNetwork.info('Configuring Ethernet packet header')
     ethernetDstField = ethernetStackObj.Field.find(DisplayName='Destination MAC Address')
@@ -126,7 +126,7 @@ try:
     vlanFieldObj = createPacketHeader(rawTrafficItemObj, packetHeaderToAdd='^vlan$', appendToStack='ethernet$')
     vlanIdField = vlanFieldObj.find(DisplayName='VLAN-ID')
     vlanIdField.SingleValue = 103
-        
+
     vlanPriorityField = vlanFieldObj.find(DisplayName='VLAN Priority')
     vlanPriorityField.Auto = False
     vlanPriorityField.SingleValue = 3
@@ -165,7 +165,7 @@ try:
     # Example on how to create a custom list of ip addresses
     ipv4DstField = ipv4FieldObj.find(DisplayName='Destination Address')
     ipv4DstField.ValueType = 'valueList'
-    ipv4DstField.ValueList = ['1.1.1.2', '1.1.1.3', '1.1.1.4', '1.1.1.5']    
+    ipv4DstField.ValueList = ['1.1.1.2', '1.1.1.3', '1.1.1.4', '1.1.1.5']
 
     # DSCP configurations and references
 
@@ -199,18 +199,18 @@ try:
     #       Precedence 6 = 48
     #       Precedence 7 = 56
     #
-    # DisplayName options: 
-    #     'Default PHB' = Field/10 
+    # DisplayName options:
+    #     'Default PHB' = Field/10
     #     'Class selector PHB' = Field/12
     #     'Assured forwarding PHB" = Field/14
-    #     'Expedited forwarding PHB" = Field/16 
+    #     'Expedited forwarding PHB" = Field/16
     #ipv4DefaultPHBField = ipv4FieldObj.find(DisplayName='Class selector')
     ipv4DefaultPHBField = ipv4FieldObj.find(DisplayName='Default PHB')
 
     ipv4DefaultPHBField.ActiveFieldChoice = True
     ipv4DefaultPHBField.ValueType = 'singleVaoue' ;# singleValue, increment
     ipv4DefaultPHBField.SingleValue = 56
-    # Below is for increment 
+    # Below is for increment
     #ipv4DefaultPHBField.StartValue = 3
     #ipv4DefaultPHBField.StepValue = 1
     #ipv4DefaultPHBField.CountValue = 9
@@ -241,7 +241,7 @@ try:
 
 
     # Optional: Enable tracking to track your packet headers:
-    #    
+    #
     #    Other trackings: udpUdpSrcPrt0, udpUdpDstPrt0,tcpTcpSrcPrt0, tcpTcpDstPrt0, vlanVlanId0, vlanVlanUserPriority0
     #    On an IxNetwork GUI (Windows or Web UI), add traffic item trackings.
     #    Then go on the API browser to view the tracking fields.
@@ -257,5 +257,3 @@ except Exception as errMsg:
     if debugMode == False and 'session' in locals():
         if session.TestPlatform.Platform != 'windows':
             session.Session.remove()
-
-

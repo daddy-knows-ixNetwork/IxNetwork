@@ -83,7 +83,7 @@ try:
     releasePortsWhenDone = jsonData['releasePortsWhenDone']
     enableDebugTracing = jsonData['enableDebugTracing']
     deleteSessionAfterTest = jsonData['deleteSessionAfterTest']
-    
+
     configLicense = jsonData['configLicense']
     licenseServerIp = jsonData['licenseServerIp']
     licenseModel = jsonData['licenseModel']
@@ -98,7 +98,7 @@ try:
         matchCard = re.match('card\[([0-9]+)]', card)
         port = vport['connectedTo'].split('/')[-1]
         matchPort = re.match('port\[([0-9]+)]', port)
-        portList.append([ixChassisIp, matchCard.group(1), matchPort.group(1)]) 
+        portList.append([ixChassisIp, matchCard.group(1), matchPort.group(1)])
 
     if osPlatform == 'linux':
         mainObj = Connect(apiServerIp = jsonData['linuxApiServerIp'],
@@ -114,7 +114,7 @@ try:
 
     #---------- Preference Settings End --------------
     fileMgmtObj = FileMgmt(mainObj)
-    
+
     portObj = PortMgmt(mainObj)
     portObj.connectIxChassis(ixChassisIp)
 
@@ -193,7 +193,3 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
         if osPlatform == 'windowsConnectionMgr':
             if deleteSessionAfterTest:
                 mainObj.deleteSession()
-
-
-
-

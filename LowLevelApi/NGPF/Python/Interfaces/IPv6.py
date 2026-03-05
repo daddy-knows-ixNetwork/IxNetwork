@@ -46,7 +46,7 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#    This sample configures 10 IPv6 sessions on each of the two ports          # 
+#    This sample configures 10 IPv6 sessions on each of the two ports          #
 #                                                                              #
 ################################################################################
 
@@ -141,7 +141,7 @@ ixNet.setMultiAttribute(ixNet.getAttribute(ipv6_2, '-prefix') + '/singleValue', 
 ixNet.commit()
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 vports = ixNet.getList(ixNet.getRoot(), 'vport')
 print ("Assigning ports to " + str(vports) + " ...")

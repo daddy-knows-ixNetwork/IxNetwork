@@ -240,7 +240,7 @@ print('ixNet.help(\'::ixNet::OBJ-/topology/deviceGroup/ethernet/isisL3\')')
 print (ixNet.help('::ixNet::OBJ-/topology/deviceGroup/ethernet/isisL3'))
 
 ###########################################################################
-#Add and Configure BFDv6 Interface 
+#Add and Configure BFDv6 Interface
 ###########################################################################
 print("Adding BFDv6 and Configuring")
 ixNet.add(ip1, 'bfdv6Interface')
@@ -318,7 +318,7 @@ except :
 time.sleep(10)
 
 ###############################################################################
-# Retrieve protocol learned info                                              # 
+# Retrieve protocol learned info                                              #
 ###############################################################################
 print("Fetching BFD learned info")
 ixNet.execute('getLearnedInfo', bfdv61, '1')

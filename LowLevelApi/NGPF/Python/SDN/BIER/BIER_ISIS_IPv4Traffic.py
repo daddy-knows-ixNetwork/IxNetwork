@@ -739,12 +739,12 @@ ixNet.commit()
 ################################################################################
 print ('Configuring L2-L3 IPv4 S-PMSI Traffic Item')
 SpmsiTrafficItem = ixNet.add(ixNet.getRoot() + '/traffic', 'trafficItem')
-ixNet.setMultiAttribute(SpmsiTrafficItem, '-name', 'NGMVPN S-PMSI Traffic', 
-			'-multicastForwardingMode', 'replication', 
-			'-useControlPlaneRate', 'true', 
-			'-useControlPlaneFrameSize', 'true', 
-			'-roundRobinPacketOrdering', 'false', 
-			'-numVlansForMulticastReplication', '1', 
+ixNet.setMultiAttribute(SpmsiTrafficItem, '-name', 'NGMVPN S-PMSI Traffic',
+			'-multicastForwardingMode', 'replication',
+			'-useControlPlaneRate', 'true',
+			'-useControlPlaneFrameSize', 'true',
+			'-roundRobinPacketOrdering', 'false',
+			'-numVlansForMulticastReplication', '1',
 			'-trafficType', 'ipv4')
 ixNet.commit()
 

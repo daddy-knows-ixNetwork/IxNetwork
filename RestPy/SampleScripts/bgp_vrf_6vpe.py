@@ -15,8 +15,8 @@ Tested with two back-2-back IxNetwork ports.
    - Start traffic
    - Get/Show Traffic Item Statistics
    - Get/Show Flow Statistics stats
-   
-   
+
+
 Supports IxNetwork API servers:
    - Windows, Windows Connection Mgr and Linux
 Requirements:
@@ -57,7 +57,7 @@ try:
                                 ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
     ixNetwork = session.Ixnetwork
-    
+
     ixNetwork.info('Assign test ports into IxNetwork')
 
     portMap = session.PortMapAssistant()
@@ -128,7 +128,7 @@ try:
 
     pe1BgpVrf1 = pe1Bgp.BgpVrf.add(Name='PE1_BGP_VRF')
 
-    # VPN Routes - IPv6 
+    # VPN Routes - IPv6
     ixNetwork.info('Configuring IPv6 VPN Routes')
     routeRange1 = pe1DevGroup1.NetworkGroup.add(Multiplier='10' , Name='VRF_1')
     vrf1=routeRange1.Ipv6PrefixPools.add(NumberOfAddresses=5)

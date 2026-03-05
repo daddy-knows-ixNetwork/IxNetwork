@@ -70,7 +70,7 @@ try:
                           serverOs=osPlatform,
                           generateLogFile='ixiaDebug.log'
                       )
-        
+
     if osPlatform in ['windows', 'windowsConnectionMgr']:
         mainObj = Connect(apiServerIp='192.168.70.3',
                           serverIpPort='11009',
@@ -78,13 +78,13 @@ try:
                           deleteSessionAfterTest=deleteSessionAfterTest,
                           generateLogFile='ixiaDebug.log'
                       )
-        
+
     #---------- Preference Settings End --------------
 
     # Only need to blank the config for Windows because osPlatforms such as Linux and
     # Windows Connection Mgr supports multiple sessions and a new session always come up as a blank config.
     if osPlatform == 'windows':
-        mainObj.newBlankConfig() 
+        mainObj.newBlankConfig()
 
     mainObj.configLicenseServerDetails([licenseServerIp], licenseModel)
 
@@ -173,7 +173,7 @@ try:
                                                                     'frameRate': 10,
                                                                     'frameRateType': 'percentLineRate',
                                                                     'frameSize': 128}])
-    
+
     trafficItemObj   = trafficStatus[0]
     endpointObj      = trafficStatus[1][0]
     configElementObj = trafficStatus[2][0]
@@ -182,15 +182,15 @@ try:
     trafficObj.configTrafficItem(mode='modify',
                                  obj=trafficItemObj,
                                  trafficItem = {'name':'Topo1_mod_Topo2'})
-    
+
     trafficObj.configTrafficItem(mode='modify',
                                  obj=configElementObj,
                                  configElements = {'frameSize':'512'})
-    
+
     trafficObj.configTrafficItem(mode='modify',
                                  obj=endpointObj,
                                  endpoints = {'name':'Flow-Group-10'})
-    
+
     trafficObj.startTraffic(regenerateTraffic=True, applyTraffic=True)
 
 

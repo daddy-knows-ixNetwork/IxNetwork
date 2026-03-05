@@ -125,5 +125,3 @@ proc verifyLacpLearnedInfo {linkProtoId checkLinkLearntInfoList \
     set isError 0
     return $isError
 }
-
-

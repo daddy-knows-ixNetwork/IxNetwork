@@ -35,81 +35,53 @@ test
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${fc_client_handle} =  Get From Dictionary  ${result}  handle
-	
+
 #================================ ADD FPORT ==================================#
-	
+
 	Log To Console  Adding F-PORT ...
 	${result} =  Fc Fport Config  mode=add  port_handle=${fc_fport_port_handle}
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${fc_fport_handle} =  Get From Dictionary  ${result}  handle
-	
+
 #========================== ADD VNPORT =======================================#
-	
+
 	Log To Console  Adding vnport ...
 	${result} =  Fc Fport Vnport Config  mode=add  handle=${fc_fport_handle}  count=1
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${fc_fport_vnport_handle} =  Get From Dictionary  ${result}  handle
-	
+
 #========================== ADD VNPORT FOR FLOGI =============================#
-	
+
 	Log To Console  Adding vnport for FLOGI...
 	${result} =  Fc Fport Vnport Config  mode=add  handle=${fc_fport_handle}  name=N_PORT-FLOGI  simulated=1  plogi_enable=1  plogi_target_name=FLOGI-NAME  count=1
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${fc_fport_vnport_flogi_handle} =  Get From Dictionary  ${result}  handle
-	
+
 #========================= CONFIG CLIENT TO PLOGI TO FPORT ===================#
-	
+
 	Log To Console  Config client ...
 	${result} =  Fc Client Config  mode=modify  handle=${fc_client_handle}  flogi_plogi_target_name=N_PORT-FLOGI  flogi_prli_enabled=1
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
+
 #============================ START F-PORT and CLIENT-PORT ===================#
-	
+
 	Log To Console  Start session in sync mode...
 	${result} =  Fc Control  action=start  port_handle=@{portHandles}
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
+
 	Log To Console  Wait 10 seconds for the sessions to come up
 	Sleep  10s
-	
+
 #============================ VERIFY STATISTICS ==============================#
-	Log To Console  Verify Session by Statistics ... 
+	Log To Console  Verify Session by Statistics ...
 #============================ For Client Port ================================#
 	Log To Console  Compare statistics for Client Port
 	${result} =  Fc Client Stats  mode=aggregate  port_handle=@{portHandles}
-	
+
 	Log To Console  Wait 5 seconds to get aggregate stats for client
 	Sleep  5s
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	

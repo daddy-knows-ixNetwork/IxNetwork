@@ -49,22 +49,22 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#   The script below walks through the workflow of an AppLibrary end to end    #	
-#	test, using the below steps:											   #	
+#   The script below walks through the workflow of an AppLibrary end to end    #
+#	test, using the below steps:											   #
 #		1. Connection to the chassis, IxNetwork Tcl Server 					   #
 #		2. Topology configuration											   #
-#		3. Configure trafficItem 1 for Layer 4-7 AppLibrary Profile			   #	
+#		3. Configure trafficItem 1 for Layer 4-7 AppLibrary Profile			   #
 #		4. Configure trafficItem 2 for Layer 4-7 AppLibrary Profile			   #
-#		5. Start protocols													   #	
+#		5. Start protocols													   #
 #		6. Apply and run AppLibrary traffic									   #
 #		7. Drill down per IP addresses during traffic run					   #
-#		8. Stop Traffic.													   #	
-#																			   #	
+#		8. Stop Traffic.													   #
+#																			   #
 #                                                                              #
 ################################################################################
 
 ################################################################################
-# Utils									       								   #	
+# Utils									       								   #
 ################################################################################
 use warnings;
 use strict;
@@ -115,7 +115,7 @@ tcl_server => $tcl_server,
 if (ixiangpf::status_item('status') != 1) {
     ixnHLT_errorHandler('connect');
 	}
-	
+
 
 my @chassis_vport_list = ();
 for (my $_x = 0; $_x < $#chassis+1; $_x++) {
@@ -149,14 +149,14 @@ for (my $_x = 0; $_x < $#chassis+1; $_x++) {
 #}
 
 ################################################################################
-# Configure Topology 1, Device Group 1                                         # 
+# Configure Topology 1, Device Group 1                                         #
 ################################################################################
 
 my @status_keys = ();
 
 my $topology_1_status = ixiangpf::topology_config ({
         topology_name      => "{Topology 1}",
-        port_handle        => "$ixnHLT{'PORT-HANDLE,//vport:<1>'}", 
+        port_handle        => "$ixnHLT{'PORT-HANDLE,//vport:<1>'}",
     });
 	if (ixiangpf::status_item('status') != $ixiangpf::SUCCESS) {
         handle_error();
@@ -164,7 +164,7 @@ my $topology_1_status = ixiangpf::topology_config ({
 @status_keys = ixiangpf::status_item_keys();
 my $topology_1_handle = ixiangpf::status_item('topology_handle');
     $ixnHLT{'HANDLE,//topology:<1>'} = $topology_1_handle;
-    
+
 my $device_group_1_status = ixiangpf::topology_config ({
         topology_handle              => "$topology_1_handle",
         device_group_name            => "{Device Group 1}",
@@ -177,10 +177,10 @@ my $device_group_1_status = ixiangpf::topology_config ({
 @status_keys = ixiangpf::status_item_keys();
 my $deviceGroup_1_handle = ixiangpf::status_item('device_group_handle');
     $ixnHLT{'HANDLE,//topology:<1>/deviceGroup:<1>'} = $deviceGroup_1_handle;
-    
+
 ################################################################################
-# Configure protocol interfaces for first topology                             # 
-################################################################################ 
+# Configure protocol interfaces for first topology                             #
+################################################################################
 
 my $multivalue_1_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
@@ -215,7 +215,7 @@ my $ethernet_1_status = ixiangpf::interface_config ({
 	if (ixiangpf::status_item('status') != $ixiangpf::SUCCESS) {
         handle_error();
     }
-    
+
 @status_keys = ixiangpf::status_item_keys();
 my $ethernet_1_handle = ixiangpf::status_item('ethernet_handle');
 $ixnHLT{'HANDLE,//topology:<1>/deviceGroup:<1>/ethernet:<1>'} = $ethernet_1_handle;
@@ -234,7 +234,7 @@ my $multivalue_2_status = ixiangpf::multivalue_config ({
     }
 @status_keys = ixiangpf::status_item_keys();
     my $multivalue_2_handle = ixiangpf::status_item('multivalue_handle');
-    
+
 my $multivalue_3_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "101.1.0.1",
@@ -249,7 +249,7 @@ my $multivalue_3_status = ixiangpf::multivalue_config ({
     }
 @status_keys = ixiangpf::status_item_keys();
     my $multivalue_3_handle = ixiangpf::status_item('multivalue_handle');
-    
+
 my $ipv4_1_status = ixiangpf::interface_config ({
         protocol_name                     => "{IPv4 1}",
         protocol_handle                   => "$ethernet_1_handle",
@@ -268,8 +268,8 @@ my $ipv4_1_status = ixiangpf::interface_config ({
     $ixnHLT{'HANDLE,//topology:<1>/deviceGroup:<1>/ethernet:<1>/ipv4:<1>'} = $ipv4_1_handle;
 
 ################################################################################
-# Configure Topology 2, Device Group 2                                         # 
-################################################################################ 
+# Configure Topology 2, Device Group 2                                         #
+################################################################################
 
 my $topology_2_status = ixiangpf::topology_config ({
         topology_name      => "{Topology 2}",
@@ -282,7 +282,7 @@ my $topology_2_status = ixiangpf::topology_config ({
 @status_keys = ixiangpf::status_item_keys();
 my $topology_2_handle = ixiangpf::status_item('topology_handle');
     $ixnHLT{'HANDLE,//topology:<2>'} = $topology_2_handle;
-    
+
 my $device_group_2_status = ixiangpf::topology_config ({
         topology_handle              => "$topology_2_handle",
         device_group_name            => "{Device Group 2}",
@@ -296,10 +296,10 @@ my $device_group_2_status = ixiangpf::topology_config ({
 @status_keys = ixiangpf::status_item_keys();
     my $deviceGroup_2_handle = ixiangpf::status_item('device_group_handle');
     $ixnHLT{'HANDLE,//topology:<2>/deviceGroup:<1>'} = $deviceGroup_2_handle;
-	
+
 ################################################################################
-# Configure protocol interfaces for second topology                            # 
-################################################################################ 
+# Configure protocol interfaces for second topology                            #
+################################################################################
 
 my $multivalue_4_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
@@ -313,10 +313,10 @@ my $multivalue_4_status = ixiangpf::multivalue_config ({
 	if (ixiangpf::status_item('status') != $ixiangpf::SUCCESS) {
         handle_error();
     }
-    
+
 @status_keys = ixiangpf::status_item_keys();
     my $multivalue_4_handle = ixiangpf::status_item('multivalue_handle');
-    
+
 my $ethernet_2_status = ixiangpf::interface_config ({
         protocol_name                => "{Ethernet 2}",
         protocol_handle              => "$deviceGroup_2_handle",
@@ -335,11 +335,11 @@ my $ethernet_2_status = ixiangpf::interface_config ({
 	if (ixiangpf::status_item('status') != $ixiangpf::SUCCESS) {
         handle_error();
     }
-    
+
 @status_keys = ixiangpf::status_item_keys();
     my $ethernet_2_handle = ixiangpf::status_item('ethernet_handle');
     $ixnHLT{'HANDLE,//topology:<2>/deviceGroup:<1>/ethernet:<1>'} = $ethernet_2_handle;
-    
+
 my $multivalue_5_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "101.1.0.1",
@@ -352,10 +352,10 @@ my $multivalue_5_status = ixiangpf::multivalue_config ({
 	if (ixiangpf::status_item('status') != $ixiangpf::SUCCESS) {
         handle_error();
     }
-    
+
 @status_keys = ixiangpf::status_item_keys();
     my $multivalue_5_handle = ixiangpf::status_item('multivalue_handle');
-    
+
 
 my $multivalue_6_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
@@ -369,10 +369,10 @@ my $multivalue_6_status = ixiangpf::multivalue_config ({
 	if (ixiangpf::status_item('status') != $ixiangpf::SUCCESS) {
         handle_error();
     }
-    
+
     @status_keys = ixiangpf::status_item_keys();
     my $multivalue_6_handle = ixiangpf::status_item('multivalue_handle');
-    
+
 my $ipv4_2_status = ixiangpf::interface_config ({
         protocol_name                     => "{IPv4 2}",
         protocol_handle                   => "$ethernet_2_handle",
@@ -386,18 +386,18 @@ my $ipv4_2_status = ixiangpf::interface_config ({
 	if (ixiangpf::status_item('status') != $ixiangpf::SUCCESS) {
         handle_error();
     }
-    
+
     @status_keys = ixiangpf::status_item_keys();
     my $ipv4_2_handle = ixiangpf::status_item('ipv4_handle');
     $ixnHLT{'HANDLE,//topology:<2>/deviceGroup:<1>/ethernet:<1>/ipv4:<1>'} = $ipv4_2_handle;
-    
+
 ################################################################################
-# Configure Topology 3, Device Group 3                                         # 
+# Configure Topology 3, Device Group 3                                         #
 ################################################################################
 
 my $topology_3_status = ixiangpf::topology_config ({
         topology_name      => "{Topology 3}",
-        port_handle        => "$ixnHLT{'PORT-HANDLE,//vport:<3>'}", 
+        port_handle        => "$ixnHLT{'PORT-HANDLE,//vport:<3>'}",
     });
 	if (ixiangpf::status_item('status') != $ixiangpf::SUCCESS) {
         handle_error();
@@ -405,8 +405,8 @@ my $topology_3_status = ixiangpf::topology_config ({
 
 @status_keys = ixiangpf::status_item_keys();
 my $topology_3_handle = ixiangpf::status_item('topology_handle');
-    $ixnHLT{'HANDLE,//topology:<3>'} = $topology_3_handle; 
-    
+    $ixnHLT{'HANDLE,//topology:<3>'} = $topology_3_handle;
+
 my $device_group_3_status = ixiangpf::topology_config ({
         topology_handle              => "$topology_3_handle",
         device_group_name            => "{Device Group 3}",
@@ -420,10 +420,10 @@ my $device_group_3_status = ixiangpf::topology_config ({
 @status_keys = ixiangpf::status_item_keys();
     my $deviceGroup_3_handle = ixiangpf::status_item('device_group_handle');
     $ixnHLT{'HANDLE,//topology:<3>/deviceGroup:<1>'} = $deviceGroup_3_handle;
-	
+
 ################################################################################
-# Configure protocol interfaces for the third topology                         # 
-################################################################################ 
+# Configure protocol interfaces for the third topology                         #
+################################################################################
 
 my $multivalue_7_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
@@ -437,10 +437,10 @@ my $multivalue_7_status = ixiangpf::multivalue_config ({
 	if (ixiangpf::status_item('status') != $ixiangpf::SUCCESS) {
         handle_error();
     }
-    
+
 @status_keys = ixiangpf::status_item_keys();
     my $multivalue_7_handle = ixiangpf::status_item('multivalue_handle');
-    
+
 my $ethernet_3_status = ixiangpf::interface_config ({
         protocol_name                => "{Ethernet 3}",
         protocol_handle              => "$deviceGroup_3_handle",
@@ -459,11 +459,11 @@ my $ethernet_3_status = ixiangpf::interface_config ({
 	if (ixiangpf::status_item('status') != $ixiangpf::SUCCESS) {
         handle_error();
     }
-    
+
 @status_keys = ixiangpf::status_item_keys();
     my $ethernet_3_handle = ixiangpf::status_item('ethernet_handle');
     $ixnHLT{'HANDLE,//topology:<3>/deviceGroup:<1>/ethernet:<1>'} = $ethernet_3_handle;
-    
+
 my $multivalue_8_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "3000:0:0:1:0:0:0:2",
@@ -476,10 +476,10 @@ my $multivalue_8_status = ixiangpf::multivalue_config ({
 	if (ixiangpf::status_item('status') != $ixiangpf::SUCCESS) {
         handle_error();
     }
-    
+
 @status_keys = ixiangpf::status_item_keys();
     my $multivalue_8_handle = ixiangpf::status_item('multivalue_handle');
-    
+
 
 my $multivalue_9_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
@@ -493,10 +493,10 @@ my $multivalue_9_status = ixiangpf::multivalue_config ({
 	if (ixiangpf::status_item('status') != $ixiangpf::SUCCESS) {
         handle_error();
     }
-    
+
     @status_keys = ixiangpf::status_item_keys();
     my $multivalue_9_handle = ixiangpf::status_item('multivalue_handle');
-    
+
 my $ipv6_3_status = ixiangpf::interface_config ({
         protocol_name                     => "{IPv6 3}",
         protocol_handle                   => "$ethernet_3_handle",
@@ -507,24 +507,24 @@ my $ipv6_3_status = ixiangpf::interface_config ({
         ipv6_gateway                      => "$multivalue_9_handle",
         ipv6_gateway_step                 => "::0",
         ipv6_intf_addr                    => "$multivalue_8_handle",
-        ipv6_intf_addr_step               => "::0",        
+        ipv6_intf_addr_step               => "::0",
         ipv6_prefix_length                => "64",
     });
 	if (ixiangpf::status_item('status') != $ixiangpf::SUCCESS) {
         handle_error();
     }
-    
+
     @status_keys = ixiangpf::status_item_keys();
     my $ipv6_3_handle = ixiangpf::status_item('ipv6_handle');
     $ixnHLT{'HANDLE,//topology:<3>/deviceGroup:<1>/ethernet:<1>/ipv6:<1>'} = $ipv6_3_handle;
-    
+
 ################################################################################
-# Configure Topology 4, Device Group 4                                         # 
+# Configure Topology 4, Device Group 4                                         #
 ################################################################################
 
 my $topology_4_status = ixiangpf::topology_config ({
         topology_name      => "{Topology 4}",
-        port_handle        => "$ixnHLT{'PORT-HANDLE,//vport:<4>'}", 
+        port_handle        => "$ixnHLT{'PORT-HANDLE,//vport:<4>'}",
     });
 	if (ixiangpf::status_item('status') != $ixiangpf::SUCCESS) {
         handle_error();
@@ -532,8 +532,8 @@ my $topology_4_status = ixiangpf::topology_config ({
 
 @status_keys = ixiangpf::status_item_keys();
 my $topology_4_handle = ixiangpf::status_item('topology_handle');
-    $ixnHLT{'HANDLE,//topology:<4>'} = $topology_4_handle; 
-    
+    $ixnHLT{'HANDLE,//topology:<4>'} = $topology_4_handle;
+
 my $device_group_4_status = ixiangpf::topology_config ({
         topology_handle              => "$topology_4_handle",
         device_group_name            => "{Device Group 4}",
@@ -547,10 +547,10 @@ my $device_group_4_status = ixiangpf::topology_config ({
 @status_keys = ixiangpf::status_item_keys();
     my $deviceGroup_4_handle = ixiangpf::status_item('device_group_handle');
     $ixnHLT{'HANDLE,//topology:<4>/deviceGroup:<1>'} = $deviceGroup_4_handle;
-    
-    
+
+
 ################################################################################
-# Configure protocol interfaces for the fourth topology                        # 
+# Configure protocol interfaces for the fourth topology                        #
 ################################################################################
 
 my $multivalue_10_status = ixiangpf::multivalue_config ({
@@ -565,10 +565,10 @@ my $multivalue_10_status = ixiangpf::multivalue_config ({
 	if (ixiangpf::status_item('status') != $ixiangpf::SUCCESS) {
         handle_error();
     }
-    
+
 @status_keys = ixiangpf::status_item_keys();
     my $multivalue_10_handle = ixiangpf::status_item('multivalue_handle');
-    
+
 my $ethernet_4_status = ixiangpf::interface_config ({
         protocol_name                => "{Ethernet 4}",
         protocol_handle              => "$deviceGroup_4_handle",
@@ -587,11 +587,11 @@ my $ethernet_4_status = ixiangpf::interface_config ({
 	if (ixiangpf::status_item('status') != $ixiangpf::SUCCESS) {
         handle_error();
     }
-    
+
 @status_keys = ixiangpf::status_item_keys();
     my $ethernet_4_handle = ixiangpf::status_item('ethernet_handle');
     $ixnHLT{'HANDLE,//topology:<4>/deviceGroup:<1>/ethernet:<1>'} = $ethernet_4_handle;
-    
+
 my $multivalue_11_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "3000:0:1:1:0:0:0:2",
@@ -604,10 +604,10 @@ my $multivalue_11_status = ixiangpf::multivalue_config ({
 	if (ixiangpf::status_item('status') != $ixiangpf::SUCCESS) {
         handle_error();
     }
-    
+
 @status_keys = ixiangpf::status_item_keys();
     my $multivalue_11_handle = ixiangpf::status_item('multivalue_handle');
-    
+
 
 my $multivalue_12_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
@@ -621,10 +621,10 @@ my $multivalue_12_status = ixiangpf::multivalue_config ({
 	if (ixiangpf::status_item('status') != $ixiangpf::SUCCESS) {
         handle_error();
     }
-    
+
     @status_keys = ixiangpf::status_item_keys();
     my $multivalue_12_handle = ixiangpf::status_item('multivalue_handle');
-    
+
 my $ipv6_4_status = ixiangpf::interface_config ({
         protocol_name                     => "{IPv6 4}",
         protocol_handle                   => "$ethernet_4_handle",
@@ -635,23 +635,23 @@ my $ipv6_4_status = ixiangpf::interface_config ({
         ipv6_gateway                      => "$multivalue_12_handle",
         ipv6_gateway_step                 => "::0",
         ipv6_intf_addr                    => "$multivalue_11_handle",
-        ipv6_intf_addr_step               => "::0",        
+        ipv6_intf_addr_step               => "::0",
         ipv6_prefix_length                => "64",
     });
 	if (ixiangpf::status_item('status') != $ixiangpf::SUCCESS) {
         handle_error();
     }
-    
+
     @status_keys = ixiangpf::status_item_keys();
     my $ipv6_4_handle = ixiangpf::status_item('ipv6_handle');
     $ixnHLT{'HANDLE,//topology:<4>/deviceGroup:<1>/ethernet:<1>/ipv6:<1>'} = $ipv6_4_handle;
-    
+
 ####################################################
 ##Configure traffic for all configuration elements##
 
 ##########################################################
 # Configure trafficItem 1 for Layer 4-7 AppLibrary Profile
-########################################################## 
+##########################################################
 
 my $traffic_item_1_status = ixiangpf::traffic_l47_config ({
         mode                        => "create",
@@ -672,8 +672,8 @@ if (ixiangpf::status_item('status') != $ixiangpf::SUCCESS) {
     @status_keys = ixiangpf::status_item_keys();
     my $trafficItem_1_handle = ixiangpf::status_item('traffic_l47_handle');
     $ixnHLT{'HANDLE,//traffic/trafficItem:<0>'} = $trafficItem_1_handle;
-    
-    
+
+
 ##########################################################
 # Configure trafficItem 2 for Layer 4-7 AppLibrary Profile
 ##########################################################
@@ -697,7 +697,7 @@ if (ixiangpf::status_item('status') != $ixiangpf::SUCCESS) {
     @status_keys = ixiangpf::status_item_keys();
     my $trafficItem_2_handle = ixiangpf::status_item('traffic_l47_handle');
     $ixnHLT{'HANDLE,//traffic/trafficItem:<0>'} = $trafficItem_2_handle;
-	
+
 ####################################################
 # Start protocols                                  #
 ####################################################
@@ -716,14 +716,14 @@ if (ixiangpf::status_item('status') != 1) {
 sleep(10);
 
 ################################################################################
-# Start traffic                                                                # 
+# Start traffic                                                                #
 ################################################################################
 
 ixnHLT_logger(q(Starting traffic...));
     $_result_ = ixiangpf::traffic_control({
         action => 'run',
         traffic_generator => 'ixnetwork_540',
-        type => 'l47'    
+        type => 'l47'
     });
     # Check status
     if (ixiangpf::status_item('status') != 1) {
@@ -735,7 +735,7 @@ ixnHLT_logger(q(Starting traffic...));
 ###############################################################################
 
 my @drillDownSelectedOptions =(['L47_traffic_item_tcp', 'per_ports_per_initiator_flows', 'initiatorPorts', 'L47_flow_initiator_tcp', 'per_initiator_ports', 'initiatorPorts']);
-    
+
 $_result_ = ixiangpf::traffic_stats({
     mode => "L47_traffic_item_tcp",
 	drill_down_type => "per_ports_per_initiator_flows",
@@ -753,15 +753,15 @@ $_result_ = ixiangpf::traffic_stats({
 	drill_down_traffic_item => "$trafficItem_2_handle",
 	drill_down_port => "$ixnHLT{'PORT-HANDLE,//vport:<3>'}",
 	drill_down_flow => "Microsoft_Update"
-});          
+});
 if (ixiangpf::status_item('status') != $ixiangpf::SUCCESS) {
         handle_error();
-    }            
+    }
 sleep(30);
 
 
 
-#################################################### 
+####################################################
 # Stop traffic                                     #
 ####################################################
 sleep(10);
@@ -769,17 +769,17 @@ ixnHLT_logger(q(Stopping traffic...));
     $_result_ = ixiangpf::traffic_control({
         action => 'stop',
         traffic_generator => 'ixnetwork_540',
-        type => 'l47'    
+        type => 'l47'
     });
     # Check status
     if (ixiangpf::status_item('status') != 1) {
         ixnHLT_errorHandler('traffic_control');
 		}
-		
-        
+
+
 sleep(15);
 
-#################################################### 
+####################################################
 # Test END                                         #
 ####################################################
 

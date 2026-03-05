@@ -1,9 +1,9 @@
 # DESCRIPTION
-# 
+#
 #     This is an ixVm chassis builder parameters file used in conjunction with ixVmChassisBuilder.py.
-# 
+#
 # NOTE
-#   
+#
 #     For removing, you have TWO options.
 #        1> Remove 'all'
 #        2> Remove a list of mgmtIp.
@@ -26,7 +26,7 @@ ixvmCardPortList = [
 ]
 
 
-# For REMOVING cards: 
+# For REMOVING cards:
 #    Method 1: To remove all cards by default, set vmMgmtCardListToRemove = 'all'
 #    Method 2: To remove specific cards, state the mgmt IP addresses in a list.
 
@@ -39,4 +39,3 @@ vmMgmtCardListToRemove = 'all'
 
 # Do you want to delete the virtual chassis? True or False
 removeVChassis = True
-

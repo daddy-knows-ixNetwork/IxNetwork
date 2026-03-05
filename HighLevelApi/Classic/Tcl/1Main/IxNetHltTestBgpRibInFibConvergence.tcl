@@ -8,31 +8,31 @@ package req Ixia ; #Loading the Ixia package to use Tclx keylist command
 
 # Description
 #
-#     This script loads an existing ixcfg file and 
+#     This script loads an existing ixcfg file and
 #     map ports to the loaded configuration.
 #
 #     By default, this script will loop through each vport to get
 #     the physical port and create a port list.
-# 
+#
 #     Optionally:
 #         In case the configuration is saved with logical ports, meaning no
 #         physical port assigned, users can uncomment out the variable portList
 #         to state the physical ports used.
 #
 #     - This script will test BGP RIB-IN convergence benchmarking.
-#     - On the Traffic Item Options in the IxNetwork GUI, 
+#     - On the Traffic Item Options in the IxNetwork GUI,
 #       enable the following CP/DP Convergence:
 #              - Control Plane Events
 #                    To capture the BGP route advertisement time.
 #
 #              - Data Plane Events - Rate monitoring
 #                    To measure incoming traffic to capture the timestamp
-# 
+#
 #              - Set Data Plane Threshold (%) = 85
 #                     Trigger the timestamp when the incoming throughput rate is over 85%.
 #
 #              - Set Data Plane Jitter Window = 10ms
-#                     Ixia port will collect all arriving packets to determine the 
+#                     Ixia port will collect all arriving packets to determine the
 #                     throughput and frame rate.
 #
 #                ixNet setMultiAttribute $::IxScriptgen::_objRefs(1)/traffic/statistics/cpdpConvergence \
@@ -52,7 +52,7 @@ package req Ixia ; #Loading the Ixia package to use Tclx keylist command
 #     1> Make sure we have a stabilized test setup.
 #         - Start BGP protocl and verify BGP session.
 #         - Start/stop traffic and verify traffic is received.
-#     
+#
 #     2> If step #1 passes, then get ready for testing ...
 #         - Start continuous traffic
 #         - Disable BGP routes
@@ -61,14 +61,14 @@ package req Ixia ; #Loading the Ixia package to use Tclx keylist command
 #         - Verify BGP session is up
 #         - Wait for traffic to get received.
 #         - Once traffic is received, get the RIB-IN/FIB convergence time
-#       
+#
 # Optional: Uncomment the below line and provide your ports for this config file.
 # set portList {{1 1} {1 2}}
 
 # User's must change the following variables accordingly
 set ixNetworkVersion 7.12
 # This is Dean Lee's Ixia Chassis. His ports are connected to a DUT with BGP
-set ixChassisIp 10.200.134.44 
+set ixChassisIp 10.200.134.44
 #set ixChassisIp 10.205.4.172
 set ixNetworkTclServer 10.205.1.42
 set userName hgee
@@ -104,26 +104,26 @@ proc ConfigInterfaceIp {} {
 	if {[array get ::intConfig connectedInt,$port,*] != ""} {
 	    set portConfigProperties {-mode config }
 	    append portConfigProperties "-port_handle $port "
-	    
+
 	    puts "\nInterface Config:\n\t-port_handle $port\n\t-mode config"
-	    
+
 	    foreach {properties values} [array get ::intConfig connectedInt,$port,*] {
 		set property [lindex [split $properties ,] end]
 		append portConfigProperties "-$property $values "
 		puts "\t-$property $values"
 	    }
-	    
+
 	    set portStatus [eval ::ixia::interface_config $portConfigProperties]
-	    
+
 	    if {[keylget portStatus status] != $::SUCCESS} {
 		puts "\nERROR: ConfigInterfaceIp: Failed on $port: $portStatus"
 		exit
 	    } else {
 		puts "Successfully configured IP interface on $port"
 	    }
-	    
+
 	    set interfaceHandle [keylget portStatus interface_handle]
-	    
+
 	    # Build a list of all the src/dst emulation handles for Traffic Item
 	    # interfaceHandles: ::ixNet::OBJ-/vport:1/interface:1
 	    set ::trafficConfig($port,interfaceHandle) $interfaceHandle
@@ -133,11 +133,11 @@ proc ConfigInterfaceIp {} {
 
 proc ConfigTrafficItem {} {
     # This Proc will create Traffic Items "dynamically".
-    # This configures only what the user create for the 
+    # This configures only what the user create for the
     # array trafficConfig.
     # All the parameters must be the same as the HLT parameters.
 
-    # Get a list of all the Traffic Items first in order to know exactly 
+    # Get a list of all the Traffic Items first in order to know exactly
     # how many Traffic Items to create.
     set totalTrafficItem {}
     foreach {properties values} [array get ::trafficConfig *] {
@@ -151,8 +151,8 @@ proc ConfigTrafficItem {} {
 	puts "\nTrafficItem $traffItemNum:\n\t-mode create"
 
 	set trafficItemProperties {-mode create }
-	
-	foreach {properties value} [array get ::trafficConfig trafficItem,$traffItemNum,*] {	    
+
+	foreach {properties value} [array get ::trafficConfig trafficItem,$traffItemNum,*] {
 	    set property [lindex [split $properties ,] end]
 
 	    if {$property == "endpoints"} {
@@ -181,7 +181,7 @@ proc ConfigTrafficItem {} {
 	}
 
 	set trafficItemStatus [eval ::ixia::traffic_config $trafficItemProperties]
-	
+
 	if {[keylget trafficItemStatus status] != $::SUCCESS} {
 	    puts "\nERROR: Ixia traffic item $traffItemNum failed: $trafficItemStatus"
 	    exit
@@ -202,19 +202,19 @@ proc VerifyPortState {} {
 	    set card [lindex [split [lindex $connectedTo 0] :] end]
 	    set port [lindex [split [lindex $connectedTo 1] :] end]
 	    set port $card/$port
-	    
+
 	    set portState [ixNet getAttribute $vport -state]
 	    if {$portState != "up" && $timer != "60"} {
 		puts "$port is still rebooting. PortState = $portState.  $timer/60 seconds."
 		after 2000
 		continue
 	    }
-	    
+
 	    if {$portState != "up" && $timer == "60"} {
 		puts "$port seem to be stuck on rebooting"
 		exit
 	    }
-	    
+
 	    if {$portState == "up"} {
 		puts "$port state is $portState"
 		break
@@ -261,7 +261,7 @@ proc ConfigCpDpConvergence {} {
 	puts "Error: Failed to set Traffic Options CP/DP Convergence"
 	puts "$cpdpStatus"
     }
-    
+
     if 0 {
 	ixNet setMultiAttribute [ixNet getRoot]/traffic/statistics/cpdpConvergence \
 	    -enabled true \
@@ -341,7 +341,7 @@ proc StartTraffic { } {
 		return 1
 	    }
 	}
-	
+
 	if {$trafficState == "started"} {
 	    puts "Traffic Started"
 	    break
@@ -419,37 +419,37 @@ proc CheckTrafficState {} {
 }
 
 proc GetStatView { {statView "Flow Statistics"} {getStatsBy trafficItem} } {
-    # $viewList: 
-    # {::ixNet::OBJ-/statistics/view:"Port Statistics"} 
-    # {::ixNet::OBJ-/statistics/view:"Tx-Rx Frame Rate Statistics"} 
-    # {::ixNet::OBJ-/statistics/view:"Port CPU Statistics"} 
+    # $viewList:
+    # {::ixNet::OBJ-/statistics/view:"Port Statistics"}
+    # {::ixNet::OBJ-/statistics/view:"Tx-Rx Frame Rate Statistics"}
+    # {::ixNet::OBJ-/statistics/view:"Port CPU Statistics"}
     # {::ixNet::OBJ-/statistics/view:"Global Protocol Statistics"}
-    # {::ixNet::OBJ-/statistics/view:"Flow Statistics"} 
-    # {::ixNet::OBJ-/statistics/view:"Flow Detective"}  
-    # {::ixNet::OBJ-/statistics/view:"Data Plane Port Statistics"} 
-    # {::ixNet::OBJ-/statistics/view:"User Defined Statistics"} 
+    # {::ixNet::OBJ-/statistics/view:"Flow Statistics"}
+    # {::ixNet::OBJ-/statistics/view:"Flow Detective"}
+    # {::ixNet::OBJ-/statistics/view:"Data Plane Port Statistics"}
+    # {::ixNet::OBJ-/statistics/view:"User Defined Statistics"}
     # {::ixNet::OBJ-/statistics/view:"Traffic Item Statistics"}
     # {::ixNet::OBJ-/statistics/view:"BGP Aggregated Statistics"}
     set viewList [ixNet getList [ixNet getRoot]/statistics view]
 
     # set statViewSelection "Flow Statistics"
     set statViewSelection $statView
-    
+
     set flowStatsViewIndex [lsearch -regexp $viewList $statViewSelection]
     if {$flowStatsViewIndex == -1} {
 	puts "ViewStats: No \"$statViewSelection\" found"
 	exit
     }
-    
+
     # $view: ::ixNet::OBJ-/statistics/view:"Flow Statistics"
     set view [lindex $viewList $flowStatsViewIndex]
-    
+
     ixNet setAttribute $view -enabled true
     ixNet commit
 
     # $columnList:
     # {Tx Port} {Rx Port} {Traffic Item} {Ethernet II:Destination MAC Address} {Ethernet II:Source MAC Address} {Ethernet II:Ethernet-Type} {Ethernet II:PFC Queue} {IPv4 :Precedence} {IPv4 :Source Address} {IPv4 :Destination Address} {Custom Tracking: Byte Offset 0} {Source/Dest Endpoint Pair} {Source/Dest Value Pair} {Source/Dest Port Pair} {Source Endpoint} {Source Port} {Dest Endpoint} {Frame Size} {Flow Group} {Traffic Group ID} {Tx Frames} {Rx Frames} {Frames Delta} {Loss %} {Tx Frame Rate} {Rx Frame Rate} {Rx Bytes} {Tx Rate (Bps)} {Rx Rate (Bps)} {Tx Rate (bps)} {Rx Rate (bps)} {Tx Rate (Kbps)} {Rx Rate (Kbps)} {Tx Rate (Mbps)} {Rx Rate (Mbps)} {Store-Forward Avg Latency (ns)} {Store-Forward Min Latency (ns)} {Store-Forward Max Latency (ns)} {First TimeStamp} {Last TimeStamp}
-    
+
     set columnList [ixNet getAttribute ${view}/page -columnCaptions]
     #puts "\n$columnList\n"
 
@@ -464,8 +464,8 @@ proc GetStatView { {statView "Flow Statistics"} {getStatsBy trafficItem} } {
 	    break
 	}
     }
-    
-    # Iterrate through each page 
+
+    # Iterrate through each page
     for {set currPage 1} {$currPage <= $totalPages} {incr currPage} {
 	catch {ixNet setAttribute $view/page -currentPage $currPage} errMsg
 	if {$errMsg != "::ixNet::OK"} {
@@ -473,7 +473,7 @@ proc GetStatView { {statView "Flow Statistics"} {getStatsBy trafficItem} } {
 	    exit
 	}
 	ixNet commit
-	
+
 	# Wait for statistics to populate on current page
 	set whileLoopStopCounter 0
 	while {[ixNet getAttribute $view/page -isReady] != "true"} {
@@ -487,7 +487,7 @@ proc GetStatView { {statView "Flow Statistics"} {getStatsBy trafficItem} } {
 	    }
 	    incr whileLoopStopCounter
 	}
-	
+
 	set pageList [ixNet getAttribute $view/page -rowValues] ;# first list of all rows in the page
 	set totalFlowStatistics [llength $pageList]
 
@@ -498,7 +498,7 @@ proc GetStatView { {statView "Flow Statistics"} {getStatsBy trafficItem} } {
 	    for {set rowIndex 0} {$rowIndex < [llength $rowList]} {incr rowIndex} {
 		# cellList: 1/1/1 1/1/2 TI0-Flow_1 1.1.1.1-1.1.2.1 4000 4000 0 0 0 0 256000 0 0 0 0 0 0 0 0 0 0 0 00:00:00.684 00:00:00.700
 		set cellList [lindex $rowList $rowIndex] ;# third list of cell values
-		
+
 		#puts "\n--- cellList $pageListIndex: $cellList ---\n"
 
 		# Get the Traffic Item name
@@ -520,10 +520,10 @@ proc GetStatView { {statView "Flow Statistics"} {getStatsBy trafficItem} } {
 		    # Flow Group 0008
 		    set flowGroup [lindex [lindex $cellList $flowGroupIndex] end]
 		}
-		
+
 		set rxPortIndex [lsearch $columnList "Rx Port"]
 		set rxPort [lindex $cellList $rxPortIndex]
-		
+
 		foreach column $columnList item $cellList {
 		    if {[regexp "Sess\. Up" $column]} {
 			set column "SessionUp"
@@ -578,7 +578,7 @@ proc VerifyBgpSession {} {
 
 	set results [GetStatView "BGP Aggregated Statistics"]
 	set bgpSessionUp [keylget results trafficItem.UnknownTrafficItem_0.flowGroup.Flow_Group_0.SessionUp]
-	
+
 	if {$bgpSessionUp == 0 || $bgpSessionUp == ""} {
 	    puts "BGP session is not up yet: Waiting $counter/$endCounter seconds ..."
 	    after 1000
@@ -625,10 +625,10 @@ proc GetConvergenceStats {} {
     set ribInFibConverge [keylget results trafficItem.To_BGP.flowGroup.Flow_Group_0.RibInFibConvergence]
     set dpAboveThresholdTimestamp [keylget results trafficItem.To_BGP.flowGroup.Flow_Group_0.DpAboveThresholdTimestamp]
     set dpBelowThresholdTimestamp [keylget results trafficItem.To_BGP.flowGroup.Flow_Group_0.DpBelowThresholdTimestamp]
-    
+
     set eventStartTimestamp [keylget results trafficItem.To_BGP.flowGroup.Flow_Group_0.EventStartTimestamp]
     set eventEndTimestamp [keylget results trafficItem.To_BGP.flowGroup.Flow_Group_0.EventEndTimestamp]
-    
+
     puts \n
     puts "RibInFibConverge          : $ribInFibConverge (ms)"
     puts "DPAboveThresholdTimestamp : $dpAboveThresholdTimestamp (ns)"
@@ -698,11 +698,11 @@ proc Connect { {connectionType reset} } {
 			       -session_resume_keys 1 \
 			  ]
     }
-    
+
     if {[keylget connectStatus status] != $::SUCCESS} {
 	puts "Connecting to ixNetwork Tcl server failed\n\n$connectStatus\n"
 	exit
-    } 
+    }
 }
 
 Connect reset
@@ -779,7 +779,7 @@ if {[ApplyTraffic]} {
     exit
 }
 
-# Start/Stop traffic and verify to 
+# Start/Stop traffic and verify to
 # ensure the test setup is in a good state
 if {[StartTraffic]} {
     exit
@@ -788,7 +788,7 @@ after 5000
 StopTraffic
 
 # If VerifyTxRxTraffic returns 0, means traffic was good.
-if {[VerifyTxRxTraffic 25] == 0} {    
+if {[VerifyTxRxTraffic 25] == 0} {
     puts "\nThe test setup is in a stabilized condition for convergence testing ..."
 
     StartTraffic
@@ -810,5 +810,3 @@ if {[VerifyTxRxTraffic 25] == 0} {
 
 StopTraffic
 StopAllProtocols
-
-

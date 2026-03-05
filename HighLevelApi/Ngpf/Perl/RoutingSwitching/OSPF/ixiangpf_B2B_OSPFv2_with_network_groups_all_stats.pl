@@ -106,16 +106,16 @@ use warnings;
 sub main {
 
 	my @inputArgs = @_;
-	
+
 	# Parse the input arguments looking for the IxNetwork server, chassis and ports
 	my $index = 0;
 	++$index until $inputArgs[$index] eq '-ixnetwork_server' or $index > $#inputArgs;
 	my $ixNetServer = $inputArgs[$index+1];
-	
+
 	$index = 0;
 	++$index until $inputArgs[$index] eq '-chassis' or $index > $#inputArgs;
 	my $chassis = $inputArgs[$index+1];
-	
+
 	$index = 0;
 	++$index until $inputArgs[$index] eq '-port_list' or $index > $#inputArgs;
 	my $ports = $inputArgs[$index+1];
@@ -124,8 +124,8 @@ sub main {
 	# Initialize variables that are used to get the command status
 	my $_result_ = '';
 	my @status_keys = ();
-	my $command_status = '';    
-	
+	my $command_status = '';
+
 	# Connect and add chassis & ports
 	$_result_ = ixiangpf::connect({
 		reset                => '1',
@@ -142,12 +142,12 @@ sub main {
 
 	# Create source topology
 	print "\n\nCreating a topology which will advertise multiple OSPF routes...\n";
-	
+
 	my $port_handles = ixiangpf::status_item('vport_list');
 	my @port_handles_list = split(/ /,$port_handles);
 	my @topology_1_ports = ($port_handles_list[0]);
 	my @topology_2_ports = ($port_handles_list[2]);
-	
+
 	my $topology_1_status = ixiangpf::topology_config ({
 		topology_name      => 'Source Topology',
         port_handle        => \@topology_1_ports,
@@ -159,7 +159,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $topology_1_handle = ixiangpf::status_item('topology_handle');
-    
+
     my $device_group_1_status = ixiangpf::topology_config ({
         topology_handle              => $topology_1_handle,
         device_group_name            => 'OSPF Advertising Servers',
@@ -173,7 +173,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $deviceGroup_1_handle = ixiangpf::status_item('device_group_handle');
-    
+
     my $multivalue_1_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "00.11.01.00.00.01",
@@ -190,7 +190,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $multivalue_1_handle = ixiangpf::status_item('multivalue_handle');
-    
+
     my $ethernet_1_status = ixiangpf::interface_config ({
         protocol_name                => "Ethernet 1",
         protocol_handle              => "$deviceGroup_1_handle",
@@ -213,7 +213,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $ethernet_1_handle = ixiangpf::status_item('ethernet_handle');
-    
+
     my $ipv4_1_status = ixiangpf::interface_config ({
         protocol_name                => "IPv4 1",
         protocol_handle              => "$ethernet_1_handle",
@@ -232,7 +232,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $ipv4_1_handle = ixiangpf::status_item('ipv4_handle');
-    
+
     my $multivalue_2_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "0",
@@ -249,7 +249,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $multivalue_2_handle = ixiangpf::status_item('multivalue_handle');
-    
+
     my $ospfv2_1_status = ixiangpf::emulation_ospf_config ({
         handle                                                    => "$ipv4_1_handle",
         area_id                                                   => "0.0.0.0",
@@ -318,7 +318,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $ospfv2_1_handle = ixiangpf::status_item('ospfv2_handle');
-    
+
     my $multivalue_3_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "200.1.0.0",
@@ -335,7 +335,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $multivalue_3_handle = ixiangpf::status_item('multivalue_handle');
-    
+
     my $network_group_1_status = ixiangpf::emulation_ospf_network_group_config ({
         handle                               => "$ospfv2_1_handle",
         type                                 => "ipv4-prefix",
@@ -357,8 +357,8 @@ sub main {
 		return "FAILED - $error";
 	}
     my $networkGroup_1_handle = ixiangpf::status_item('network_group_handle');
-    
-    
+
+
     my $multivalue_4_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "201.1.0.0",
@@ -375,7 +375,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $multivalue_4_handle = ixiangpf::status_item('multivalue_handle');
-    
+
     my $network_group_2_status = ixiangpf::emulation_ospf_network_group_config ({
         handle                               => "$ospfv2_1_handle",
         type                                 => "ipv4-prefix",
@@ -397,8 +397,8 @@ sub main {
 		return "FAILED - $error";
 	}
     my $networkGroup_2_handle = ixiangpf::status_item('network_group_handle');
-    
-    
+
+
     my $multivalue_5_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "202.1.0.0",
@@ -415,7 +415,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $multivalue_5_handle = ixiangpf::status_item('multivalue_handle');
-    
+
     my $network_group_3_status = ixiangpf::emulation_ospf_network_group_config ({
         handle                               => "$ospfv2_1_handle",
         type                                 => "ipv4-prefix",
@@ -437,12 +437,12 @@ sub main {
 		return "FAILED - $error";
 	}
     my $networkGroup_3_handle = ixiangpf::status_item('network_group_handle');
-    
+
 	print "\nDONE creating source topology.\n";
-	
+
     # Create destination topology
 	print "\n\nCreating a destination topology containing only OSPF routers...\n";
-    
+
 	my $topology_2_status = ixiangpf::topology_config ({
         topology_name      => 'Destination Topology',
         port_handle        => \@topology_2_ports,
@@ -454,7 +454,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $topology_2_handle = ixiangpf::status_item('topology_handle');
-    
+
     my $device_group_2_status = ixiangpf::topology_config ({
         topology_handle              => $topology_2_handle,
         device_group_name            => 'OSPF Standalone Server',
@@ -467,7 +467,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $deviceGroup_2_handle = ixiangpf::status_item('device_group_handle');
-    
+
     my $multivalue_6_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "00.12.01.00.00.01",
@@ -484,7 +484,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $multivalue_6_handle = ixiangpf::status_item('multivalue_handle');
-    
+
     my $ethernet_2_status = ixiangpf::interface_config ({
         protocol_name                => "Ethernet 2",
         protocol_handle              => "$deviceGroup_2_handle",
@@ -507,7 +507,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $ethernet_2_handle = ixiangpf::status_item('ethernet_handle');
-    
+
     my $ipv4_2_status = ixiangpf::interface_config ({
         protocol_name                => "IPv4 2",
         protocol_handle              => "$ethernet_2_handle",
@@ -526,7 +526,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $ipv4_2_handle = ixiangpf::status_item('ipv4_handle');
-    
+
     my $multivalue_7_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "0",
@@ -543,7 +543,7 @@ sub main {
 		return "FAILED - $error";
 	}
     my $multivalue_7_handle = ixiangpf::status_item('multivalue_handle');
-    
+
     my $ospfv2_2_status = ixiangpf::emulation_ospf_config ({
         handle                                                    => "$ipv4_2_handle",
         area_id                                                   => "0.0.0.0",
@@ -612,12 +612,12 @@ sub main {
 		return "FAILED - $error";
 	}
     my $ospfv2_2_handle = ixiangpf::status_item('ospfv2_handle');
-    
+
 	print "\nDONE creating destination topology.\n";
-	
+
 	# Start protocols
 	print "\n\nStarting protocols...\n";
-	
+
 	$_result_ = ixiangpf::test_control({
 		action	=>	'start_protocol',
 		handle	=>	$topology_1_handle,
@@ -627,8 +627,8 @@ sub main {
 	if ($command_status != $ixiangpf::SUCCESS) {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
-	}	
-	
+	}
+
 	$_result_ = ixiangpf::test_control({
 		action	=>	'start_protocol',
 		handle	=>	$topology_2_handle,
@@ -639,14 +639,14 @@ sub main {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
 	}
-	
+
 	print "\n\nSleeping for 30 seconds to allow OSPF routes to be advertised...";
-	
+
 	# Sleep for 30 seconds
 	sleep(30);
 
 	print "\nDONE waiting for protocol start and route advertisment.\n";
-	
+
 	# Get statistics
 	print "\n\nGetting statistics for OSPF stacks...\n";
 
@@ -661,7 +661,7 @@ sub main {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
 	}
-	
+
 	print "\nThe aggregated OSPF statistics for $ospfv2_1_handle are:\n";
 	my $ospf_1_aggregate_stats = ixiangpf::get_result_hash();
 	ixiangpf::PrintHash($ospf_1_aggregate_stats);
@@ -678,12 +678,12 @@ sub main {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
 	}
-	
+
 	print "\nThe per-session OSPF statistics for $ospfv2_1_handle are:\n";
 	my $ospf_1_session_stats = ixiangpf::get_result_hash();
 	ixiangpf::PrintHash($ospf_1_session_stats);
 	print "\n";
-	
+
 	$_result_ = ixiangpf::emulation_ospf_info({
 		handle				=>	$ospfv2_2_handle,
 		mode				=>	'learned_info',
@@ -695,14 +695,14 @@ sub main {
 		my $error = ixiangpf::status_item('log');
 		return "FAILED - $error";
 	}
-	
+
 	print "\nThe learned info for the standalone OSPF router is:\n";
 	my $ospf_1_session_stats = ixiangpf::get_result_hash();
 	ixiangpf::PrintHash($ospf_1_session_stats);
-	print "\n";	
-    
+	print "\n";
+
 	print "\nDONE getting OSPF statistics.\n";
-	
+
 	# Stop all and clean up
 	print "\n\nStopping all protocols...\n";
 	$_result_ = ixiangpf::test_control({
@@ -716,7 +716,7 @@ sub main {
 	}
 
 	print "\n\nSleeping for 30 seconds to allow them to go down...";
-	
+
 	# Sleep for 30 seconds
 	sleep(30);
 
@@ -724,7 +724,7 @@ sub main {
 
 	# Remove all topologies
 	print "\n\nRemoving topologies...\n";
-	
+
 	$_result_ = ixiangpf::topology_config({
 		mode			=>	'destroy',
 		topology_handle	=>	$topology_1_handle,
@@ -748,18 +748,17 @@ sub main {
 	}
 
 	print "\nDONE removing topologies.\n";
-	
+
 	# Clean up the session
 	print "\n\nPerforming final session cleanup...\n";
-	
+
 	$_result_ = ixiangpf::cleanup_session();
-	
+
 	print "\nSession cleanup completed.\n";
 
-	return "SUCCESS";	
+	return "SUCCESS";
 	return "SUCCESS";
 }
 
 my $test_result = main(@ARGV);
 print "\nTest execution complete.\nStatus: $test_result\n";
-    

@@ -3873,5 +3873,3 @@ proc MaxMinThresholdTimeStamps {FlowstatValuePerRxPort StatsName flag} {
 
 
 #######################################################
-
-

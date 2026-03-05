@@ -418,7 +418,7 @@ proc checkPbtDelayLearnedInfo {bridge filterList checkList {timeout 5000}} {
     set delayInfo      [lindex [ixNet getList $bridge pbbTeDelayLearnedInfo] 0]
     set delayInSec     [ixNet getAttr $delayInfo -valueInSec]
     set delayInNanoSec [ixNet getAttr $delayInfo -valueInNanoSec]
-    
+
     puts "Pbt LB Learned ConfigMep ? :                         \
          [ixNet getAttr $bridge -isPbbTeDelayLearnedConfigMep] \
          (valueInSec : $delayInSec, valueInNanoSec : $delayInNanoSec)"
@@ -462,10 +462,10 @@ proc checkPbtDelayLearnedInfo {bridge filterList checkList {timeout 5000}} {
     # Match tolerence <0 - 100>
     if {($matchTol >= 0) && ($matchTol <= 100)} {
         set expectedDelayInSec [lindex $checkList 2]
-        
+
         set min [expr $expectedDelayInSec - [expr \
                 [expr double($matchTol) / 100] * $expectedDelayInSec]]
-        
+
         set max [expr $expectedDelayInSec + [expr \
                 [expr double($matchTol) / 100] * $expectedDelayInSec]]
 
@@ -477,14 +477,14 @@ proc checkPbtDelayLearnedInfo {bridge filterList checkList {timeout 5000}} {
         set expectedDelayInNanoSec [lindex $checkList 3]
         set min [expr $expectedDelayInNanoSec - [expr \
                 [expr double($matchTol) / 100] * $expectedDelayInNanoSec]]
-                
+
         set max [expr $expectedDelayInNanoSec + [expr \
                 [expr double($matchTol) / 100] * $expectedDelayInNanoSec]]
 
         puts "< $min - $max >"
         puts "expectedDelayInNanoSec : $expectedDelayInNanoSec , \
               delayInNanoSec : $delayInNanoSec]"
-        
+
         if {($delayInNanoSec < $min) || ($delayInNanoSec > $max)} {
             return $isError
         }
@@ -544,7 +544,7 @@ proc checkPbtLbLearnedInfo {bridge filterList checkList {configMep "true"} \
         set isComplete [ixNet getAttr $bridge -isPbbTeLbLearnedInfoRefreshed]
         puts "isComplete ---> $isComplete"
         after 1000
-        
+
         incr count
         if { $count > $maxCount } {
             puts "Failed to retrieve Pbt LB learnt info, \
@@ -584,7 +584,7 @@ proc checkPbtLbLearnedInfo {bridge filterList checkList {configMep "true"} \
                      break
                 }
             } ;# end foreach attr $db
-            
+
             if {$misMatch == 0} {
                 # Check case with unconfigured MEP
                 if {([string tolower $configMep] == "false") && ($transactionId != 0)} {
@@ -602,7 +602,7 @@ proc checkPbtLbLearnedInfo {bridge filterList checkList {configMep "true"} \
             }
         } ;# end foreach lbInfo $lbLearnedInfoList
     } ;# foreach $db $checkList
-    
+
     puts "Among all $numInfoInCheckList info $isFound are \
           present in PBT LB Learnt Info List"
     if {$numInfoInCheckList != $isFound} {
@@ -672,7 +672,7 @@ proc checkCfmPbtCcmLearnedInfo {bridge checkCcmList} {
         puts "No CCM learnt info present in database ... "
         return $isError
     }
-    
+
     # Loop through expected list & search in learntinfo list
     set numInfoInCheckList 0
     set isFound 0
@@ -704,7 +704,7 @@ proc checkCfmPbtCcmLearnedInfo {bridge checkCcmList} {
 
     puts "Among all $numInfoInCheckList info $isFound are \
           present in CCM Learnt Info List"
-    
+
     if {$numInfoInCheckList != $isFound} {
         return $isError
     }
@@ -850,7 +850,7 @@ proc checkAllProtocolStats {portList protocol stat {exactMatch 0}} {
                    }
                }
             }
-            
+
             if {[llength $doneList] == 0} {
                 set contFlag 1
                 break
@@ -956,7 +956,7 @@ proc verifyCapturedPackets {chassis card port matchFieldList {expPktCnt 1}} {
         foreach {startIndex endIndex expectedVal} $matchFieldList {
             puts "Obtained: [lrange $capframe $startIndex $endIndex] \
                   Expected: $expectedVal"
-            
+
             if {[lrange $capframe $startIndex $endIndex] != $expectedVal} {
                 set mismatch 1
                 puts "Obtained: [lrange $capframe $startIndex $endIndex] \
@@ -1115,7 +1115,7 @@ proc checkPbbtePeriodicOAMLTLearnedInfo {bridge checkList} {
 
     puts "Among all $numInfoInCheckList info $isFound are present in \
             Link Trace Learnt Info List"
-    
+
     if {$numInfoInCheckList != $isFound} {
         return $isError
     }
@@ -1419,7 +1419,7 @@ proc checkCfmPeriodicOAMLtLearnedInfo {bridge checkList ltLearnedHopList} {
             }
         }
     }
- 
+
     puts "Among all $numInfoInCheckList info $isFound are \
           present in Link Trace Learnt Info List"
     if {$numInfoInCheckList != $isFound} {
@@ -1519,7 +1519,7 @@ proc checkCfmPeriodicOAMLBLearnedInfo {bridge checkList} {
 
     puts "Among all $numInfoInCheckList info $isFound are present \
         in Link Trace Learnt Info List"
-    
+
     if {$numInfoInCheckList != $isFound} {
         return $isError
     }
@@ -1625,10 +1625,10 @@ proc checkItuPeriodicOAMDMLearnedInfo {bridge checkList} {
             }
         }
     }
-    
+
     puts "Among all $numInfoInCheckList info $isFound are present in \
          Link Trace Learnt Info List"
-    
+
     if {$numInfoInCheckList != $isFound} {
         return $isError
     }
@@ -1698,7 +1698,7 @@ proc checkPbbteDelayLearnedInfo {bridge filterList checkList {timeout 5000}} {
 
     set delayInfo [ixNet getList $bridge pbbTeDelayLearnedInfo]
     after 5000
-    
+
     set db {bVlan         \
             dstMacAddress \
             mdLevel       \
@@ -1725,7 +1725,7 @@ proc checkPbbteDelayLearnedInfo {bridge filterList checkList {timeout 5000}} {
                 if {$misMatch == 0} {
                     puts "averageDelaySec: [ixNet getAttr $dmInfo -valueInSec] \
                         averageDelayNanoSec: [ixNet getAttr $dmInfo -valueInNanoSec]"
-                    
+
                     if {([ixNet getAttr $dmInfo -valueInSec] == 0 && \
                         [ixNet getAttr $dmInfo -valueInNanoSec] == 0)} {
                         puts "Delay should be a non zero value..."
@@ -1740,10 +1740,10 @@ proc checkPbbteDelayLearnedInfo {bridge filterList checkList {timeout 5000}} {
             }
         }
     }
-    
+
     puts "Among all $numInfoInCheckList info $isFound are present \
           in DM Learnt Info List"
-    
+
     if {$numInfoInCheckList != $isFound} {
         return $isError
     }
@@ -1838,7 +1838,7 @@ proc checkItuDelayLearnedInfo {bridge filterList checkList {timeout 5000}} {
                          break
                     }
                 }
-                
+
                 if {$misMatch == 0} {
                     puts "averageDelaySec: [ixNet getAttr $dmInfo -valueInSec] \
                         averageDelayNanoSec: [ixNet getAttr $dmInfo -valueInNanoSec]"
@@ -1847,7 +1847,7 @@ proc checkItuDelayLearnedInfo {bridge filterList checkList {timeout 5000}} {
                         puts "Delay should be a non zero value..."
                         return $isError
                     }
-                    
+
                     # Reached here -> all field match found in learnt info
                     puts "Expected learntinfo present in CFM Link Trace learntinfo list ..."
                     puts " ----------------------------- "
@@ -2004,7 +2004,7 @@ proc checkPbbTeLtLearnedInfo {bridge filterList checkList ltLearnedHopList \
             }
         }
     }
-    
+
     puts "Among all $numInfoInCheckList info $isFound are present in \
           Link Trace Learnt Info List"
     if {$numInfoInCheckList != $isFound} {

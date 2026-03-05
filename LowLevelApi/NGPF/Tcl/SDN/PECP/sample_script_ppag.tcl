@@ -8383,7 +8383,7 @@ foreach learnedInfo $learnedInfoList {
         set colList [ixNet getAttr $t -columns]
         set rowList [ixNet getAttr $t -values]
         foreach valList $rowList {
-            set ndx 0  
+            set ndx 0
             foreach val $valList {
                 set name  [lindex $colList $ndx]
                 set value $val

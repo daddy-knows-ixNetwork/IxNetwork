@@ -84,19 +84,19 @@ sub peak_loading {
     my $_control_status_ = '';
   	my @status_keys = ();
 
-	
 
-# Connection 
+
+# Connection
 	my $chassis = 'ixro-hlt-xm2-09';
 	my $tcl_server = 'ixro-hlt-xm2-09';
 	my @port_list = ([ '2/1', '2/2', '2/3', '2/4']);
 	my $guard_rail = 'statistics';
 	my $ixNetServer = 'localhost';
     my $config_file = 'peak_loading_ipv4_vlan_traffic.ixncfg';
-	
 
 
-        
+
+
 	$_result_ = ixiangpf::connect({
 		port_list	         	=> \@port_list,
 		device				 	=> $chassis,
@@ -117,21 +117,21 @@ sub peak_loading {
 
 	my $port_handles = ixiangpf::status_item('vport_list');
 	my @port_handles_list = split(/ /,$port_handles);
-	
-    my $ixNet =  new IxNetwork(); 
+
+    my $ixNet =  new IxNetwork();
 	$ixNet->connect('localhost', '-port', 8009, '-version', '7.40');
-    
+
     my $ti_name=ixiangpf::status_item('traffic_config');
     my @aux =split('{',$ti_name);
     my @aux2 = split('}',$aux[1]);
     $ti_name = $aux2[0];
     my $ti = ixiangpf::status_item($ti_name.".traffic_config.traffic_item");
     print("traffic item = $ti\n");
-    
+
     my $run_status = ixiangpf::test_control({
 		action		=> 'start_all_protocols',
 	});
-	
+
 	@status_keys = ixiangpf::status_item_keys();
 	$command_status = ixiangpf::status_item('status');
 	if ($command_status != $ixiangpf::SUCCESS) {
@@ -140,7 +140,7 @@ sub peak_loading {
 		return "FAILED - $error";
 	}
 
-sleep(5);    
+sleep(5);
     $_result_=ixiangpf::traffic_config({
         mode                            => 'modify',
         global_dest_mac_retry_count     => '3',
@@ -150,7 +150,7 @@ sleep(5);
         global_frame_ordering           => 'peak_loading',
         stream_id                       => $ti,
     });
-    
+
     @status_keys = ixiangpf::status_item_keys();
 	$command_status = ixiangpf::status_item('status');
 	if ($command_status != $ixiangpf::SUCCESS) {
@@ -158,7 +158,7 @@ sleep(5);
 		print "Error: $error";
 		return "FAILED - $error";
 	}
-    
+
 my $ordering_mode = $ixNet->getAttribute('/traffic','-frameOrderingMode');
 print "Frame ordering mode set is : $ordering_mode\n";
 

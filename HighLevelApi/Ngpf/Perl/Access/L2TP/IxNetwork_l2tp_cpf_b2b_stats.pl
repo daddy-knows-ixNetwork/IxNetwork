@@ -111,7 +111,7 @@ my @portHandleList         = ();
 ################################################################################
 
 # Connect to the chassis, reset to factory defaults and take ownership
-# When using P2NO HLTSET, for loading the IxTclNetwork package please 
+# When using P2NO HLTSET, for loading the IxTclNetwork package please
 # provide –ixnetwork_tcl_server parameter to ::ixia::connect
 
 $_result_ = ixiangpf::connect ({
@@ -1070,7 +1070,7 @@ my $pppoxserver_2_status = ixiangpf::pppox_config ({
 @status_keys = ixiangpf::status_item_keys();
 my $pppoxserver_2_handle = ixiangpf::status_item('pppox_server_handle');
 my $pppoxServerSessions_2_handle = ixiangpf::status_item('pppox_server_sessions_handle');
-    
+
 print ("waiting for ports to become available ...");
 sleep (5);
 
@@ -1081,7 +1081,7 @@ my $control_start = ixiahlt::test_control ({
 &catch_error();
 @status_keys = ixiangpf::status_item_keys();
 
-sleep (15);        
+sleep (15);
 print ("Getting statistics per port...");
 my $l2tp_port_stats = ixiangpf::l2tp_stats ({
     port_handle => $port_handle,
@@ -1089,7 +1089,7 @@ my $l2tp_port_stats = ixiangpf::l2tp_stats ({
 });
 &catch_error();
 @status_keys = ixiangpf::status_item_keys();
-     
+
 print ("Stopping protocols ...");
 my $control_stop = ixiahlt::test_control({
     action => 'stop_all_protocols',

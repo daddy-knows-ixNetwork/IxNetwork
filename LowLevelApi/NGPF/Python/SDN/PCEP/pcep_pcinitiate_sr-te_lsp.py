@@ -63,7 +63,7 @@
 #      7. Verify L2/L3 traffic statistics.                                     #
 #      8. Stop traffic.                                                        #
 #      9. Change the MPLS Label value in ERO1 of LSP1 at the PCE end in        #
-#         topology1.                                                           #      
+#         topology1.                                                           #
 #     10. Wait for a few seconds and verify learned info                       #
 #     11. Apply L2/L3 traffic.                                                 #
 #     12. Verify traffic L2/L3 statistics.                                     #
@@ -255,7 +255,7 @@ ixNet.commit()
 
 ################################################################################
 # Set  pceInitiateLSPParameters                                                #
-# 1. IP version                -- ipv4                                         # 
+# 1. IP version                -- ipv4                                         #
 # 2. IPv4 source endpoint      -- 2.0.0.1                                      #
 # 3. IPv4 destination endpoint -- 3.0.0.1                                      #
 ################################################################################
@@ -294,8 +294,8 @@ ixNet.setAttribute(includeLspMv + '/singleValue', '-value', 'True')
 
 includeSymbolicPathMv = ixNet.getAttribute(pccGroup + '/pceInitiateLSPParameters',
     '-includeSymbolicPathNameTlv')
-ixNet.setAttribute(includeSymbolicPathMv + '/singleValue', '-value', 'True')    
-    
+ixNet.setAttribute(includeSymbolicPathMv + '/singleValue', '-value', 'True')
+
 symbolicPathNameMv = ixNet.getAttribute(pccGroup + '/pceInitiateLSPParameters',
     '-symbolicPathName')
 ixNet.setAttribute(symbolicPathNameMv + '/singleValue', '-value',
@@ -314,7 +314,7 @@ ixNet.setMultiAttribute(includeAssociationMv + '/singleValue',
             '-value', 'true')
 ixNet.commit()
 ################################################################################
-# Set the properties of ERO1                                                   # 
+# Set the properties of ERO1                                                   #
 # a. Active                                                                    #
 # b. Sid Type                                                                  #
 # c. MPLS Label                                                                #
@@ -341,7 +341,7 @@ ero1TcMv = ixNet.getAttribute(
     pccGroup + '/pceInitiateLSPParameters/pcepEroSubObjectsList:1',
     '-tc')
 
-ixNet.setAttribute(ero1TcMv + '/singleValue', '-value',  '1') 
+ixNet.setAttribute(ero1TcMv + '/singleValue', '-value',  '1')
 
 ero1TtlMv = ixNet.getAttribute(
     pccGroup + '/pceInitiateLSPParameters/pcepEroSubObjectsList:1',
@@ -405,7 +405,7 @@ ixNet.setMultiAttribute(pcc + '/expectedInitiatedLspList',
     '-name', '{Expected PCE Initiated LSP 1}')
 ixNet.commit()
 ################################################################################
-# Add expected PCC's Expected Initiated LSP traffic end point                  # 
+# Add expected PCC's Expected Initiated LSP traffic end point                  #
 # a. Active                                                                    #
 # b. Source IP addresses                                                       #
 # c. Symbolic path name                                                        #
@@ -469,7 +469,7 @@ for learnedInfo in learnedInfoList :
         colList = ixNet.getAttribute(t, '-columns')
         rowList = ixNet.getAttribute(t, '-values')
         for valList in rowList :
-            ndx = 0  
+            ndx = 0
             for val in valList :
                 name  = colList[ndx]
                 value = val
@@ -485,11 +485,11 @@ for learnedInfo in learnedInfoList :
 # 5. Configure L2-L3 traffic                                                   #
 ################################################################################
 print("Configuring L2-L3 Traffic Item")
-ixNet.setAttribute(ixNet.getRoot() + '/traffic', 
+ixNet.setAttribute(ixNet.getRoot() + '/traffic',
   '-refreshLearnedInfoBeforeApply', 'true')
 ixNet.commit()
 
-trafficItem1=ixNet.add(ixNet.getRoot() + '/traffic', 
+trafficItem1=ixNet.add(ixNet.getRoot() + '/traffic',
    'trafficItem')
 ixNet.setMultiAttribute(trafficItem1,
     '-name',                     '{Traffic Item 1}',
@@ -505,7 +505,7 @@ destination  = [topo1]
 ixNet.setMultiAttribute(endpointSet1,
     '-name',         'EndpointSet-1',
     '-sources',      source,
-    '-destinations', destination)    
+    '-destinations', destination)
 ixNet.commit()
 
 ixNet.setMultiAttribute(trafficItem1 + '/transmissionDistribution',
@@ -637,4 +637,3 @@ time.sleep(5)
 print ('Stopping protocols')
 ixNet.execute('stopAllProtocols')
 print ('!!! Test Script Ends !!!')
-

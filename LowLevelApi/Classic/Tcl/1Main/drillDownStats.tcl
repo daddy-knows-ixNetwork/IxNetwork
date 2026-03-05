@@ -16,7 +16,7 @@ proc createView {name type } {
     ixNet setAttribute $view -visible true
     ixNet setAttribute $view -type $type
     ixNet commit
-    return $view 
+    return $view
 }
 
 proc enableView {view {enable true}} {
@@ -44,7 +44,7 @@ proc GetDrillDownStats {} {
     # type=kEnumValue=layer23NextGenProtocol,layer23ProtocolAuthAccess,layer23ProtocolPort,layer23ProtocolRouting,layer23ProtocolStack,layer23TrafficFlow,layer23TrafficFlowDetective,layer23TrafficItem,layer23TrafficPort,layer47AppLibraryTraffic,sVReadOnly
     ixNet setAttribute $view -type layer23ProtocolAuthAccess
     ixNet commit
-    
+
     set protocolFilters [ixNet getList ${view} availableProtocolFilter]
     puts "\nprotocolFilters: $protocolFilters"
 

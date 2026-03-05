@@ -48,21 +48,21 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#                                                                              #        
+#                                                                              #
 # This is a sample script written in HLPy to describe ISIS SR IPv6.It          #
 # configures two ISIS router back to back. One of them has                     #
 # simulated topology (type linear) configured behind it. The script does       #
-# the following operations.                                                    #  
+# the following operations.                                                    #
 # 1. Starts all the topologies.                                                #
 # 2. Check protocol statistics.                                                #
-# 3. Checks for learned info.                                                  # 
+# 3. Checks for learned info.                                                  #
 # 4. OTF change flag bits and weight value in Simulated Interface.             #
 # 5. Checks for learned info.                                                  #
 # 6. Stops all protocols.                                                      #
 #                                                                              #
 # Ixia Software:                                                               #
 #     IxOS : 8.30 EA                                                           #
-#     IxNetwork : 8.30 EA                                                      # 
+#     IxNetwork : 8.30 EA                                                      #
 ################################################################################
 
 from pprint import pprint
@@ -99,7 +99,7 @@ else:
 
 ixiahlt = IxiaHlt(ixiatcl)
 ixiangpf = IxiaNgpf(ixiahlt)
-            
+
 try:
     ErrorHandler('', {})
 except (NameError,):
@@ -147,14 +147,14 @@ ports = connect_result['vport_list'].split()
 #-------------------------------------------------------------------------------
 # Add topology1
 #-------------------------------------------------------------------------------
-print ('Adding topology1')    
+print ('Adding topology1')
 topology_1_status = ixiangpf.topology_config(
         topology_name      = """ISIS Topology 1""",
         port_handle        = ports[0],
 )
 if topology_1_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', topology_1_status)
-    
+
 topology_1_handle = topology_1_status['topology_handle']
 
 #-------------------------------------------------------------------------------
@@ -169,9 +169,9 @@ device_group_1_status = ixiangpf.topology_config(
 )
 if device_group_1_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', device_group_1_status)
-    
+
 deviceGroup_1_handle = device_group_1_status['device_group_handle']
-   
+
 #-------------------------------------------------------------------------------
 # Add ethernet stack1
 #-------------------------------------------------------------------------------
@@ -186,7 +186,7 @@ if ethernet_1_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', ethernet_1_status)
 
 ethernet_1_handle = ethernet_1_status['ethernet_handle']
- 
+
 #--------------------------------------------------------------------------
 # Add IPv6 Stack1
 #--------------------------------------------------------------------------
@@ -225,7 +225,7 @@ isis_l3_1_status = ixiangpf.emulation_isis_config(
         ipv4_flag                            = "0",
         ipv6_flag                            = "0",
         enable_sr                            = "1",
-        interface_enable_adj_sid             = "1",                        
+        interface_enable_adj_sid             = "1",
         ipv6_srh_flag_emulated_router        = "1",
         ipv6_node_prefix                     = "7895:0:0:1:0:0:0:1",
         prefix_length_v6                     = "128",
@@ -243,7 +243,7 @@ print("Adding simulated topology1 linear")
 network_group_1_status = ixiangpf.network_group_config(
     protocol_handle             = deviceGroup_1_handle,
     protocol_name               = """Network Group 1""",
-    multiplier                  = "1",                          
+    multiplier                  = "1",
     enable_device               = "1",
     type                        = "linear",
     linear_nodes                = "5",
@@ -262,7 +262,7 @@ print("Configuring ISIS route parameter in the simulated topology")
 network_isis_grp_status = ixiangpf.emulation_isis_network_group_config(
     handle                                          = networkGroup_1_handle,
     mode                                            = "modify",
-    connected_to_handle                             = ethernet_1_handle,    
+    connected_to_handle                             = ethernet_1_handle,
     router_system_id                                = "a1:01:00:00:00:01",
     enable_ip                                       = "1",
     sim_topo_active                                 = "1",
@@ -286,14 +286,14 @@ simtopo_1_handle = network_isis_grp_status['network_group_handle']
 #-------------------------------------------------------------------------------
 # Add topology2
 #-------------------------------------------------------------------------------
-print ('Adding topology2')    
+print ('Adding topology2')
 topology_2_status = ixiangpf.topology_config(
         topology_name      = """ISIS Topology 2""",
         port_handle        = ports[1],
 )
 if topology_2_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', topology_2_status)
-    
+
 topology_2_handle = topology_2_status['topology_handle']
 
 #-------------------------------------------------------------------------------
@@ -308,9 +308,9 @@ device_group_2_status = ixiangpf.topology_config(
 )
 if device_group_2_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', device_group_2_status)
-    
+
 deviceGroup_2_handle = device_group_2_status['device_group_handle']
-   
+
 #-------------------------------------------------------------------------------
 # Add ethernet stack2
 #-------------------------------------------------------------------------------
@@ -325,7 +325,7 @@ if ethernet_2_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', ethernet_2_status)
 
 ethernet_2_handle = ethernet_2_status['ethernet_handle']
- 
+
 #--------------------------------------------------------------------------
 # Add IPv6 Stack2
 #--------------------------------------------------------------------------
@@ -364,7 +364,7 @@ isis_l3_2_status = ixiangpf.emulation_isis_config(
         ipv4_flag                            = "0",
         ipv6_flag                            = "0",
         enable_sr                            = "1",
-        interface_enable_adj_sid             = "1",                        
+        interface_enable_adj_sid             = "1",
         ipv6_srh_flag_emulated_router        = "1",
         ipv6_node_prefix                     = "9087:0:0:1:0:0:0:1",
         prefix_length_v6                     = "128",
@@ -376,10 +376,10 @@ if isis_l3_2_status['status'] != IxiaHlt.SUCCESS:
 isisL3_2_handle = isis_l3_2_status['isis_l3_handle']
 
 #--------------------------------------------------------------------------
-# Start all the protocols                                                    
+# Start all the protocols
 #--------------------------------------------------------------------------
 print ('Starting all protocol !!!')
-	
+
 status = ixiangpf.test_control(action='start_all_protocols')
 if status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('ixiangpf.test_control', status)
@@ -391,7 +391,7 @@ time.sleep(120)
 # Fetching ISIS statistics
 #-------------------------------------------------------------------------------
 
-print ('Fetching statistics on ISIS router1')               
+print ('Fetching statistics on ISIS router1')
 status = ixiangpf.emulation_isis_info(\
         handle = isisL3_1_handle,
         mode   = 'stats')
@@ -446,7 +446,7 @@ pprint(status)
 print('===================================================================================')
 
 #----------------------------------------------------------------------------
-# OTF changing the valye of BGPLS ID & Instance ID                         
+# OTF changing the valye of BGPLS ID & Instance ID
 #----------------------------------------------------------------------------
 print('Changing Attribute Values in Simulated Interfaces OTF')
 isis_ng = ixiangpf.emulation_isis_network_group_config(
@@ -495,7 +495,7 @@ print('=========================================================================
 #-------------------------------------------------------------------------------
 print ('Stopping all protocol(s) ...')
 stop = ixiangpf.test_control(action='stop_all_protocols')
-                  
+
 if stop['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('test_control', stop)
 
@@ -503,5 +503,3 @@ if stop['status'] != IxiaHlt.SUCCESS:
 # Test Ends
 #-------------------------------------------------------------------------------
 print ('!!! Test Script Ends !!!')
-
-

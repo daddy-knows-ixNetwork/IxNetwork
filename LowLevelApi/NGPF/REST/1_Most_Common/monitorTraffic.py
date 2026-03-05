@@ -646,7 +646,3 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
         print('\n%s' % traceback.format_exc())
     #sys.exit('\nTest aborted. Traceback: {0}\n'.format(errMsg))
     sys.exit('\nTest aborted. Traceback: {0}\n'.format(traceback.format_exc()))
-
-
-
-

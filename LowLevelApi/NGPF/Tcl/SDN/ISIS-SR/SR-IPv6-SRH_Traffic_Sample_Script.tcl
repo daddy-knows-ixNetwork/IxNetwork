@@ -94,7 +94,7 @@ ixNet exec newConfig
 
 ################################################################################
 # protocol configuration section                                               #
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -191,7 +191,7 @@ ixNet commit
 
 puts "Disabling the checkbox 'Use This Device As Ingress' for the 2nd Tunnel in 1st device of IPv6 SR Ext"
 set mv [ixNet getAttr $ipv6sr -useAsIngress]
-set overlay [ixNet add $mv "overlay"]        
+set overlay [ixNet add $mv "overlay"]
 ixNet setMultiA $overlay \
 -count 1 \
 -index 2 \
@@ -202,7 +202,7 @@ ixNet commit
 
 puts "Setting values to 'Segment Left' field for the 2nd tunnel of device 1"
 set segmentsLeft [ixNet getAttr $ipv6sr -segmentsLeft]
-set overlay [ixNet add $segmentsLeft "overlay"]        
+set overlay [ixNet add $segmentsLeft "overlay"]
 ixNet setMultiA $overlay \
 -count 1 \
 -index 2 \
@@ -216,7 +216,7 @@ puts "Disabling the checkbox 'Enable Segment 4' for the 1st Tunnel in 1st device
 set IPv6SegmentsList [ixNet getList $ipv6sr IPv6SegmentsList]
 set enableSegment4 [lindex $IPv6SegmentsList 3]
 set sIDEnable [ixNet getAttr $enableSegment4 -sIDEnable]
-set overlay [ixNet add $sIDEnable "overlay"]        
+set overlay [ixNet add $sIDEnable "overlay"]
 ixNet setMultiA $overlay \
 -count 1 \
 -index 1 \
@@ -241,7 +241,7 @@ ixNet exec startAllProtocols
 after 45000
 
 ################################################################################
-# 14. Configure L2-L3 traffic 
+# 14. Configure L2-L3 traffic
 ################################################################################
 
 puts "Configuring  L2-L3 IPv6 Traffic Item # "
@@ -268,7 +268,7 @@ ixNet setMultiAttribute $endpointSet1\
 	-ngpfFilters           [list]\
 	-trafficGroups         [list]\
 	-sources               $source\
-	-destinations          $destination\	
+	-destinations          $destination\
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\

@@ -59,7 +59,7 @@
 #    2. Start the ESMC protocol.                                               #
 #    3. Retrieve protocol statistics.                                          #
 #    4. Stop all protocols.                                                    #
-#                                                                              #                                                                                
+#                                                                              #
 # Ixia Software:                                                               #
 #    IxOS      9.10 EB                                                         #
 #    IxNetwork 9.10 EB                                                         #
@@ -81,13 +81,13 @@ sub assignPorts {
 	my $card1    = $my_resource[2];
 	my $port1    = $my_resource[3];
 	my $vport1   = $my_resource[4];
-	
+
 	my $root = $ixNet->getRoot();
 	my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-	
+
 	my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -102,7 +102,7 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.39.50.134';
 my $ixTclPort   = '8779';
 my @ports       = (('10.39.50.126', '1', '1'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
@@ -151,7 +151,7 @@ $ixNet->setMultiAttribute($ixNet->getAttribute($mac1, '-mac').'/counter',
         '-direction', 'increment',
         '-start',     '00:11:01:00:00:01',
         '-step',      '00:00:00:00:00:01');
-		
+
 $ixNet->commit();
 
 
@@ -202,13 +202,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 

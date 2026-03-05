@@ -109,7 +109,7 @@ my @uniHandleList          = ();
 ################################################################################
 
 # Connect to the chassis, reset to factory defaults and take ownership
-# When using P2NO HLTSET, for loading the IxTclNetwork package please 
+# When using P2NO HLTSET, for loading the IxTclNetwork package please
 # provide –ixnetwork_tcl_server parameter to ::ixia::connect
 
 $_result_ = ixiahlt::connect ( {

@@ -10,7 +10,7 @@ loadConfigFile.py:
    - Optional: Assign ports or use the ports that are in the saved config file.
    - Start all protocols
    - Verify all protocols
-   - Start traffic 
+   - Start traffic
    - Get Traffic Item
    - Get Flow Statistics stats
 
@@ -40,7 +40,7 @@ debugMode = False
 
 try:
     # LogLevel: none, info, warning, request, request_response, all
-    session = SessionAssistant(IpAddress='192.168.70.3', RestPort=None, UserName='admin', Password='admin', 
+    session = SessionAssistant(IpAddress='192.168.70.3', RestPort=None, UserName='admin', Password='admin',
                                SessionName=None, SessionId=None, ApiKey=None,
                                ClearConfig=True, LogLevel='info', LogFilename='restpy.log')
 
@@ -77,7 +77,7 @@ try:
 
     trafficItemStatistics = session.StatViewAssistant('Traffic Item Statistics')
     ixNetwork.info('{}\n'.format(trafficItemStatistics))
-    
+
     # Get the statistic values
     txFrames = trafficItemStatistics.Rows[0]['Tx Frames']
     rxFrames = trafficItemStatistics.Rows[0]['Rx Frames']
@@ -94,8 +94,3 @@ except Exception as errMsg:
     print('\n%s' % traceback.format_exc())
     if debugMode and 'session' in locals():
         session.Session.remove()
-
-
-
-
-

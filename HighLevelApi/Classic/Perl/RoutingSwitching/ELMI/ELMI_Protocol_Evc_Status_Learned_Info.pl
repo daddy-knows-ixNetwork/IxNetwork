@@ -110,7 +110,7 @@ my @uniHandleList          = ();
 ################################################################################
 
 # Connect to the chassis, reset to factory defaults and take ownership
-# When using P2NO HLTSET, for loading the IxTclNetwork package please 
+# When using P2NO HLTSET, for loading the IxTclNetwork package please
 # provide –ixnetwork_tcl_server parameter to ::ixia::connect
 
 $_result_ = ixiahlt::connect ( {
@@ -187,7 +187,7 @@ my $format = "%-40s %-s %-10s\n";
 my @stat_list = ixiahlt::status_item_keys("$port_0.$uni_handle_0.$evc_learned_status_0");
 print ("\n\nELMI evc learned status for Port: $port_0 EVC Learned Status: $evc_learned_status_0\n");
 foreach my $stat (@stat_list) {
-    my $stat_value = ixiahlt::status_item("$port_0.$uni_handle_0.$evc_learned_status_0.$stat");        
+    my $stat_value = ixiahlt::status_item("$port_0.$uni_handle_0.$evc_learned_status_0.$stat");
      printf $format, $stat, "=", $stat_value;
 }
 

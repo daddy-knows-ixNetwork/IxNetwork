@@ -1,7 +1,7 @@
 #!/usr/local/python2.7.6/bin/python2.7
 
 # Description:
-# 
+#
 #    A sample BGP script using high level APIs.
 #      - Create two Topologies.
 #      - Create BGP network advertising routes.
@@ -41,7 +41,7 @@ def VerifyProtocolSessionStatusUpNgpfHlPy(protocolHandleList, totalTime=60):
     '''
     protocolHandleList: One or more protocol handles in a list
                         to verify for sessions status 'UP'.
-    
+
     Protocol handle example:
                      /topology:1/deviceGroup:1/ethernet:1/ipv4:1
                      /topology:1/deviceGroup:1/ethernet:1/ipv4:1/ospfv2:1
@@ -393,7 +393,7 @@ if VerifyProtocolSessionStatusUpNgpfHlPy([topo1Ipv4Handle, topo2Ipv4Handle]) == 
     #time.sleep(45)
     sys.exit()
 
-print "Verifying BGP aggregated statistics on Port1"               
+print "Verifying BGP aggregated statistics on Port1"
 protostats = ixia_ngpf.emulation_bgp_info(\
     handle = bgpIpv4PeerHandle1,
     mode   = 'stats')
@@ -402,7 +402,7 @@ if protostats['status'] != IxiaHlt.SUCCESS:
 
 print_dict(protostats)
 
-print "Verifying BGP aggregated statistics on Port2"               
+print "Verifying BGP aggregated statistics on Port2"
 protostats = ixia_ngpf.emulation_bgp_info(\
     handle = bgpIpv4PeerHandle2,
     mode   = 'stats')

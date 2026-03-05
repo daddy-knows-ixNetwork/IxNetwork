@@ -212,7 +212,7 @@ ixNet.commit()
 print ('ixNet.help(\'::ixNet::OBJ-/topology/deviceGroup/ethernet\')')
 print (ixNet.help('::ixNet::OBJ-/topology/deviceGroup/ethernet'))
 
-# Adding Ipv4 stack 
+# Adding Ipv4 stack
 print("Add ipv4")
 ixNet.add(mac1, 'ipv4')
 ixNet.add(mac2, 'ipv4')
@@ -514,7 +514,7 @@ time.sleep(5)
 ipv6PseudoNodeRoutes2 = ixNet.getList(isisL3PseudoRouter2, 'IPv6PseudoNodeRoutes')[0]
 ipv6PseudoNodeRouteMultivalue2 = ixNet.getAttribute(ipv6PseudoNodeRoutes2, '-active')
 ixNet.setAttribute(ipv6PseudoNodeRouteMultivalue2 + '/singleValue', '-value', 'true')
-ixNet.commit() 
+ixNet.commit()
 
 ################################################################################
 # Stop/Start ISIS Router on both ports and apply changes on-the-fly
@@ -593,7 +593,7 @@ time.sleep(5)
 linfo = ixNet.getList(isisL3_1, 'learnedInfo')[0]
 ipv6table = ixNet.getList(linfo, 'table')[1]
 values    = ixNet.getAttribute(ipv6table, '-values')
-	 
+
 
 print("***************************************************\n")
 for v in values:
@@ -674,7 +674,7 @@ print("Configuring Applib traffic profile %s." % trafficType)
 trafficItem2 = ixNet.add(ixNet.getRoot() + '/traffic', 'trafficItem')
 
 ixNet.setMultiAttribute(trafficItem2,
-    '-name',                     'Traffic Item 3',             
+    '-name',                     'Traffic Item 3',
     '-trafficItemType',          'applicationLibrary',
     '-roundRobinPacketOrdering', 'false',
     '-trafficType',              trafficType)
@@ -694,7 +694,7 @@ ixNet.setMultiAttribute(endpointSet2,
     '-ngpfFilters',           [],
     '-trafficGroups',         [],
     '-sources',               source_app,
-    '-destinations',          destin_app)    
+    '-destinations',          destin_app)
 ixNet.commit()
 
 endpointSet2 = ixNet.remapIds(endpointSet2)[0]

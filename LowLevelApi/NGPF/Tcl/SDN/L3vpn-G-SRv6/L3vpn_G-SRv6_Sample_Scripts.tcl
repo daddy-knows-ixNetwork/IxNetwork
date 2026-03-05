@@ -7,7 +7,7 @@
 #                                                                              #
 ################################################################################
 
-####################################################################################    
+####################################################################################
 #                                                                                  #
 #                                LEGAL  NOTICE:                                    #
 #                                ==============                                    #
@@ -42,7 +42,7 @@
 # damages limitations set forth herein and will not obligate Keysight to provide   #
 # any additional maintenance or support services.                                  #
 #                                                                                  #
-####################################################################################   
+####################################################################################
 
 #####################################################################################
 #                                                                              		#
@@ -62,7 +62,7 @@
 #    5. Start the L2-L3 traffic.                                               		#
 #    6. Retrieve L2-L3 traffic stats.                                          		#
 #    7. Stop L2-L3 traffic.                                                    		#
-#    8. Stop all protocols.                                                    		#                                                                                          
+#    8. Stop all protocols.                                                    		#
 #####################################################################################
 
 # Script Starts
@@ -88,7 +88,7 @@ ixNet exec newConfig
 ################################################################################
 # 1. Protocol configuration section. Configure ISISL3/BGP+ as per the description
 #    give above
-################################################################################ 
+################################################################################
 set Root [ixNet getRoot]
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
@@ -305,7 +305,7 @@ ixNet commit
 
 #configure sidCount locator in for isisL3Router in t1dev1
 puts "configure sidCount locator in for isisL3Router in t1dev1"
-ixNet setMultiAttribute $t1dev1/isisL3Router:1/isisSRv6LocatorEntryList -sidCount 3 
+ixNet setMultiAttribute $t1dev1/isisL3Router:1/isisSRv6LocatorEntryList -sidCount 3
 ixNet commit
 
 #Configure EndSid Value for isisL3Router in t1dev1
@@ -396,7 +396,7 @@ ixNet commit
 
 #Configure ipv6AdjSid Value in isisL3_1
 puts "Configure ipv6AdjSid Value in isisL3_1"
-set ipv6AdjSid_2 [ixNet getAttribute $isisL3_1/isisSRv6AdjSIDList -ipv6AdjSid]		
+set ipv6AdjSid_2 [ixNet getAttribute $isisL3_1/isisSRv6AdjSIDList -ipv6AdjSid]
 ixNet commit
 set counter [ixNet add $ipv6AdjSid_2 "counter"]
 ixNet setMultiAttribute $counter \
@@ -444,7 +444,7 @@ ixNet commit
 set singlV5 [ixNet add $includeSRv6SIDStructureSubSubTlv_2 "singleValue"]
 ixNet setMultiAttribute $singlV5 \
 	-value true
-ixNet commit 
+ixNet commit
 set locatorBlockLength_2 [ixNet getAttribute $isisL3_1/isisSRv6AdjSIDList -locatorBlockLength]
 ixNet setMultiAttribute $locatorBlockLength_2 \
 	-clearOverlays false
@@ -452,7 +452,7 @@ ixNet commit
 set singlV6 [ixNet add $locatorBlockLength_2 "singleValue"]
 ixNet setMultiAttribute $singlV6\
 	-value 48
-ixNet commit		
+ixNet commit
 ixNet setMultiAttribute $locatorBlockLength_2/nest:1 \
 	-enabled false \
 	-step 1
@@ -491,7 +491,7 @@ ixNet commit
 
 #configure sidCount
 puts "configure sidCount"
-ixNet setMultiAttribute $t2dev1/isisL3Router:1/isisSRv6LocatorEntryList -sidCount 3 
+ixNet setMultiAttribute $t2dev1/isisL3Router:1/isisSRv6LocatorEntryList -sidCount 3
 ixNet commit
 
 #Configure EndSid Value
@@ -582,7 +582,7 @@ ixNet commit
 
 #Configure ipv6AdjSid Value
 puts "Configure ipv6AdjSid Value"
-set ipv6AdjSid [ixNet getAttribute $isisL3_2/isisSRv6AdjSIDList -ipv6AdjSid]		
+set ipv6AdjSid [ixNet getAttribute $isisL3_2/isisSRv6AdjSIDList -ipv6AdjSid]
 ixNet commit
 set counter [ixNet add $ipv6AdjSid "counter"]
 ixNet setMultiAttribute $counter \
@@ -630,7 +630,7 @@ ixNet commit
 set singleV5 [ixNet add $includeSRv6SIDStructureSubSubTlv "singleValue"]
 ixNet setMultiAttribute $singleV5 \
 	-value true
-ixNet commit 
+ixNet commit
 set locatorBlockLength [ixNet getAttribute $isisL3_2/isisSRv6AdjSIDList -locatorBlockLength]
 ixNet setMultiAttribute $locatorBlockLength \
 	-clearOverlays false
@@ -638,7 +638,7 @@ ixNet commit
 set singleV6 [ixNet add $locatorBlockLength "singleValue"]
 ixNet setMultiAttribute $singleV6\
 	-value 48
-ixNet commit		
+ixNet commit
 ixNet setMultiAttribute $locatorBlockLength/nest:1 \
 	-enabled false \
 	-step 1
@@ -718,7 +718,7 @@ ixNet setMultiAttribute $counter \
 	-start 201.1.0.0 \
 	-direction increment
 ixNet commit
-	
+
 #Create Network Group At PEER2 Side
 puts "Create Network Group At PEER2 Side"
 set networkGroup_P2 [ixNet add $t2dev1 "networkGroup"]
@@ -1524,7 +1524,7 @@ foreach statValList [ixNet getAttr $viewPage -rowValues] {
 puts "***************************************************"
 
 ################################################################################
-# 4. Configure L2-L3 traffic 
+# 4. Configure L2-L3 traffic
 ################################################################################
 puts "Congfiguring L2-L3 Traffic Item"
 set statistic_1 [ixNet add $Root/globals/testInspector "statistic"]

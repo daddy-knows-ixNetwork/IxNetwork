@@ -60,7 +60,7 @@
 #    8. Start the L2-L3 traffic.                                               #
 #   11. Retrieve L2-L3 traffic stats.                                          #
 #   12. Stop L2-L3 traffic.                                                    #
-#   13. Stop all protocols.                                                    #                                                                                
+#   13. Stop all protocols.                                                    #
 ################################################################################
 
 # Script Starts
@@ -86,7 +86,7 @@ ixNet exec newConfig
 ################################################################################
 # 1. Protocol configuration section. Configure LDP as per the description
 #    give above
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -614,7 +614,7 @@ after 10000
 
 ###############################################################################
 # 6. Retrieve protocol learned info again and compare with
-#    previouly retrieved learned info.  
+#    previouly retrieved learned info.
 ###############################################################################
 puts "Fetching MPLSOAM Basic Learned Info"
 ixNet exec getAllLearnedInfo $mplsoamloop1 1
@@ -678,7 +678,7 @@ ixNet setMultiAttribute $endpointSet1\
     -ngpfFilters           [list]\
     -trafficGroups         [list]\
     -sources               $source\
-    -destinations          $destination    
+    -destinations          $destination
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\
@@ -738,4 +738,3 @@ puts "Stopping all protocols"
 ixNet exec stopAllProtocols
 
 puts "!!! Test Script Ends !!!"
-

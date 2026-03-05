@@ -206,7 +206,7 @@ ixNet.setMultiAttribute(ti1 + "/tracking", '-trackBy', ['sourceDestValuePair0'])
 ixNet.commit()
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 
 vports = ixNet.getList(ixNet.getRoot(), 'vport')
@@ -325,6 +325,3 @@ print "Sleep 5sec then stop traffic"
 time.sleep(5)
 print "Stop Traffic"
 ixNet.execute('stop', '/traffic')
-
-
-

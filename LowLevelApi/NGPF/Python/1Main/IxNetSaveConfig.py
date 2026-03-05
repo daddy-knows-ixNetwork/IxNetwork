@@ -33,7 +33,7 @@ def ConnectToIxia(ixNetTclServer='', ixNetTclPort='8009', ixNetVersion=''):
 def CreateNewBlankConfig():
     print('Creating a blank configuration ...')
     ixNet.execute('newConfig')
-    
+
 def AddIxiaChassis( ixChassisIp ):
     print('Adding chassis: '), ixChassisIp
     ixChassisObj = ixNet.add(ixNet.getRoot()+'availableHardware', 'chassis', '-hostname', ixChassisIp)
@@ -53,7 +53,7 @@ def ClearPortOwnership(ixChassisObj, portList):
         # Must do a port.split(' ') to convert string to list -> ['1', '2']
         cardNumber = port.split('/')[0]
         portNumber = port.split('/')[1]
-        
+
         # ::ixNet::OBJ-/availableHardware/chassis:"10.205.4.35"/card:1/port:2
         #print ('Clearing port'), 'card:'+cardNumber+'/port:'+portNumber
         print 'Clearing port:', ixChassisObj+'/card:' + cardNumber + '/port:' + portNumber
@@ -71,15 +71,15 @@ def CreateVPort(port):
     vPortObj = ixNet.add(ixNet.getRoot(), 'vport')
     ixNet.commit()
     vPortObj = ixNet.remapIds(vPortObj)[0]
-    
+
     return vPortObj
-    
+
 
 def ConnectToPorts(vPortList, portList, ixChassisObj):
     for vPort, port in zip(vPortList, portList):
         cardNumber = port.split('/')[0]
         portNumber = port.split('/')[1]
-        
+
         print 'ConnectToPort:', ixChassisObj + '/card:' + cardNumber + '/port:' + portNumber
         print '\tvPort =', vPort
 
@@ -108,19 +108,19 @@ def VerifyPortState( stopTime = 5 ):
             if portState != 'up':
                 print 'VerifyPortState: %s is not up yet. Verifying %d/%d seconds' % (port, timer, stopTime)
                 time.sleep(1)
-            
+
             if timer == stopTime:
                 print('Port can\'t come up.  Exiting test')
                 ixNet.disconnect()
                 sys.exit()
 
-                
+
 def CreateProtocolInterface(vPort, port):
     #global ixNet
 
     print 'Creating Protocol Interface:', port + '...'
     vPortInterfaceObj = ixNet.add(vPort, 'interface')
-    
+
     addPortIntResult = ixNet.setMultiAttribute(vPortInterfaceObj, \
                                                    '-enabled', 'True', \
                                                    '-description', port \
@@ -136,13 +136,13 @@ def ProtocolIntMacAddress(protocolIntObj, macAddress):
                            '-macAddress', macAddress \
                            )
     ixNet.commit()
-    
+
 
 def ProtocolIntIpv4(protocolIntObj, ipAddress, gateway):
     print '\nProtocol Interface IPv4:', ipAddress
-    
+
     ipv4IntObj = ixNet.add(protocolIntObj, 'ipv4')
-    
+
     ixNet.setMultiAttribute(ipv4IntObj, \
                                 '-gateway', gateway, \
                                 '-ip', ipAddress, \
@@ -153,17 +153,17 @@ def ProtocolIntIpv4(protocolIntObj, ipAddress, gateway):
     return ipv4IntObj
 
 
-def CreateTrafficItem(name=          'My Traffic Item', 
-                      trafficType=   'ipv4', 
-                      transmitMode=  'interleaved', 
-                      biDirectional= '1', 
-                      routeMesh=     'oneToOne', 
+def CreateTrafficItem(name=          'My Traffic Item',
+                      trafficType=   'ipv4',
+                      transmitMode=  'interleaved',
+                      biDirectional= '1',
+                      routeMesh=     'oneToOne',
                       srcDestMesh=   'oneToOne'):
 
     print '\nCreating Traffic Item: %s ...' % name
-    
+
     trafficItemObj = ixNet.add(ixNet.getRoot() + '/traffic', 'trafficItem')
-    
+
     ixNet.setMultiAttribute(trafficItemObj, \
                                 '-enabled', 'True', \
                                 '-name', name, \
@@ -180,20 +180,20 @@ def CreateTrafficItem(name=          'My Traffic Item',
 
 def ConfigTracking(trafficItemObj, trackingList):
     print '\nConfiguring trackBy: %s ...' % trackingList
-    
+
     ixNet.setAttribute(trafficItemObj + '/tracking', \
                            '-trackBy', trackingList \
                            )
     ixNet.commit()
-    
-    
+
+
 def CreateEndPointSet(trafficItemObj='', name='Flow_Group', srcEndpoints='', destEndpoints=''):
     '''
     Each endpoint is a highlevelstream in a Traffic Item
     '''
 
     print '\nCreating Endpoint: %s ...' % name
-    
+
     endpointObj = ixNet.add(trafficItemObj, 'endpointSet', \
                                 '-name', name, \
                                 '-sources', srcEndpoints, \
@@ -208,13 +208,13 @@ def ConfigFlowGroup(flowGroupObj='', frameSize='128', frameRate='100'):
     print '\nConfiguring Flow Group:', flowGroupObj
     print 'Configuring frame size:', frameSize
     ixNet.setAttribute(flowGroupObj + '/frameSize', '-fixedSize', frameSize)
-    
+
     print 'Configuring line rate: %s%s' % (frameRate, '%')
     ixNet.setAttribute(flowGroupObj + '/frameRate', '-rate', frameRate)
-    
+
     ixNet.commit()
 
-        
+
 def ConfigFlowGroupFrameCount(flowGroupObj, frameCount) :
     print 'Configuring frame count:', frameCount
     result = ixNet.setMultiAttribute(flowGroupObj + '/transmissionControl', \
@@ -222,11 +222,11 @@ def ConfigFlowGroupFrameCount(flowGroupObj, frameCount) :
                                          '-type', 'fixedFrameCount' \
                                          )
     ixNet.commit()
-    
+
 
 def ApplyTraffic():
     print('Applying Traffic to hardware ...')
-    
+
     stopCounter = 10
     for startCounter in range(1,10):
 
@@ -412,7 +412,7 @@ def StartTraffic():
     for start in range(startCounter, stopCounter):
         start = start + 1
         trafficState = IxNetLowLevel.CheckTrafficState()
-        
+
         if trafficState == 'started':
             print('Traffic started')
             break
@@ -437,7 +437,7 @@ def StartTraffic():
                 print('Failed: Traffic failed to start')
                 ixNet.disconnect()
                 sys.exit()
-    
+
 
 
 def Lsearch(searchList, searchWord):
@@ -445,7 +445,7 @@ def Lsearch(searchList, searchWord):
     for index in range(0, len(searchList)):
         if re.search(r'%s' % searchWord, searchList[index], re.I):
             return index
-            
+
     if wordExists == 0:
         # Return 'None' if not found
         return
@@ -453,13 +453,13 @@ def Lsearch(searchList, searchWord):
 
 def GetKeyListDependency(searchPattern, keys):
     # print 'match:', searchPattern, keys
-    # searchPattern = ('eth2', '2.2', 'AA:BB:CC:DD:EE:FF') 
+    # searchPattern = ('eth2', '2.2', 'AA:BB:CC:DD:EE:FF')
     # keys          = ('eth2', '2.2.2.2', 'AA:BB:CC:DD:EE:FF')
 
     #i:  0 ; x:  eth2
     #i:  1 ; x:  *
     #i:  2 ; x:  AA:BB:CC:DD:EE:FF
-    
+
     #keys[i]:  eth2
     #keys[i]:  2.2.2.2
     #keys[i]:  AA:BB:CC:DD:EE:FF
@@ -485,7 +485,7 @@ def GetKeyList(datas, searchPattern):
         if GetKeyListDependency(searchPattern, keys):
             keyValue = keys, values
             myList.append(keyValue)
-        
+
     return myList
 
 
@@ -527,7 +527,7 @@ def GetStatistics( getStatsBy='trafficItem' ):
         print('currentPage: '), currentPage
         ixNet.setAttribute(view + '/page', '-currentPage', currentPage)
         ixNet.commit()
-        
+
         whileLoopStopCounter = 0
         while ixNet.getAttribute(view + '/page', '-isReady') != 'true':
             if whileLoopCounter == 5:
@@ -548,25 +548,25 @@ def GetStatistics( getStatsBy='trafficItem' ):
                 cellList = rowList[rowIndex]
                 #print cellList
                 trafficItem = cellList[trafficItemIndex]
-                
+
                 flowGroupIndex = Lsearch(columnList, 'Flow Group')
                 if flowGroupIndex == None:
                     flowGroup = pageListIndex
                 else:
                     # Parse out 'Flow Group 0008' only
                     flowGroup = cellList[flowGroupIndex].split('-')[-1].strip()
-                    
+
                 rxPortIndex = Lsearch(columnList, 'Rx Port')
                 rxPort = cellList[rxPortIndex]
-                
+
                 for column, item in zip(columnList, cellList):
                     #print column, item ;# <- Thi is a great way to pring out keyed list counter values
                     if re.match(r'VLAN:VLAN Priority', column, re.I):
                         column = 'Vlan Priority'
-                        
+
                     if re.match(r'VLAN:VLAN-ID', column):
                         column = 'Vlan ID'
-                            
+
                     if getStatsBy == 'trafficItem':
                         if re.match(r'Traffic Item', column) == None:
                             getStats['trafficItem','_'.join(trafficItem.split()),'flow',totalFlows,'_'.join(column.split())] = item
@@ -614,6 +614,6 @@ if __name__ == "__main__":
     ixTopo.cfgFile = 'mySavedConfig.ixncfg'
 
     ConnectToIxia(ixNetTclServer=ixTopo.ixNetTclServer, ixNetVersion=ixTopo.ixNetVersion)
-    
+
     # ixNet exec saveConfig [ixNet writeTo $ixNetworkCfgFile -overwrite]
     ixNet.execute('saveConfig', ixNet.writeTo('mySavedConfig.ixncfg', '-overwrite'))

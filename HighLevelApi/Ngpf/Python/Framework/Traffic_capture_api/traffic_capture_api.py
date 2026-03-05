@@ -53,7 +53,7 @@
 #    This sample creates an IPv4 stream with increasing frame length.          #
 #    It configures buffer triggers and filters to capture only frames within a #
 #    a small length range.                                                     #
-#    Starts the capture, then starts the streams, collects statistics and      #  
+#    Starts the capture, then starts the streams, collects statistics and      #
 #    returns the capture buffer in a csv file.                                 #
 #                                                                              #
 # Module:                                                                      #
@@ -69,7 +69,7 @@ import pdb
 
 # Append paths to python APIs
 
-# sys.path.append('/path/to/hltapi/library/common/ixiangpf/python') 
+# sys.path.append('/path/to/hltapi/library/common/ixiangpf/python')
 # sys.path.append('/path/to/ixnetwork/api/python')
 
 
@@ -123,7 +123,7 @@ if connect_result['status'] != '1':
 
 print " Printing connection result"
 pprint(connect_result)
- 
+
 ports = connect_result['vport_list'].split()
 rx_port = ports[0]
 tx_port = ports[1]
@@ -154,11 +154,11 @@ interface_status = ixiangpf.interface_config(
         speed           = ipV4_speed_list,
         port_rx_mode    = ipV4_port_rx_mode,
     )
-    
+
 if interface_status['status'] != '1':
     ErrorHandler('interface_config', interface_status)
-    
- 
+
+
 ##################################
 #  Configure streams on TX port  #
 ##################################
@@ -167,7 +167,7 @@ pkts_per_burst_1=1000
 ipv4_handles = interface_status['ipv4_handle'].split()
 ti_src = ipv4_handles[0]
 ti_dst = ipv4_handles[1]
-   
+
 traffic_status = ixiangpf.traffic_config(
     mode                                       = 'create',
     traffic_generator                          = 'ixnetwork_540',
@@ -207,8 +207,8 @@ traffic_status = ixiangpf.traffic_config(
     egress_tracking                            = 'none'            ,
     )
 if traffic_status['status'] != '1':
-    ErrorHandler('traffic_config', traffic_status) 
-    
+    ErrorHandler('traffic_config', traffic_status)
+
 traffic_item = traffic_status['traffic_item']
 
 interface_status = ixiangpf.interface_config(
@@ -217,8 +217,8 @@ interface_status = ixiangpf.interface_config(
     )
 
 if interface_status['status'] != '1':
-    ErrorHandler('interface_config', interface_status) 
-    
+    ErrorHandler('interface_config', interface_status)
+
 
 time.sleep(10)
 
@@ -228,8 +228,8 @@ interface_status = ixiangpf.interface_config(
     )
 
 if interface_status['status'] != '1':
-    ErrorHandler('interface_config', interface_status) 
-    
+    ErrorHandler('interface_config', interface_status)
+
 # Clear stats before sending traffic
 clear_stats_status = ixiangpf.traffic_control(
         port_handle    = ports,
@@ -251,13 +251,13 @@ config_status = ixiangpf.packet_config_buffers(
     )
 
 if config_status['status'] != '1':
-    ErrorHandler('packet_config_buffers', config_status) 
+    ErrorHandler('packet_config_buffers', config_status)
 
 config_status = ixiangpf.packet_config_filter(
         port_handle = tx_port,
     )
 if config_status['status'] != '1':
-    ErrorHandler('packet_config_filter', config_status) 
+    ErrorHandler('packet_config_filter', config_status)
 
 
 uds1_size_from = 62
@@ -287,7 +287,7 @@ config_status = ixiangpf.packet_config_triggers(
     )
 
 if config_status['status'] != '1':
-    ErrorHandler('packet_config_triggers', config_status) 
+    ErrorHandler('packet_config_triggers', config_status)
 
 time.sleep(5)
 
@@ -303,7 +303,7 @@ start_status = ixiangpf.packet_control(
         packet_type = 'data',
     )
 if start_status['status'] != '1':
-    ErrorHandler('packet_control', start_status) 
+    ErrorHandler('packet_control', start_status)
 
 time.sleep(10)
 
@@ -318,7 +318,7 @@ traffic_control_status = ixiangpf.traffic_control(
         action      = 'run',
     )
 if traffic_control_status['status'] != '1':
-    ErrorHandler('traffic_control', traffic_control_status) 
+    ErrorHandler('traffic_control', traffic_control_status)
 
 time.sleep(10)
 
@@ -332,8 +332,8 @@ traffic_control_status = ixiangpf.traffic_control(
         action      = 'stop',
     )
 if traffic_control_status['status'] != '1':
-    ErrorHandler('traffic_control', traffic_control_status) 
-    
+    ErrorHandler('traffic_control', traffic_control_status)
+
 
 print "Traffic stopped"
 
@@ -351,7 +351,7 @@ stop_status = ixiangpf.packet_control(
     )
 
 if stop_status['status'] != '1':
-    ErrorHandler('packet_control', stop_status) 
+    ErrorHandler('packet_control', stop_status)
 
 time.sleep(15)
 
@@ -366,6 +366,6 @@ stats_status = ixiangpf.packet_stats(
         dirname     = dirname,
     )
 if stats_status['status'] != '1':
-    ErrorHandler('packet_stats', stats_status) 
+    ErrorHandler('packet_stats', stats_status)
 
 print "SUCCESS!"

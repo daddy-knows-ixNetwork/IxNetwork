@@ -6,21 +6,21 @@
 # Requirement:
 # ------------
 #    IxNetwork 8.0
-# 
+#
 # Description:
 # ------------
 #
 #    Using REST API to connect to an existing Quick Test configuration.
 #    If the variable userSelectQuickTestList is 'all', then execute all
-#    the configured Quick Tests. Else, execute the list provided by 
-#    the user from the commandline. 
+#    the configured Quick Tests. Else, execute the list provided by
+#    the user from the commandline.
 #
-#    Each Quick Test will retrieve its AggregateResults.csv file and 
+#    Each Quick Test will retrieve its AggregateResults.csv file and
 #    includes a timestamp on it.
 #
 # Usage:
 # ------
-# 
+#
 #    Enter: python IxNetRestLoadQuickTestConfig.py -help
 #
 
@@ -87,7 +87,7 @@ class IxNet:
 	def remapIds(self, localIdList):
 		if type(localIdList)==list:return localIdList
 		else:return [localIdList]
-	
+
 	def checkError(self):
 		if not self.response.ok:TestFailedError(self.response.text)
 	def getList(self, objRef, child):
@@ -99,12 +99,12 @@ class IxNet:
 		self.checkError()
 		objs = ["%s/%s/%s" % (objRef,child,str(i['id'])) for i in self.response.json()]
 		return objs
-	
-		
+
+
 	def getIxNetSessions(self):
 		if debug:print self.baseUrl +"/sessions"
 		try:self.response = requests.get(self.baseUrl +"/sessions", headers=self.urlHeadersJson)
-		except Exception, e:raise Exception('Got an error code: ', e)  
+		except Exception, e:raise Exception('Got an error code: ', e)
 		self.checkError()
 		sessions = [i for i in self.response.json() if i['state']=='ACTIVE']
 		return sessions
@@ -114,17 +114,17 @@ class IxNet:
 		except:data=[{}]
 		if debug:print "ADD:","%s/%s/" % (objRef,child),data
 		try:self.response = requests.post("%s/%s/" % (objRef,child), data=json.dumps(data),headers=self.urlHeadersJson)
-		except Exception, e:raise Exception('Got an error code: ', e)  
+		except Exception, e:raise Exception('Got an error code: ', e)
 		self.checkError()
 		return ["http://%s:%s%s" % (self.server,self.port,i['href']) for i in self.response.json()['links']]
 
 	def remove(self, objRef):
 		try:self.response = requests.delete(objRef)
-		except Exception, e:raise Exception('Got an error code: ', e)  
+		except Exception, e:raise Exception('Got an error code: ', e)
 		self.checkError()
 		return self.response.json()
 
-		
+
 	def execute(self, *args):
 		args=list(args)
 		if debug:print "EXECUTE ARGS:",args
@@ -143,17 +143,17 @@ class IxNet:
 			self.waitForComplete(posturl)
 			self.checkError()
 			return self.response.json()
-			
+
 		elif execName=="importBgpRoutes":
 			argx = ['arg%d' % (i+1,) for i in range(len(args[1:]))]
 			tmp =[]
 			for i in args[1:]:
 				try:tmp.append(i.replace(self.srvUrl,""))
 				except:tmp.append(i)
-				
+
 			data = dict(zip(argx,tmp))
 			posturl = self.srvUrl+data['arg1']
-			
+
 		else:
 			argx = ['arg%d' % (i+1,) for i in range(len(args[1:]))]
 			argsv = args[1:]
@@ -180,12 +180,12 @@ class IxNet:
 					obj = data['arg1'][0].replace(self.srvUrl,"")
 					posturl = self.srvUrl+obj + "/operations/"+execName
 			else:
-				obj=data['arg1'].replace(self.srvUrl,"") 
+				obj=data['arg1'].replace(self.srvUrl,"")
 				posturl = self.srvUrl+obj + "/operations/"+execName
 		print "POST:->",posturl
 		print "DATA:->",data
-		
-		
+
+
 		#self.response = requests.post(url=posturl, data=json.dumps(data),headers=self.urlHeadersJson)
 		print '\nEXECUTE:', posturl, data
 		try:self.response = requests.post(url=posturl, data=json.dumps(data),headers=self.urlHeadersJson)
@@ -201,16 +201,16 @@ class IxNet:
 		name=name.lstrip("-")
 		if debug:print "SET ATTRIBUTE DATA",{name:value}
 		try:self.response = requests.patch(url=objRef, data=json.dumps({name:value}), headers=self.urlHeadersJson)
-		except Exception, e:raise Exception('Got an error code: ', e)  
+		except Exception, e:raise Exception('Got an error code: ', e)
 		self.checkError()
 
-	
+
 	def getOptions(self,objRef,nodetype="attributes",editable=True):
-		
+
 		if self.srvUrl not in objRef:
 			objRef = self.srvUrl + objRef
 		try:self.response = requests.options(url=objRef)
-		except Exception, e:raise Exception('Got an error code: ', e)  
+		except Exception, e:raise Exception('Got an error code: ', e)
 		self.checkError()
 		#if debug:pprint.pprint(self.response.json())
 		childrenList       = self.response.json()['custom']['children']
@@ -221,8 +221,8 @@ class IxNet:
 			if attr['type']['name']=="href":attributesList.append(attr)
 			elif attr['readOnly']==False:attributesList.append(attr)
 			if editable:attributesList.append(attr)
-			
-				
+
+
 		operationsDict = {}
 		for attr in operationsList:operationsDict[attr['operation']] = attr['href']
 		if nodetype=="children":returnvalues = childrenList
@@ -240,7 +240,7 @@ class IxNet:
 			print "setMultiAttribute:url",objRef
 			pprint.pprint(data)
 		try:self.response = requests.patch(url=objRef, data=json.dumps(data), headers=self.urlHeadersJson)
-		except Exception, e:raise Exception('Got an error code: ', e)  
+		except Exception, e:raise Exception('Got an error code: ', e)
 		self.checkError()
 
 	def getAttribute(self, objRef, name):
@@ -249,7 +249,7 @@ class IxNet:
 		name=name.lstrip("-")
                 #print '\nGET:', objRef, name
 		try:self.response = requests.get(objRef)
-		except Exception, e:raise Exception('Got an error code: ', e)  
+		except Exception, e:raise Exception('Got an error code: ', e)
 		self.checkError()
 		if name=="all":
                     return self.response.json()
@@ -257,9 +257,9 @@ class IxNet:
                     #print '\nGET Response:', pprint.pprint(self.response.json())
                     return self.response.json()[name]
 
-		
+
 	def getIxNetSessionUrl(self, sessionId=None):
-		if sessionId:return 
+		if sessionId:return
 		else:return "/%s/sessions/%s/ixnetwork" % (self.baseUrl,str(self.sessionId))
 
 	def readFrom(self,filename, *args):
@@ -278,7 +278,7 @@ class IxNet:
 		except Exception, e:raise Exception(str(e))
 		data["arg3"] = vports
 		return data
-		
+
 	def ixNetExec(objUrl, execName, payload=None):
 		try:
 			stateURL_ = objUrl + "/operations/"+execName
@@ -288,14 +288,14 @@ class IxNet:
 			if payload == None:
 				print "POST: " + urlString
 				response = requests.post(url=urlString, headers=urlHeadersJson)
-			else: 
+			else:
 				print "POST: " + urlString + "  <-- Payload: " + str(payload)
 				response = requests.post(url=urlString, headers=urlHeadersJson, data=json.dumps(payload))
 			a = response.json()
 			if a["id"]!="":waitForComplete(objUrl, response)
 			else : return response
 		except Exception, e:
-			raise Exception('Got an error code: ', e)  
+			raise Exception('Got an error code: ', e)
 		if not response.ok:
 			raise TestFailedError(response.text)
 		return response
@@ -303,10 +303,10 @@ class IxNet:
 
 def loadConfigFile(sessionUrl, configFile):
     # Load a saved config file from a Linux filesystem
-    # 
+    #
     # sessionUrl = http://10.219.x.x:11009/api/v1/sessions/1/ixnetwork
     # configFile = The full path including the saved config file
-    # 
+    #
     # Returns 0 if success
     # Returns 1 if failed
 
@@ -364,7 +364,7 @@ def VerifyPortState( portList='all', expectedPortState='up' ):
 
             if port in portList:
                 vPortList.append(vport)
-                
+
     portsAllUpFlag = 0
 
     for vport in vPortList:
@@ -396,7 +396,7 @@ def VerifyPortState( portList='all', expectedPortState='up' ):
                     print '\nVerifyPortState: %s is still %s. Expecting port down. %s/60 seconds.' % (port, portState, timer)
                     time.sleep(2)
                     continue
-                
+
                 if portState == 'up' and timer != 60:
                     print '\nError VerifyPortState: %s seem to be stuck on the %s state. Expecting port down' % (port, portState)
                     portsAllUpFlag = 1
@@ -427,7 +427,7 @@ def VerifyAllQuickTestNames( quickTestNameList ):
     for qtHandle in allConfiguredQuickTestHandles:
         allConfiguredQuickTestNames.append(ixNet.getAttribute(qtHandle, 'name'))
 
-    print '\nAll configured QT test names:', allConfiguredQuickTestNames, 
+    print '\nAll configured QT test names:', allConfiguredQuickTestNames,
 
     for userDefinedQuickTestName in quickTestNameList:
         if userDefinedQuickTestName not in allConfiguredQuickTestNames:
@@ -470,7 +470,7 @@ def VerifyQuickTestApply( quickTestHandle ):
         currentAction = GetQuickTestCurrentAction(quickTestHandle).strip(' ')
         if currentAction == None:
             currentAction = 'ApplyingAndInitializing'
-            
+
         print '\nVerifyQuickTestApply: %s : Waiting %s/%s seconds' % (currentAction, counter, applyQuickTestCounter)
         if ixNetworkVersionNumber >= 8:
             if counter < applyQuickTestCounter and currentAction != 'TransmittingFrames':
@@ -493,7 +493,7 @@ def VerifyQuickTestApply( quickTestHandle ):
                 print '\nVerifyQuickTestApply is done applying configuration and has started transmitting frames'
                 break
             break
-        
+
         if counter == applyQuickTestCounter:
             if ixNetworkVersionNumber >= 8 & currentAction != 'TransmittingFrames':
                 print '\nVerifyQuickTestApply is stuck on %s. Waited %s/%s seconds' % (
@@ -538,22 +538,22 @@ def CopyFileWindowsToLocalLinux( currentQtTestName, windowsPath, localPath ):
     print '\nCopyFileWindowsToLocalLinux: From: %s to %s\n' % (windowsPath, localPath)
     destinationPath = '/api/v1/sessions/1/ixnetwork/files/'+fileName
     currentTimestamp = datetime.datetime.utcnow().strftime('%s')
-    
+
     requests.post('http://%s:%s/api/v1/sessions/1/ixnetwork/operations/copyfile' % (
-		    configs.ixNetworkApiServer, 
-		    int(configs.ixNetworkPort)+3000), 
-		  data=json.dumps({"arg1": windowsPath, "arg2": destinationPath}), 
+		    configs.ixNetworkApiServer,
+		    int(configs.ixNetworkPort)+3000),
+		  data=json.dumps({"arg1": windowsPath, "arg2": destinationPath}),
 		  headers={'content-type': 'application/json'})
 
     # curl http://10.219.117.103:11009/api/v1/sessions/1/ixnetwork/files/AggregateResults.csv -O -H "Content-Type: application/octet-stream" -output /home/hgee/AggregateResults.csv
 
     requestStatus = requests.get('http://%s:%s/api/v1/sessions/1/ixnetwork/files/%s' % (
-		    configs.ixNetworkApiServer, 
-		    int(configs.ixNetworkPort)+3000, fileName), 
+		    configs.ixNetworkApiServer,
+		    int(configs.ixNetworkPort)+3000, fileName),
 				 stream=True)
     if requestStatus.status_code == 200:
         contents = requestStatus.raw.read()
-	localPath = localPath+'/'+currentQtTestName.replace(' ', '_')+'_'+fileName+'_'+currentTimestamp 
+	localPath = localPath+'/'+currentQtTestName.replace(' ', '_')+'_'+fileName+'_'+currentTimestamp
 	with open(localPath, 'wb') as downloadedFileContents:
             downloadedFileContents.write(contents)
     else:
@@ -579,7 +579,7 @@ def help():
     os.system('clear')
     print '\n\nUsage:'
     print '-'*50, '\n'
-    
+
     print '-ixNetworkApiServerIp:   The IxNetwork Windows PC'
     print '-ixNetworkPort:          The IxNetwork socket port number'
     print '-quickTestListToRun:     All the Quick Test names to run wrapped inside double quotes'
@@ -615,7 +615,7 @@ while argIndex < len(parameters):
     elif currentArg == '-help':
         help()
     else:
-        sys.exit('No such parameter: %s' % currentArg) 
+        sys.exit('No such parameter: %s' % currentArg)
 
 
 ixNet = IxNet(configs.ixNetworkApiServer, int(configs.ixNetworkPort)+3000)
@@ -658,7 +658,7 @@ for quickTestName in quickTestNameList:
     # Must wait 8 seconds for applying to sync before moving forward
     print '\nWait 8 seconds for Quick Test to apply to hardware ...'
     time.sleep(8)
-    
+
     if StartQuickTest(quickTestHandle) == 1:
         sys.exit()
 
@@ -675,4 +675,3 @@ for quickTestName in quickTestNameList:
     CopyFileWindowsToLocalLinux(currentQuickTestName, resultPath, configs.copyResultFileToLocalLinuxPath)
 
 sys.exit()
-

@@ -2,7 +2,7 @@
 
 # Connect to an existing IxNetwork configuration.
 #
- 
+
 package req Ixia
 
 set ixiaChassisIp 10.219.117.x
@@ -46,7 +46,7 @@ proc StartAllProtocolsHlt {} {
 proc StartTrafficHlt {} {
     puts "\nStarting IxNetwork traffic ..."
     set status [ixia::traffic_control -action run]
-    
+
     if {[keylget status status] != $::SUCCESS} {
 	puts "\nIxia traffic failed to start: $status"
     } else {
@@ -59,7 +59,7 @@ proc StartTrafficHlt {} {
 proc GetStatsHlt { {type flow} } {
     puts "\nGetStatsHlt"
     set flowStats [::ixia::traffic_stats -mode $type]
-    
+
     if {[keylget flowStats status] != $::SUCCESS} {
 	puts "GetStatsHlt failed: $status"
 	return 0

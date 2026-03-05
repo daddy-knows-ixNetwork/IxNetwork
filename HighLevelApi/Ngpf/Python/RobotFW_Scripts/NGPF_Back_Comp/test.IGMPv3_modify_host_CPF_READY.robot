@@ -38,59 +38,51 @@ test
 	@{session} =  Split String  ${session}
 	${host} =  Get From Dictionary  ${result}  igmp_host_handle
 	@{host} =  Split String  ${host}
-	
+
 # Create multicast group pool number 1
-	
+
 	${result} =  Emulation Multicast Group Config  mode=create  num_groups=5  ip_addr_start=226.0.1.1  ip_addr_step=0.0.0.1  ip_prefix_len=24
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${group1} =  Get From Dictionary  ${result}  handle
-	
+
 # Create multicast group pool number 2
-	
+
 	${result} =  Emulation Multicast Group Config  mode=create  num_groups=5  ip_addr_start=227.0.1.1  ip_addr_step=0.0.0.1  ip_prefix_len=24
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${group2} =  Get From Dictionary  ${result}  handle
-	
+
 # Create multicast source pool number 1
-	
+
 	${result} =  Emulation Multicast Source Config  mode=create  num_sources=3  ip_addr_start=100.41.1.1  ip_addr_step=0.0.1.0  ip_prefix_len=24
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${source1} =  Get From Dictionary  ${result}  handle
-	
+
 # Create multicast source pool number 1
-	
+
 	${result} =  Emulation Multicast Source Config  mode=create  num_sources=3  ip_addr_start=100.43.1.1  ip_addr_step=0.0.1.0  ip_prefix_len=24
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${source2} =  Get From Dictionary  ${result}  handle
-	
+
 # Create group member for session1 with group_pool_handle group1
-	
+
 	${result} =  Emulation Igmp Group Config  mode=create  session_handle=@{session}[0]  group_pool_handle=${group1}
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${group_member1} =  Get From Dictionary  ${result}  handle
-	
+
 # Create group member for session1 with group_pool_handle group2 and
 # source handle source1 and source2
 	${result} =  Emulation Igmp Group Config  mode=create  session_handle=@{session}[0]  group_pool_handle=${group2}  source_pool_handle=${source1} ${source2}
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 	${group_member2} =  Get From Dictionary  ${result}  handle
-	
+
 # Modify session to have filter_mode include and no ip_router_alert
-	
+
 	${result} =  Emulation Igmp Config  mode=modify  handle=@{session}[0]  filter_mode=include  ip_router_alert=0
 	${status} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${status}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-	
-	
-	
-	
-	
-	
-	
-	

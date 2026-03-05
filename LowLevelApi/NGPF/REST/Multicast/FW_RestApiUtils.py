@@ -44,7 +44,7 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#    This contains required definitions for restAPI sample scripts             # 
+#    This contains required definitions for restAPI sample scripts             #
 #                                                                              #
 ################################################################################
 # Needed for REST API
@@ -84,7 +84,7 @@ def getIxNetSessionsList(ixnetUrl):
 #######################################################
 def getIxNetSessions(ixnetUrl):
     print "[getIxNetSessions] + " + ixnetUrl
-        
+
     try:
         h = httplib2.Http()
         sessionsUrl = ixnetUrl+"sessions"
@@ -97,7 +97,7 @@ def getIxNetSessions(ixnetUrl):
     if response.status != 200 :
         raise TestFailedError(content.json()['errors'])
     return json.loads(content)
-    
+
 
 #######################################################
 # Add new list to IxNetwork session, returns response in requests form
@@ -139,7 +139,7 @@ def addIxNetObject(inputUrl, obj, payload=None):
         raise Exception('Got an error code: ', e)
     if response.status != 200 :
         raise TestFailedError(json.loads(content)['errors'])
-        
+
     objLists = json.loads(content)
     objUrl =  inputUrl.split("/api/v1/sessions/")[0] + objLists['links'][0]['href']
     return objUrl
@@ -258,7 +258,7 @@ def ixNetExec(objUrl, execName, payload=None):
     if response.status != 200 :
         raise TestFailedError(response.json()['errors'])
     return content
-    
+
 #######################################################
 # wait for the current operation to complete
 # Ex: waitForComplete(sessionUrl, response)
@@ -325,7 +325,7 @@ def ixNetAssignPorts(sessionUrl, realPorts):
         # print datas
         print "POST: " + urlString + " <--- DATA: " + str(datas)
         # response = requests.post(url=urlString, data=json.dumps(datas), headers=urlHeadersJson)
-        
+
         response, content = h.request(urlString,'POST',json.dumps(datas),urlHeadersJson)
         # wait for COMPLETE
         waitForComplete(sessionUrl, content)
@@ -419,7 +419,7 @@ def ixNetCheckAtt(urlString, atts):
     if response.status != 200 :
         raise TestFailedError(json.loads(content)['errors'])
     reqAtt = json.loads(content)
-    
+
     for attrib in atts:
         if str(reqAtt[attrib]).lower() != str(atts[attrib]).lower():
             raise TestFailedError("Attribute was not set correctly: "  + attrib + "=" + reqAtt[attrib] + ", should be: " + atts[attrib])
@@ -462,7 +462,7 @@ def ixNetGetAtt(getAttUrl, att, logging=True ):
         raise TestFailedError(json.loads(content)['errors'])
     attUrl = res[att]
     return attUrl
-    
+
 
 #######################################################
 # ixNet get List in requests form
@@ -782,4 +782,3 @@ class RestQuickTest:
                 return qtFullUrl
                 # return timeLine["quickTestId"]
         raise TestFailedError("Specified timeLine URL was not found, timeLineUrl:" + timeLineUrl)
-

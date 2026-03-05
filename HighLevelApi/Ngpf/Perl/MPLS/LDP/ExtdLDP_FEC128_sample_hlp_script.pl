@@ -86,7 +86,7 @@
 ################################################################################
 
 ################################################################################
-# Utils                                                                        #	
+# Utils                                                                        #
 ################################################################################
 
 # Libraries to be included
@@ -105,7 +105,7 @@
     # use ixiahlt {IXIA_VERSION => $ENV{'IXIA_VERSION'}, TclAutoPath  => [$ENV{'PERL_IXOS_LIB_PATH'}, $ENV{'PERL_IXNET_LIB_PATH'}]};
 
 
-# Running from Windows: 
+# Running from Windows:
 
 	# use lib "C:/Program Files (x86)/Ixia/hltapi/4.95.117.44/TclScripts/lib/hltapi/library/common/ixia_hl_lib-7.40";
     #use lib "C:/Program Files (x86)/Ixia/hltapi/4.95.117.44/TclScripts/lib/hltapi/library/common/ixiangpf/perl";
@@ -162,7 +162,7 @@ my @port_handles_list = split(/ /,$port_handles);
 ################################################################################
 
 # Creating a topology on first port
-print "Adding topology 1 on port 1\n";     
+print "Adding topology 1 on port 1\n";
 my $topology_1_status = ixiangpf::topology_config ({
     topology_name      => "{Topology for FEC128 1}",
     port_handle        => $port_handles_list[0],
@@ -176,8 +176,8 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $topology_1_handle = $HashRef->{'topology_handle'};
 
-# Creating a device group in topology 
-print "Creating device group 1 in topology 1\n";      
+# Creating a device group in topology
+print "Creating device group 1 in topology 1\n";
 my $device_group_1_status = ixiangpf::topology_config ({
     topology_handle              => "$topology_1_handle",
     device_group_name            => "{Provider Router 1}",
@@ -192,7 +192,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $deviceGroup_1_handle = $HashRef->{'device_group_handle'};
-    
+
 
 # Creating a topology on second port
 print "Adding topology 2 on port 2\n";
@@ -230,7 +230,7 @@ my $deviceGroup_2_handle = $HashRef->{'device_group_handle'};
 #  Configure protocol interfaces                                               #
 ################################################################################
 
-# Creating ethernet stack for the first Device Group 
+# Creating ethernet stack for the first Device Group
 print "Creating ethernet stack for the first Device Group\n";
 my $ethernet_1_status = ixiangpf::interface_config ({
     protocol_name                => "{Ethernet 1}",
@@ -266,8 +266,8 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $ethernet_2_handle = $HashRef->{'ethernet_handle'};
 
-# Creating IPv4 Stack on top of Ethernet Stack for the first Device Group                                 
-print "Creating IPv4 Stack on top of Ethernet Stack for the first Device Group\n";     
+# Creating IPv4 Stack on top of Ethernet Stack for the first Device Group
+print "Creating IPv4 Stack on top of Ethernet Stack for the first Device Group\n";
 my $ipv4_1_status = ixiangpf::interface_config ({
     protocol_name                     => "{IPv4 1}",
     protocol_handle                   => "$ethernet_1_handle",
@@ -287,7 +287,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $ipv4_1_handle = $HashRef->{'ipv4_handle'};
 
-# Creating IPv4 Stack on top of Ethernet Stack for the second Device Group 
+# Creating IPv4 Stack on top of Ethernet Stack for the second Device Group
 print "Creating IPv4 2 stack on ethernet 2 stack for the second Device Group\n";
 my $ipv4_2_status = ixiangpf::interface_config ({
     protocol_name                     => "{IPv4 2}",
@@ -309,9 +309,9 @@ if ($command_status != $ixiangpf::SUCCESS) {
 my $ipv4_2_handle = $HashRef->{'ipv4_handle'};
 
 ################################################################################
-# Other protocol configurations                                                # 
+# Other protocol configurations                                                #
 ################################################################################
-# This will create OSPFv2 on top of IP within Topology 1 
+# This will create OSPFv2 on top of IP within Topology 1
 print "Creating OSPFv2 on top of IPv4 1 stack\n";
 my $ospfv2_1_status =ixiangpf::emulation_ospf_config ({
      handle                                                 => $ipv4_1_handle,
@@ -620,7 +620,7 @@ my $ldp_targeted_router_1_status =ixiangpf::emulation_ldp_config ({
    targeted_peer_name        =>  "{LDP Targeted Peers 1}",
    lpb_interface_name        =>  "{LDP-IF 3}",
    lpb_interface_active      =>  "1",
-}); 
+});
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
 if ($command_status != $ixiangpf::SUCCESS) {
@@ -670,7 +670,7 @@ my $ldp_targeted_router_2_status =ixiangpf::emulation_ldp_config ({
    targeted_peer_name        =>  "{LDP Targeted Peers 2}",
    lpb_interface_name        =>  "{LDP-IF 4}",
    lpb_interface_active      =>  "1",
-}); 
+});
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
 if ($command_status != $ixiangpf::SUCCESS) {
@@ -714,7 +714,7 @@ my $network_group_5_status =ixiangpf::network_group_config ({
    connected_to_handle           =>  $ldppwvpls_1_handle,
    type                          =>  "mac-pools",
    mac_pools_mac                 =>  "a0.12.01.00.00.01",
-}); 
+});
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
 if ($command_status != $ixiangpf::SUCCESS) {
@@ -733,7 +733,7 @@ my $network_group_5_status =ixiangpf::network_group_config ({
    connected_to_handle           =>  $ldppwvpls_2_handle,
    type                          =>  "mac-pools",
    mac_pools_mac                 =>  "a0.11.01.00.00.01",
-}); 
+});
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
 if ($command_status != $ixiangpf::SUCCESS) {
@@ -763,12 +763,12 @@ if ($command_status != $ixiangpf::SUCCESS) {
 print "Starting LDP in topology2\n";
 ixiangpf::test_control({
     handle => $topology_2_handle,
-    action => 'start_protocol',});    
+    action => 'start_protocol',});
 if ($command_status != $ixiangpf::SUCCESS) {
     my $error = ixiangpf::status_item('log');
     print "Error: $error";
     return "FAILED - $error";
-}    
+}
 print "Waiting for 20 seconds\n";
 sleep(20);
 ############################################################################
@@ -834,7 +834,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
      my $error = ixiangpf::status_item('log');
      print "Error: $error";
      return "FAILED - $error";
- }    
+ }
 
 ############################################################################
 # Applying changes one the fly                                             #
@@ -885,7 +885,7 @@ foreach (@status_keys) {
 # 5. Frame Size: 64 bytes                                                  #
 # 6. Tracking  : Source Destination EndPoint Set                           #
 ############################################################################
-print "Configuring L2-L3 traffic\n";  
+print "Configuring L2-L3 traffic\n";
 $_result_ = ixiangpf::traffic_config({
     mode                                    => 'create',
     traffic_generator                       => 'ixnetwork_540',
@@ -895,9 +895,9 @@ $_result_ = ixiangpf::traffic_config({
     frame_sequencing                        => 'disable',
     frame_sequencing_mode                   => 'rx_threshold',
     name                                    => 'Traffic_1_Item',
-    circuit_endpoint_type                   => 'ethernet_vlan',                              
-    rate_pps                                => '100000',                                      
-    frame_size                              => '64',                                           
+    circuit_endpoint_type                   => 'ethernet_vlan',
+    rate_pps                                => '100000',
+    frame_size                              => '64',
     mac_dst_mode                            => "fixed",
     mac_src_mode                            => "fixed",
     mac_src_tracking                        => "1",
@@ -984,5 +984,5 @@ my $stop_status = ixiangpf::test_control({
     }
 sleep(2);
 
-print "!!! Test Script Ends !!!\n";           
-print "SUCCESS - $0\n";         
+print "!!! Test Script Ends !!!\n";
+print "SUCCESS - $0\n";

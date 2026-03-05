@@ -17,20 +17,20 @@ import pytest
 
 runTraffic = True
 
-class BGP(): 
+class BGP():
     def test_setup_ixia(self, connectIxNetwork, ixNetworkSessionObj, ixNetworkObj, middleware):
         """
         Configure IxNetwork BGP NGPF.
-        
+
         connectIxNetwork <fixture>: Connects to IxNetwork API server
         ixNetworkSessioinObj <object>: RestPy session object
         ixNetworkObj <object>: RestPy IxNetwork object
         """
         # IxNetwork config params are passed into this script from pytest fixtures middleware
         print('\n--- middleware:', middleware.params)
-        
+
         forceTakePortOwnership = middleware.params['forceTakePortOwnership']
-            
+
         try:
             portList = middleware.params['portList']
 
@@ -47,7 +47,7 @@ class BGP():
 
             if runTraffic:
                 portMap.Connect(forceTakePortOwnership)
-            
+
             ixNetworkObj.info('Creating Topology Group 1')
             topology1 = ixNetworkObj.Topology.add(Name='Topo1', Ports=vport['Port_1'])
             deviceGroup1 = topology1.DeviceGroup.add(Name='DG1', Multiplier='3')
@@ -90,7 +90,7 @@ class BGP():
             ipv4 = ethernet2.Ipv4.add(Name='Ipv4-2')
             ipv4.Address.Increment(start_value='1.1.1.4', step_value='0.0.0.1')
             ipv4.GatewayIp.Increment(start_value='1.1.1.1', step_value='0.0.0.0')
-        
+
             ixNetworkObj.info('Configuring BgpIpv4Peer 2')
             bgp2 = ipv4.BgpIpv4Peer.add(Name='Bgp2')
             bgp2.DutIp.Increment(start_value='1.1.1.1', step_value='0.0.0.1')
@@ -102,7 +102,7 @@ class BGP():
             ipv4PrefixPool = networkGroup2.Ipv4PrefixPools.add(NumberOfAddresses='1')
             ipv4PrefixPool.NetworkAddress.Increment(start_value='20.20.0.1', step_value='0.0.0.1')
             ipv4PrefixPool.PrefixLength.Single(32)
-            
+
             if runTraffic:
                 ixNetworkObj.StartAllProtocols(Arg1='sync')
 
@@ -114,7 +114,7 @@ class BGP():
 
             ixNetworkObj.info('Create Traffic Item')
             trafficItem = ixNetworkObj.Traffic.TrafficItem.add(Name='BGP Traffic', BiDirectional=False, TrafficType='ipv4')
-            
+
             ixNetworkObj.info('Add endpoint flow group')
             trafficItem.EndpointSet.add(Sources=topology1, Destinations=topology2)
 
@@ -140,39 +140,39 @@ class BGP():
                     ixNetworkObj.info('\nRow:{}  TxPort:{}  RxPort:{}  TxFrames:{}  RxFrames:{}\n'.format(
                         rowNumber, flowStat['Tx Port'], flowStat['Rx Port'],
                         flowStat['Tx Frames'], flowStat['Rx Frames']))
-                    
+
                 ixNetworkObj.Traffic.StopStatelessTrafficBlocking()
                 ixNetworkObj.StopAllProtocols(Arg1='sync')
-                
+
                 if middleware.params['debugMode'] == False:
                     for vport in ixNetworkObj.Vport.find():
                         vport.ReleasePort()
-                        
+
                     # For linux and connection_manager only
                     if ixNetworkSessionObj.TestPlatform.Platform != 'windows':
                         ixNetworkSessionObj.Session.remove()
-                
+
                 if flowStatistics.Rows[0]['Tx Frames'] != flowStatistics.Rows[0]['Rx Frames']:
                     pytest.fail(f'\nFailed: Tx Frames: {flowStatistics.Rows[0]["Tx Frames"]}   Rx Frames: {flowStatistics.Rows[1]["Rx Frames"]}')
-                    
+
         except Exception as errMsg:
             if middleware.params['debugMode'] == False:
                 if ixNetworkSessionObj.TestPlatform.Platform != 'windows':
                     ixNetworkSessionObj.Session.remove()
-                    
+
             pytest.fail('\n{}'.format(traceback.format_exc(None, errMsg)))
 
-        
+
     def test_bgp(self, ixNetworkSessionObj, ixNetworkObj):
         """
         Start BGP traffic for testing.  Get stats for passed/failed result.
-        
+
         sandboxConfigs <dict object>: A dict object containing toka controller/sandbox data
         ixNetworkSessioinObj <object>: RestPy session object
         ixNetworkObj <objecet>: RestPy IxNetwork object
         """
         ixNetworkObj.info('Starting test_bgp ...')
-        
+
         '''
         try:
             if runTraffic:
@@ -191,22 +191,22 @@ class BGP():
 
                 ixNetworkObj.Traffic.StopStatelessTrafficBlocking()
                 ixNetworkObj.StartAllProtocols(Arg1='sync')
-                
+
                 if sandboxConfigs['debugMode'] == False:
                     for vport in ixNetworkObj.Vport.find():
                         vport.ReleasePort()
-                        
+
                     # For linux and connection_manager only
                     if ixNetworkSessionObj.TestPlatform.Platform != 'windows':
                         ixNetworkSessionObj.Session.remove()
-                        
+
         except Exception as errMsg:
             if sandboxConfigs['debugMode'] == False:
                 if ixNetworkSessionObj.TestPlatform.Platform != 'windows':
                     ixNetworkSessionObj.Session.remove()
-                    
+
             pytest.fail('\n{}'.format(traceback.format_exc(None, errMsg)))
         '''
-        
+
     def test_teardown_ixia(self):
         assert True

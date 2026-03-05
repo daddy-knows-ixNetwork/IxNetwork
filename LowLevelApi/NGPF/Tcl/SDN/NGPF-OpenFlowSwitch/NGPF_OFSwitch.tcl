@@ -47,7 +47,7 @@
 #                                                                              #
 # Description:                                                                 #
 #    This script intends to demonstrate how to use NGPF OF Switch API          #
-#    It will create one OF Switch topology , it will start the emulation       #       
+#    It will create one OF Switch topology , it will start the emulation       #
 #    and then it will retrieve and display few statistics .                    #
 #    It will send learned info trigger  for specified match crteria            #
 ################################################################################
@@ -74,7 +74,7 @@ ixNet exec newConfig
 
 ################################################################################
 # protocol configuration section                                               #
-################################################################################ 
+################################################################################
 puts "Adding 1 vports"
 ixNet add [ixNet getRoot] vport
 ixNet commit
@@ -136,24 +136,24 @@ set NumChannels [ixNet getAttribute $openFlowSwitch1 -numberOfChannels]
 ixNet setAttr $openFlowSwitch1 -numberOfChannels 1
 ixNet commit
 set openFlowChannel [ixNet getL $openFlowSwitch1 OFSwitchChannel ]
-puts "Set Number of auxilary Channel to 1" 
+puts "Set Number of auxilary Channel to 1"
 set NumAuxChannel [ixNet getA $openFlowChannel -auxConnectionsPerChannel]
 ixNet setAttr $openFlowChannel -auxConnectionsPerChannel 1
 ixNet commit
 set OfSwitchAuxChannel [ixNet getL $openFlowChannel auxiliaryConnectionList]
-puts "Set auxilary Channel Connection Type to UDP" 
+puts "Set auxilary Channel Connection Type to UDP"
 set mvAux [ixNet getA $OfSwitchAuxChannel -connectionType]
 ixNet setAttr $mvAux/singleValue -value udp
 ixNet commit
 set OfSwitchAuxConnectionType [ixNet getA $mvAux -values]
 
-puts "Set auxilary Channel ID to 1" 
+puts "Set auxilary Channel ID to 1"
 set mvAuxID [ixNet getA $OfSwitchAuxChannel -auxId ]
 ixNet setAttr $mvAuxID/singleValue -value 1
 ixNet commit
 set OfSwitchAuxId [ixNet getA $mvAuxID -values]
 
-puts "Set auxilary Channel UDP port Number to 6000" 
+puts "Set auxilary Channel UDP port Number to 6000"
 set mvUdp [ixNet getA $OfSwitchAuxChannel -uDPSrcPortNum]
 ixNet setAttr $mvUdp/singleValue -value 6000
 ixNet commit
@@ -180,7 +180,7 @@ puts "set Table ID Custom for Switch Flow Learned Info "
 ixNet setA $oFSwitchLearnedInfoConfig -flowStatTableIdMode tableIdCustom
 ixNet commit
 set flowStatTableIdMode [ixNet getA $oFSwitchLearnedInfoConfig -flowStatTableIdMode]
-     
+
 
 ################################################################################
 # Start protocol and check statistics                                          #
@@ -220,7 +220,7 @@ foreach statValList [ixNet getAttr $viewPage -rowValues] {
 }
 puts "***************************************************"
 #######################################################################################
-# On the fly section  Enabling and Disabling Switch , Switch Channel and Switch port #  
+# On the fly section  Enabling and Disabling Switch , Switch Channel and Switch port #
 #######################################################################################
 
 puts " Disable switch on the Fly"
@@ -266,13 +266,13 @@ set OFSwitchChannel [ixNet getL $openFlowSwitch1 OFSwitchChannel]
 set ofMultiValueMac [ixNet getA $ofSwitchPorts -etherAddr]
 ixNet setA $ofMultiValueMac/singleValue -value 00:00:00:10:10:10
 ixNet commit
-set oFportMacAddress [ixNet getA $ofMultiValueMac -values] 
+set oFportMacAddress [ixNet getA $ofMultiValueMac -values]
 puts "Change Port number on the fly"
 set OFSwitchChannel [ixNet getL $openFlowSwitch1 OFSwitchChannel]
 set oFMvPortNumber [ixNet getA $ofSwitchPorts -portNumber]
 ixNet setA $oFMvPortNumber /singleValue -value 5
 ixNet commit
-set oFportNumber [ixNet getA $oFMvPortNumber  -values] 
+set oFportNumber [ixNet getA $oFMvPortNumber  -values]
 
 
 ###############################################################################

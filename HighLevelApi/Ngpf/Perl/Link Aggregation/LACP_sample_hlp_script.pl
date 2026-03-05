@@ -270,7 +270,7 @@ print "\nCreating LACP on top of Ethernet Stack for the first Device Group with 
     }
     @status_keys = ixiangpf::status_item_keys();
     my $multivalue_1_handle = ixiangpf::status_item('multivalue_handle');
-    
+
 # Configuring SYSTEM1-lacp-LHS with Actor Key, System Id and flags
 print ("Configuring SYSTEM1-lacp-LHS with Actor Key, System Id and flags\n");
     my $lacp_1_status = ixiangpf::emulation_lacp_link_config ({
@@ -296,7 +296,7 @@ print ("Configuring SYSTEM1-lacp-LHS with Actor Key, System Id and flags\n");
     }
     @status_keys = ixiangpf::status_item_keys();
     my $lacp_1_handle = ixiangpf::status_item('lacp_handle');
-# Creating LACP on top of Ethernet Stack for the second Device Group with actor key 00:00:00:00:07:77 
+# Creating LACP on top of Ethernet Stack for the second Device Group with actor key 00:00:00:00:07:77
 print "\nCreating LACP on top of Ethernet Stack for the second Device Group with actor key 00:00:00:00:07:77\n";
       my $multivalue_2_status = ixiangpf::multivalue_config ({
         pattern                 => "counter",
@@ -722,4 +722,3 @@ my $stop_status = ixiangpf::test_control({
 sleep(5);
 
 print "!!! Test Script Ends !!!\n";
-

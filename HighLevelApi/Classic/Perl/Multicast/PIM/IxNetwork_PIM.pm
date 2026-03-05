@@ -1,5 +1,5 @@
 ################################################################################
-# $Revision: 0.1                                                               # 
+# $Revision: 0.1                                                               #
 # $Author:  Vijay Anantha Murthy                                               #
 #                                                                              #
 #    Copyright  1997 - 2012 by IXIA                                            #
@@ -204,7 +204,7 @@ my $vals;
 foreach (@status_keys) {
     print ("\nINFO Keys are : $_\n");
     $vals = ixiahlt::status_item($_);
-    print ("\nINFO Values are $vals\n"); 
+    print ("\nINFO Values are $vals\n");
 }
 
 my @pim_session_handle =  ixiahlt::status_item('handle');
@@ -242,7 +242,7 @@ my $group_pool_handle = ixiahlt::status_item('handle');
 print("\nINFO: group pool handle $group_pool_handle\n");
 
 #######################################################
-# Configure PIM Group with Session,                   # 
+# Configure PIM Group with Session,                   #
 # Source and Group handles                            #
 #######################################################
 $_result_ = ixiahlt::emulation_pim_group_config({
@@ -352,7 +352,7 @@ $_result_ = ixiahlt::emulation_pim_control ({
 
 #######################################################
 # Stop the first PIM router per port                  #
-#######################################################          
+#######################################################
 $_result_ = ixiahlt::emulation_pim_control ({
     mode           => 'stop',
     handle         => $pim_session1,

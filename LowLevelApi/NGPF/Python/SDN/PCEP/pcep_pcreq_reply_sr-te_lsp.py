@@ -44,8 +44,8 @@
 ################################################################################
 
 ################################################################################
-# Description: 
-# 1. PCC Requested SR LSPs are statically configured in PCC, with initial 
+# Description:
+# 1. PCC Requested SR LSPs are statically configured in PCC, with initial
 #	 delegation TRUE. When PCC starts, it sends PCRequest these LSPs with PCE.
 # 2. Assign ports
 # 3. Start all protocols
@@ -135,7 +135,7 @@ ixNet.commit()
 ethernet1 = ixNet.remapIds(ethernet1)[0]
 macMv = ixNet.getAttribute(ethernet1, '-mac')
 ixNet.add(macMv, 'counter')
-ixNet.setMultiAttribute(macMv + '/counter',  
+ixNet.setMultiAttribute(macMv + '/counter',
              '-direction', 'increment',
              '-start'    , '00:11:01:00:00:01',
              '-step'     , '00:00:00:00:00:01')
@@ -173,7 +173,7 @@ ixNet.commit()
 pccGroup1 = ixNet.remapIds(pccGroup1)[0]
 pccIpv4AddressMv = ixNet.getAttribute(pccGroup1, '-pccIpv4Address')
 ixNet.add(pccIpv4AddressMv, 'counter')
-ixNet.setMultiAttribute(pccIpv4AddressMv + '/counter',  
+ixNet.setMultiAttribute(pccIpv4AddressMv + '/counter',
              '-direction', 'increment',
              '-start'    , '1.1.1.2',
              '-step'     , '0.0.0.1')
@@ -193,14 +193,14 @@ ixNet.commit()
 pceReqMatchCriteria1 = pccGroup1+'/pcRequestMatchCriteria:1'
 srcEndPointIpv4Mv = ixNet.getAttribute(pceReqMatchCriteria1, '-srcIpv4Address')
 ixNet.add(srcEndPointIpv4Mv, 'counter')
-ixNet.setMultiAttribute(srcEndPointIpv4Mv + '/counter',  
+ixNet.setMultiAttribute(srcEndPointIpv4Mv + '/counter',
              '-direction', 'increment',
              '-start'    , '100.0.0.1',
              '-step'     , '0.0.0.1')
 ixNet.commit()
 destEndPointIpv4Mv = ixNet.getAttribute(pceReqMatchCriteria1, '-destIpv4Address')
 ixNet.add(destEndPointIpv4Mv, 'counter')
-ixNet.setMultiAttribute(destEndPointIpv4Mv + '/counter',  
+ixNet.setMultiAttribute(destEndPointIpv4Mv + '/counter',
              '-direction', 'increment',
              '-start'    , '101.0.0.1',
              '-step'     , '0.0.0.1')
@@ -235,7 +235,7 @@ ixNet.commit()
 ethernet2 = ixNet.remapIds(ethernet2)[0]
 macMv = ixNet.getAttribute(ethernet2, '-mac')
 ixNet.add(macMv, 'counter')
-ixNet.setMultiAttribute(macMv + '/counter',  
+ixNet.setMultiAttribute(macMv + '/counter',
              '-direction', 'increment',
              '-start'    , '00:12:01:00:00:01',
              '-step'     , '00:00:00:00:00:01')
@@ -249,7 +249,7 @@ ixNet.commit()
 ipv4Addr2 = ixNet.remapIds(ipv4Addr2)[0]
 addressMv = ixNet.getAttribute(ipv4Addr2, '-address')
 ixNet.add(addressMv, 'counter')
-ixNet.setMultiAttribute(addressMv + '/counter',  
+ixNet.setMultiAttribute(addressMv + '/counter',
              '-direction', 'increment',
              '-start'    , '1.1.1.2',
              '-step'     , '0.0.0.1')
@@ -290,14 +290,14 @@ ixNet.commit()
 reqLsp2 = pcc2 + '/requestedLsps:1'
 sourceIpv6AddressMv = ixNet.getAttribute(reqLsp2, '-sourceIpv6Address')
 ixNet.add(sourceIpv6AddressMv, 'counter')
-ixNet.setMultiAttribute(sourceIpv6AddressMv + '/counter',  
+ixNet.setMultiAttribute(sourceIpv6AddressMv + '/counter',
              '-direction', 'increment',
              '-start'    , '1000:0:0:0:0:0:0:1',
              '-step'     , '0:0:0:0:0:0:0:1')
 ixNet.commit()
 sourceIpv4AddressMv = ixNet.getAttribute(reqLsp2, '-sourceIpv4Address')
 ixNet.add(sourceIpv4AddressMv, 'counter')
-ixNet.setMultiAttribute(sourceIpv4AddressMv + '/counter',  
+ixNet.setMultiAttribute(sourceIpv4AddressMv + '/counter',
              '-direction', 'increment',
              '-start'    , '100.0.0.1',
              '-step'     , '0.0.0.1')
@@ -331,7 +331,7 @@ ixNet.setMultiAttribute(subObjectTypeMv + '/singleValue',
 ixNet.commit()
 ipv4AddressMv = ixNet.getAttribute(reqLspMetric2, '-ipv4Address')
 ixNet.add(ipv4AddressMv, 'counter')
-ixNet.setMultiAttribute(ipv4AddressMv + '/counter',  
+ixNet.setMultiAttribute(ipv4AddressMv + '/counter',
              '-direction', 'increment',
              '-start'    , '100.0.0.1',
              '-step'     , '0.0.0.1')

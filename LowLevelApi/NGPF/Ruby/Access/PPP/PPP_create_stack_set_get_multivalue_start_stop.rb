@@ -321,4 +321,3 @@ puts("\n\nCleaning up IxNetwork...")
 @ixNet.execute('newConfig')
 @ixNet.disconnect()
 puts("Done: IxNetwork session is closed...")
-

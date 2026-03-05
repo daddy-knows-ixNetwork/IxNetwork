@@ -170,9 +170,9 @@ if sm.checkStats(topo_result, expected_topology,True):
 timeoutReconnect = 180
 for x in range(1, 2):
     print ("Waiting for card " + str(x) + " to connect...")
-    
+
     cardStatus = RestCB.getCardStatus (sessionUrl,x)
-    
+
     i = 0
     while (cardStatus != "cardOK" and i < timeoutReconnect) :
         print ("cardStatus is: " + str(cardStatus))
@@ -185,7 +185,7 @@ for x in range(1, 2):
         raise TestFailedError("The card was not connected... check your configuration!")
     else :
         print ("The card was connected after (sec) " + str(i))
-    
+
     print ("Card " + str(x) + " connected successfully!")
 
 # Reboot card

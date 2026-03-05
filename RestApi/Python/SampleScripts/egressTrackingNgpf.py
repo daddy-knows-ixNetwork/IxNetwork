@@ -79,7 +79,7 @@ from IxNetRestApiPortMgmt import PortMgmt
 from IxNetRestApiProtocol import Protocol
 from IxNetRestApiTraffic import Traffic
 from IxNetRestApiStatistics import Statistics
- 
+
 # Default the API server to either windows or linux.
 osPlatform = 'windows'
 
@@ -146,7 +146,7 @@ try:
                           serverOs=osPlatform,
                           generateLogFile='ixiaDebug.log'
                       )
-        
+
     if osPlatform in ['windows', 'windowsConnectionMgr']:
         mainObj = Connect(apiServerIp='192.168.70.3',
                           serverIpPort='11009',
@@ -168,18 +168,18 @@ try:
     protocolObj = Protocol(mainObj, portObj)
     topologyObj1 = protocolObj.createTopologyNgpf(portList=[portList[0]],
                                                   topologyName='Topo1')
-    
+
     deviceGroupObj1 = protocolObj.createDeviceGroupNgpf(topologyObj1,
                                                         multiplier=1,
                                                         deviceGroupName='DG1')
-    
+
     topologyObj2 = protocolObj.createTopologyNgpf(portList=[portList[1]],
                                                   topologyName='Topo2')
-    
+
     deviceGroupObj2 = protocolObj.createDeviceGroupNgpf(topologyObj2,
                                                         multiplier=1,
                                                         deviceGroupName='DG2')
-    
+
     ethernetObj1 = protocolObj.configEthernetNgpf(deviceGroupObj1,
                                                   ethernetName='MyEth1',
                                                   macAddress={'start': '00:01:01:00:00:01',
@@ -189,7 +189,7 @@ try:
                                                   vlanId={'start': 103,
                                                           'direction': 'increment',
                                                           'step':0})
-    
+
     ethernetObj2 = protocolObj.configEthernetNgpf(deviceGroupObj2,
                                                   ethernetName='MyEth2',
                                                   macAddress={'start': '00:01:02:00:00:01',
@@ -211,7 +211,7 @@ try:
                                           gatewayPortStep='disabled',
                                           prefix=24,
                                           resolveGateway=True)
-    
+
     ipv4Obj2 = protocolObj.configIpv4Ngpf(ethernetObj2,
                                           ipv4Address={'start': '1.1.1.2',
                                                        'direction': 'increment',
@@ -223,10 +223,10 @@ try:
                                           gatewayPortStep='disabled',
                                           prefix=24,
                                           resolveGateway=True)
-    
+
     protocolObj.startAllProtocols()
     protocolObj.verifyProtocolSessionsNgpf()
-    
+
     # For all parameter options, please go to the API configTrafficItem
     # mode = create or modify
     trafficObj = Traffic(mainObj)
@@ -249,34 +249,34 @@ try:
                            'frameRate': 88,
                            'frameRateType': 'percentLineRate',
                            'frameSize': 128}])
-    
+
     trafficItemObj   = trafficStatus[0]
     endpointObj      = trafficStatus[1][0]
     configElementObj = trafficStatus[2][0]
-    
+
     trafficObj.regenerateTrafficItems()
     trafficObj.applyTraffic()
     trafficObj.configEgressCustomTracking(trafficItemObj, offsetBit, bitWidth)
     statview = trafficObj.createEgressStatView(trafficItemObj, egressTrackingPort, offsetBit, bitWidth,
                                                egressStatViewName, ingressTrackingFilterName)
-    
+
     # Already called regenerateTrafficItems() and applyTraffic() few lines above.
     # Don't call it again or else egress stats will disappear.
     trafficObj.startTraffic(regenerateTraffic=False, applyTraffic=False)
-    
+
     # Check the traffic state before getting stats.
     #    Use one of the below APIs based on what you expect the traffic state should be before calling stats.
     #    If you expect traffic to be stopped such as for fixedFrameCount and fixedDuration
     #    or do you expect traffic to be started such as in continuous mode.
     trafficObj.checkTrafficState(expectedState=['stopped'], timeout=45)
     #trafficObj.checkTrafficState(expectedState=['started'], timeout=45)
-    
+
     statObj = Statistics(mainObj)
     stats = statObj.getStats(viewName=egressStatViewName)
-        
+
     #if removeAllTclStatViews:
     #    mainObj.removeAllTclViews()
-    
+
     print('{0:10} {1:15} {2:15}'.format(
         'rxPort', 'txFrames', 'rxFrames'))
     print('-'*90)

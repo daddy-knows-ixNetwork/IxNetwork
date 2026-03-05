@@ -158,4 +158,3 @@ proc TxRxCalculation {TxFrame RxFrame {tolerance 15} } {
     set flag 0
     return $flag
 }
-

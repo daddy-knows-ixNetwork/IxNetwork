@@ -406,7 +406,7 @@ my $rx_interface_handle = ixiahlt::status_item('interface_handle');
 ######################################################
 # Configure an OSPFv3 emulated router on each port   #
 ######################################################
-my @ospf_router_handle_list; 
+my @ospf_router_handle_list;
 my $local_ip_address_temp  =  $local_ip_address;
 my $router_id_address_temp =  $router_id_address;
 $_result_ = ixiahlt::emulation_ospf_config ({
@@ -473,7 +473,7 @@ $_result_ = ixiahlt::emulation_ospf_info ({
     port_handle => \@portHandleList,
 });
 &catch_error();
- 
+
 ######################################################
 # Start OSPFv3                                       #
 ######################################################

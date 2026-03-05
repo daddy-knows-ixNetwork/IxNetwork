@@ -107,7 +107,7 @@ my @portHandleList         = ();
 ################################################################################
 
 # Connect to the chassis, reset to factory defaults and take ownership
-# When using P2NO HLTSET, for loading the IxTclNetwork package please 
+# When using P2NO HLTSET, for loading the IxTclNetwork package please
 # provide –ixnetwork_tcl_server parameter to ::ixia::connect
 
 $_result_ = ixiahlt::connect ( {
@@ -1232,13 +1232,13 @@ my $bgp_stats_1_status = ixiangpf::emulation_bgp_control ({
 my $format = "%-40s %-s %-10s\n";
 my $stat_value = '';
 
-$stat_value = ixiangpf::status_item("$port_0.aggregate.status");        
+$stat_value = ixiangpf::status_item("$port_0.aggregate.status");
 printf $format, "status", "=", $stat_value;
 
-$stat_value = ixiangpf::status_item("$port_0.aggregate.sessions_configured");        
+$stat_value = ixiangpf::status_item("$port_0.aggregate.sessions_configured");
 printf $format, "sessions_configured", "=", $stat_value;
 
-$stat_value = ixiangpf::status_item("$port_0.aggregate.sessions_established");        
+$stat_value = ixiangpf::status_item("$port_0.aggregate.sessions_established");
 printf $format, "sessions_established", "=", $stat_value;
 
 my $bgp_session_2_status = ixiangpf::emulation_bgp_control ({
@@ -1250,10 +1250,10 @@ my $bgp_session_2_status = ixiangpf::emulation_bgp_control ({
 
 @status_keys = ixiangpf::status_item_keys();
 
-$stat_value = ixiangpf::status_item("$session_handle.session.session_status");        
+$stat_value = ixiangpf::status_item("$session_handle.session.session_status");
 printf $format, "session_status", "=", $stat_value;
 
-$stat_value = ixiangpf::status_item("$session_handle.session.fsm_state");        
+$stat_value = ixiangpf::status_item("$session_handle.session.fsm_state");
 printf $format, "fsm_state", "=", $stat_value;
 
 ############################################
@@ -1300,14 +1300,3 @@ print("Wait for 30 seconds");
 sleep(30);
 
 print ("\n\n$test_name : TEST COMPLETED SUCCESSFULLY!\n");
-
-
-
-
-
-
-
-
-
-
-

@@ -28,13 +28,13 @@ def ConnectAndResumeNgpfHlPy(ixNetworkTclServer, tclServer,
     This API will return all configuration handles.
     '''
 
-    connectStatus = ixia_ngpf.connect ( 
+    connectStatus = ixia_ngpf.connect (
         ixnetwork_tcl_server = ixNetworkTclServer,
         tcl_server = tclServer,
         username = userName,
         session_resume_keys = '1',
         break_locks = '1',
-        ) 
+        )
     if connectStatus['status'] != '1':
         return 1
     else:

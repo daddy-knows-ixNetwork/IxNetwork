@@ -67,13 +67,13 @@ sub assignPorts {
     my $port2    = $my_resource[6];
     my $vport1   = $my_resource[7];
     my $vport2   = $my_resource[8];
-    
+
     my $root = $ixNet->getRoot();
     my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-    
+
     my $chassisObj2 = '';
     if ($chassis1 ne $chassis2) {
         $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -83,7 +83,7 @@ sub assignPorts {
     } else {
         $chassisObj2 = $chassisObj1;
     }
-    
+
     my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -92,7 +92,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-        
+
     $ixNet->commit();
 }
 
@@ -103,7 +103,7 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.39.43.12';
 my $ixTclPort   = '8072';
 my @ports       = (('10.39.37.45', '2', '1'), ('10.39.37.45', '2', '2'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
@@ -126,7 +126,7 @@ sleep(5);
 
 ################################################################################
 # protocol configuration section                                               #
-################################################################################ 
+################################################################################
 print("Adding 2 topologies\n");
 $ixNet->add($ixNet->getRoot(), 'topology', '-vports', $vportTx);
 $ixNet->add($ixNet->getRoot(), 'topology', '-vports', $vportRx);
@@ -313,13 +313,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-        my $statIndiv = ''; 
+        my $statIndiv = '';
         $index = 0;
         foreach $statIndiv (@$statVal) {
             printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
             $index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 ###############################################################################

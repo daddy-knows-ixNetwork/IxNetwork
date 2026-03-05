@@ -50,12 +50,12 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#    This sample connects to a daisy chained topology and sets the chain	   # 
+#    This sample connects to a daisy chained topology and sets the chain	   #
 #    sequence and cable length for each slave, using the ixiangpf namespace.   #
 # Module:                                                                      #
 #    The sample was tested on a LSM XMVDC16NG module.                          #
-#																			   # 
-# Script details:															   # 
+#																			   #
+# Script details:															   #
 # Edit the following lines and replace %HLT_PATH% with the actual			   #
 # installation path for you HLT API release									   #
 #                                                                              #
@@ -98,7 +98,7 @@ sub DHCPv4v6 {
     my $_dhcp_stats_ = '';
 	my @status_keys = ();
 
-# Connection 
+# Connection
     my @chassis         = ("ixro-hlt-xm2-02", "ixro-hlt-xm2-03","ixro-hlt-xm2-09");
 	my $tcl_server      = 'localhost';
 	my @port_list      = (("2/1"), ("2/3"),("2/1"));
@@ -110,11 +110,11 @@ sub DHCPv4v6 {
     my @cable_lengths   = (0,6,3);
     my @chain_seq       = (1,3,2);
 
-    my $ixNet =  new IxNetwork(); 
+    my $ixNet =  new IxNetwork();
 	$ixNet->connect('localhost', '-port', 8009, '-version', '7.31');
 	my $root = $ixNet->getRoot();
-	
- 	
+
+
 	$_result_ = ixiangpf::connect({
         reset                   => 1,
 		port_list	         	=> \@port_list,
@@ -137,12 +137,12 @@ sub DHCPv4v6 {
 
 	my $port_handles = ixiangpf::status_item('vport_list');
 	my @port_handles_list = split(/ /,$port_handles);
-    
-    
+
+
  ########################################################### # 1. Configure 2 topologies, each on one port.
- ########################################################### # 2. Configure a DHCPv6 server and a DHCPv6 client. 
+ ########################################################### # 2. Configure a DHCPv6 server and a DHCPv6 client.
  ########################################################### # 3. Configure a DHCPv4 server and a DHCPv4 client.
-    
+
     my $topology_1_status = ixiangpf::topology_config ({
         topology_name      => "CLIENTS TOPOLOGY",
         port_handle        => "$port_handles_list[0]",
@@ -156,7 +156,7 @@ sub DHCPv4v6 {
     }
 
     my $topology_1_handle = $HashRef->{'topology_handle'};
-   
+
     my $device_group_1_status = ixiangpf::topology_config ({
         topology_handle              => "$topology_1_handle",
         device_group_name            => "Clients Device Group",
@@ -173,7 +173,7 @@ sub DHCPv4v6 {
 
     my $device_group_1_handle = $HashRef->{'device_group_handle'};
 
-    
+
     my $multivalue_1_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "00.11.01.00.00.01",
@@ -192,7 +192,7 @@ sub DHCPv4v6 {
     }
 
     my $multivalue_1_handle = $HashRef->{'multivalue_handle'};
-    
+
     my $ethernet_1_status = ixiangpf::interface_config ({
         protocol_name                => "Ethernet DHCPv4",
         protocol_handle              => "$device_group_1_handle",
@@ -218,8 +218,8 @@ sub DHCPv4v6 {
     }
 
     my $ethernet_1_handle = $HashRef->{'ethernet_handle'};
- 
-    
+
+
     my $dhcpv4client_1_status = ixiangpf::emulation_dhcp_group_config ({
         dhcp_range_ip_type               => "ipv4",
         dhcp_range_renew_timer           => "0",
@@ -240,7 +240,7 @@ sub DHCPv4v6 {
 
     my $dhcpv4client_1_handle = $HashRef->{'dhcpv4client_handle'};
 
-    
+
     my $multivalue_2_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "00.12.01.00.00.01",
@@ -250,7 +250,7 @@ sub DHCPv4v6 {
         nest_owner             => "$topology_1_handle",
         nest_enabled           => "1",
     });
-    
+
     $HashRef = ixiangpf::get_result_hash();
     $command_status = $HashRef->{'status'};
     if ($command_status != $ixiangpf::SUCCESS) {
@@ -260,7 +260,7 @@ sub DHCPv4v6 {
     }
 
     my $multivalue_2_handle = $HashRef->{'multivalue_handle'};
-    
+
     my $ethernet_2_status = ixiangpf::interface_config ({
         protocol_name                => "Ethernet DHCPv6",
         protocol_handle              => "$device_group_1_handle",
@@ -287,7 +287,7 @@ sub DHCPv4v6 {
 
     my $ethernet_2_handle = $HashRef->{'ethernet_handle'};
 
-    
+
     my $multivalue_3_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "10",
@@ -305,7 +305,7 @@ sub DHCPv4v6 {
         return "FAILED - $error";
     }
     my $multivalue_3_handle = $HashRef->{'multivalue_handle'};
-    
+
     my $dhcpv6client_1_status = ixiangpf::emulation_dhcp_group_config ({
         dhcp6_range_duid_enterprise_id            => "$multivalue_3_handle",
         dhcp6_range_duid_type                     => "duid_llt",
@@ -335,7 +335,7 @@ sub DHCPv4v6 {
     my $dhcpv6client_1_handle = $HashRef->{'dhcpv6client_handle'};
     my $dhcp6Iapd_1_handle = $HashRef->{'dhcpv6_iapd_handle'};
     my $dhcp6Iana_1_handle = $HashRef->{'dhcpv6_iana_handle'};
-    
+
     my $topology_2_status = ixiangpf::topology_config ({
         topology_name      => "SERVERS TOPOLOGY",
         port_handle        => "$port_handles_list[1]",
@@ -348,7 +348,7 @@ sub DHCPv4v6 {
         return "FAILED - $error";
     }
     my $topology_2_handle = $HashRef->{'topology_handle'};
-    
+
     my $device_group_2_status = ixiangpf::topology_config ({
         topology_handle              => "$topology_2_handle",
         device_group_name            => "Servers Device Group",
@@ -381,7 +381,7 @@ sub DHCPv4v6 {
         return "FAILED - $error";
     }
     my $multivalue_4_handle = $HashRef->{'multivalue_handle'};
-    
+
     my $ethernet_3_status = ixiangpf::interface_config ({
         protocol_name                => "DHCPv4 Server Ethernet",
         protocol_handle              => "$device_group_2_handle",
@@ -406,8 +406,8 @@ sub DHCPv4v6 {
         return "FAILED - $error";
     }
     my $ethernet_3_handle = $HashRef->{'ethernet_handle'};
-   
-    
+
+
     my $multivalue_5_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "5.5.5.2",
@@ -425,7 +425,7 @@ sub DHCPv4v6 {
         return "FAILED - $error";
     }
     my $multivalue_5_handle = $HashRef->{'multivalue_handle'};
-    
+
     my $multivalue_6_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "5.5.5.1",
@@ -435,7 +435,7 @@ sub DHCPv4v6 {
         nest_owner             => "$topology_2_handle",
         nest_enabled           => "1",
     });
-  
+
     $HashRef = ixiangpf::get_result_hash();
     $command_status = $HashRef->{'status'};
     if ($command_status != $ixiangpf::SUCCESS) {
@@ -444,7 +444,7 @@ sub DHCPv4v6 {
         return "FAILED - $error";
     }
     my $multivalue_6_handle = $HashRef->{'multivalue_handle'};
-    
+
     my $ipv4_1_status = ixiangpf::interface_config ({
         protocol_name                     => "Server IPv4",
         protocol_handle                   => "$ethernet_3_handle",
@@ -465,8 +465,8 @@ sub DHCPv4v6 {
         return "FAILED - $error";
     }
     my $ipv4_1_handle = $HashRef->{'ipv4_handle'};
- 
-    
+
+
     my $multivalue_7_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "10",
@@ -484,7 +484,7 @@ sub DHCPv4v6 {
         return "FAILED - $error";
     }
     my $multivalue_7_handle = $HashRef->{'multivalue_handle'};
-    
+
     my $multivalue_8_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "5.5.5.5",
@@ -502,7 +502,7 @@ sub DHCPv4v6 {
         return "FAILED - $error";
     }
     my $multivalue_8_handle = $HashRef->{'multivalue_handle'};
-    
+
     my $multivalue_9_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "86400",
@@ -512,7 +512,7 @@ sub DHCPv4v6 {
         nest_owner             => "$topology_2_handle",
         nest_enabled           => "0",
     });
-   
+
     $HashRef = ixiangpf::get_result_hash();
     $command_status = $HashRef->{'status'};
     if ($command_status != $ixiangpf::SUCCESS) {
@@ -521,7 +521,7 @@ sub DHCPv4v6 {
         return "FAILED - $error";
     }
     my $multivalue_9_handle = $HashRef->{'multivalue_handle'};
-    
+
     my $dhcpv4server_1_status = ixiangpf::emulation_dhcp_server_config ({
         dhcp_offer_router_address                  => "0.0.0.0",
         dhcp_offer_router_address_inside_step      => "0.0.0.0",
@@ -549,7 +549,7 @@ sub DHCPv4v6 {
     }
     my $dhcpv4server_1_handle = $HashRef->{'dhcpv4server_handle'};
 
-    
+
     my $multivalue_10_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "00.14.01.00.00.01",
@@ -567,7 +567,7 @@ sub DHCPv4v6 {
         return "FAILED - $error";
     }
     my $multivalue_10_handle = $HashRef->{'multivalue_handle'};
-    
+
     my $ethernet_4_status = ixiangpf::interface_config ({
         protocol_name                => "{Ethernet 4}",
         protocol_handle              => "$device_group_2_handle",
@@ -592,7 +592,7 @@ sub DHCPv4v6 {
         return "FAILED - $error";
     }
     my $ethernet_4_handle = $HashRef->{'ethernet_handle'};
-  
+
     my $multivalue_11_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "2000:0:0:100:0:0:50:100",
@@ -610,7 +610,7 @@ sub DHCPv4v6 {
         return "FAILED - $error";
     }
     my $multivalue_11_handle = $HashRef->{'multivalue_handle'};
-    
+
     my $multivalue_12_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "2000:0:0:100:0:0:50:1",
@@ -628,7 +628,7 @@ sub DHCPv4v6 {
         return "FAILED - $error";
     }
     my $multivalue_12_handle = $HashRef->{'multivalue_handle'};
-    
+
     my $ipv6_1_status = ixiangpf::interface_config ({
         protocol_name                     => "IPv6 Servers",
         protocol_handle                   => "$ethernet_4_handle",
@@ -650,8 +650,8 @@ sub DHCPv4v6 {
         return "FAILED - $error";
     }
     my $ipv6_1_handle = $HashRef->{'ipv6_handle'};
-  
-    
+
+
     my $multivalue_13_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "2000:0:0:100:0:0:50:101",
@@ -669,7 +669,7 @@ sub DHCPv4v6 {
         return "FAILED - $error";
     }
     my $multivalue_13_handle = $HashRef->{'multivalue_handle'};
-    
+
     my $multivalue_14_status = ixiangpf::multivalue_config ({
         pattern                => "counter",
         counter_start          => "a1a1:0:0:0:0:0:0:0",
@@ -687,7 +687,7 @@ sub DHCPv4v6 {
         return "FAILED - $error";
     }
     my $multivalue_14_handle = $HashRef->{'multivalue_handle'};
-    
+
     my $dhcpv6server_1_status = ixiangpf::emulation_dhcp_server_config ({
         dhcp6_ia_type                     => "iana",
         handle                            => "$ipv6_1_handle",
@@ -724,12 +724,12 @@ sub DHCPv4v6 {
 
     my @dhcp_list = ($dhcpv6server_1_handle, $dhcpv4server_1_handle, $dhcpv6client_1_handle , $dhcpv4client_1_handle);
     print "Starting protocols .... \n\n";
-    
+
     my $run_status = ixiangpf::test_control({
 		action		=> 'start_protocol',
 		handle		=> \@dhcp_list,
 	});
-	
+
 	$HashRef = ixiangpf::get_result_hash();
 	$command_status = $HashRef->{'status'};
 	if ($command_status != $ixiangpf::SUCCESS){
@@ -738,14 +738,14 @@ sub DHCPv4v6 {
 		return "FAILED - $error";
 	}
 
-    sleep(20);   
+    sleep(20);
 
     print "Stopping protocols .... \n\n";
     # my $stop_status = ixiangpf::test_control({
 		# action		=> 'stop_protocol',
 		# handle		=> \@dhcp_list,
 	# });
-	
+
 	# $HashRef = ixiangpf::get_result_hash();
 	# $command_status = $HashRef->{'status'};
 	# if ($command_status != $ixiangpf::SUCCESS){
@@ -753,12 +753,12 @@ sub DHCPv4v6 {
 		# print "Error: $error";
 		# return "FAILED - $error";
 	# }
-    
+
     ixiangpf::test_control({action=> 'stop_all_protocols'});
     sleep(60);
-    
+
 ######################################################################## 5. Remove the protocols and delete the Device Groups (DG) and topologies.
-    
+
     my $remove_dhcp_status = ::ixiangpf::topology_config ({
         mode                => 'destroy',
         device_group_handle => \@dhcp_list,
@@ -794,7 +794,7 @@ sub DHCPv4v6 {
 		print "Error: $error";
 		return "FAILED - $error";
 	}
-    
+
     my @ethernet_list_2 = ($ethernet_3_handle, $ethernet_4_handle);
     my $remove_eth_status_2 = ::ixiangpf::topology_config ({
         mode                => 'destroy',
@@ -807,7 +807,7 @@ sub DHCPv4v6 {
 		print "Error: $error";
 		return "FAILED - $error";
 	}
-    
+
     my @device_group_list = ($device_group_1_handle, $device_group_2_handle);
     my $remove_dg_status = ::ixiangpf::topology_config ({
         mode                => 'destroy',
@@ -830,7 +830,7 @@ sub DHCPv4v6 {
 		my $error = ixiangpf::status_item('log');
 		print "Error: $error";
 		return "FAILED - $error";
-	}	
+	}
     my $dg_after_delete_1 = $ixNet->getList("$root$topology_1_handle",'deviceGroup');
     my $dg_after_delete_2 = $ixNet->getList("$root$topology_2_handle",'deviceGroup');
 
@@ -839,7 +839,7 @@ sub DHCPv4v6 {
 		$CfgErrors +=1;
     }
     my @topologies = ($topology_1_handle, $topology_2_handle);
-    
+
     my $remove_topologies_status = ::ixiangpf::topology_config ({
         mode                => 'destroy',
         device_group_handle => $topology_1_handle,
@@ -862,7 +862,7 @@ sub DHCPv4v6 {
 		print "Error: $error";
 		return "FAILED - $error";
 	}
-    
+
     if ($CfgErrors != 0) {
         print " This script contains $CfgErrors errors! \n";
         return 0;

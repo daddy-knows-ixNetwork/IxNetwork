@@ -1,5 +1,5 @@
 #!/usr/bin/tclsh
-#################################################################################                                                                             
+#################################################################################
 #    Copyright 1997 - 2020 by IXIA  Keysight                                   #
 #    All Rights Reserved.                                                      #
 #                                                                               #
@@ -60,7 +60,7 @@
 #    Configuration flow of the script is as follow:                             #
 #        i.   Add ISIS router and enable BIER and configure BIER related        #
 #             parameters.                                                       #
-#        ii.  Add Network Topology(NT) and configure BIER related parameters.   #     
+#        ii.  Add Network Topology(NT) and configure BIER related parameters.   #
 #        iii. Add chain DG behind both P routers                                #
 #        iv.  Add loopback on chained DG, confiugre BGP on loopback.            #
 #              add mVRF over BGP within chain DG.                               #
@@ -727,7 +727,7 @@ puts "Switching to S-PMSI for IPv4 Cloud from Sender Site"
 ixNet exec switchToSpmsi $bgpMVpnSenderSitesIpv4
 
 ###############################################################################
-# 5. Retrieve BGP MVPN learned info 
+# 5. Retrieve BGP MVPN learned info
 ###############################################################################
 puts "Fetching IPv4 mVPN Learned Info in Ingress topology"
 ixNet exec getIpv4MvpnLearnedInfo $bgp1 1

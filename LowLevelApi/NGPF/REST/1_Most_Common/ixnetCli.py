@@ -80,7 +80,7 @@ try:
             #if inspect.isfunction(obj) and eval(name+'.__doc__') is not None:
             if inspect.isfunction(obj):
                 parameters = inspect.getargspec(eval(name))
-         
+
                 if parameters[0] == []:
                     parameters = ''
                     if command is None:
@@ -124,11 +124,11 @@ try:
         middleware.ixn.linuxServerStopOperations(middleware.linuxServerSessionId)
         middleware.ixn.linuxServerDeleteSession(middleware.linuxServerSessionId)
 
-    def connect(apiServerIp=None, apiServerIpPort=None, apiServerType=None, resume=False, 
+    def connect(apiServerIp=None, apiServerIpPort=None, apiServerType=None, resume=False,
                 apiKey=None, sessionId=None, username='admin', password='admin', deleteSessionAfterTest=True):
         """Connect to an API server with a user defined JSON config file.
         You could use this API to change the API server IP that is different
-        from the JSON config file. 
+        from the JSON config file.
 
         param: apiServerType: windows|linux.
         param: resume: (True|False): To connect to an existing configuration.
@@ -137,7 +137,7 @@ try:
         param: apiServerIp: (str): The IP address of the IxNetwork API server to connect to.
         param: apiServerIpPort: (int): The API server IP port number to use.
                         Windows default port = 11009.
-                        Linux default port = 443. 
+                        Linux default port = 443.
         param: apiKey: (str): For Linux API server only. The API-KEY of the Linux API server.
                         You could get this in the Web UI, under My Account, and in show API-KEY.
         param: sessionID: (int): For Linux API server only. The existing session ID to connect to.
@@ -165,10 +165,10 @@ try:
                 (apiKey is not None and sessionId is None):
                     print('\nError: To resume on Linux API server, you must provide both apiKey and sessionId.\n')
                     return
-        
+
         if resume == False:
 
-            
+
             # Check to see if resuming on Windows
             if middleware.apiServerType == 'windows':
                 if apiServerIp == None and middleware.windowsApiServerIp == None:
@@ -176,7 +176,7 @@ try:
                 if apiServerIpPort == None and middleware.windowsApiServerIpPort == None:
                     print('\nError: You must include apiServerIpPort\n') ;# return
 
-                if apiServerIp != None:            
+                if apiServerIp != None:
                     middleware.windowsApiServerIp = apiServerIp
                 if apiServerIpPort != None:
                     middleware.windowsApiServerIpPort = apiServerIpPort
@@ -187,12 +187,12 @@ try:
                 if apiServerIp == None and middleware.linuxApiServerIp == None:
                     print('\nError: You must include the apiServerIp\n') ;# return
 
-                if apiServerIp != None:           
+                if apiServerIp != None:
                     middleware.linuxApiServerIp = apiServerIp
                 if apiServerIpPort != None:
                     middleware.linuxApiServerIpPort = apiServerIpPort
 
-            # if apiKey and sessionId: 
+            # if apiKey and sessionId:
             #     middleware.linuxApiServerIp = apiServerIp
             #     middleware.linuxApiServerIpPort = apiServerIpPort
             #     middleware.username = username
@@ -233,12 +233,12 @@ try:
 
         param: jsonConfigFile: The IxNetwork saved configuration in JSON format.
         param: chassisIp: Ixia chassis IP address.
-        param: portList: All the ports to use for this JSON configuration file. The amount of ports must match the 
+        param: portList: All the ports to use for this JSON configuration file. The amount of ports must match the
                          amount of configured ports in the JSON config file.
                          Example:     portList = [[ixChassisIp, '1', '1'], [ixChassisIp, '2', '1']]
         param: licenseServerIp: The license server IP address.
         param: licenseMode: mixed|subscription|perpetual
-        param: licenseTier: tier1, tier2, tier3""" 
+        param: licenseTier: tier1, tier2, tier3"""
         #middleware.loadJsonConfig = True
         if licenseServerIp:
             middleware.licenseServerIp = [licenseServerIp]
@@ -249,7 +249,7 @@ try:
 
         jsonData = middleware.ixn.jsonReadConfig(jsonConfigFile)
         if portList != None:
-            middleware.ixn.jsonAssignPorts(jsonData, portList)  
+            middleware.ixn.jsonAssignPorts(jsonData, portList)
 
         if chassisIp is not None:
             chassisIp = jsonData['availableHardware']['chassis'][0]['hostname']
@@ -507,7 +507,7 @@ try:
 
     def settrafficcontinuous(trafficItemName):
         """Modify the transmission type to transmit continuously.
-        
+
         param: trafficItemName: The name of the Traffic Item."""
         queryData = {'from': '/traffic',
             'nodes': [{'node': 'trafficItem', 'properties': ['name'], 'where': [{'property': 'name', 'regex': trafficItemName}]},
@@ -515,10 +515,10 @@ try:
         queryResponse = middleware.ixn.query(data=queryData)
         configElementObj = queryResponse.json()['result'][0]['trafficItem'][0]['configElement'][0]['href']
         middleware.ixn.configTrafficItem(mode='modify', obj=configElementObj, configElements={'transmissionType': 'continuous'})
- 
+
     def setfixedframes(trafficItemName):
         """Modify the transmission type to transmit a fixed frame count.
-        
+
         param: trafficItemName: The name of the Traffic Item."""
         queryData = {'from': '/traffic',
             'nodes': [{'node': 'trafficItem', 'properties': ['name'], 'where': [{'property': 'name', 'regex': trafficItemName}]},
@@ -530,10 +530,10 @@ try:
     def flapbgp(topologyName=None, enableTrueOrFalse=True, ipInterfaceList='all', upTimeInSeconds=0, downTimeInSeconds=0):
         """Config BGP flapping.
 
-        param: topologyName: The Topolgy Group name where the BGP stack resides in. 
-        param: enableTrueOrFalse: (True|False): Enable or disable BGP flapping. 
+        param: topologyName: The Topolgy Group name where the BGP stack resides in.
+        param: enableTrueOrFalse: (True|False): Enable or disable BGP flapping.
         param: ipInterfaceList: (list): A list of the local BGP IP interface to configure for flapping.
-        param: upTimeInSeconds: (int): The up time for BGP to remain up before flapping it down. 
+        param: upTimeInSeconds: (int): The up time for BGP to remain up before flapping it down.
         param: downTimeInSeconds: (int): The down time for BGP to remain down before flapping it back up."""
         queryData = {'from': '/',
                     'nodes': [{'node': 'topology', 'properties': [], 'where': []},
@@ -549,10 +549,10 @@ try:
     def configbgp(jsonConfigFile):
         """Configure BGP and Traffic Item from scratch.  Getting all the settings from the user
         defined JSON config file.
-        
+
         param: jsonConfigFile: The JSON parameter file to load for this configuration."""
         readjsonparamfile(jsonConfigFile)
-     
+
         middleware.ixn.connectIxChassis(middleware.params['ixChassisIp'])
         if middleware.ixn.arePortsAvailable(middleware.params['portList'], raiseException=False) != 0:
             if middleware.params['forceTakePortOwnership'] == True:
@@ -694,7 +694,7 @@ try:
             # middleware.endpointObj = endpointObj
             # middleware.configElementObj = configElementObj
 
-        if isAnyTrafficItemConfigured == 0: 
+        if isAnyTrafficItemConfigured == 0:
             raise IxNetRestApiException('No Traffic Item was enabled for configuring')
 
     def getInput(prompt):
@@ -714,7 +714,7 @@ try:
             return options[state]
         except IndexError:
             return None
-    
+
     if __name__ == "__main__":
         commandList = []
         for name,obj in inspect.getmembers(sys.modules[__name__]):
@@ -785,7 +785,7 @@ try:
                                     # Don't wrap quotations marks around keywords
                                     value1 = argList[-1]
                             finalValue = param + '=' + value1
-                        
+
                         if '=' not in value:
                             if '"' in value:
                                 finalValue = value
@@ -843,5 +843,3 @@ except (IxNetRestApiException, Exception, KeyboardInterrupt) as errMsg:
             middleware.ixn.releasePorts(portList)
         if middleware.apiServerType == 'windowsConnectionMgr':
             middleware.ixn.deleteSession()
-
-

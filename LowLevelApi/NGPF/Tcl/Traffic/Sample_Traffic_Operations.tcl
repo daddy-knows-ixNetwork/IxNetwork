@@ -47,7 +47,7 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#    This sample configures 10 IPv4 sessions on each of the two ports,         # 
+#    This sample configures 10 IPv4 sessions on each of the two ports,         #
 #    and performs the following traffic actions                                #
 #    - Creating 2 Traffic Items for IPv4                                       #
 #    - Add 2 new Endpoint sets to TI 1 IPv4                                    #
@@ -124,7 +124,7 @@ proc createBasicIPv4TrafficItem { name sourceEP destEP } {
             -fixedSize   128
     ixNet setMultiAttrs $trafficItem/configElement:1/frameRate  \
             -type       percentLineRate                         \
-            -rate       2                 
+            -rate       2
     ixNet setMultiAttrs $trafficItem/configElement:1/transmissionControl \
             -duration               1                                   \
             -iterationCount         1                                   \
@@ -155,7 +155,7 @@ proc setIngressTrackingForTI { ti trackingList} {
 
 ################################################################################
 # Defining the Egress Tracking for Traffic Item set function
-################################################################################    
+################################################################################
 proc setFirstEgressTrackingForTI { ti stack field} {
     set tiName [ixNet getAttribute $ti -name]
     puts "--- Traffic Item: $tiName setting eggress tracking to field $field for stack $stack "
@@ -288,7 +288,7 @@ ixNet setMultiAttribute [ixNet getAttribute $ipv4_2 -resolveGateway]/singleValue
 ixNet commit
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 set vPorts [ixNet getList [ixNet getRoot] vport]
 puts "Assigning ports to $vPorts"
@@ -365,4 +365,3 @@ puts "Stop All Protocols"
 ixNet execute stopAllProtocols
 puts "Sleep 30sec for protocols to stop"
 after 30000
-

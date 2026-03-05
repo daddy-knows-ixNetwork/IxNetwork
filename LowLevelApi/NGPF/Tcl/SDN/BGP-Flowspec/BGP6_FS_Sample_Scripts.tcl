@@ -99,7 +99,7 @@ set port2 [keylget connect_status port_handle.$chassis_ip.[lindex $port_list 1]]
 ################################################################################
 
 # Creating a topology on first port
-puts "Adding topology 1 on port 1" 
+puts "Adding topology 1 on port 1"
 set topology_1_status [::ixiangpf::topology_config\
     -topology_name      {BGP6 Topology 1}          \
     -port_handle        $port1                    \
@@ -110,8 +110,8 @@ if {[keylget topology_1_status status] != $::SUCCESS} {
 }
 set topology_1_handle [keylget topology_1_status topology_handle]
 
-# Creating a device group in topology 
-puts "Creating device group 1 in topology 1"    
+# Creating a device group in topology
+puts "Creating device group 1 in topology 1"
 set device_group_1_status [::ixiangpf::topology_config    \
     -topology_handle              $topology_1_handle      \
     -device_group_name            {BGP6 Topology 1 Router} \
@@ -155,7 +155,7 @@ set deviceGroup_2_handle [keylget device_group_2_status device_group_handle]
 #  Configure protocol interfaces                                               #
 ################################################################################
 
-# Creating ethernet stack for the first Device Group 
+# Creating ethernet stack for the first Device Group
 puts "Creating ethernet stack for the first Device Group"
 set ethernet_1_status [::ixiangpf::interface_config          \
     -protocol_name                {Ethernet 1}               \
@@ -185,7 +185,7 @@ if {[keylget ethernet_2_status status] != $::SUCCESS} {
 }
 set ethernet_2_handle [keylget ethernet_2_status ethernet_handle]
 
-# Creating IPv6 Stack on top of Ethernet Stack for the first Device Group                                 
+# Creating IPv6 Stack on top of Ethernet Stack for the first Device Group
 puts "Creating IPv6 Stack on top of Ethernet Stack for the first Device Group"
 set ipv6_1_status [::ixiangpf::interface_config \
     -protocol_name                     {IPv6 1}                \
@@ -206,7 +206,7 @@ if {[keylget ipv6_1_status status] != $::SUCCESS} {
 }
 set ipv6_1_handle [keylget ipv6_1_status ipv6_handle]
 
-# Creating IPv6 Stack on top of Ethernet Stack for the second Device Group 
+# Creating IPv6 Stack on top of Ethernet Stack for the second Device Group
 puts "Creating IPv6 2 stack on ethernet 2 stack for the second Device Group"
 set ipv6_2_status [::ixiangpf::interface_config \
     -protocol_name                     {IPv6 2}                \
@@ -229,7 +229,7 @@ set ipv6_2_handle [keylget ipv6_2_status ipv6_handle]
 
 
 ################################################################################
-# Other protocol configurations                                                # 
+# Other protocol configurations                                                #
 ################################################################################
 
 # This will Create BGP6 Stack on top of IPv6 Stack of Topology1 & Topology2
@@ -880,10 +880,10 @@ if {[keylget bgp_flow_spec_ranges_list_v6_2_status status] != $::SUCCESS} {
 ############################################################################
 # Start BGP6 protocol                                                       #
 ############################################################################
-	
+
 puts "Waiting 5 seconds before starting protocol(s) ..."
     after 5000
-	
+
 puts {Starting all protocol(s) ...}
 set r [::ixiangpf::test_control -action start_all_protocols]
 if {[keylget r status] != $::SUCCESS} {
@@ -892,21 +892,21 @@ if {[keylget r status] != $::SUCCESS} {
 
 puts {Waiting for 60 seconds}
     after 60000
-	
+
 ############################################################################
-# Retrieve protocol statistics                                             # 
+# Retrieve protocol statistics                                             #
 ############################################################################
 puts {Fetching BGP6 aggregated statistics}
 set aggregate_stats [::ixiangpf::emulation_bgp_info                                \
     -handle $bgp_v6_Interface_1_handle                                                 \
     -mode stats_per_device_group]
-	
+
 if {[keylget aggregate_stats status] != $::SUCCESS} {
     puts "FAIL - $test_name - [keylget aggregate_stats log]"
 }
 
 puts $aggregate_stats
-	
+
 ############################################################################
 # Retrieve protocol learned info                                           #
 ############################################################################
@@ -914,7 +914,7 @@ puts {Fetching BGP6 learned info}
 set learned_info [::ixiangpf::emulation_bgp_info                                   \
     -handle $bgp_v6_Interface_1_handle                                                 \
     -mode learned_info]
-	
+
 if {[keylget learned_info status] != $::SUCCESS} {
     puts "FAIL - $test_name - [keylget learned_info log]"
 }
@@ -929,6 +929,6 @@ set r [::ixiangpf::test_control -action stop_all_protocols]
     if {[keylget r status] != $::SUCCESS} {
     puts "FAIL - $test_name - [keylget r log]"
 }
-	
+
 puts "!!! Test Script Ends !!!"
 return 1

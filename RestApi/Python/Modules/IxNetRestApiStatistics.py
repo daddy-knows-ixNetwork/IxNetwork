@@ -49,7 +49,7 @@ class Statistics(object):
         else:
             return self.getStatsPage(viewObject=viewObject, viewName=viewName, csvFile=csvFile, csvEnableFileTimestamp=csvEnableFileTimestamp,
                                      displayStats=displayStats, silentMode=silentMode, ignoreError=ignoreError)
-            
+
     def getStatsPage(self, viewObject=None, viewName='Flow Statistics', csvFile=None, csvEnableFileTimestamp=False,
                      displayStats=True, silentMode=True, ignoreError=False):
         """
@@ -132,7 +132,7 @@ class Statistics(object):
                         viewName, counter, counterStop), timestamp=False)
                     time.sleep(1)
                     continue
-                    
+
                 if counter == counterStop:
                     if viewObject == None and ignoreError == False:
                         raise IxNetRestApiException("viewObj wasn't found for viewName: {0}".format(viewName))
@@ -211,10 +211,10 @@ class Statistics(object):
                      displayStats=True, silentMode=False, ignoreError=False):
         """
         Description
-            For IxNetwork version >= 8.50.   
+            For IxNetwork version >= 8.50.
             Get stats by the statistic name or get stats by providing a view object handle.
             This method get stats using /api/v1/sessions/{id}/ixnetwork/statistics/view/{id}/data to get
-            attributes columnCaptions, pageValues and totalPages. This method uses new API starting in 
+            attributes columnCaptions, pageValues and totalPages. This method uses new API starting in
             version 8.50.
 
         Parameters
@@ -290,7 +290,7 @@ class Statistics(object):
                         viewName, counter, counterStop), timestamp=False)
                     time.sleep(1)
                     continue
-                    
+
                 if counter == counterStop:
                     if viewObject == None and ignoreError == False:
                         raise IxNetRestApiException("viewObj wasn't found for viewName: {0}".format(viewName))
@@ -363,7 +363,7 @@ class Statistics(object):
                 columnList = response.json()['columnCaptions']
                 if csvFile != None:
                     csvWriteObj.writerow(columnList)
-                
+
             statValueList = response.json()['pageValues']
             for statValue in statValueList:
                 if csvFile != None:

@@ -58,7 +58,7 @@
 #    6. Start the L2-L3 traffic.                                               #
 #    7. Retrieve L2-L3 traffic stats.                                          #
 #    8. Stop L2-L3 traffic.                                                    #
-#    9. Stop all protocols.                                                    # 
+#    9. Stop all protocols.                                                    #
 ################################################################################
 puts "Load ixNetwork Tcl API package"
 package req IxTclNetwork
@@ -93,7 +93,7 @@ set r [ixNet getRoot]
 ################################################################################
 
 puts "Add  virtual port vport1"
-set vport1 [ixNet add $r vport] 
+set vport1 [ixNet add $r vport]
 ixNet setMultiAttribute $vport1 -type ethernetvm -rxMode CaptureAndMeasure
 ixNet commit
 set vport1 [lindex [ixNet remapId $vport1] 0]
@@ -115,7 +115,7 @@ set ip1 [lindex [ixNet remapId $ip1] 0]
 ################################################################################
 
 puts "Add  virtual port vport2"
-set vport2 [ixNet add $r vport] 
+set vport2 [ixNet add $r vport]
 ixNet setMultiAttribute $vport2 -type ethernetvm -rxMode CaptureAndMeasure
 ixNet commit
 set vport2 [lindex [ixNet remapId $vport2] 0]
@@ -145,8 +145,8 @@ puts "Assign the real ports"
 ################################################################################
 
 puts "Enablling ISIS L2/L3 on ports ..."
-ixNet setMultiAttribute $vport1/protocols/isis -enabled true  
-ixNet setMultiAttribute $vport2/protocols/isis -enabled true  
+ixNet setMultiAttribute $vport1/protocols/isis -enabled true
+ixNet setMultiAttribute $vport2/protocols/isis -enabled true
 ixNet commit
 
 ################################################################################
@@ -278,10 +278,10 @@ after 5000
 #	4. Retrieve ISIS L2/L3 protocol learned info.                          #
 ################################################################################
 
-# Fetch learned info on port 1 
+# Fetch learned info on port 1
 ixNet exec refreshLearnedInformation $router1
 
-# Wait for 3 sec 
+# Wait for 3 sec
 puts "Waiting for 3 sec ..."
 after 3000
 
@@ -313,7 +313,7 @@ foreach entry $learnedInfo1 {
 puts "***************************************************"
 
 #####################################################################
-#	5.Configure L2-L3 traffic.				    #	
+#	5.Configure L2-L3 traffic.				    #
 #####################################################################
 
 set trafficItem1 [ixNet add [ixNet getRoot]/traffic trafficItem]
@@ -358,7 +358,7 @@ after 2000
 puts "Starting L2/L3 traffic......."
 ixNet exec start [ixNet getRoot]/traffic
 
-# Delay of 20 seconds to get traffic stat 
+# Delay of 20 seconds to get traffic stat
 after 20000
 
 ###################################################################
@@ -393,8 +393,3 @@ ixNet exec stop [ixNet getRoot]/traffic
 ###################################################################
 ixNet exec stopAllProtocols
 puts "!!! Test Script Ends !!!"
-
-
-
-
-

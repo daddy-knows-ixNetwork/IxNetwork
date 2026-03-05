@@ -6,11 +6,11 @@
 #   Supports Python2 and Python3
 #
 # Requirements
-#     Since there are many type of licenses, you must set the variable 
+#     Since there are many type of licenses, you must set the variable
 #     "licenseNameToGet" with a value of your license.
 #
 # Usage:
-#   python GetPortLicenses.py <IxVM Chassis IP> ixnetwork 
+#   python GetPortLicenses.py <IxVM Chassis IP> ixnetwork
 #   python GetPortLicenses.py <IxVM Chassis IP> ixload
 #
 # By: Hubert Gee
@@ -45,13 +45,13 @@ class PortLicenses():
            Class PortLicenses()
            Get available port licenses from the chassis.
            Only supported on chassis's running LinuxOS.  Not for Windows.
-        
+
         Parameters
            host: The chassis IP address
            username: The chassis login username. Default = admin
            password: The chassis login password. Default = admin
-           licenseToGet: The license name to look under: For example: 
-                         VM-IxN-TIER3  VM-IXL-TIER4-10G 
+           licenseToGet: The license name to look under: For example:
+                         VM-IxN-TIER3  VM-IXL-TIER4-10G
         """
         self.chassisIp = chassisIp
         self.username = username
@@ -83,7 +83,7 @@ class PortLicenses():
             if match:
                 # Located license name: VM-IXN-TIER3 | 18-dec-2017 | No | 8 | hgee | Windows2012  | 192.168.70.127 | 2 | No |  |
                 self.availablePortLicenses = match.group(4)
-            
+
     def getLicenseDetails(self):
         self.ssh = paramiko.SSHClient()
         self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -92,7 +92,7 @@ class PortLicenses():
         transport.set_keepalive(1)
         self.channel = self.ssh.invoke_shell()
         self.send(command=self.command, expect=self.licenseNameToGet)
-        
+
     def areThereEnoughLicenses(self, required):
         self.requiredNumberOfLicenses = required
         msg = '\nPort license check:'
@@ -101,7 +101,7 @@ class PortLicenses():
             print(msg)
         else:
             raise IxNetRestApiException('Not enough port licenses:'+msg)
-        
+
 try:
     portLicenseObj = PortLicenses(chassisIp=sys.argv[1],
                                   username=username,

@@ -78,7 +78,7 @@ ixNet exec newConfig
 
 ################################################################################
 # protocol configuration section                                               #
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -325,7 +325,7 @@ ixNet setMultiAttribute $endpointSet1\
 	-ngpfFilters           [list]\
 	-trafficGroups         [list]\
 	-sources               $source\
-	-destinations          $destination\	
+	-destinations          $destination\
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\
@@ -360,7 +360,7 @@ ixNet setMultiAttribute $endpointSet2\
 	-ngpfFilters           [list]     \
 	-trafficGroups         [list]     \
 	-sources               $source_app\
-	-destinations          $destin_app\	
+	-destinations          $destin_app\
 ixNet commit
 set endpointSet2 [lindex [ixNet remapIds $endpointSet2] 0]
 

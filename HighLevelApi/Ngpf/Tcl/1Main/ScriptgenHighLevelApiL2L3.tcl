@@ -20,13 +20,13 @@ if {![info exists ::ixnHLT_errorHandler]} {
     }
     set ::ixnHLT_errorHandler ::my_ixnhlt_errorhandler
 }
-            
+
 
 proc ixnHLT_connectedPathList {ixnHLT_N} {
     upvar $ixnHLT_N ixnHLT
     set path_list [ixnHLT_vportPathList ixnHLT "connected"]
     # consider the topology connected
-    # if at least one of the vports for the topology is connected 
+    # if at least one of the vports for the topology is connected
     set connected_vpaths $path_list
     foreach {t v} [ixnHLT_collectTopologyVports ixnHLT] {
         foreach v_item $v {
@@ -64,7 +64,7 @@ proc ixnHLT_collectTopologyVports {ixnHLT_N} {
     set r [ixNet getRoot]
     set failed [catch {
         set t_list [ixNet getList $r topology]
-    }] 
+    }]
     if {$failed} {
         # no topology present in this configuration
         return {}
@@ -89,12 +89,12 @@ proc ixnHLT_collectTopologyVports {ixnHLT_N} {
 }
 proc ixnHLT_endpointMatch {ixnHLT_N ixnpattern_list {handle_type "HANDLE"}} {
     upvar $ixnHLT_N ixnHLT
-    
+
     set traffic_ep_ignore_list {
         {^::ixNet::OBJ-/vport:\d+/protocols/mld/host:\d+$}
         {^::ixNet::OBJ-/vport:\d+/protocolStack/ethernet:[^/]+/ipEndpoint:[^/]+/range:[^/]+/ptpRangeOverIp:1$}
     }
-    
+
     set rval [list]
     foreach {cpat} $ixnpattern_list {
         set pat $cpat
@@ -129,11 +129,11 @@ proc ixnHLT_endpointMatch {ixnHLT_N ixnpattern_list {handle_type "HANDLE"}} {
 
 # ----------------------------------------------------------------
 # Configuration procedure
-# 
+#
 
 proc ixnHLT_Scriptgen_Configure {ixnHLTVarName} {
     upvar 1 $ixnHLTVarName ixnHLT
-    
+
     # //vport
     $::ixnHLT_log interface_config://vport:<1>...
     set _result_ [::ixia::interface_config  \
@@ -185,14 +185,14 @@ proc ixnHLT_Scriptgen_Configure {ixnHLTVarName} {
     # n kString -ixnChassisVersion 8.10.1046.6
     # n kBool -isMapped True
     # n kString -name 1/1/1
-    
-    catch { 
-        set ixnHLT(HANDLE,//vport:<1>) [keylget _result_ interface_handle] 
+
+    catch {
+        set ixnHLT(HANDLE,//vport:<1>) [keylget _result_ interface_handle]
         lappend ixnHLT(VPORT-CONFIG-HANDLES,//vport:<1>,interface_config) \
             $ixnHLT(HANDLE,//vport:<1>)
     }
     $::ixnHLT_log {COMPLETED: interface_config}
-    
+
     # //vport
     $::ixnHLT_log interface_config://vport:<2>...
     set _result_ [::ixia::interface_config  \
@@ -244,14 +244,14 @@ proc ixnHLT_Scriptgen_Configure {ixnHLTVarName} {
     # n kString -ixnChassisVersion 8.10.1046.6
     # n kBool -isMapped True
     # n kString -name 1/1/2
-    
-    catch { 
-        set ixnHLT(HANDLE,//vport:<2>) [keylget _result_ interface_handle] 
+
+    catch {
+        set ixnHLT(HANDLE,//vport:<2>) [keylget _result_ interface_handle]
         lappend ixnHLT(VPORT-CONFIG-HANDLES,//vport:<2>,interface_config) \
             $ixnHLT(HANDLE,//vport:<2>)
     }
     $::ixnHLT_log {COMPLETED: interface_config}
-    
+
     # //vport/l1Config/rxFilters/filterPalette
     $::ixnHLT_log uds_config://vport:<1>/l1Config/rxFilters/filterPalette...
     set _result_ [::ixia::uds_config  \
@@ -327,9 +327,9 @@ proc ixnHLT_Scriptgen_Configure {ixnHLTVarName} {
     # n kString -pattern2Mask 00
     # n kEnumValue -pattern1OffsetType fromStartOfFrame
     # n kString -pattern1Mask 00
-    
+
     $::ixnHLT_log {COMPLETED: uds_config}
-    
+
     # //vport/l1Config/rxFilters/filterPalette
     $::ixnHLT_log uds_config://vport:<2>/l1Config/rxFilters/filterPalette...
     set _result_ [::ixia::uds_config  \
@@ -405,9 +405,9 @@ proc ixnHLT_Scriptgen_Configure {ixnHLTVarName} {
     # n kString -pattern2Mask 00
     # n kEnumValue -pattern1OffsetType fromStartOfFrame
     # n kString -pattern1Mask 00
-    
+
     $::ixnHLT_log {COMPLETED: uds_config}
-    
+
     # //vport/l1Config/rxFilters/filterPalette
     $::ixnHLT_log uds_filter_pallette_config://vport:<1>/l1Config/rxFilters/filterPalette...
     set _result_ [::ixia::uds_filter_pallette_config  \
@@ -433,9 +433,9 @@ proc ixnHLT_Scriptgen_Configure {ixnHLTVarName} {
     if {[keylget _result_ status] != $::SUCCESS} {
       $::ixnHLT_errorHandler [info script] $_result_
     }
-    
+
     $::ixnHLT_log {COMPLETED: uds_filter_pallette_config}
-    
+
     # //vport/l1Config/rxFilters/filterPalette
     $::ixnHLT_log uds_filter_pallette_config://vport:<2>/l1Config/rxFilters/filterPalette...
     set _result_ [::ixia::uds_filter_pallette_config  \
@@ -461,9 +461,9 @@ proc ixnHLT_Scriptgen_Configure {ixnHLTVarName} {
     if {[keylget _result_ status] != $::SUCCESS} {
       $::ixnHLT_errorHandler [info script] $_result_
     }
-    
+
     $::ixnHLT_log {COMPLETED: uds_filter_pallette_config}
-    
+
     # The following objects had no attributes that were scriptgenned:
     # n //globals/interfaces
     # n //statistics/measurementMode
@@ -530,13 +530,13 @@ proc ixnHLT_Scriptgen_Configure {ixnHLTVarName} {
     # n {//statistics/rawData/statistic:"Reordered Packets"}
     # n {//statistics/rawData/statistic:"Lost Packets"}
     # end of list
-    
+
     return 0
 }
 
 proc ixnCPF_Scriptgen_Configure {ixnHLTVarName} {
     upvar 1 $ixnHLTVarName ixnHLT
-    
+
     set topology_1_status [::ixiangpf::topology_config \
         -topology_name      {Topology 1}                            \
         -port_handle        "$ixnHLT(PORT-HANDLE,//vport:<1>)"      \
@@ -546,7 +546,7 @@ proc ixnCPF_Scriptgen_Configure {ixnHLTVarName} {
     }
     set topology_1_handle [keylget topology_1_status topology_handle]
     set ixnHLT(HANDLE,//topology:<1>) $topology_1_handle
-    
+
     set device_group_1_status [::ixiangpf::topology_config \
         -topology_handle              $topology_1_handle      \
         -device_group_name            {Basic L3-1}            \
@@ -558,7 +558,7 @@ proc ixnCPF_Scriptgen_Configure {ixnHLTVarName} {
     }
     set deviceGroup_1_handle [keylget device_group_1_status device_group_handle]
     set ixnHLT(HANDLE,//topology:<1>/deviceGroup:<1>) $deviceGroup_1_handle
-    
+
     set ethernet_1_status [::ixiangpf::interface_config \
         -protocol_name                {Ethernet 1}               \
         -protocol_handle              $deviceGroup_1_handle      \
@@ -584,7 +584,7 @@ proc ixnCPF_Scriptgen_Configure {ixnHLTVarName} {
     }
     set ethernet_1_handle [keylget ethernet_1_status ethernet_handle]
     set ixnHLT(HANDLE,//topology:<1>/deviceGroup:<1>/ethernet:<1>) $ethernet_1_handle
-    
+
     set ipv4_1_status [::ixiangpf::interface_config \
         -protocol_name                     {IPv4 1}                \
         -protocol_handle                   $ethernet_1_handle      \
@@ -604,7 +604,7 @@ proc ixnCPF_Scriptgen_Configure {ixnHLTVarName} {
     }
     set ipv4_1_handle [keylget ipv4_1_status ipv4_handle]
     set ixnHLT(HANDLE,//topology:<1>/deviceGroup:<1>/ethernet:<1>/ipv4:<1>) $ipv4_1_handle
-    
+
     set topology_2_status [::ixiangpf::topology_config \
         -topology_name      {Topology 2}                            \
         -port_handle        "$ixnHLT(PORT-HANDLE,//vport:<2>)"      \
@@ -614,7 +614,7 @@ proc ixnCPF_Scriptgen_Configure {ixnHLTVarName} {
     }
     set topology_2_handle [keylget topology_2_status topology_handle]
     set ixnHLT(HANDLE,//topology:<2>) $topology_2_handle
-    
+
     set device_group_2_status [::ixiangpf::topology_config \
         -topology_handle              $topology_2_handle      \
         -device_group_name            {Basic L3-2}            \
@@ -626,7 +626,7 @@ proc ixnCPF_Scriptgen_Configure {ixnHLTVarName} {
     }
     set deviceGroup_2_handle [keylget device_group_2_status device_group_handle]
     set ixnHLT(HANDLE,//topology:<2>/deviceGroup:<1>) $deviceGroup_2_handle
-    
+
     set ethernet_2_status [::ixiangpf::interface_config \
         -protocol_name                {Ethernet 2}               \
         -protocol_handle              $deviceGroup_2_handle      \
@@ -652,7 +652,7 @@ proc ixnCPF_Scriptgen_Configure {ixnHLTVarName} {
     }
     set ethernet_2_handle [keylget ethernet_2_status ethernet_handle]
     set ixnHLT(HANDLE,//topology:<2>/deviceGroup:<1>/ethernet:<1>) $ethernet_2_handle
-    
+
     set ipv4_2_status [::ixiangpf::interface_config \
         -protocol_name                     {IPv4 2}                \
         -protocol_handle                   $ethernet_2_handle      \
@@ -672,7 +672,7 @@ proc ixnCPF_Scriptgen_Configure {ixnHLTVarName} {
     }
     set ipv4_2_handle [keylget ipv4_2_status ipv4_handle]
     set ixnHLT(HANDLE,//topology:<2>/deviceGroup:<1>/ethernet:<1>/ipv4:<1>) $ipv4_2_handle
-    
+
     # n Node: /globals/topology/ipv6Autoconfiguration does not have global settings.
     # n Node: /globals/topology/ipv6 does not have global settings.
     # n Node: /globals/topology/bfdRouter does not have global settings.
@@ -718,7 +718,7 @@ proc ixnCPF_Scriptgen_Configure {ixnHLTVarName} {
     # n Node: /globals/topology/openFlowChannel does not have global settings.
     # n Node: /globals/topology/openFlowController does not have global settings.
     # n Node: /globals/topology/ovsdbserver does not have global settings.
-    
+
     set ipv4_3_status [::ixiangpf::interface_config \
         -protocol_handle                    /globals      \
         -arp_on_linkup                      0             \
@@ -740,7 +740,7 @@ proc ixnCPF_Scriptgen_Configure {ixnHLTVarName} {
     if {[keylget ipv4_3_status status] != $::SUCCESS} {
         $::ixnHLT_errorHandler [info script] $ipv4_3_status
     }
-    
+
     set ethernet_3_status [::ixiangpf::interface_config \
         -protocol_handle                     /globals      \
         -ethernet_attempt_enabled            0             \
@@ -755,7 +755,7 @@ proc ixnCPF_Scriptgen_Configure {ixnHLTVarName} {
     if {[keylget ethernet_3_status status] != $::SUCCESS} {
         $::ixnHLT_errorHandler [info script] $ethernet_3_status
     }
-    
+
     # n Node: /globals/topology/ipv6Autoconfiguration does not have global settings.
     # n Node: /globals/topology/ipv6 does not have global settings.
     # n Node: /globals/topology/bfdRouter does not have global settings.
@@ -805,27 +805,27 @@ proc ixnCPF_Scriptgen_Configure {ixnHLTVarName} {
 
 proc ixnHLT_Scriptgen_RunTest {ixnHLTVarName} {
     upvar 1 $ixnHLTVarName ixnHLT
-    
+
     # #######################
     # start phase of the test
     # #######################
     $::ixnHLT_log {Waiting 60 seconds before starting protocol(s) ...}
     after 60000
-    
+
     $::ixnHLT_log {Starting all protocol(s) ...}
     set r [::ixia::test_control -action start_all_protocols]
     if {[keylget r status] != $::SUCCESS} {
         $::ixnHLT_errorHandler [info script] $r
-    }
-    
+    }
+
     after 30000
 
 
-    
-                    
-    # 
+
+
+    #
     #  Reset traffic
-    # 
+    #
     $::ixnHLT_log {Resetting traffic...}
     set _result_ [::ixia::traffic_control  \
         -action reset \
@@ -843,7 +843,7 @@ proc ixnHLT_Scriptgen_RunTest {ixnHLTVarName} {
     if {[keylget _result_ status] != $::SUCCESS} {
       $::ixnHLT_errorHandler [info script] $_result_
     }
-    
+
     set port_handles_for_traffic_stats {}
     #
     # Collect port_handles_for_traffic_stats
@@ -852,10 +852,10 @@ proc ixnHLT_Scriptgen_RunTest {ixnHLTVarName} {
         lappend port_handles_for_traffic_stats $v
     }
     set port_handles_for_traffic_stats [lsort -unique $port_handles_for_traffic_stats]
-                    
-    # 
+
+    #
     #  Configure traffic for all configuration elements
-    # 
+    #
     #  -- Traffic item //traffic/trafficItem:<1>
     $::ixnHLT_log {Configuring traffic for traffic item: //traffic/trafficItem:<1>}
     set ti_srcs(EndpointSet-1) [ixnHLT_endpointMatch ixnHLT [list //topology:<1>] HANDLE]
@@ -866,7 +866,7 @@ proc ixnHLT_Scriptgen_RunTest {ixnHLTVarName} {
     if {[llength $ti_dsts(EndpointSet-1)] == 0} {
         error "Cannot find any dst endpoints for elem EndpointSet-1"
     }
-    
+
     set _result_ [::ixia::traffic_config  \
         -mode create \
         -traffic_generator ixnetwork_540 \
@@ -916,10 +916,10 @@ proc ixnHLT_Scriptgen_RunTest {ixnHLTVarName} {
     if {[keylget _result_ status] != $::SUCCESS} {
       $::ixnHLT_errorHandler [info script] $_result_
     }
-    
+
     #  -- All current config elements
     set config_elements [keylget _result_ traffic_item]
-    
+
     #  -- Config Element //traffic/trafficItem:<1>/configElement:<1>
     $::ixnHLT_log {Configuring options for config elem: //traffic/trafficItem:<1>/configElement:<1>}
     set _result_ [::ixia::traffic_config  \
@@ -950,11 +950,11 @@ proc ixnHLT_Scriptgen_RunTest {ixnHLTVarName} {
     if {[keylget _result_ status] != $::SUCCESS} {
       $::ixnHLT_errorHandler [info script] $_result_
     }
-    
+
     #  -- Endpoint set EndpointSet-1
     $::ixnHLT_log {Configuring traffic for config elem: //traffic/trafficItem:<1>/configElement:<1>}
     $::ixnHLT_log {Configuring traffic for endpoint set: EndpointSet-1}
-    
+
     #  -- Stack //traffic/trafficItem:<1>/configElement:<1>/stack:"ethernet-1"
     set _result_ [::ixia::traffic_config  \
         -mode modify_or_insert \
@@ -970,7 +970,7 @@ proc ixnHLT_Scriptgen_RunTest {ixnHLTVarName} {
     if {[keylget _result_ status] != $::SUCCESS} {
       $::ixnHLT_errorHandler [info script] $_result_
     }
-    
+
     #  -- Stack //traffic/trafficItem:<1>/configElement:<1>/stack:"ipv4-2"
     set _result_ [::ixia::traffic_config  \
         -mode modify_or_insert \
@@ -1022,7 +1022,7 @@ proc ixnHLT_Scriptgen_RunTest {ixnHLTVarName} {
     if {[keylget _result_ status] != $::SUCCESS} {
       $::ixnHLT_errorHandler [info script] $_result_
     }
-    
+
     #  -- Post Options
     $::ixnHLT_log {Configuring post options for config elem: //traffic/trafficItem:<1>/configElement:<1>}
     set _result_ [::ixia::traffic_config  \
@@ -1035,13 +1035,13 @@ proc ixnHLT_Scriptgen_RunTest {ixnHLTVarName} {
     if {[keylget _result_ status] != $::SUCCESS} {
       $::ixnHLT_errorHandler [info script] $_result_
     }
-    
-    
 
-    # 
+
+
+    #
     # Configure traffic for Layer 4-7 AppLibrary Profile
-    # 
-    
+    #
+
 
     #
     # Start traffic configured earlier
@@ -1055,18 +1055,18 @@ proc ixnHLT_Scriptgen_RunTest {ixnHLTVarName} {
     if {[keylget r status] != $::SUCCESS} {
         $::ixnHLT_errorHandler [info script] $r
     }
-                
+
     after 30000
-    
+
     # ################################
     # protocol stats phase of the test
     # ################################
-    
+
     #  stats for:
     #  packet_config_buffers handles
     $::ixnHLT_log {getting stats for packet_config_buffers configuration elements}
     after [expr 5*1000]
-                    
+
     foreach {vport_path} [ixnHLT_vportPathList ixnHLT "connected"] {
         set port_handle $ixnHLT(PORT-HANDLE,$vport_path)
         if {![info exists ixnHLT(VPORT-CONFIG-HANDLES,$vport_path,packet_config_buffers)]} {
@@ -1095,7 +1095,7 @@ proc ixnHLT_Scriptgen_RunTest {ixnHLTVarName} {
             $::ixnHLT_log ""
         }
     }
-                
+
     # ######################
     # stop phase of the test
     # ######################
@@ -1110,14 +1110,14 @@ proc ixnHLT_Scriptgen_RunTest {ixnHLTVarName} {
     if {[keylget r status] != $::SUCCESS} {
         $::ixnHLT_errorHandler [info script] $r
     }
-    
+
     # ###############################
     # traffic stats phase of the test
     # ###############################
     after 30000
-                    
+
     #
-    # print stats for all ports that are involved w/ 
+    # print stats for all ports that are involved w/
     # ixnHLT(TRAFFIC-ENDPOINT-HANDLES)
     #
     $::ixnHLT_log "Traffic stats"
@@ -1130,20 +1130,20 @@ proc ixnHLT_Scriptgen_RunTest {ixnHLTVarName} {
         if {[keylget r status] != $::SUCCESS} {
             $::ixnHLT_errorHandler [info script] $r
         }
-                        
+
         if {![keylget r waiting_for_stats]} {
             break
         }
-                        
+
         $::ixnHLT_log "Traffic waiting_for_stats flag is 1. Trial $traffic_stats_retry"
         after 1000
     }
-                    
+
     if {[keylget r waiting_for_stats]} {
         keylset r log "Traffic statistics are not ready after 120 seconds. waiting_for_stats is 1"
         $::ixnHLT_errorHandler [info script] $r
     }
-                    
+
     foreach {port_handle} $port_handles_for_traffic_stats {
         $::ixnHLT_log ""
         $::ixnHLT_log "port $port_handle"
@@ -1162,33 +1162,33 @@ proc ixnHLT_Scriptgen_RunTest {ixnHLTVarName} {
         }
         $::ixnHLT_log ""
     }
-    
+
     $::ixnHLT_log {Stopping all protocol(s) ...}
     set r [::ixia::test_control -action stop_all_protocols]
     if {[keylget r status] != $::SUCCESS} {
         $::ixnHLT_errorHandler [info script] $r
     }
-                    
+
 }
 #  reset ixnHLT
 catch {unset ixnHLT}; array set ixnHLT {}
 
 # ----------------------------------------------------------------
 #  chassis, card, port configuration
-# 
+#
 #  port_list needs to match up with path_list below
-# 
+#
 set chassis {10.219.117.101}
 set tcl_server 10.219.117.101
 set port_list {{1/1 1/2}}
 set vport_name_list {{1/1/1 1/1/2}}
 set guard_rail none
-# 
+#
 #  this should match up w/ your port_list above
-# 
+#
 set ixnHLT(path_list) {{//vport:<1> //vport:<2>}}
-# 
-# 
+#
+#
 set _result_ [::ixiangpf::connect  \
     -reset 1 \
     -device $chassis \
@@ -1225,9 +1225,9 @@ foreach {port_list_elem} $port_list         \
         $::ixnHLT_errorHandler [info script] $vpinfo_rval
     }
 }
-            
 
-# 
+
+#
 if {[llength [info commands obj_config_placeholder]]==0} {
     proc obj_config_placeholder {args} {}
 }

@@ -70,7 +70,7 @@
         ipv42GatewayPortStep: 'disabled'
         ipv42AddressPrefix: 24
         ipv42ResolveGateway: True
-        
+
         bgp1Name: 'bgp_1'
         bgp1Enable: True
         bgp1HoldTimer: 90
@@ -123,8 +123,3 @@
 
 #      register: out
 #    - debug: var=out
-
-
-
-
-

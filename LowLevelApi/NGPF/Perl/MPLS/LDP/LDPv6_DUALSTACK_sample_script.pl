@@ -58,7 +58,7 @@
 #     dual stack router connected to both IPv4 and IPv6 interface. The         #
 #     transport connection preference in LDP router is set to IPv6.            #
 #     The network groups consists of both IPv4 and IPv6 prefix pools.          #
-#     Traffic is configured in between IPv6 prefix pools as end points.        #       
+#     Traffic is configured in between IPv6 prefix pools as end points.        #
 #                                                                              #
 # Script Flow:                                                                 #
 #    1. Configuration of protocols as described in topology.                   #
@@ -72,7 +72,7 @@
 #   11. Retrieve L2-L3 traffic stats.                                          #
 #   12. Stop L2-L3 traffic.                                                    #
 #   13. Stopallprotocols.                                                      #
-#                                                                              #                                                                                
+#                                                                              #
 # Ixia Software:                                                               #
 #    IxOS      6.90 EA                                                         #
 #    IxNetwork 7.50 EA                                                         #
@@ -80,7 +80,7 @@
 ################################################################################
 
 ################################################################################
-# Please ensure that PERL5LIB environment variable is set properly so that 
+# Please ensure that PERL5LIB environment variable is set properly so that
 # IxNetwork.pm module is available. IxNetwork.pm is generally available in
 # C:\<IxNetwork Install Path>\API\Perl
 ################################################################################
@@ -98,13 +98,13 @@ sub assignPorts {
 	my $port2    = $my_resource[6];
 	my $vport1   = $my_resource[7];
 	my $vport2   = $my_resource[8];
-	
+
 	my $root = $ixNet->getRoot();
 	my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-	
+
 	my $chassisObj2 = '';
 	if ($chassis1 ne $chassis2) {
 	    $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -114,7 +114,7 @@ sub assignPorts {
 	} else {
 	    $chassisObj2 = $chassisObj1;
 	}
-	
+
 	my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -123,7 +123,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-		
+
     $ixNet->commit();
 }
 
@@ -134,7 +134,7 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.205.28.41';
 my $ixTclPort   = '8981';
 my @ports       = (('10.205.28.12', '6', '1'), ('10.205.28.12', '6', '2'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
@@ -147,7 +147,7 @@ $ixNet->execute('newConfig');
 ################################################################################
 # Protocol configuration section                                               #
 # Configure LDPv6 as per the description given above                           #
-################################################################################ 
+################################################################################
 print("Adding two virtual ports\n");
 $ixNet->add($ixNet->getRoot(), 'vport');
 $ixNet->add($ixNet->getRoot(), 'vport');
@@ -338,7 +338,7 @@ print("All configuration is completed..Wait for 5 seconds...\n");
 sleep(5);
 
 ################################################################################
-# Start LDPv6 protocol and wait for 60 seconds                                 #  
+# Start LDPv6 protocol and wait for 60 seconds                                 #
 ################################################################################
 print("Starting protocols and waiting for 60 seconds for protocols to come up\n");
 $ixNet->execute('startAllProtocols');
@@ -357,13 +357,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -377,7 +377,7 @@ sleep(5);
 my @linfoList  = ($ixNet->getList(@ldpv6DualStackRouter1, 'learnedInfo'));
 print("***************************************************\n");
 my $linfo = '';
-foreach $linfo (@linfoList) { 
+foreach $linfo (@linfoList) {
     my @values = $ixNet->getAttribute($linfo, '-values');
     my $v      = '';
     print("***************************************************\n");
@@ -431,7 +431,7 @@ sleep(5);
 my @linfoList  = ($ixNet->getList(@ldpv6DualStackRouter1, 'learnedInfo'));
 print("***************************************************\n");
 my $linfo = '';
-foreach $linfo (@linfoList) { 
+foreach $linfo (@linfoList) {
     my @values = $ixNet->getAttribute($linfo, '-values');
     my $v      = '';
     print("***************************************************\n");
@@ -509,13 +509,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 

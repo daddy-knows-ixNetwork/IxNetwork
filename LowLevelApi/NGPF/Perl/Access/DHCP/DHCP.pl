@@ -101,7 +101,7 @@
 
 
 
-             
+
 
 
 
@@ -115,7 +115,7 @@ $py_ixTclPort	= 8009;
 
 
 
-#------------------------------------------------Import Lib and Other pl packages---------------------------------------------------# 
+#------------------------------------------------Import Lib and Other pl packages---------------------------------------------------#
 
 use IxNetwork;
 
@@ -486,4 +486,3 @@ $ixNet->wait($asyncHandle);
 print "\n\n Disconnect from the IxNetwork Client.\n";
 
 $ixNet->disconnect();
-

@@ -199,7 +199,7 @@ ixNet setMultiAttribute $ti1/tracking -trackBy {{sourceDestValuePair0}}
 ixNet commit
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 set vPorts [ixNet getList [ixNet getRoot] vport]
 puts "Assigning ports to $vPorts"
@@ -282,11 +282,11 @@ after 30000
 
 puts "Getting number of Control Packets"
 set controlPacketNumber [ixNet getAttr $captureObj1 -controlPacketCounter]
-puts "Number of Control Packets: $controlPacketNumber" 
+puts "Number of Control Packets: $controlPacketNumber"
 
 puts "Getting number of Data Packets"
 set dataPacketNumber [ixNet getAttr $captureObj2 -dataPacketCounter]
-puts "Number of Control Packets: $dataPacketNumber" 
+puts "Number of Control Packets: $dataPacketNumber"
 
 ################################################################################
 # Search inside of captured Packets
@@ -298,7 +298,7 @@ set status [ixNet exec getPacketFromDataCapture $currentPkt 11]
 set stackList [ixNet getList $currentPkt stack]
 set SelectedStack [lsearch -inline -regexp $stackList "Frame"]
 set allFields [ixNet getL $SelectedStack field]
- 
+
 foreach field $allFields {
 puts "[ixNet getA $field -displayName] : [ixNet getA $field -fieldValue]"
 }

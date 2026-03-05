@@ -71,7 +71,7 @@ The Ansible model contains three components:
 
 Playbook example:
     - This examples show 2 plays: webservers and databases
-    - Noticed the dash for hosts: webservers and databases. 
+    - Noticed the dash for hosts: webservers and databases.
     - Dashes signifies a list for YAML.
     - Inside each Play, there is a list of tasks called "name".
     - Playbooks are executed in sequential order, from top to bottom.
@@ -98,17 +98,17 @@ Playbook example:
         licenseServerIp: '192.168.70.3'
         licenseMode: 'subscription'
         licenseTier: 'tier3'
- 
+
 
 Running Ansible:
 
     - It will attempt to connect as the user it is being run as.
     - ansible_python_interpreter = /usr/local/python3.6.3/bin/python3.6
 
-    - Example 1: 
+    - Example 1:
           ansible-playbook Playbooks/playBgp.yml -i Inventory/hostsIxia --module-path Modules -c local -e ansible_python_interpreter=/usr/local/python3.6.3/bin/python3.6 -v
 
-    - Example 2:  Run multiple playbooks 
+    - Example 2:  Run multiple playbooks
           ansible-playbook Playbooks/playBgp.yml Playbooks/playOspf.yml -i Inventory/hostsIxia --module-path Modules -c local -e ansible_python_interpreter=/usr/local/python3.6.3/bin/python3.6 -v
 
 Output:
@@ -128,7 +128,7 @@ Output:
    }
 
    PLAY RECAP *******************************************************************************
-   192.168.70.3               : ok=2    changed=0    unreachable=0    failed=0 
+   192.168.70.3               : ok=2    changed=0    unreachable=0    failed=0
 
 
 
@@ -163,7 +163,7 @@ Printing to STDOUT:
    and displaying real-time stdout results can be very unconvenient.
 
    To view real-time loggings:
-      - Running OpenIxia ReST API sample scripts generates a real-time log file called 
+      - Running OpenIxia ReST API sample scripts generates a real-time log file called
         ixNetRestApi_debugLog.txt in the Playbook directory.
 
       - tail -f ixNetRestApi_debugLog.txt
@@ -177,4 +177,3 @@ To make Ansible display failures:
     [defaults]
     # Add stdout_callback
     stdout_callback = debug
-

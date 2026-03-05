@@ -2,7 +2,7 @@
 ################################################################################
 # Version 1.0    $Revision: 1 $                                                #
 #                                                                              #
-#    Copyright © 1997 - 2016 by IXIA                                           # 
+#    Copyright © 1997 - 2016 by IXIA                                           #
 #    All Rights Reserved.                                                      #
 #                                                                              #
 #    Revision Log:                                                             #
@@ -63,7 +63,7 @@
 #    7. Retrieve protocol learned info in Port2.                               #
 #    8. On the fly change SID Index value for IPv4 MS Ranges in Device Group1. #
 #    9. On the fly Change IPV6 prefix in MS range and accordingly IPV6 address #
-#        count of Node Routes in  Mesh Simulated Topology behind Device Group2.#  
+#        count of Node Routes in  Mesh Simulated Topology behind Device Group2.#
 #    10.On the fly Change in IPV6 FEC prefix in MS  and accordingly IPV6       #
 #       address of Node Routes in Mesh Simulated Topology behind Device Group2.#
 #    11. Retrieve protocol learned info in both ports after On the Fly changes.#
@@ -101,7 +101,7 @@ ixNet exec newConfig
 ################################################################################
 # 1. Protocol configuration section. Configure ISIS as per the description
 #  give above
-################################################################################ 
+################################################################################
 # Adding Virtual ports
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
@@ -281,7 +281,7 @@ ixNet setAttr $networkGoup2 -name "ISIS_Linear Topology 2"
 ixNet commit
 
 ########################################################################################
-# 2.Enabling Segment Routing in Emulated Router on Device Group 1 and Device Group 2 
+# 2.Enabling Segment Routing in Emulated Router on Device Group 1 and Device Group 2
 ########################################################################################
 puts "Enabling Segment Routing for ISIS"
 ixNet setAttr $isisL3Router1 -enableSR true
@@ -322,8 +322,8 @@ ixNet setA $sidcountsv -value 100
 ixNet commit
 
 ###########################################################################################################################################
-# 4. Set IPV4 and IPV6 Ranges for both router acts as Mapping Server(MS)and accordingly IPV4 & IPV6 Node Routes in Simulated Topologies    
-###########################################################################################################################################         
+# 4. Set IPV4 and IPV6 Ranges for both router acts as Mapping Server(MS)and accordingly IPV4 & IPV6 Node Routes in Simulated Topologies
+###########################################################################################################################################
 puts "Enabling IPV4  and IPV6 Node Routes Simulated Routers on Linear Network Group behind Device Group1"
 puts "***************************************************"
 set networkTopo1 [ixNet getList $networkGoup1 networkTopology]
@@ -376,8 +376,8 @@ puts "Enabling Mapping Server on  Emulated Router in Device Group 1  and Setting
 puts "***************************************************"
 
 set enablems1 [ixNet getAttribute $t1devices/isisL3Router:1 -enableMappingServer]
-	
-			
+
+
 set single [ixNet add $enablems1 "singleValue"]
 ixNet setMultiAttribute $single \
 -value true
@@ -388,8 +388,8 @@ ixNet setMultiAttribute $t1devices/isisL3Router:1 \
 			-numberOfMappingIPV4Ranges 3 \
 			-numberOfMappingIPV6Ranges 3 \
 			-name "ISIS-L3\ RTR\ 1"
-			
-ixNet commit 
+
+ixNet commit
 
 puts "Enabling Mapping Server on  Emulated Router in Device Group 2  and Setting No. of IPV4 and IPV6 Mapping Ranges "
 puts "***************************************************"
@@ -406,8 +406,8 @@ ixNet setMultiAttribute $t2devices/isisL3Router:1 \
 			-numberOfMappingIPV4Ranges 3 \
 			-numberOfMappingIPV6Ranges 3 \
 			-name "ISIS-L3\ RTR\ 1"
-			
-ixNet commit 		
+
+ixNet commit
 
 puts "Setting Mapping Server IPV4 FEC Prefix ranges For Emulated Router1 in Device Group1"
 
@@ -485,7 +485,7 @@ puts "***************************************************\n"
 ###############################################################################
 puts "Fetching ISIS IPv4 & IPv6 Learned Info of Device Group1 Topology1 Emulated Router  for Proper Prefix-Label Binding in Port1 "
 puts "***************************************************"
-ixNet exec getLearnedInfo $isisL3_1 
+ixNet exec getLearnedInfo $isisL3_1
 after 5000
 set learnedInfoList [ixNet getList $isisL3_1 learnedInfo]
 set linfoList [ixNet getList $learnedInfoList table]
@@ -594,11 +594,11 @@ if {[catch {ixNet exec applyOnTheFly $topology}] == 1} {
 after 5000
 
 ###############################################################################
-# 11 . Retrieve protocol learned info in Both Port 
+# 11 . Retrieve protocol learned info in Both Port
 ###############################################################################
 puts "Fetching ISIS IPv4 & IPv6 Learned Info of Device Group1 Topology1 Emulated Router  for Proper Prefix-Label Binding in Port1 "
 
-ixNet exec getLearnedInfo $isisL3_1 
+ixNet exec getLearnedInfo $isisL3_1
 after 5000
 set learnedInfoList [ixNet getList $isisL3_1 learnedInfo]
 set linfoList [ixNet getList $learnedInfoList table]
@@ -640,7 +640,7 @@ foreach table $linfoList {
 puts "***************************************************"
 
 ################################################################################
-# 12. Configure L2-L3 traffic 
+# 12. Configure L2-L3 traffic
 ################################################################################
 puts "Configuring  L2-L3 IPv4 Traffic Item # 1"
 puts "***************************************************"
@@ -678,7 +678,7 @@ ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/configElement:1/transmissionDistribution \
     -distributions [list srcDestEndpointPair0 ]
-	
+
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\
@@ -686,7 +686,7 @@ ixNet setMultiAttribute $trafficItem1/tracking\
     -fieldWidth     thirtyTwoBits\
     -protocolOffset Root.0\
     -values         [list]\
-	
+
 ixNet commit
 
 
@@ -728,7 +728,7 @@ ixNet commit
 
 ixNet setMultiAttribute $trafficItem2/configElement:1/transmissionDistribution \
     -distributions [list srcDestEndpointPair0 ]
-	
+
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem2/tracking\
@@ -736,7 +736,7 @@ ixNet setMultiAttribute $trafficItem2/tracking\
     -fieldWidth     thirtyTwoBits\
     -protocolOffset Root.0\
     -values         [list]\
-	
+
 ixNet commit
 
 ##################################################################################
@@ -778,4 +778,3 @@ after 5000
 ixNet exec stopAllProtocols
 puts "!!! Test Script Ends !!!"
 puts "***************************************************"
-

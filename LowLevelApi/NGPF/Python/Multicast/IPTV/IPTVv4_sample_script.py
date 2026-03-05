@@ -209,7 +209,7 @@ ixNet.commit()
 
 ################################################################################
 # Adding IGMP Host over ipv4 stack
-################################################################################ 
+################################################################################
 print("Adding IGMP Host over IPv4 stack")
 ixNet.add(ip1, 'igmpHost')
 ixNet.commit()
@@ -222,7 +222,7 @@ ixNet.setAttribute(topo2, '-name', 'IPv4 Topology 2')
 ixNet.commit()
 
 ################################################################################
-# Enabling IPTV in IGMP host 
+# Enabling IPTV in IGMP host
 ################################################################################
 print("Enabling IPTV")
 enableIptv = ixNet.getAttribute(igmpHost, '-enableIptv')
@@ -268,7 +268,7 @@ ixNet.setAttribute(singleValue, '-value', 'zapandview')
 ixNet.commit()
 
 ################################################################################
-# Start protocol 
+# Start protocol
 ################################################################################
 print("Starting protocols and waiting for 20 seconds for protocols to come up")
 ixNet.execute('startAllProtocols')
@@ -415,9 +415,8 @@ ixNet.execute('stop', ixNet.getRoot() + '/traffic')
 time.sleep(5)
 
 ################################################################################
-# Stop protocol 
+# Stop protocol
 ################################################################################
 print("Stopping protocol")
 ixNet.execute('stopAllProtocols')
 print("!!! Test Script Ends !!!")
-

@@ -9,7 +9,7 @@
 #    - Python modules: requests
 #    - NGPF configuration. (Classic Framework is not supported in ReST)
 #    - For ReST API, use Web QuickTest
-  
+
 # DESCRIPTION
 #    This sample script demonstrates:
 #        - REST API configurations using two back-to-back Ixia ports.
@@ -108,7 +108,7 @@ try:
     portObj.assignPorts(portList, createVports=False)
     portObj.verifyPortState()
 
-    quickTestObj = QuickTest(mainObj, fileMgmtObj) 
+    quickTestObj = QuickTest(mainObj, fileMgmtObj)
     quickTestHandle = quickTestObj.getQuickTestHandleByName(quickTestNameToRun)
     print('\nQuickTest Handle:', quickTestHandle)
 

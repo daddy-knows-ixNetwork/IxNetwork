@@ -6,8 +6,8 @@
 #    1> Loads the config file and use the saved config ports.
 #    2> Loads the config file, but use different ports.
 #       NOTE:  If the saved config file uses 3 ports, then user
-#              must provide a list with 3 ports. 
-#            
+#              must provide a list with 3 ports.
+#
 # Included APIs:
 #
 #   DebugHlt
@@ -19,7 +19,7 @@
 #   EnableTrafficItem  <Traffic Item name>
 #   StartAllProtocols
 #   StopAllProtocols
-#   SendArpHlt  
+#   SendArpHlt
 #   VerifyArpDiscoveries
 #   StartTrafficHlt
 #   GetStatsHlt
@@ -67,7 +67,7 @@ proc VerifyArpDiscoveries { {ExitTest doNotExitTest} } {
     # interface isn't enable.
     # Then get a list of all the discovered arps.
     # At the end, compare the two list. Any left overs are unresolved arps.
-    
+
     set resolvedArp {}
     set allIpGateways {}
 
@@ -87,13 +87,13 @@ proc VerifyArpDiscoveries { {ExitTest doNotExitTest} } {
 		set isIntEnabled [ixNet getAttribute $int -enabled]
 		if {$isIntEnabled == "true" || $isIntEnabled == "True"} {
 		    catch {ixNet getAttribute $int/ipv4 -gateway} ipv4GatewayReturn
-		    
+
 		    if {[regexp "null" $ipv4GatewayReturn] != 1} {
 			if {[lsearch $allIpGateways $ipv4GatewayReturn] == -1} {
 			    lappend allIpGateways $ipv4GatewayReturn
 			}
 		    }
-		    
+
 		    catch {ixNet getList $int ipv6} ipv6GatewayList
 		    if {$ipv6GatewayList != ""} {
 			foreach ipv6Gateway $ipv6GatewayList {
@@ -119,19 +119,19 @@ proc VerifyArpDiscoveries { {ExitTest doNotExitTest} } {
     foreach vP [ixNet getList [ixNet getRoot] vport] {
 	# Get all the discovered ARPs for the current vPort
 	set vPortInterfaceList [ixNet getList $vP discoveredNeighbor]
-	
+
 	if {$vPortInterfaceList != ""} {
 	    set currentPort [GetVportConnectedToPort $vP]
 
 	    # vPortInt = ::ixNet::OBJ-/vport:1/discoveredNeighbor:1
 	    foreach vPortInt $vPortInterfaceList {
 		set currentVp [join [lrange [split $vPortInt /] 0 1] /]
-		
+
 		set discoveredIp [ixNet getAttribute $vPortInt -neighborIp]
 		set discoveredMac [ixNet getAttribute $vPortInt -neighborMac]
-		
+
 		puts "VerifyArpDiscoveries: Discovered arp on $currentPort: $discoveredIp : $discoveredMac"
-		
+
 		if {$discoveredMac != "" || $discoveredMac != "00:00:00:00:00:00"} {
 		    if {[lsearch $allIpGateways $discoveredIp] != -1} {
 			lappend resolvedArp $discoveredIp
@@ -214,13 +214,13 @@ proc GetVportConnectedToPort { vport } {
     set connectedTo [lrange [split $connectedTo /] 3 4]
     set card [lindex [split [lindex $connectedTo 0] :] end]
     set port [lindex [split [lindex $connectedTo 1] :] end]
-    return $card/$port    
+    return $card/$port
 }
 
 proc StartTrafficHlt {} {
     puts "\nStarting IxNetwork traffic ..."
     set status [ixia::traffic_control -action run]
-    
+
     if {[keylget status status] != $::SUCCESS} {
 	puts "\nIxia traffic failed to start: $status"
     } else {
@@ -233,7 +233,7 @@ proc StartTrafficHlt {} {
 proc GetStatsHlt { {type flow} } {
     puts "\nGetStatsHlt"
     set flowStats [::ixia::traffic_stats -mode $type]
-    
+
     if {[keylget flowStats status] != $::SUCCESS} {
 	puts "GetStatsHlt failed: $status"
 	return 0
@@ -269,7 +269,7 @@ proc EnableTrafficItem { Name } {
 	    ixNet commit
 	    puts "\nEnableTrafficItemByName: $Name : Done\n"
 	    return 0
-	} 
+	}
     }
 
     puts "\nEnableTrafficItemByName: No such traffic item name: $Name\n"
@@ -394,7 +394,7 @@ proc DebugHlt { {debugFileName ixiaHltDebug.log} } {
 proc Connect { {type useConfigFilePorts} } {
     # Options:
     #    type = useConfigFilePorts | remapPorts
-    #   
+    #
     #    Defaults to using ports in the saved config file
 
     if {[file exists $::ixncfgFile] == 0} {
@@ -421,7 +421,7 @@ proc Connect { {type useConfigFilePorts} } {
 			      ]
     }
 
-    # NOTE: This requires -tcl_server <ip address> if the ixNet 
+    # NOTE: This requires -tcl_server <ip address> if the ixNet
     #       Tcl server is not running IxOS Tcl Server.
     if {$type == "useConfigFilePorts"} {
 	puts "Loading saved config ports: $::portList"
@@ -431,7 +431,7 @@ proc Connect { {type useConfigFilePorts} } {
 			       -ixnetwork_tcl_server $::ixNetworkTclServerIp \
 			       -session_resume_keys 1 \
 			       -connect_timeout 30 \
-			       -break_locks 1 
+			       -break_locks 1
 			  ]
     }
 
@@ -441,7 +441,7 @@ proc Connect { {type useConfigFilePorts} } {
     } else {
 	puts "Successfully connected to IxNetwork Tcl server"
     }
-    
+
     puts "\n[KeylPrint connectStatus]\n"
     return $connectStatus
 }
@@ -480,11 +480,8 @@ for {set flowNumber 1} {$flowNumber <= [llength [keylget flowStats flow]]} {incr
     set rxPort [keylget flowStats flow.$flowNumber.rx.port]
     set txFrames [keylget flowStats flow.$flowNumber.tx.total_pkts]
     set rxFrames [keylget flowStats flow.$flowNumber.rx.total_pkts]
-    
+
     set flowName [keylget flowStats flow.$flowNumber.flow_name]
-  
+
     puts "[format %5s $flowNumber][format %15s $txPort][format %10s $rxPort][format %14s $txFrames][format %14s $rxFrames]"
 }
-
-
-

@@ -7,7 +7,7 @@ Description
      Your scripts will be instantiating objects using your classes.
      With inheritance, this allows your scripts to use all of OpenIxia functions
      and use your added functions in your classes.
-     This allows you to keep getting OpenIxia updates without interferring with 
+     This allows you to keep getting OpenIxia updates without interferring with
      your extended functions.
 
 """

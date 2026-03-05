@@ -49,7 +49,7 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#    This sample configures 10 IPv4 sessions on each of the two ports,         # 
+#    This sample configures 10 IPv4 sessions on each of the two ports,         #
 #    and performs the following traffic actions                                #
 #    - Creating 2 Traffic Items for IPv4                                       #
 #    - Add 2 new Endpoint sets to TI 1 IPv4                                    #
@@ -164,7 +164,7 @@ def setIngressTrackingForTI(ixNet, ti, trackingList):
 
 ################################################################################
 # Defining the Egress Tracking for Traffic Item set function
-################################################################################    
+################################################################################
 def setFirstEgressTrackingForTI(ixNet, ti, stack, field):
     tiName = ixNet.getAttribute(ti, '-name')
     print "--- Traffic Item: %s setting eggress tracking to field %s for stack %s " % (tiName, field, stack)
@@ -285,7 +285,7 @@ ixNet.setMultiAttribute(ixNet.getAttribute(ipv4_2, '-resolveGateway') + '/single
 ixNet.commit()
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 vports = ixNet.getList(ixNet.getRoot(), 'vport')
 print "Assigning ports to " + str(vports) + " ..."
@@ -358,4 +358,3 @@ print "Stop All Protocols"
 ixNet.execute('stopAllProtocols')
 print "Sleep 30sec for protocols to stop"
 time.sleep(30)
-

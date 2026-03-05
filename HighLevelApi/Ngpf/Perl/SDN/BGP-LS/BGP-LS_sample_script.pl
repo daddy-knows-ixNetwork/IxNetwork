@@ -54,13 +54,13 @@
 #    than it will retrieve and display few statistics                          #
 # Ixia Software:                                                              #
 #    IxOS      8.10 EA                                                         #
-#    IxNetwork 8.10 EA  
+#    IxNetwork 8.10 EA
 #                                                                              #
 ################################################################################
 
 ################################################################################
-# Utils                                                                        #	
-################################################################################       
+# Utils                                                                        #
+################################################################################
 # Running from Linux:
 
 	# use lib ".";
@@ -73,7 +73,7 @@
        # use ixiahlt {IXIA_VERSION => $ENV{'IXIA_VERSION'}, TclAutoPath  => [$ENV{'PERL_IXOS_LIB_PATH'}, $ENV{'PERL_IXNET_LIB_PATH'}]};
 
 
-# Running from Windows: 
+# Running from Windows:
 
 	# use lib "C:/Program Files (x86)/Ixia/hltapi/4.95.117.44/TclScripts/lib/hltapi/library/common/ixia_hl_lib-7.40";
 	# use lib "C:/Program Files (x86)/Ixia/hltapi/4.95.117.44/TclScripts/lib/hltapi/library/common/ixiangpf/perl";
@@ -130,7 +130,7 @@ my @port_handles_list = split(/ /,$port_handles);
 # Creating topology and device group                                           #
 ################################################################################
 # Creating a topology on first port
-print "Adding Topology 1 on Port 1\n";    
+print "Adding Topology 1 on Port 1\n";
 my $topology_1_status = ixiangpf::topology_config ({
     topology_name      => "{BGP Topology 1}",
     port_handle        => $port_handles_list[0],
@@ -144,9 +144,9 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $topology_1_handle = $HashRef->{'topology_handle'};
- 
-# Creating a device group in topology 
-print "Creating device group 1 in topology 1\n";   
+
+# Creating a device group in topology
+print "Creating device group 1 in topology 1\n";
 my $device_group_1_status = ixiangpf::topology_config ({
     topology_handle              => "$topology_1_handle",
     device_group_name            => "{BGP Topology 1 Router}",
@@ -200,7 +200,7 @@ my $deviceGroup_2_handle = $HashRef->{'device_group_handle'};
 ################################################################################
 #  Configure protocol interfaces                                               #
 ################################################################################
-# Creating ethernet stack for the first Device Group 
+# Creating ethernet stack for the first Device Group
 my $ethernet_1_status = ixiangpf::interface_config ({
     protocol_name                => "{Ethernet 1}",
     protocol_handle              => "$deviceGroup_1_handle",
@@ -217,7 +217,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $ethernet_1_handle = $HashRef->{'ethernet_handle'};
-    
+
 # Creating ethernet stack for the second Device Group
 print "Creating ethernet for the second Device Group\n";
 my $ethernet_2_status = ixiangpf::interface_config ({
@@ -237,7 +237,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $ethernet_2_handle = $HashRef->{'ethernet_handle'};
 
-# Creating IPv4 Stack on top of Ethernet Stack for the first Device Group                                 
+# Creating IPv4 Stack on top of Ethernet Stack for the first Device Group
 print "Creating IPv4 Stack on top of Ethernet Stack for the first Device Group\n";
 my $ipv4_1_status = ixiangpf::interface_config ({
     protocol_name                     => "{IPv4 1}",
@@ -284,48 +284,48 @@ if ($command_status != $ixiangpf::SUCCESS) {
 my $ipv4_2_handle = $HashRef->{'ipv4_handle'};
 
 ################################################################################
-# Other protocol configurations                                                # 
+# Other protocol configurations                                                #
 ################################################################################
 # This will create BGP Stack on top of IPv4 stack
-print "Creating BGP Stack on top of IPv4 Stack in Topology 1\n";    
+print "Creating BGP Stack on top of IPv4 Stack in Topology 1\n";
 my $bgp_v4_interface_1_status = ixiangpf::emulation_bgp_config ({
-    mode                                              => "enable",                  
+    mode                                              => "enable",
     active                                            => "1",
-    md5_enable                                        => "0",                          
-    handle                                            => "$ipv4_1_handle",             
+    md5_enable                                        => "0",
+    handle                                            => "$ipv4_1_handle",
     ip_version                                        => "4",
-    remote_ip_addr                                    => "20.20.20.1",                 
-    next_hop_enable                                   => "0",                          
+    remote_ip_addr                                    => "20.20.20.1",
+    next_hop_enable                                   => "0",
     next_hop_ip                                       => "0.0.0.0",
-    filter_link_state                                 => "1",                          
-    capability_linkstate_nonvpn                       => "1",                          
-    bgp_ls_id                                         => "300",                        
+    filter_link_state                                 => "1",
+    capability_linkstate_nonvpn                       => "1",
+    bgp_ls_id                                         => "300",
     instance_id                                       => "400",
-    number_of_communities                             => "1",                          
-    enable_community                                  => "0",                          
-    community_type                                    => "no_export",                  
-    community_as_number                               => "0",                          
-    community_last_two_octets                         => "0",                          
-    number_of_ext_communities                         => "1",                          
-    enable_ext_community                              => "0",                          
-    ext_communities_type                              => "admin_as_two_octet",         
-    ext_communities_subtype                           => "route_target",               
-    ext_community_as_number                           => "1",                          
-    ext_community_as_4_bytes                          => "1",                          
-    ext_community_ip                                  => "1.1.1.1",                    
-    ext_community_opaque_data                         => "0",                          
-    enable_override_peer_as_set_mode                  => "0",                          
-    bgp_ls_as_set_mode                                => "include_as_seq",             
-    number_of_as_path_segments                        => "1",                          
-    enable_as_path_segments                           => "1",                          
-    enable_as_path_segment                            => "1",                          
-    number_of_as_number_in_segment                    => "1",                          
-    as_path_segment_type                              => "as_set",                     
-    as_path_segment_enable_as_number                  => "1",                          
-    as_path_segment_as_number                         => "1",                          
-    number_of_clusters                                => "1",                          
-    enable_cluster                                    => "0",                          
-    cluster_id                                        => "0.0.0.0",                                      
+    number_of_communities                             => "1",
+    enable_community                                  => "0",
+    community_type                                    => "no_export",
+    community_as_number                               => "0",
+    community_last_two_octets                         => "0",
+    number_of_ext_communities                         => "1",
+    enable_ext_community                              => "0",
+    ext_communities_type                              => "admin_as_two_octet",
+    ext_communities_subtype                           => "route_target",
+    ext_community_as_number                           => "1",
+    ext_community_as_4_bytes                          => "1",
+    ext_community_ip                                  => "1.1.1.1",
+    ext_community_opaque_data                         => "0",
+    enable_override_peer_as_set_mode                  => "0",
+    bgp_ls_as_set_mode                                => "include_as_seq",
+    number_of_as_path_segments                        => "1",
+    enable_as_path_segments                           => "1",
+    enable_as_path_segment                            => "1",
+    number_of_as_number_in_segment                    => "1",
+    as_path_segment_type                              => "as_set",
+    as_path_segment_enable_as_number                  => "1",
+    as_path_segment_as_number                         => "1",
+    number_of_clusters                                => "1",
+    enable_cluster                                    => "0",
+    cluster_id                                        => "0.0.0.0",
 });
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
@@ -387,32 +387,32 @@ my $bgpInterface_2_handle = $HashRef->{'bgp_handle'};
 
 print "Creating OSPFv2 Stack on top of IPv4 1 stack on Topology 1";
 my $ospfv2_1_status = ixiangpf::emulation_ospf_config({
-    handle                                                    =>"$ipv4_1_handle",            
+    handle                                                    =>"$ipv4_1_handle",
     area_id                                                   => "0.0.0.0",
-    area_id_as_number                                         => "0",                         
-    area_id_type                                              => "number",                    
-    authentication_mode                                       => "null",                      
-    dead_interval                                             => "40",                        
-    hello_interval                                            => "10",                        
-    router_interface_active                                   => "1",                         
-    enable_fast_hello                                         => "0",                         
-    hello_multiplier                                          => "2",                         
-    max_mtu                                                   => "1500",                      
-    protocol_name                                             => "OSPFv2-IF 1",             
-    router_active                                             => "1",                         
-    router_asbr                                               => "0",                         
-    do_not_generate_router_lsa                                => "0",                         
-    router_abr                                                => "0",                         
-    inter_flood_lsupdate_burst_gap                            => "33",                        
-    lsa_refresh_time                                          => "1800",                      
-    lsa_retransmit_time                                       => "5",                         
-    max_ls_updates_per_burst                                  => "1",                         
-    oob_resync_breakout                                       => "0",                         
-    interface_cost                                            => "10",                         
-    lsa_discard_mode                                          => "1",                         
-    md5_key_id                                                => "1",                         
-    network_type                                              => "ptop",                      
-    mode                                                      => "create",                    
+    area_id_as_number                                         => "0",
+    area_id_type                                              => "number",
+    authentication_mode                                       => "null",
+    dead_interval                                             => "40",
+    hello_interval                                            => "10",
+    router_interface_active                                   => "1",
+    enable_fast_hello                                         => "0",
+    hello_multiplier                                          => "2",
+    max_mtu                                                   => "1500",
+    protocol_name                                             => "OSPFv2-IF 1",
+    router_active                                             => "1",
+    router_asbr                                               => "0",
+    do_not_generate_router_lsa                                => "0",
+    router_abr                                                => "0",
+    inter_flood_lsupdate_burst_gap                            => "33",
+    lsa_refresh_time                                          => "1800",
+    lsa_retransmit_time                                       => "5",
+    max_ls_updates_per_burst                                  => "1",
+    oob_resync_breakout                                       => "0",
+    interface_cost                                            => "10",
+    lsa_discard_mode                                          => "1",
+    md5_key_id                                                => "1",
+    network_type                                              => "ptop",
+    mode                                                      => "create",
 });
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
@@ -471,7 +471,7 @@ my $network_group_1_status = ixiangpf::network_group_config({
     connected_to_handle                  => "$ethernet_2_handle",
     type                                 => "ipv4-prefix",
     ipv4_prefix_network_address          => "200.1.0.0",
-    ipv4_prefix_network_address_step     => "0.1.0.0",                    
+    ipv4_prefix_network_address_step     => "0.1.0.0",
     ipv4_prefix_length                   => "24",
     ipv4_prefix_number_of_addresses      => "2",
 });
@@ -485,16 +485,16 @@ if ($command_status != $ixiangpf::SUCCESS) {
 my $networkGroup_1_handle = $HashRef->{'network_group_handle'};
 
 my $network_group_2_status = ixiangpf::network_group_config({
-    protocol_handle                   => "$deviceGroup_2_handle",      
+    protocol_handle                   => "$deviceGroup_2_handle",
     protocol_name                     => "IPv6 Prefix NLRI",
     connected_to_handle               => "$ethernet_2_handle",
-    type                              => "ipv6-prefix",                
-    multiplier                        => "2",                          
-    enable_device                     => "1",                          
-    ipv6_prefix_network_address       => "3000:0:1:1:0:0:0:0",         
-    ipv6_prefix_network_address_step  => "0:0:1:0:0:0:0:0",            
-    ipv6_prefix_length                => "64",                         
-    ipv6_prefix_number_of_addresses   => "2"                          
+    type                              => "ipv6-prefix",
+    multiplier                        => "2",
+    enable_device                     => "1",
+    ipv6_prefix_network_address       => "3000:0:1:1:0:0:0:0",
+    ipv6_prefix_network_address_step  => "0:0:1:0:0:0:0:0",
+    ipv6_prefix_length                => "64",
+    ipv6_prefix_number_of_addresses   => "2"
 });
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
@@ -508,14 +508,14 @@ my $networkGroup_2_handle = $HashRef->{'network_group_handle'};
 my $network_group_3_status = ixiangpf::network_group_config({
     protocol_handle                   => "$deviceGroup_2_handle",
     protocol_name                     => "IPv4 Prefix NLRI",
-    connected_to_handle               => "$ethernet_2_handle",         
-    type                              => "ipv4-prefix",                
-    multiplier                        => "2",                          
-    enable_device                     => "1",                          
-    ipv4_prefix_network_address       => "200.1.0.0",                  
-    ipv4_prefix_network_address_step  => "0.1.0.0",                    
-    ipv4_prefix_length                => "24",                         
-    ipv4_prefix_number_of_addresses   => "2"                          
+    connected_to_handle               => "$ethernet_2_handle",
+    type                              => "ipv4-prefix",
+    multiplier                        => "2",
+    enable_device                     => "1",
+    ipv4_prefix_network_address       => "200.1.0.0",
+    ipv4_prefix_network_address_step  => "0.1.0.0",
+    ipv4_prefix_length                => "24",
+    ipv4_prefix_number_of_addresses   => "2"
 });
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
@@ -527,14 +527,14 @@ if ($command_status != $ixiangpf::SUCCESS) {
 my $networkGroup_3_handle = $HashRef->{'network_group_handle'};
 
 my $network_group_4_status = ixiangpf::network_group_config({
-    protocol_handle                   => "$deviceGroup_2_handle",      
-    protocol_name                     => "Node/Link/Prefix NLRI",    
-    multiplier                        => "1",                          
-    enable_device                     => "1",                          
-    type                              => "mesh",                       
-    mesh_number_of_nodes              => "3",                          
-    mesh_include_emulated_device      => "0",                          
-    mesh_link_multiplier              => "1",                          
+    protocol_handle                   => "$deviceGroup_2_handle",
+    protocol_name                     => "Node/Link/Prefix NLRI",
+    multiplier                        => "1",
+    enable_device                     => "1",
+    type                              => "mesh",
+    mesh_number_of_nodes              => "3",
+    mesh_include_emulated_device      => "0",
+    mesh_link_multiplier              => "1",
 });
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
@@ -568,12 +568,12 @@ sleep(60);
 print "Changing BGPLS ID and Instance ID On The Fly";
 my $bgp_v4_interface_2_status = ixiangpf::emulation_bgp_config({
     mode                                               => "modify",
-    active                                             => "1",                          
-    md5_enable                                         => "0",                          
-    handle                                             => "$bgpInterface_2_handle",     
-    ip_version                                         => "4",                          
-    bgp_ls_id                                          => "700",                        
-    instance_id                                        => "800",                        
+    active                                             => "1",
+    md5_enable                                         => "0",
+    handle                                             => "$bgpInterface_2_handle",
+    ip_version                                         => "4",
+    bgp_ls_id                                          => "700",
+    instance_id                                        => "800",
 });
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
@@ -605,7 +605,7 @@ sleep(10);
 ############################################################################
 print "Fetching BGP aggregated statistics\n";
 my $protostats = ixiangpf::emulation_bgp_info({
-    handle => $bgpInterface_1_handle, 
+    handle => $bgpInterface_1_handle,
     mode   => 'stats_per_device_group'
 });
  $HashRef = ixiangpf::get_result_hash();
@@ -661,6 +661,5 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 sleep(2);
-print "!!! Test Script Ends !!!\n";           
-print "SUCCESS - $0\n";         
-
+print "!!! Test Script Ends !!!\n";
+print "SUCCESS - $0\n";

@@ -10,7 +10,7 @@ params = {
     "configLicense": True,
     "licenseServerIp": ["192.168.70.3"],
     "licenseModel": "subscription",
-    "licenseTier": "tier3",    
+    "licenseTier": "tier3",
     "ixChassisIp": "192.168.70.11",
     "portList": [["192.168.70.11", "1", "1"],
                  ["192.168.70.11", "2", "1"]
@@ -19,7 +19,7 @@ params = {
 	{"name": "Topology-1",
          "ports": [["192.168.70.11", "1", "1"]],
          "deviceGroup": [
-             {"name": "Outer-DG-1",		
+             {"name": "Outer-DG-1",
               "multiplier": 1,
               "ethernet": [
                   {"name": "Ethernet-1",
@@ -56,7 +56,7 @@ params = {
                }
               ],
               "deviceGroup": [
-                  {"name": "Inner-DG-1",		
+                  {"name": "Inner-DG-1",
                    "multiplier": 3,
                    "ethernet": [
                        {"name": "Ethernet-1-1",
@@ -86,11 +86,11 @@ params = {
               ]
           }
          ]
-     },	
+     },
         {"name": "Topology-2",
          "ports": [["192.168.70.11", "2", "1"]],
          "deviceGroup": [
-             {"name": "Outer-DG-2",		
+             {"name": "Outer-DG-2",
               "multiplier": 1,
               "ethernet": [
                   {"name": "Ethernet-2",
@@ -127,7 +127,7 @@ params = {
                }
               ],
               "deviceGroup": [
-                  {"name": "Innerr-DG-2",		
+                  {"name": "Innerr-DG-2",
                    "multiplier": 3,
                    "ethernet": [
                        {"name": "Ethernet-2-2",
@@ -180,4 +180,3 @@ params = {
      }
     ]
 }
-

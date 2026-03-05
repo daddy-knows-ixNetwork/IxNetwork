@@ -9,7 +9,7 @@ Description
 
 Disclaimer
 ----------
-    This application is not meant to support all IxNetwork features.  It's meant for lightweight 
+    This application is not meant to support all IxNetwork features.  It's meant for lightweight
     configurations.
 
     However, you could create a very complicated configuration in the GUI, save the
@@ -19,7 +19,7 @@ Disclaimer
     frame size, frame rate, continuous traffic or fixed packet count, biDirectional and enable/disable
     traffic items.
 
-    
+
 Table of Contents
 -----------------
 	- Overview
@@ -40,7 +40,7 @@ Table of Contents
 	- showcommands()
 	- Examples
 	     1> Set your preference file name.
-	     
+
 	     2> Start by connecting to one of the API type of servers:
 	        - windows API server --> Enter:  connecttowindows()
 	        - Linux API server   --> Enter:  connecttolinux()
@@ -58,8 +58,8 @@ Overview
    - This is intended for environments that configures simple configurations,
      send traffic and get stats.
    - This app allow users to use the CLI to make a configuration, modify traffic
-     configurations, run and rerun traffic and get stats. 
-   - All users have to do is enter the Python shell and enter "from ixnetCli import *" and 
+     configurations, run and rerun traffic and get stats.
+   - All users have to do is enter the Python shell and enter "from ixnetCli import *" and
      start entering CLI commands by calling function names.
    - The CLI commands are nothing but Python functions.
    - The Python functions are high level wrappers that calls functions in the the IxNetRestApi* modules.
@@ -101,23 +101,23 @@ Requirements
         - The requests module is a client-side tool to send ReST API commands.
 
         - If you are using Python version 2.7.9 to 2.7.14, you could do a "pip install requests".
-            - If you're in a Linux environment, enter "which python" to get the path to your Python. 
+            - If you're in a Linux environment, enter "which python" to get the path to your Python.
             - If your Python path is: /usr/local/python2.7.9, then go to /usr/local/python2.7.9/bin and ...
-            - Enter: sudo pip install requests 
+            - Enter: sudo pip install requests
             - Must have root privileges.
 
         - If you are using Python version 3+, follow the same steps as above.
 
-        - If you are using Python version 2 prior to 2.7.9, make sure that you have pip installed. 
+        - If you are using Python version 2 prior to 2.7.9, make sure that you have pip installed.
             - The earlier Python 2 versions don't come with PIP.
     	    - If you don't have PIP installed, then following the below steps to install it.
     	    - You must have root privilegs.
-      
+
 	    <Steps to install setuptools and install PIP>
 
 	      In Linux:
 
-	        - Enter: wget --no-check-certificate https://pypi.python.org/packages/source/s/setuptools/setuptools-8.2.1.tar.gz 
+	        - Enter: wget --no-check-certificate https://pypi.python.org/packages/source/s/setuptools/setuptools-8.2.1.tar.gz
 		- Enter: tar -xvf setuptools-8.2.1.tar.gz
 		- Enter: cd setuptools-8.2.1
 		- Enter: python setup.py install
@@ -140,17 +140,17 @@ Getting Started:
 
     1> Clone from Github:  https://github.com/OpenIxia/IxNetwork.git
 
-    2> Create a preference file in the /Preferences directory 
+    2> Create a preference file in the /Preferences directory
 
        Copy template.py to a meaningful name.  This is your preference file.
        You will set this preference file each time you use this app.
 
        IMPORTTANT:
-          Copy the preference.py file to a different name and place it somewhere outside of your 
-          cloned Github directory.  So in case you do an update from Github on this project, your 
+          Copy the preference.py file to a different name and place it somewhere outside of your
+          cloned Github directory.  So in case you do an update from Github on this project, your
           preference file will not get overwritten.
 
-	This is where you state your preferred chassis IP, port list, API server IP and license server IP 
+	This is where you state your preferred chassis IP, port list, API server IP and license server IP
 	so you don't have to enter them on CLI each time you run this application.
 
 	Each user could have their own preference file because they could
@@ -162,14 +162,14 @@ Getting Started:
 
 
 	- Preference file must have the .py extension.
-        
+
 	- Prefence files need to be stored in /Preferences.
           You could put them in other locations, then you must include the path to PYTHONPATH so
           IxNetCli knows where to import it from.
 
-        
+
 	Preference file example:
-	
+
 	  NOTE: Set the value to None if not applied.
 
             apiServerType = 'windows' ;# Options: windows|linux
@@ -184,7 +184,7 @@ Getting Started:
             licenseMode = 'subscription'
             forceTakePortOwnership = True
             deleteSessionAfterTest = False ;# For Linux only
-            enableDebugTracing = False ;# Display error tracebacks 
+            enableDebugTracing = False ;# Display error tracebacks
 
 2 configuration methods
 -----------------------
@@ -197,7 +197,7 @@ Getting Started:
 	- Enter: config("<bgpParams.py>").
 	         For example: If you created a config file called bgpParams.py, then enter:
                               config('bgpParams.py')
-		 
+
         - Reads the bgpParams.py parameter file, which is a Python dict file.
         - Configures two Topology.
         - Start all protocols.
@@ -208,13 +208,13 @@ Getting Started:
            - On the IxNetwork GUI, make sure your configuration is good.
 	   - Export the configuration into either a JSON format file or a binary .ixncfg file.
 	   - Put all saved config files in the /ConfigFiles directory.
-	   - Enter: loadsavedconfig('ConfigFiles/<the saved config file>') 
+	   - Enter: loadsavedconfig('ConfigFiles/<the saved config file>')
 
 
 2 IxNetwork API servers to use
 ------------------------------
 Choices are:  Windows and Linux
-	
+
     1> Windows
         - The Windows IxNetwork GUI is the ReST API server. Using tcp port 11009.
 	- Supports only 1 session.
@@ -235,15 +235,15 @@ Choices are:  Windows and Linux
 How to use ixnetCli.py
 ------------------------------------------
     - ixnetCli.py is the main module that you import in the Python Shell Interpreter.
-    
+
     Example:
 
 	 From a Linux or Windows OS prompt:
 
             Step 1:
 	        Enter a Python shell:
-		(If you are using Windows, you might have to enter the full path to your Python.exe) 
-	           Enter: python  
+		(If you are using Windows, you might have to enter the full path to your Python.exe)
+	           Enter: python
 
             Step 2:
                 Import the ixnetCli module
@@ -286,7 +286,7 @@ Modify existing configurations, run traffic and get stats
 
     Once you are in the Python Shell, every CLI command is a
     Python syntax.
-    
+
     Notes:
 
        - Modifying Traffic Item requires the Traffic Item's name as the first parameter.
@@ -294,7 +294,7 @@ Modify existing configurations, run traffic and get stats
        - To see all of your configured Traffic Item names, enter:
              showtrafficitemnames() or showtrafficitems()
 
-       - To get a description of each parameter, enter: help(<the_function_name>)	 
+       - To get a description of each parameter, enter: help(<the_function_name>)
 
 
     As of this version of the DOC, this application supports the following traffic modifications:
@@ -337,7 +337,7 @@ help()
 ------
     - All the CLI functions in the main module ixnetCli.py has a docstring description
       that descibes the function and all the parameters.
-    
+
     - Use help(<CLI function name>) to see how to use the function and its parameters.
 
 showcommands()
@@ -356,7 +356,7 @@ For using Linux API server, which supports 10 concurrent sessions:
 	  - On top right corner, click on the settings icon
           - Go to My Account
 	  - Click on Show API-Key.
- 
+
      - If you haven't created a session ID, enter connecttolinux()
 
      - If you already have a session ID created, you could connect to it by entering:
@@ -369,4 +369,4 @@ For using Linux API server, which supports 10 concurrent sessions:
      - Once you are connected to a session Id, you could load different param files anytime you like
        to have a different configuration.
 
-     -      
+     -

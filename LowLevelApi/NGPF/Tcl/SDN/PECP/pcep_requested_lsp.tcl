@@ -37,7 +37,7 @@
 ################################################################################
 
 ################################################################################
-# Description: 
+# Description:
 # 1. Pre-established SR LSPs are statically configured in PCC. When PCC starts,
 #    it synchronizes these LSPs with PCE.
 # 2. Assign ports

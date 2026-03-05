@@ -43,38 +43,38 @@
 ################################################################################
 
 ################################################################################
-#                                                                              				
-# Description:                                                                				
-#    This sample script configures a RFC2544 Tput/Latency Use-Existing QT over      	
-# NGPF.                                                                           				
-# Steps:   1 -> Cleaning up IxNetwork                                         				
-#	   			2 -> Add virtual port                                               		
-#	  			3  -> Add topologies                                               			
-#	   			4  -> Add device groups                                             		
-#	   			5 -> Add values for deviceGroup and Topologies                     			
-#	   			6 -> Add mac to device group                                      			
-#	   			7  -> Add ipv4 to device group                                      		
-#	   			8 -> Add virtual ports to topology                                  		
-#	   			9 -> Setting multiple values for ipv4 addresse                     			
-#	   			10 -> Creating Traffic Item                                        			
-#	   			11  -> Creating QT                                                 			
-#	   			12 -> Assigning ports to virtual ports                              		
-#	   			13 -> Starting All Protocols                                        		
-#	   			14 -> Apply QT                                                      		
-#	   			15 -> Starting QT                                                   		
-#	   			16 -> Test run status                                 						
-#     			17 -> Cleaning up the client                                        		
-# 									      													
+#
+# Description:
+#    This sample script configures a RFC2544 Tput/Latency Use-Existing QT over
+# NGPF.
+# Steps:   1 -> Cleaning up IxNetwork
+#	   			2 -> Add virtual port
+#	  			3  -> Add topologies
+#	   			4  -> Add device groups
+#	   			5 -> Add values for deviceGroup and Topologies
+#	   			6 -> Add mac to device group
+#	   			7  -> Add ipv4 to device group
+#	   			8 -> Add virtual ports to topology
+#	   			9 -> Setting multiple values for ipv4 addresse
+#	   			10 -> Creating Traffic Item
+#	   			11  -> Creating QT
+#	   			12 -> Assigning ports to virtual ports
+#	   			13 -> Starting All Protocols
+#	   			14 -> Apply QT
+#	   			15 -> Starting QT
+#	   			16 -> Test run status
+#     			17 -> Cleaning up the client
+#
 ################################################################################
 
 
 namespace eval ::py {
     #client domain name or ip address
-    set ixTclServer PC-name 
+    set ixTclServer PC-name
     #client Tcl port
-    set ixTclPort   8009    
-    #chassis ip address/domain name ; card number ; port number	
-    set ports       {{192.168.1.1 1 1} {192.168.1.1 1 2}} 
+    set ixTclPort   8009
+    #chassis ip address/domain name ; card number ; port number
+    set ports       {{192.168.1.1 1 1} {192.168.1.1 1 2}}
 }
 
 ################################################################################
@@ -171,7 +171,7 @@ ixNet setMultiAttribute $trafficItem \-name "RFC2544Traffic" \-roundRobinPacketO
 
 set endpointSet [ixNet add $trafficItem endpointSet]
 ixNet setMultiAttribute $endpointSet \-sources $topo1 \-destinations $topo2
-ixNet setMultiAttribute $trafficItem /tracking \-trackBy [list flowGroup0 trackingenabled0] 
+ixNet setMultiAttribute $trafficItem /tracking \-trackBy [list flowGroup0 trackingenabled0]
 ixNet commit
 
 puts "Step 11  -> Creating QT"
@@ -179,14 +179,14 @@ set test [ixNet add /quickTest "rfc2544throughput"]
 ixNet commit
 
 set test [lindex [ixNet remapIds $test] 0]
-ixNet setMultiAttribute $test/testConfig \-frameSizeMode fixed \-loadType unchanged \-imixTrafficType UNCHANGED 
-	
+ixNet setMultiAttribute $test/testConfig \-frameSizeMode fixed \-loadType unchanged \-imixTrafficType UNCHANGED
+
 set trafficSelection [ixNet add $test "trafficSelection"]
 ixNet setMultiAttribute $trafficSelection \-id $trafficItem \-isGenerated false
 ixNet commit
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 set vPorts [ixNet getList [ixNet getRoot] vport]
 puts "Step 12 -> Assigning ports to $vPorts"
@@ -219,7 +219,7 @@ while {true} {
 
 	set progress [ixNet getA $test/results -progress]
 	if { [string length $progress ] > 3 } {
-	    puts $progress  
+	    puts $progress
 	}
 	after 5000
 	if {[ixNet getA $test/results -isRunning] == "false"} {
@@ -229,7 +229,7 @@ while {true} {
 puts "Test Finished"
 
 ################################################################################
-#Test run status 
+#Test run status
 ################################################################################
 puts "Step 16 -> Test run status"
 
@@ -242,7 +242,7 @@ if {[ixNet getA $test/results -result] == "fail"} {
 
 
 ################################################################################
-#Cleaning up the client 
+#Cleaning up the client
 ################################################################################
 puts "Step 17 -> Cleaning up the client: "
 puts " -> Stopping protocols"
@@ -252,7 +252,7 @@ after 5000
 
 puts "->Performing New Config"
 ixNet exec newConfig
-    
+
 ################################################################################
 # TEST END
 ################################################################################

@@ -62,7 +62,7 @@
 #    9. Configure IPv4 & IPv6 L2-L3 traffic.                                   #
 #   10. Retrieve L2-L3 traffic stats.                                          #
 #   11. Stop L2-L3 traffic.                                                    #
-#   12. Stop all protocols.                                                    #                                                                                
+#   12. Stop all protocols.                                                    #
 ################################################################################
 
 # Script Starts
@@ -87,7 +87,7 @@ ixNet exec newConfig
 
 ################################################################################
 # 1. Protocol configuration section. Configure mLDP                            #
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -211,7 +211,7 @@ set leafRange_rootAddrCount [ixNet getAttribute $ldp2/ldpLeafRangeV4 -rootAddres
 ixNet setMultiAttribute $leafRange_rootAddrCount/counter -start 15.1.1.1
 ixNet commit
 
-puts "Configuring 2 Opaque TLVs for Root Ranges"	
+puts "Configuring 2 Opaque TLVs for Root Ranges"
 set rootRange_numberOfTLV [ixNet setAttribute $ldp1/ldpRootRangeV4 -numberOfTLVs 2]
 ixNet commit
 puts "Configuring 2 Opaque TLVs for Leaf Ranges"
@@ -323,7 +323,7 @@ ixNet setMultiAttribute $lsp2/singleValue -value 5
 puts "Changing Label value  On The Fly behind Egress Router on Topology 2"
 set label [ixNet getAttribute $ldp2/ldpLeafRangeV4 -labelValueStart]
 ixNet setMultiAttribute $label/singleValue -value 666
-ixNet commit 
+ixNet commit
 
 set globals [ixNet getRoot]/globals
 set topology $globals/topology
@@ -336,7 +336,7 @@ after 5000
 
 ###############################################################################
 # 6. Retrieve protocol learned info again and compare with
-#    previouly retrieved learned info.  
+#    previouly retrieved learned info.
 ###############################################################################
 puts "Fetching P2MP FEC Learned Info in Ingress Router on Topology 1"
 ixNet exec getP2MPFECLearnedInfo $ldp1 1
@@ -350,7 +350,7 @@ foreach v $values {
 puts "***************************************************"
 
 ################################################################################
-# 7. Configure L2-L3 traffic 
+# 7. Configure L2-L3 traffic
 ################################################################################
 puts "Configuring L2-L3 Traffic Item"
 set ldp1 [lindex [ixNet remapIds $ldp1] 0]
@@ -375,7 +375,7 @@ ixNet setMultiAttribute $endpointSet1\
     -ngpfFilters           [list]\
     -trafficGroups         [list]\
     -sources               $source\
-    -destinations          [list]    
+    -destinations          [list]
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\
@@ -403,7 +403,7 @@ ixNet setMultiAttribute $endpointSet2\
     -ngpfFilters           [list]\
     -trafficGroups         [list]\
     -sources               $source\
-    -destinations          [list]    
+    -destinations          [list]
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem2/tracking\

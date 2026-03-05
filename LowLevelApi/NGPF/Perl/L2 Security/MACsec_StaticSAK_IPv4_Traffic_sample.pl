@@ -43,7 +43,7 @@
 ################################################################################
 
 ################################################################################
-# Description: 
+# Description:
 # 1. Configure MACSec with Static SAK (HW based)
 # 2. Create traffic Item
 # 3. Assign ports
@@ -55,7 +55,7 @@
 ################################################################################
 
 ################################################################################
-# Please ensure that PERL5LIB environment variable is set properly so that 
+# Please ensure that PERL5LIB environment variable is set properly so that
 # IxNetwork.pm module is available. IxNetwork.pm is generally available in
 # C:\<IxNetwork Install Path>\API\Perl
 ################################################################################
@@ -72,13 +72,13 @@ sub assignPorts {
     my $port2    = $my_resource[6];
     my $vport1   = $my_resource[7];
     my $vport2   = $my_resource[8];
-    
+
     my $root = $ixNet->getRoot();
     my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-    
+
     my $chassisObj2 = '';
     if ($chassis1 ne $chassis2) {
         $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -88,7 +88,7 @@ sub assignPorts {
     } else {
         $chassisObj2 = $chassisObj1;
     }
-    
+
     my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -97,7 +97,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-        
+
     $ixNet->commit();
 }
 
@@ -105,7 +105,7 @@ sub assignPorts {
 my @ports       = (('10.36.74.52', '1', '13'), ('10.36.74.52', '1', '17'));
 my $ixTclServer = '10.36.67.90';
 my $ixTclPort   = '8909';
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 ################################################################################
@@ -165,7 +165,7 @@ $ixNet->commit();
 $ethernet1 = ($ixNet->remapIds($ethernet1))[0];
 my $macMv = $ixNet->getAttribute($ethernet1, '-mac');
 $ixNet->add($macMv, 'counter');
-$ixNet->setMultiAttribute($macMv.'/counter',  
+$ixNet->setMultiAttribute($macMv.'/counter',
              '-direction', 'increment',
              '-start'    , '00:11:01:00:00:01',
              '-step'     , '00:00:00:00:00:01');
@@ -181,7 +181,7 @@ $macsec1 = ($ixNet->remapIds($macsec1))[0];
 print("Configure DUT SCI in Rx Properties of MACsec 1\n");
 my $dutSciMacMv = $ixNet->getAttribute($macsec1, '-dutSciMac');
 $ixNet->add($dutSciMacMv, 'counter');
-$ixNet->setMultiAttribute($dutSciMacMv.'/counter',  
+$ixNet->setMultiAttribute($dutSciMacMv.'/counter',
              '-direction', 'increment',
              '-start'    , '00:12:01:00:00:01',
              '-step'     , '00:00:00:00:00:01');
@@ -217,7 +217,7 @@ print("Configure Tx SAK and Rx SAK for all devices in MACSec 1");
 my $txSakPool1 = ($ixNet->getList($macsec1, 'txSakPool'))[0];
 my $txSak128mv1 = $ixNet->getAttribute($txSakPool1, '-txSak128');
 $ixNet->add($txSak128mv1, 'counter');
-$ixNet->setMultiAttribute($txSak128mv1.'/counter',  
+$ixNet->setMultiAttribute($txSak128mv1.'/counter',
              '-direction', 'increment',
              '-start'    , 'f123456789abcdef0123456789a11111',
              '-step'     , '00000000000000000000000000000001');
@@ -225,7 +225,7 @@ $ixNet->commit();
 my $rxSakPool1 = ($ixNet->getList($macsec1, 'rxSakPool'))[0];
 my $rxSak128mv1 = $ixNet->getAttribute($rxSakPool1, '-rxSak128');
 $ixNet->add($rxSak128mv1, 'counter');
-$ixNet->setMultiAttribute($rxSak128mv1.'/counter',  
+$ixNet->setMultiAttribute($rxSak128mv1.'/counter',
              '-direction', 'increment',
              '-start'    , 'f123456789abcdef0123456789a11111',
              '-step'     , '00000000000000000000000000000001');
@@ -260,7 +260,7 @@ $ixNet->commit();
 $ethernet2 = ($ixNet->remapIds($ethernet2))[0];
 my $macMv = $ixNet->getAttribute($ethernet2, '-mac');
 $ixNet->add($macMv, 'counter');
-$ixNet->setMultiAttribute($macMv.'/counter',  
+$ixNet->setMultiAttribute($macMv.'/counter',
              '-direction', 'increment',
              '-start'    , '00:12:01:00:00:01',
              '-step'     , '00:00:00:00:00:01');
@@ -277,7 +277,7 @@ $macsec2 = ($ixNet->remapIds($macsec2))[0];
 print("Configure DUT SCI in Rx Properties of MACsec 2\n");
 my $dutSciMacMv = $ixNet->getAttribute($macsec2, '-dutSciMac');
 $ixNet->add($dutSciMacMv, 'counter');
-$ixNet->setMultiAttribute($dutSciMacMv.'/counter',  
+$ixNet->setMultiAttribute($dutSciMacMv.'/counter',
              '-direction', 'increment',
              '-start'    , '00:11:01:00:00:01',
              '-step'     , '00:00:00:00:00:01');
@@ -312,7 +312,7 @@ print("Configure Tx SAK and Rx SAK for all devices in MACsec 2\n");
 my $txSakPool2 = ($ixNet->getList($macsec2, 'txSakPool'))[0];
 my $txSak128mv2 = $ixNet->getAttribute($txSakPool2, '-txSak128');
 $ixNet->add($txSak128mv2, 'counter');
-$ixNet->setMultiAttribute($txSak128mv2.'/counter',  
+$ixNet->setMultiAttribute($txSak128mv2.'/counter',
              '-direction', 'increment',
              '-start'    , 'f123456789abcdef0123456789a11111',
              '-step'     , '00000000000000000000000000000001');
@@ -320,7 +320,7 @@ $ixNet->commit();
 my $rxSakPool2 = ($ixNet->getList($macsec2, 'rxSakPool'))[0];
 my $rxSak128mv2 = $ixNet->getAttribute($rxSakPool2, '-rxSak128');
 $ixNet->add($rxSak128mv2, 'counter');
-$ixNet->setMultiAttribute($rxSak128mv2.'/counter',  
+$ixNet->setMultiAttribute($rxSak128mv2.'/counter',
              '-direction', 'increment',
              '-start'    , 'f123456789abcdef0123456789a11111',
              '-step'     , '00000000000000000000000000000001');
@@ -385,15 +385,15 @@ $ixNet->commit();
 ################################################################################
 # set frame size in Traffic Item
 ################################################################################
-$ixNet->setMultiAttribute($trafficItem1.'/configElement:1/frameSize', 
-	'-incrementFrom', '72', 
-	'-incrementTo', '1518', 
+$ixNet->setMultiAttribute($trafficItem1.'/configElement:1/frameSize',
+	'-incrementFrom', '72',
+	'-incrementTo', '1518',
 	'-type', 'increment');
-	
+
 ################################################################################
 # set frame rate in Traffic Item
-################################################################################	
-$ixNet->setMultiAttribute($trafficItem1.'/configElement:1/frameRate', 
+################################################################################
+$ixNet->setMultiAttribute($trafficItem1.'/configElement:1/frameRate',
 	'-rate', '100');
 
 $ixNet->setMultiAttribute($trafficItem1.'/tracking',
@@ -433,13 +433,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-        my $statIndiv = ''; 
+        my $statIndiv = '';
         $index = 0;
         foreach $statIndiv (@$statVal) {
             printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
             $index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -454,11 +454,11 @@ foreach my $item (@traffic_items) {
 $ixNet->execute('apply', ($ixNet->getRoot()).'/traffic');
 $ixNet->execute('start', ($ixNet->getRoot()).'/traffic');
 
-print("Run Traffic for 30 secs\n"); 
+print("Run Traffic for 30 secs\n");
 sleep(30);
 
 ################################################################################
-# Retrieve Traffic Item Flow Statistics 
+# Retrieve Traffic Item Flow Statistics
 ################################################################################
 print "Retrieve Flow Statistics\n";
 my $viewPage = '::ixNet::OBJ-/statistics/view:"Flow Statistics"/page';
@@ -470,13 +470,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 

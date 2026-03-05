@@ -47,7 +47,7 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#    This sample configures 10 IPv6 Autoconfiguration sessions the two ports   # 
+#    This sample configures 10 IPv6 Autoconfiguration sessions the two ports   #
 #                                                                              #
 ################################################################################
 
@@ -124,7 +124,7 @@ ixNet add $mac2 ipv6Autoconfiguration
 ixNet commit
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 set vPorts [ixNet getList [ixNet getRoot] vport]
 puts "Assigning ports to $vPorts"

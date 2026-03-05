@@ -66,7 +66,7 @@ test
 	Sleep  20s
 
 ###########GET DHCP STATISTICS############
-	
+
 	${result} =  Emulation Dhcp Server Stats  port_handle=@{portHandles}[0]  ip_version=6  action=collect
 	${dhcp_stats_1} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${dhcp_stats_1}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
@@ -81,7 +81,7 @@ test
 
 ###########RESET DHCP SERVER############
 
-	${result} =  Emulation Dhcp Server Config  handle=${dhcp_server_handles}  mode=reset 
+	${result} =  Emulation Dhcp Server Config  handle=${dhcp_server_handles}  mode=reset
 	${config_status_2} =  Get From Dictionary  ${result}  status
 	Run Keyword If  '${config_status_2}' != '1'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
 
@@ -89,12 +89,3 @@ test
 
 	${status}   ${result} =  Run Keyword And Ignore Error  Emulation Dhcp Server Stats  port_handle=@{portHandles}[0]  action=collect
 	Run Keyword If  '${status}' != 'FAIL'  FAIL  "Error: Status is not SUCCESS"  ELSE  Log  "Status is SUCCESS"
-
-
-
-
-
-
-
-
-

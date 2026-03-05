@@ -167,8 +167,8 @@ proc Action {portData1 portData2} {
     }
     ixNet commit
     after 3000
-	
-	
+
+
 
 
     puts "Starting CFM ... "
@@ -224,14 +224,14 @@ proc Action {portData1 portData2} {
     }
     ixNet commit
     after 3000
-	
+
 	set AttributeList [ixNet getList $trafStat column]
-    
+
     foreach x $AttributeList {
         set ColumnName [ixNet getAttr $x -name]
     }
     set index 0
-    
+
     foreach y $ColumnName {
             if {[string compare $y "Rx Frame"]==0} {
                 set index [expr $index+1]
@@ -239,7 +239,7 @@ proc Action {portData1 portData2} {
                 break
             }
     }
-	
+
     set RxColumn [lindex [ixNet getList $trafStat column]  $index]
     set RxCell [lindex [ixNet getList $RxColumn cell] 0]
     set RxFrame [ixNet getAttr $RxCell -statValue]
@@ -264,4 +264,3 @@ proc Action {portData1 portData2} {
 # Execute the Action procedure defined above                                  #
 #-----------------------------------------------------------------------------#
 Execute_Action
-

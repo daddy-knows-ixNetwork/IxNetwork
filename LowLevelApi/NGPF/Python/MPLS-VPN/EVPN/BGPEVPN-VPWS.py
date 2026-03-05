@@ -50,12 +50,12 @@
 #    About Topology:                                                           #
 #       It will create 2 BGP EVPN-VPWS topologies, each having LDP configured  #
 #       in connected Device Group .BGP EVPN-VPWS configured in chained device  #
-#       group along with Mac pools connected behind the chained Device Group.  # 
+#       group along with Mac pools connected behind the chained Device Group.  #
 # Script Flow:                                                                 #
 #        Step 1. Configuration of protocols.                                   #
 #                                                                              #
 #    Configuration flow of the script is as follow:                            #
-#       i.    Adding of Ethernet and IP within both topologies,                # 
+#       i.    Adding of Ethernet and IP within both topologies,                #
 #       ii.   Ading and configuration of OSPF and LDP router over IP           #
 #       iii.  Adding of Route Range behind DG of each topology                 #
 #       iv.   Configuring loopback address as Router ID                        #
@@ -359,7 +359,7 @@ ixNet.execute('createDefaultStack', chainedDg1, 'macPools')
 print("Adding Mac Pools behind EVPN-VPWS in topology 2")
 ixNet.execute('createDefaultStack', chainedDg2, 'macPools')
 
-# VPWS Service Instance Configuration 
+# VPWS Service Instance Configuration
 print("Changing default values of Ethernet Tag Id")
 ixNet.setAttribute(ixNet.getAttribute(broadcastDomain1, '-ethernetTagId') + '/singleValue', '-value', '1000')
 ixNet.setAttribute(ixNet.getAttribute(broadcastDomain2, '-ethernetTagId') + '/singleValue', '-value', '2000')

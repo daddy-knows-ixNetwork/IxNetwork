@@ -45,7 +45,7 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#    This sample configures 10 IPv6 sessions on each of the two ports,         # 
+#    This sample configures 10 IPv6 sessions on each of the two ports,         #
 #    adds a traffic Item that uses IPv6 endpoints, sends traffic and           #
 #    checks the loss using the statistics                                      #
 #                                                                              #
@@ -197,7 +197,7 @@ ixNet setMultiAttribute $ti1/tracking -trackBy {{sourceDestValuePair0}}
 ixNet commit
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 set vPorts [ixNet getList [ixNet getRoot] vport]
 puts "Assigning ports to $vPorts"

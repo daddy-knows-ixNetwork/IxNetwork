@@ -83,7 +83,7 @@
 ################################################################################
 
 ################################################################################
-# Utils                                                                        #    
+# Utils                                                                        #
 ################################################################################
 # Running from Linux:
 
@@ -97,7 +97,7 @@
        # use ixiahlt {IXIA_VERSION => $ENV{'IXIA_VERSION'}, TclAutoPath  => [$ENV{'PERL_IXOS_LIB_PATH'}, $ENV{'PERL_IXNET_LIB_PATH'}]};
 
 
-# Running from Windows: 
+# Running from Windows:
 
 	# use lib "C:/Program Files (x86)/Ixia/hltapi/4.95.117.44/TclScripts/lib/hltapi/library/common/ixia_hl_lib-7.40";
 	# use lib "C:/Program Files (x86)/Ixia/hltapi/4.95.117.44/TclScripts/lib/hltapi/library/common/ixiangpf/perl";
@@ -110,7 +110,7 @@ use strict;
 use bignum;
 use Carp;
 
-# Using a hash reference for the HLP procedures 
+# Using a hash reference for the HLP procedures
 # (since they return values in form of hashes)
 our $HashRef = {};
 # Using a common variable to retain the status of each command
@@ -155,7 +155,7 @@ my @port_handles_list = split(/ /,$port_handles);
 ################################################################################
 
 # Creating a topology on first port
-print "Adding topology 1 on port 1\n";     
+print "Adding topology 1 on port 1\n";
 my $topology_1_status = ixiangpf::topology_config ({
     topology_name => "{Topology for OSPFv2 1}",
     port_handle   => $port_handles_list[0],
@@ -169,8 +169,8 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $topology_1_handle = $HashRef->{'topology_handle'};
 
-# Creating a device group in topology 
-print "Creating device group 1 in topology 1\n";      
+# Creating a device group in topology
+print "Creating device group 1 in topology 1\n";
 my $device_group_1_status = ixiangpf::topology_config ({
     topology_handle         => "$topology_1_handle",
     device_group_name       => "{OSPFv2 Router 1}",
@@ -185,7 +185,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 my $deviceGroup_1_handle = $HashRef->{'device_group_handle'};
-    
+
 
 # Creating a topology on second port
 print "Adding topology 2 on port 2\n";
@@ -223,7 +223,7 @@ my $deviceGroup_2_handle = $HashRef->{'device_group_handle'};
 #  Configure protocol interfaces                                               #
 ################################################################################
 
-# Creating ethernet stack for the first Device Group 
+# Creating ethernet stack for the first Device Group
 print "Creating ethernet stack for the first Device Group\n";
 my $ethernet_1_status = ixiangpf::interface_config ({
     protocol_name     => "{Ethernet 1}",
@@ -259,8 +259,8 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $ethernet_2_handle = $HashRef->{'ethernet_handle'};
 
-# Creating IPv4 Stack on top of Ethernet Stack for the first Device Group                                 
-print "Creating IPv4 Stack on top of Ethernet Stack for the first Device Group\n";     
+# Creating IPv4 Stack on top of Ethernet Stack for the first Device Group
+print "Creating IPv4 Stack on top of Ethernet Stack for the first Device Group\n";
 my $ipv4_1_status = ixiangpf::interface_config ({
     protocol_name                => "{IPv4 1}",
     protocol_handle              => "$ethernet_1_handle",
@@ -280,7 +280,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 my $ipv4_1_handle = $HashRef->{'ipv4_handle'};
 
-# Creating IPv4 Stack on top of Ethernet Stack for the second Device Group 
+# Creating IPv4 Stack on top of Ethernet Stack for the second Device Group
 print "Creating IPv4 2 stack on ethernet 2 stack for the second Device Group\n";
 my $ipv4_2_status = ixiangpf::interface_config ({
     protocol_name                => "{IPv4 2}",
@@ -304,7 +304,7 @@ my $ipv4_2_handle = $HashRef->{'ipv4_handle'};
 ################################################################################
 # Other protocol configurations                                                #
 ################################################################################
-# This will create OSPFv2 on top of IP within Topology 1 
+# This will create OSPFv2 on top of IP within Topology 1
 print "Creating OSPFv2 on top of IPv4 1 stack\n";
 my $ospfv2_1_status = ixiangpf::emulation_ospf_config ({
      handle                  => $ipv4_1_handle,
@@ -332,7 +332,7 @@ my $ospfv2_2_status = ixiangpf::emulation_ospf_config ({
      mode                    => "create",
      network_type            => "ptop",
      protocol_name           => "{OSPFv2-IF 2}",
-     lsa_discard_mode        => "0",   
+     lsa_discard_mode        => "0",
      router_id               => "194.0.0.1",
      router_interface_active => "1",
      router_active           => "1",
@@ -370,7 +370,7 @@ my $ipv4PrefixPools_1_handle = $HashRef->{'ipv4_prefix_pools_handle'};
 
 print "Configuring OSPFv2 group range for topology 1\n";
 my  $ospfv2_network_group_1_status = ixiangpf::emulation_ospf_network_group_config({
-    handle                   => $networkGroup_1_handle, 
+    handle                   => $networkGroup_1_handle,
     mode                     => "modify",
     ipv4_prefix_active       => "1",
     ipv4_prefix_route_origin => "another_area",
@@ -383,7 +383,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 
-# Creating IPv4 prefix pool of Network for Network Cloud behind second 
+# Creating IPv4 prefix pool of Network for Network Cloud behind second
 # Device Group  with "ipv4_prefix_network_address" =202.1.0.1
 print "Creating IPv4 prefix pool behind second Device Group\n";
 my $network_group_2_status = ixiangpf::network_group_config ({
@@ -560,12 +560,12 @@ print "Starting OSPFv2 in topology2\n";
 ixiangpf::test_control({
     handle => $topology_2_handle,
     action => 'start_protocol',
-});    
+});
 if ($command_status != $ixiangpf::SUCCESS) {
     my $error = ixiangpf::status_item('log');
     print "Error: $error";
     return "FAILED - $error";
-}    
+}
 print "Waiting for 30 seconds\n";
 sleep(30);
 
@@ -626,7 +626,7 @@ print "Disabling the OSPFv2 group-range on the topology 2\n";
 my $ospfv2_2_modify_status = ixiangpf::emulation_ospf_network_group_config({
     handle             => "$networkGroup_2_handle",
     mode               => "modify",
-    ipv4_prefix_active => "0", 
+    ipv4_prefix_active => "0",
 });
 
 $HashRef = ixiangpf::get_result_hash();
@@ -751,7 +751,7 @@ foreach (@status_keys) {
 # 5. Frame Size: 64 bytes                                                      #
 # 6. Tracking  : Source Destination EndPoint Set                               #
 ################################################################################
-print "Configuring L2-L3 traffic\n";  
+print "Configuring L2-L3 traffic\n";
 $_result_ = ixiangpf::traffic_config({
     mode                  => 'create',
     traffic_generator     => 'ixnetwork_540',
@@ -761,15 +761,15 @@ $_result_ = ixiangpf::traffic_config({
     frame_sequencing      => 'disable',
     frame_sequencing_mode => 'rx_threshold',
     name                  => 'Traffic_1_Item',
-    circuit_endpoint_type => 'ipv4',                              
-    rate_pps              => '100000',                                      
-    frame_size            => '64',                                           
+    circuit_endpoint_type => 'ipv4',
+    rate_pps              => '100000',
+    frame_size            => '64',
     mac_dst_mode          => "fixed",
     mac_src_mode          => "fixed",
     mac_src_tracking      => "1",
     track_by              => '{sourceDestEndpointPair0 trackingenabled0}'
 });
- 
+
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
 if ($command_status != $ixiangpf::SUCCESS) {
@@ -778,13 +778,13 @@ if ($command_status != $ixiangpf::SUCCESS) {
     return "FAILED - $error";
 }
 
-################################################################################# 
+#################################################################################
 # Configure L4-L7 Application traffic                                           #
 # 1. Endpoints      : Source->IPv4 Loopback, Destination->IPv4 Loopback         #
 # 2. Flow Group     : On IPv4 Destination Address                               #
 # 3. objective value: 100                                                       #
 #################################################################################
-print "Configuring L4-L7 App Lib traffic\n"; 
+print "Configuring L4-L7 App Lib traffic\n";
 # L4-L7 applib profiles
 my $traffic_item_1_status = ixiangpf::traffic_l47_config ({
     mode                        => 'create',
@@ -796,25 +796,25 @@ my $traffic_item_1_status = ixiangpf::traffic_l47_config ({
     objective_value             => '100',
     objective_distribution      => 'apply_full_objective_to_each_port',
     enable_per_ip_stats         => '0',
-    flows                       => "{Bandwidth_BitTorrent_File_Download 
-                                     Bandwidth_eDonkey 
-                                     Bandwidth_HTTP 
-                                     Bandwidth_IMAPv4 
-                                     Bandwidth_POP3 
-                                     Bandwidth_Radius 
-                                     Bandwidth_Raw 
-                                     Bandwidth_Telnet 
-                                     Bandwidth_uTorrent_DHT_File_Download 
-                                     BBC_iPlayer BBC_iPlayer_Radio 
-                                     BGP_IGP_Open_Advertise_Routes 
-                                     BGP_IGP_Withdraw_Routes Bing_Search 
-                                     BitTorrent_Ares_v217_File_Download 
-                                     BitTorrent_BitComet_v126_File_Download 
-                                     BitTorrent_Blizzard_File_Download 
-                                     BitTorrent_Cisco_EMIX BitTorrent_Enterprise 
+    flows                       => "{Bandwidth_BitTorrent_File_Download
+                                     Bandwidth_eDonkey
+                                     Bandwidth_HTTP
+                                     Bandwidth_IMAPv4
+                                     Bandwidth_POP3
+                                     Bandwidth_Radius
+                                     Bandwidth_Raw
+                                     Bandwidth_Telnet
+                                     Bandwidth_uTorrent_DHT_File_Download
+                                     BBC_iPlayer BBC_iPlayer_Radio
+                                     BGP_IGP_Open_Advertise_Routes
+                                     BGP_IGP_Withdraw_Routes Bing_Search
+                                     BitTorrent_Ares_v217_File_Download
+                                     BitTorrent_BitComet_v126_File_Download
+                                     BitTorrent_Blizzard_File_Download
+                                     BitTorrent_Cisco_EMIX BitTorrent_Enterprise
                                      BitTorrent_RMIX_5M}",
-}); 
-  
+});
+
 $HashRef = ixiangpf::get_result_hash();
 $command_status = $HashRef->{'status'};
 if ($command_status != $ixiangpf::SUCCESS) {
@@ -856,7 +856,7 @@ if ($command_status != $ixiangpf::SUCCESS) {
     my $error = ixiangpf::status_item('log');
     print "Error: $error";
     return "FAILED - $error";
-}   
+}
 @status_keys = ixiangpf::status_item_keys();
  foreach (@status_keys) {
     my $my_key = $_;
@@ -898,5 +898,5 @@ if ($command_status != $ixiangpf::SUCCESS) {
 }
 sleep(2);
 
-print "!!! Test Script Ends !!!\n";           
-print "SUCCESS - $0\n";         
+print "!!! Test Script Ends !!!\n";
+print "SUCCESS - $0\n";

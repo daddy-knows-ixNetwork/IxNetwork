@@ -92,7 +92,7 @@ from ixiaerror import IxiaError
 ixiatcl = IxiaTcl()
 ixiahlt = IxiaHlt(ixiatcl)
 ixiangpf = IxiaNgpf(ixiahlt)
-            
+
 try:
     ErrorHandler('', {})
 except (NameError,):
@@ -142,14 +142,14 @@ ports = connect_result['vport_list'].split()
 ################################################################################
 
 # Creating a topology in first port
-print ('Adding topology:1 in port 1')    
+print ('Adding topology:1 in port 1')
 _result_ = ixiangpf.topology_config(
         topology_name      = """ISIS Topology 1""",
         port_handle        = ports[0],
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', _result_)
-    
+
 topology_1_handle = _result_['topology_handle']
 
 # Creating a device group in topology
@@ -162,22 +162,22 @@ _result_ = ixiangpf.topology_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', _result_)
-    
+
 deviceGroup_1_handle = _result_['device_group_handle']
-    
+
 # Creating a topology in second port
-print "Adding topology 2 in port 2"    
+print "Adding topology 2 in port 2"
 _result_ = ixiangpf.topology_config(
         topology_name      = """ISIS Topology 2""",
         port_handle        = ports[1],
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', _result_)
-    
+
 topology_2_handle = _result_['topology_handle']
 
 # Creating a device group in topology
-print "Creating device group 2 in topology 2"    
+print "Creating device group 2 in topology 2"
 _result_ = ixiangpf.topology_config(
         topology_handle              = topology_2_handle,
         device_group_name            = """Device Group 2""",
@@ -186,7 +186,7 @@ _result_ = ixiangpf.topology_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', _result_)
-    
+
 deviceGroup_4_handle = _result_['device_group_handle']
 
 ################################################################################
@@ -203,7 +203,7 @@ _result_ = ixiangpf.interface_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', _result_)
-    
+
 ethernet_1_handle = _result_['ethernet_handle']
 
 # Creating ethernet stack in device group
@@ -219,7 +219,7 @@ if _result_['status'] != IxiaHlt.SUCCESS:
 
 ethernet_2_handle = _result_['ethernet_handle']
 
-    
+
 # Creating IPv4 Stack on top of Ethernet Stack
 print "Creating IPv4  stack on first ethernet stack"
 _result_ = ixiangpf.interface_config(
@@ -234,9 +234,9 @@ _result_ = ixiangpf.interface_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', _result_)
-    
+
 ipv4_1_handle = _result_['ipv4_handle']
-    
+
 # Creating IPv4 Stack on top of Ethernet Stack
 print "Creating IPv4  stack on second ethernet stack"
 _result_ = ixiangpf.interface_config(
@@ -280,9 +280,9 @@ _result_ = ixiangpf.emulation_isis_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_isis_config', _result_)
-    
+
 isisL3_1_handle = _result_['isis_l3_handle']
-    
+
 # Creating ISIS Network Group in port 1
 print "Creating ISIS IPv4 Network group in port 1"
 _result_ = ixiangpf.network_group_config(
@@ -294,10 +294,10 @@ _result_ = ixiangpf.network_group_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('network_group_config', _result_)
-    
+
 networkGroup_1_handle = _result_['network_group_handle']
 ipv4PrefixPools_1_handle = _result_['ipv4_prefix_pools_handle']
-    
+
 _result_ = ixiangpf.emulation_isis_network_group_config(
         handle                  = networkGroup_1_handle,
         mode                    = "modify",
@@ -305,8 +305,8 @@ _result_ = ixiangpf.emulation_isis_network_group_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_isis_network_group_config', _result_)
-    
-    
+
+
 _result_ = ixiangpf.topology_config(
         device_group_name            = """Device Group 3""",
         device_group_multiplier      = "1",
@@ -315,11 +315,11 @@ _result_ = ixiangpf.topology_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', _result_)
-    
+
 deviceGroup_2_handle = _result_['device_group_handle']
-    
+
 # Creating ipv4 Loopback interface for applib traffic
-print "Adding ipv4 loopback1 for applib traffic"    
+print "Adding ipv4 loopback1 for applib traffic"
 _result_ = ixiangpf.interface_config(
         protocol_name            = """IPv4 Loopback 1""",
         protocol_handle          = deviceGroup_2_handle,
@@ -329,9 +329,9 @@ _result_ = ixiangpf.interface_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', _result_)
-    
+
 ipv4Loopback_1_handle = _result_['ipv4_loopback_handle']
-    
+
 # Creating ISIS Network group 3 for ipv6 ranges
 print "Creating ISIS Network group 3 for ipv6 ranges"
 _result_ = ixiangpf.network_group_config(
@@ -342,10 +342,10 @@ _result_ = ixiangpf.network_group_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('network_group_config', _result_)
-    
+
 networkGroup_3_handle = _result_['network_group_handle']
 ipv6PrefixPools_1_handle = _result_['ipv6_prefix_pools_handle']
-    
+
 _result_ = ixiangpf.emulation_isis_network_group_config(
         handle                      = networkGroup_3_handle,
         mode                        = "modify",
@@ -353,7 +353,7 @@ _result_ = ixiangpf.emulation_isis_network_group_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_isis_network_group_config', _result_)
-    
+
 _result_ = ixiangpf.topology_config(
         device_group_name            = """Device Group 6""",
         device_group_multiplier      = "1",
@@ -362,11 +362,11 @@ _result_ = ixiangpf.topology_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', _result_)
-    
+
 deviceGroup_3_handle = _result_['device_group_handle']
-    
+
 #Creating ipv6 loopback 1 interface for applib traffic
-print "Adding ipv6 loopback1 for applib traffic"    
+print "Adding ipv6 loopback1 for applib traffic"
 _result_ = ixiangpf.interface_config(
         protocol_name            = """IPv6 Loopback 2""",
         protocol_handle          = deviceGroup_3_handle,
@@ -376,9 +376,9 @@ _result_ = ixiangpf.interface_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', _result_)
-    
+
 ipv6Loopback_1_handle = _result_['ipv6_loopback_handle']
-    
+
 ################################################################################
 # Creating  ISIS Stack on top of ethernet stack                                #
 # Descrtiption of protocol arguments : discard_lsp: enables learning LSPs      #
@@ -403,7 +403,7 @@ _result_ = ixiangpf.emulation_isis_config(
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_isis_config', _result_)
 isisL3_2_handle = _result_['isis_l3_handle']
-    
+
 # Creating IPv4 Prefix Ranges
 print "Creating ISIS IPv4 Prefix Ranges"
 _result_ = ixiangpf.network_group_config(
@@ -416,10 +416,10 @@ _result_ = ixiangpf.network_group_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('network_group_config', _result_)
-    
+
 networkGroup_5_handle = _result_['network_group_handle']
 ipv4PrefixPools_3_handle = _result_['ipv4_prefix_pools_handle']
-    
+
 _result_ = ixiangpf.emulation_isis_network_group_config(
         handle                  = networkGroup_5_handle,
         mode                    = "modify",
@@ -427,7 +427,7 @@ _result_ = ixiangpf.emulation_isis_network_group_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_isis_network_group_config', _result_)
-    
+
 # Creating a device group in topology for loopback interface
 print "Creating device group 2 in topology 2 for loopback interface"
 _result_ = ixiangpf.topology_config(
@@ -438,11 +438,11 @@ _result_ = ixiangpf.topology_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', _result_)
-   
+
 deviceGroup_5_handle = _result_['device_group_handle']
-    
+
 #Creating ipv4 loopback 2 for applib traffic
-print "Adding ipv4 loopback2 for applib traffic"    
+print "Adding ipv4 loopback2 for applib traffic"
 _result_ = ixiangpf.interface_config(
         protocol_name            = """IPv4 Loopback 2""",
         protocol_handle          = deviceGroup_5_handle,
@@ -452,11 +452,11 @@ _result_ = ixiangpf.interface_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', _result_)
-    
+
 ipv4Loopback_2_handle = _result_['ipv4_loopback_handle']
-    
+
 # Creating ISIS Prefix ranges
-print "Creating ISIS IPv6 Prefix ranges"    
+print "Creating ISIS IPv6 Prefix ranges"
 _result_ = ixiangpf.network_group_config(
         protocol_handle                      = deviceGroup_4_handle,
         protocol_name                        = """ISIS Network Group 4""",
@@ -465,10 +465,10 @@ _result_ = ixiangpf.network_group_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('network_group_config', _result_)
-    
+
 networkGroup_7_handle = _result_['network_group_handle']
 ipv6PrefixPools_3_handle = _result_['ipv6_prefix_pools_handle']
-    
+
 _result_ = ixiangpf.emulation_isis_network_group_config(
         handle                      = networkGroup_7_handle,
         mode                        = "modify",
@@ -476,7 +476,7 @@ _result_ = ixiangpf.emulation_isis_network_group_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_isis_network_group_config', _result_)
-    
+
 # Creating a device group in topology for loopback interface
 print "Creating device group 2 in topology 2 for loopback interface"
 _result_ = ixiangpf.topology_config(
@@ -487,9 +487,9 @@ _result_ = ixiangpf.topology_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', _result_)
-    
+
 deviceGroup_6_handle = _result_['device_group_handle']
-    
+
 #Creating ipv6 loopback 2 for applib traffic
 print "Adding ipv6 loopback2 for applib traffic"
 _result_ = ixiangpf.interface_config(
@@ -502,17 +502,17 @@ _result_ = ixiangpf.interface_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', _result_)
-    
+
 ipv6Loopback_2_handle = _result_['ipv6_loopback_handle']
-    
+
 print('Waiting 5 seconds before starting protocol(s) ...')
 time.sleep(5)
 
 ############################################################################
 # Start ISIS protocol                                                      #
-############################################################################    
+############################################################################
 print ('Starting all protocol(s) ...')
-	
+
 _result_ = ixiangpf.test_control(action='start_all_protocols')
 # Check status
 if _result_['status'] != IxiaHlt.SUCCESS:
@@ -522,7 +522,7 @@ time.sleep(60)
 ############################################################################
 # Retrieve protocol statistics                                             #
 ############################################################################
-print ('Fetching ISIS aggregated statistics')               
+print ('Fetching ISIS aggregated statistics')
 protostats = ixiangpf.emulation_isis_info(\
         handle = isisL3_1_handle,
         mode   = 'stats')
@@ -551,10 +551,10 @@ _result_ = ixiangpf.traffic_config(
         rate_pps                            = '1000',
         track_by                            = 'trackingenabled0 ipv4DestIp0',
 )
-    
+
 config_elements = ixiatcl.convert_tcl_list(_result_['traffic_item'])
 current_config_element = config_elements[0]
-    
+
 print ('Configured L2-L3 IPv4 traffic item!!!')
 
 
@@ -578,10 +578,10 @@ _result_ = ixiangpf.traffic_config(
         circuit_endpoint_type            	= 'ipv6',
         pending_operations_timeout        	= '30'
 )
-    
+
 config_elements = ixiatcl.convert_tcl_list(_result_['traffic_item'])
 current_config_element = config_elements[0]
-    
+
 _result_ = ixiangpf.traffic_config(
         mode                 = 'modify',
         traffic_generator    = 'ixnetwork_540',
@@ -617,7 +617,7 @@ if traffic_mode == 1:
 
     if _result_['status'] != IxiaHlt.SUCCESS:
         ErrorHandler('traffic_l47_config', _result_)
-	
+
     trafficItem_1_handle = _result_['traffic_l47_handle']
 
 elif traffic_mode == 2:
@@ -639,9 +639,9 @@ elif traffic_mode == 2:
 
     if _result_['status'] != IxiaHlt.SUCCESS:
         ErrorHandler('traffic_l47_config', _result_)
-	
+
     trafficItem_1_handle = _result_['traffic_l47_handle']
-	
+
 ############################################################################
 #  Start L2-L3 traffic configured earlier                                  #
 ############################################################################
@@ -701,7 +701,7 @@ if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('traffic_control', _result_)
 
 time.sleep(2)
-    
+
 ############################################################################
 # Stop L4-L7 traffic started earlier                                       #
 ############################################################################
@@ -721,9 +721,8 @@ time.sleep(2)
 ############################################################################
 print ('Stopping all protocol(s) ...')
 stop = ixiangpf.test_control(action='stop_all_protocols')
-                  
+
 if stop['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('test_control', stop)
 
 print ('!!! Test Script Ends !!!')
-

@@ -534,7 +534,7 @@ if dhcp_server_stats['aggregate'][port_1]['sessions_up'] != '3':
     raise IxiaError(IxiaError.COMMAND_FAIL, 'Not all DHCP Server sessions are up!')
 
 time.sleep(5)
-	
+
 # #############################################################################
 # 								TRAFFIC CONFIG
 # #############################################################################
@@ -544,7 +544,7 @@ frame_size_start   =     '512'
 
 print('\n\nConfiguring traffic between DHCP Clients and IPv4...\n\n')
 
-traffic_status = ixiangpf.traffic_config  (      											
+traffic_status = ixiangpf.traffic_config  (
 	traffic_generator 			=				'ixnetwork_540'          					,
 	mode                	=					'create'               					,
 	circuit_endpoint_type    =      			'ipv4'                    				,
@@ -572,7 +572,7 @@ time.sleep(5)
 # #############################################################################
 
 print('\n\nStarting traffic...\n\n')
-	
+
 traffic_control_status = ixiangpf.traffic_control(
     action             =    'run'      ,
     traffic_generator   =   'ixnetwork_540'  ,
@@ -623,7 +623,7 @@ printDict(traffic_stats)
 # #############################################################################
 
 print('\n\nStopping traffic...\n\n')
-	
+
 traffic_control_status = ixiangpf.traffic_control(
     action             =    'stop'      ,
     traffic_generator   =   'ixnetwork_540'  ,
@@ -663,5 +663,3 @@ if cleanup_status['status'] != IxiaHlt.SUCCESS:
 
 print('\n\nIxNetwork session is closed...\n\n')
 print('!!! TEST is PASSED !!!')
-
-

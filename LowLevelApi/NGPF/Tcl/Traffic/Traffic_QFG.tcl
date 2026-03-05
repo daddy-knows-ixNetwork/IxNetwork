@@ -139,7 +139,7 @@ ixNet setMultiAttribute [ixNet getAttribute $ipv4_2 -resolveGateway]/singleValue
 ixNet commit
 
 ################################################################################
-# Assign ports 
+# Assign ports
 ################################################################################
 set vPorts [ixNet getList [ixNet getRoot] vport]
 puts "Assigning ports to $vPorts"
@@ -236,4 +236,3 @@ puts "Stop All Protocols"
 ixNet execute stopAllProtocols
 puts "Sleep 30sec for protocols to stop"
 after 30000
-

@@ -50,9 +50,9 @@
 ################################################################################
 #                                                                              #
 # Description:                                                                 #
-#   This script connects to a star topology chassis chain using the ixiangpf   # 
+#   This script connects to a star topology chassis chain using the ixiangpf   #
 #   namespace, displays the information retrieved and demonstrates a few key   #
-#   retrievals.                                                                # 
+#   retrievals.                                                                #
 #                                                                              #
 #   Furthermore, script configures a scenario with 2 topologies:               #
 #        - Topology 1 with Ethernet and IPv4 stacks							   #
@@ -155,10 +155,10 @@ top_1 = ixiangpf.topology_config(
 if top_1['status'] != IxiaHlt.SUCCESS:
     print "FAIL:"
     print top_1['log']
-    quit()    
-	
+    quit()
+
 top_1_handle = top_1['topology_handle']
-	
+
 dg_1 = ixiangpf.topology_config(
 	topology_handle              = top_1_handle,
 	device_group_name            = "{Device Group 1}",
@@ -170,7 +170,7 @@ if dg_1['status'] != IxiaHlt.SUCCESS:
     quit()
 
 dg_1_handle = dg_1['device_group_handle']
-	
+
 mv_1 = ixiangpf.multivalue_config(
 	pattern                = "counter",
 	counter_start          = "00.11.01.00.00.01",
@@ -183,10 +183,10 @@ mv_1 = ixiangpf.multivalue_config(
 if mv_1['status'] != IxiaHlt.SUCCESS:
     print "FAIL: %sn" % dg_1['log']
     quit()
-	
-	
+
+
 mv_1_handle = mv_1['multivalue_handle']
-	
+
 intf_dg1 = ixiangpf.interface_config(
 	protocol_name                = "{Ethernet 1}",
 	protocol_handle              = dg_1_handle,
@@ -205,7 +205,7 @@ intf_dg1 = ixiangpf.interface_config(
 if intf_dg1['status'] != IxiaHlt.SUCCESS:
     print "FAIL: %sn" % intf_dg1['log']
     quit()
-    
+
 eth_1_handle = intf_dg1['ethernet_handle']
 
 mv_2 = ixiangpf.multivalue_config(
@@ -220,9 +220,9 @@ mv_2 = ixiangpf.multivalue_config(
 if mv_2['status'] != IxiaHlt.SUCCESS:
     print "FAIL: %sn" % mv_2['log']
     quit()
-	
+
 mv_2_handle = mv_2['multivalue_handle']
-	
+
 mv_3 = ixiangpf.multivalue_config(
 	pattern                = "counter",
 	counter_start          = "100.1.0.1",
@@ -237,7 +237,7 @@ if mv_3['status'] != IxiaHlt.SUCCESS:
     quit()
 
 mv_3_handle = mv_3['multivalue_handle']
-	
+
 intf_dg1_2 = ixiangpf.interface_config(
 	protocol_name                     = "{IPv4 1}",
 	protocol_handle                   = eth_1_handle,
@@ -254,7 +254,7 @@ if intf_dg1_2['status'] != IxiaHlt.SUCCESS:
 
 ipv4_1_handle = intf_dg1_2['ipv4_handle']
 
-	
+
 top_2 = ixiangpf.topology_config(
 	topology_name      = "{Topology 2}",
 	port_handle        = ports[1],
@@ -262,10 +262,10 @@ top_2 = ixiangpf.topology_config(
 if top_2['status'] != IxiaHlt.SUCCESS:
     print "FAIL: %sn" % top_2['log']
     quit()
-	
+
 top_2_handle = top_2['topology_handle']
 
-	
+
 dg_2 = ixiangpf.topology_config(
 	topology_handle              = top_2_handle,
 	device_group_name            = "{Device Group 2}",
@@ -275,9 +275,9 @@ dg_2 = ixiangpf.topology_config(
 if dg_2['status'] != IxiaHlt.SUCCESS:
     print "FAIL: %sn" % dg_2['log']
     quit()
-	
+
 dg_2_handle = dg_2['device_group_handle']
-	
+
 mv_4 = ixiangpf.multivalue_config(
 	pattern                = "counter",
 	counter_start          = "00.12.01.00.00.01",
@@ -290,9 +290,9 @@ mv_4 = ixiangpf.multivalue_config(
 if mv_4['status'] != IxiaHlt.SUCCESS:
     print "FAIL: %sn" % mv_4['log']
     quit()
-	
+
 mv_4_handle = mv_4['multivalue_handle']
-	
+
 intf_dg2 = ixiangpf.interface_config(
 	protocol_name                = "{Ethernet 2}",
 	protocol_handle              = dg_2_handle,
@@ -314,7 +314,7 @@ if intf_dg2['status'] != IxiaHlt.SUCCESS:
 
 eth_2_handle = intf_dg2['ethernet_handle']
 
-	
+
 mv_5 = ixiangpf.multivalue_config(
 	pattern                = "counter",
 	counter_start          = "101.1.0.2",
@@ -327,9 +327,9 @@ mv_5 = ixiangpf.multivalue_config(
 if mv_5['status'] != IxiaHlt.SUCCESS:
     print "FAIL: %sn" % mv_5['log']
     quit()
-    
+
 mv_5_handle = mv_5['multivalue_handle']
-	
+
 mv_6 = ixiangpf.multivalue_config(
 	pattern                = "counter",
 	counter_start          = "101.1.0.1",
@@ -342,9 +342,9 @@ mv_6 = ixiangpf.multivalue_config(
 if mv_6['status'] != IxiaHlt.SUCCESS:
     print "FAIL: %sn" % mv_6['log']
     quit()
-	
+
 mv_6_handle = mv_6['multivalue_handle']
-	
+
 intf_dg2_2 = ixiangpf.interface_config(
 	protocol_name                     = "{IPv4 2}",
 	protocol_handle                   = eth_2_handle,
@@ -357,8 +357,8 @@ intf_dg2_2 = ixiangpf.interface_config(
 )
 if intf_dg2_2['status'] != IxiaHlt.SUCCESS:
     print "FAIL: %sn" % intf_dg2_2['log']
-    quit()	
-	
+    quit()
+
 ipv4_2_handle = intf_dg2_2['ipv4_handle']
 
 if cfgErrors > 0:

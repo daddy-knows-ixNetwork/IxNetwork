@@ -188,7 +188,7 @@ sub main {
     @status_keys = ixiangpf::status_item_keys();
     my $multivalue_1_handle = ixiangpf::status_item('multivalue_handle');
 
-	
+
 	my $multivalue_2_status = ixiangpf::multivalue_config({
 		pattern             =>  'single_value',
 		single_value 		=> '3000:0:0:0:0:0:0:1'
@@ -210,9 +210,9 @@ sub main {
 
 	@status_keys = ixiangpf::status_item_keys();
 	my $relay_1_handle = ixiangpf::status_item('dhcpv6relayagent_handle');
-	
+
 	$_result_ = ixiangpf::topology_config ({
-			topology_handle         => $dg_handle_1,	
+			topology_handle         => $dg_handle_1,
 			device_group_multiplier	=> 50,
 			device_group_name       => 'DHCP Client Device Group',
 			device_group_enabled    => 1,
@@ -242,18 +242,18 @@ sub main {
 	$_result_ = ixiangpf::emulation_dhcp_group_config ({
 			handle				=>	$ethernet_handle_3 ,
 			dhcp_range_ip_type 	=> 'ipv6',
-			protocol_name       => '{DHCPv6 Client 1}',			
+			protocol_name       => '{DHCPv6 Client 1}',
 			});
 	&catch_error();
 
 	@status_keys = ixiangpf::status_item_keys();
 	my $dhcp_client_handle = ixiangpf::status_item('dhcpv6client_handle');
-	
+
 	#####################################################
 	# Add TLVs							    #
 	#####################################################
 	print "\n";
-	print "Use tlv_config to add TLV option 12 on DHCPv6Relay:\n";	
+	print "Use tlv_config to add TLV option 12 on DHCPv6Relay:\n";
 	print "\n";
 	$_result_ = ixiangpf::tlv_config ({
 			protocol 	=> 'dhcp6_relay',
@@ -262,7 +262,7 @@ sub main {
 			tlv_name 	=> "12"
 			});
 	&catch_error();
-	
+
 	@status_keys = ixiangpf::status_item_keys();
 	print "\n";
 	print "tlv_config returns the following keys:\n";
@@ -288,15 +288,15 @@ sub main {
 
 	#####################################################
 	# Modify & check TLV values					        #
-	#####################################################	
-	
+	#####################################################
+
 	#####################################################
 	# TLV 12							    #
 	#####################################################
 
-	print "Use tlv_config to modify a field of the TLV option 12 on DHCPv6Relay:\n";	
+	print "Use tlv_config to modify a field of the TLV option 12 on DHCPv6Relay:\n";
 	print "\n";
-	
+
 	my $multivalue_3_status = ixiangpf::multivalue_config({
     	pattern             => 'single_value',
 		single_value 		=> '3000:0:0:0:0:0:0:10',
@@ -304,7 +304,7 @@ sub main {
 
     @status_keys = ixiangpf::status_item_keys();
     my $multivalue_3_handle = ixiangpf::status_item('multivalue_handle');
-	
+
 	$_result_ = ixiangpf::tlv_config ({
 			handle		=>	$tlv_12_handle_value_field ,
 			mode 		=> 'modify',
@@ -322,7 +322,7 @@ sub main {
 	print "\n";
 	my $tlv_18_handle 		= $relay_1_handle.'/lightweightDhcp6RelayTlvProfile/tlvProfile/defaultTlv:1';
 	my $tlv_18_value_handle = $tlv_18_handle.'/value/object:1/field';
-	
+
 	my $multivalue_4_status = ixiangpf::multivalue_config({
 		pattern => 'string',
 		string_pattern => "Interface{Inc:1,1}"
@@ -330,7 +330,7 @@ sub main {
 
     @status_keys = ixiangpf::status_item_keys();
     my $multivalue_4_handle = ixiangpf::status_item('multivalue_handle');
-	
+
 	$_result_ = ixiangpf::tlv_config ({
 			handle		=>	$tlv_18_value_handle ,
 			mode 		=> 'modify',
@@ -350,13 +350,11 @@ sub main {
 	my $_result_ = ixiangpf::cleanup_session();
 	&catch_error();
 
-	print '\nSession cleanup completed.\n';	
+	print '\nSession cleanup completed.\n';
 	return $PASSED
 }
-	
 
-	
+
+
 my $test_result = main(@ARGV);
 print "\nTest execution complete.\nStatus: $test_result\n";
-
-

@@ -253,7 +253,7 @@ proc enableAndStartCapture {vPort1 args} {
     ixNet setAttribute $vPort1/capture -hardwareEnabled true
     after 2000
     ixNet commit
-    
+
     after 2000
     foreach vPorts $args {
         ixNet setAttribute $vPorts -rxMode capture
@@ -273,7 +273,7 @@ proc enableAndStartCapture {vPort1 args} {
 
     ixNet commit
     after 5000
-    
+
     if {[catch {ixNet exec startCapture} err] == 1} {
         puts "Failed to start packet capture "
         ixNetCleanUp
@@ -422,7 +422,7 @@ proc verifyMarkerCapture {chassisId cardNo portNo markerType expTimeDiff \
 proc verifyActorPartnerStates {chassis card port args} {
     set PASSED 0
     set FAILED 1
-    
+
     puts "Initilizing thorugh IxTclHal...."
     ixInitialize $chassis
     chassis get $chassis
@@ -646,7 +646,7 @@ proc verifyCapturedPackets {chassis card port matchFieldList expTimeDiff \
     set isError 1
     set PASSED  0
     set FAILED  1
-    
+
     puts "Initilizing thorugh IxTclHal...."
     ixInitialize $chassis
     chassis get $chassis
@@ -712,7 +712,7 @@ proc verifyCapturedPackets {chassis card port matchFieldList expTimeDiff \
             }
         }
     }
-    
+
     if {$expPktCnt != 1 && $count < $expPktCnt} {
         puts "Not able to get min. no. of packest expected : \
               minexpPktCount/rcvdPktCont : <$expPktCnt>/<$count>"
@@ -725,11 +725,11 @@ proc verifyCapturedPackets {chassis card port matchFieldList expTimeDiff \
 
 
 proc verifyCapture {chassis card port pattern {expPktCnt 1}} {
-    
+
     set isError 1
     set PASSED  0
     set FAILED  1
-    
+
     puts "Initilizing thorugh IxTclHal...."
     ixInitialize $chassis
     chassis get $chassis
@@ -765,7 +765,7 @@ proc verifyCapture {chassis card port pattern {expPktCnt 1}} {
         foreach {startIndex endIndex expectedVal} $pattern {
             puts "Obtained Pattern: [lrange $capFrame $startIndex $endIndex] \
                   Expected Pattern: $expectedVal"
-            
+
             if {[lrange $capFrame $startIndex $endIndex] != $expectedVal} {
                 set mismatch 1
                 puts "Obtained: [lrange $capFrame $startIndex $endIndex] \
@@ -773,7 +773,7 @@ proc verifyCapture {chassis card port pattern {expPktCnt 1}} {
                 break
             }
         }
-        
+
         if {$mismatch == 0} {
             puts "------$capFrame"
             puts "All Field Patterns Matched !!!"
@@ -808,7 +808,7 @@ proc getTimeValueOfLacpPacket {chassis card port choice} {
 
     set PASSED 0
     set FAILED 1
-    
+
     puts "Initilizing thorugh IxTclHal...."
     ixInitialize $chassis
     chassis get $chassis
@@ -849,7 +849,7 @@ proc getTimeValueOfLacpPacket {chassis card port choice} {
                         57 57 "10"}
 
     if {$choice == 1} {
-        
+
         for {set f 1} {$f <= $numCapturedPkts} {incr f} {
             after 50
             captureBuffer getframe $f
@@ -858,7 +858,7 @@ proc getTimeValueOfLacpPacket {chassis card port choice} {
             foreach {startIndex endIndex expectedVal} $matchFieldList {
                 puts "Obtained Pattern: [lrange $capFrame $startIndex $endIndex] \
                       Expected Pattern: $expectedVal"
-                
+
                 if {[lrange $capFrame $startIndex $endIndex] != $expectedVal} {
                     set mismatch 1
                     puts "Obtained: [lrange $capFrame $startIndex $endIndex] \
@@ -870,9 +870,9 @@ proc getTimeValueOfLacpPacket {chassis card port choice} {
                 }
             }
         } ;# end for {set f 1} {$f <= $numCapturedPkts} {incr f}
-        
+
     } elseif {$choice == 2} {
-        
+
         for {set f 3} {$f <= $numCapturedPkts} {incr f} {
             after 50
             captureBuffer getframe $f
@@ -898,10 +898,10 @@ proc getTimeValueOfLacpPacket {chassis card port choice} {
     } elseif {$choice == 3} {
         set f 1
         after 50
-        
+
         captureBuffer getframe $f
         after 50
-        
+
         set capFrame [captureBuffer cget -frame]
 
         set getBytes "0x[lindex $capFrame 32]"
@@ -934,7 +934,7 @@ proc getTimeValueOfLacpPacket {chassis card port choice} {
             puts "The no of capture packet is <$numCapturedPkts>=<$f>..........."
         } ;# end {set f 5} {$f <= $numCapturedPkts} {incr f}
         return $PASSED
-        
+
     } elseif {$choice == 4} {
         for {set f 3} {$f <= $numCapturedPkts} {incr f} {
             after 50
@@ -962,7 +962,7 @@ proc getTimeValueOfLacpPacket {chassis card port choice} {
 }
 
 ################################################################################
-#  LACP Procs 
+#  LACP Procs
 ################################################################################
 proc getLacpLearnedInfo {linkProtoId} {
     set isComplete false
@@ -1148,7 +1148,7 @@ proc ResetDut {interfaceData number} {
 
 proc verifyCapturedPacketsTimeDiff {chassis card port matchFieldList mintime \
           maxtime {expPktCnt 1} {expPktCnt1 1} } {
-    
+
     ixInitialize $chassis
     chassis get $chassis
     set chassisId [chassis cget -id]
@@ -1200,11 +1200,11 @@ proc verifyCapturedPacketsTimeDiff {chassis card port matchFieldList mintime \
 
             set prevTime $curTime
             set curTime [captureBuffer cget -timestamp]
-            
+
             if {$prevTime != 0} {
                 set obsTimeDiff [expr double ([expr $curTime.0 - $prevTime.0])]
                 set timeDiff [expr $obsTimeDiff/1000000000]
-                
+
                 puts "time diff $timeDiff"
                 if {$timeDiff < $mintime || $timeDiff > $maxtime} {
                     puts "Time diff between two PDUs is not with in range.....$timeDiff.."
@@ -1220,7 +1220,7 @@ proc verifyCapturedPacketsTimeDiff {chassis card port matchFieldList mintime \
             return $FAILED
         }
     }
-    
+
     puts "count with time diff is: $count1"
     if {$expPktCnt1 > $count1 &&  $expPktCnt1 != 1} {
         puts "Not able to get expected no of packets with timediff : \
@@ -1238,7 +1238,7 @@ proc verifyTimestamp {chassis card port choise} {
     chassis get   $chassis
     set chassisId [chassis cget -id]
     port get      $chassisId $card $port
-    
+
     puts "Getting the ownership details..."
     set loginName [port cget -owner]
     puts "Logging in using the $loginName"
@@ -1281,7 +1281,7 @@ proc verifyTimestamp {chassis card port choise} {
             after 50
             captureBuffer getframe $f
             after 50
-            
+
             set capFrame [captureBuffer cget -frame]
             foreach {startIndex endIndex expectedVal} $matchFieldList {
                 puts "Obtained Pattern: [lrange $capFrame $startIndex $endIndex] \
@@ -1346,4 +1346,3 @@ proc verifyTimestamp {chassis card port choise} {
     }
     return $packetTimeStamp
 }
-

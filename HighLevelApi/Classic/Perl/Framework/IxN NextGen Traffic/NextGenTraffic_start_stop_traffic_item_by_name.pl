@@ -104,7 +104,7 @@ my @status_keys            = ();
 my %status_keys            = ();
 
 # Connect to the chassis, reset to factory defaults and take ownership
-# When using P2NO HLTSET, for loading the IxTclNetwork package please 
+# When using P2NO HLTSET, for loading the IxTclNetwork package please
 # provide –ixnetwork_tcl_server parameter to ::ixia::connect
 $_result_ = ixiahlt::connect( {
     reset                => 1,
@@ -134,72 +134,72 @@ print ("Ixia port handles are $port_handle ...\n");
 # Configure Protocol Interfaces on both ports                                  #
 ################################################################################
 $_result_ = ixiahlt::interface_config ( {
-    mode                   => 'config',    
-    port_handle            => $port_src_handle,    
-    transmit_clock_source  => 'external',    
-    internal_ppm_adjust    => 0,    
-    data_integrity         => 1,    
-    intf_mode              => 'ethernet',    
-    speed                  => 'ether100',    
-    duplex                 => 'full',    
-    autonegotiation        => 1,    
-    phy_mode               => 'copper',    
-    transmit_mode          => 'advanced',    
-    port_rx_mode           => 'capture_and_measure',    
-    tx_gap_control_mode    => 'fixed',    
+    mode                   => 'config',
+    port_handle            => $port_src_handle,
+    transmit_clock_source  => 'external',
+    internal_ppm_adjust    => 0,
+    data_integrity         => 1,
+    intf_mode              => 'ethernet',
+    speed                  => 'ether100',
+    duplex                 => 'full',
+    autonegotiation        => 1,
+    phy_mode               => 'copper',
+    transmit_mode          => 'advanced',
+    port_rx_mode           => 'capture_and_measure',
+    tx_gap_control_mode    => 'fixed',
 });
 &catch_error();
 
 $_result_ = ixiahlt::interface_config ( {
-    mode                   => 'config',    
-    port_handle            => $port_dst_handle,    
-    transmit_clock_source  => 'external',    
-    internal_ppm_adjust    => 0,    
-    data_integrity         => 1,    
-    intf_mode              => 'ethernet',    
-    speed                  => 'ether100',    
-    duplex                 => 'full',    
-    autonegotiation        => 1,    
-    phy_mode               => 'copper',    
-    transmit_mode          => 'advanced',    
-    port_rx_mode           => 'capture_and_measure',    
-    tx_gap_control_mode    => 'fixed',    
+    mode                   => 'config',
+    port_handle            => $port_dst_handle,
+    transmit_clock_source  => 'external',
+    internal_ppm_adjust    => 0,
+    data_integrity         => 1,
+    intf_mode              => 'ethernet',
+    speed                  => 'ether100',
+    duplex                 => 'full',
+    autonegotiation        => 1,
+    phy_mode               => 'copper',
+    transmit_mode          => 'advanced',
+    port_rx_mode           => 'capture_and_measure',
+    tx_gap_control_mode    => 'fixed',
 });
 &catch_error();
 
 $_result_ = ixiahlt::interface_config ( {
-    mode                       => 'modify',    
-    port_handle                => $port_src_handle,    
-    vlan                       => 0,    
-    l23_config_type            => 'protocol_interface',    
-    mtu                        => 1500,    
-    gateway                    => '20.0.0.1',    
-    intf_ip_addr               => '20.0.0.2',    
-    netmask                    => '255.255.255.0',    
-    check_opposite_ip_version  => 0,    
-    src_mac_addr               => '0000.0107.4232',    
-    arp_on_linkup              => 0,    
-    ns_on_linkup               => 0,    
-    single_arp_per_gateway     => 1,    
-    single_ns_per_gateway      => 1,    
+    mode                       => 'modify',
+    port_handle                => $port_src_handle,
+    vlan                       => 0,
+    l23_config_type            => 'protocol_interface',
+    mtu                        => 1500,
+    gateway                    => '20.0.0.1',
+    intf_ip_addr               => '20.0.0.2',
+    netmask                    => '255.255.255.0',
+    check_opposite_ip_version  => 0,
+    src_mac_addr               => '0000.0107.4232',
+    arp_on_linkup              => 0,
+    ns_on_linkup               => 0,
+    single_arp_per_gateway     => 1,
+    single_ns_per_gateway      => 1,
 });
 &catch_error();
 
 $_result_ = ixiahlt::interface_config ( {
-    mode                       => 'modify',    
-    port_handle                => $port_dst_handle,    
-    vlan                       => 0,    
-    l23_config_type            => 'protocol_interface',    
-    mtu                        => 1500,    
-    gateway                    => '20.0.0.2',    
-    intf_ip_addr               => '20.0.0.1',    
-    netmask                    => '255.255.255.0',    
-    check_opposite_ip_version  => 0,    
-    src_mac_addr               => '0000.0107.4233',    
-    arp_on_linkup              => 0,    
-    ns_on_linkup               => 0,    
-    single_arp_per_gateway     => 1,    
-    single_ns_per_gateway      => 1,    
+    mode                       => 'modify',
+    port_handle                => $port_dst_handle,
+    vlan                       => 0,
+    l23_config_type            => 'protocol_interface',
+    mtu                        => 1500,
+    gateway                    => '20.0.0.2',
+    intf_ip_addr               => '20.0.0.1',
+    netmask                    => '255.255.255.0',
+    check_opposite_ip_version  => 0,
+    src_mac_addr               => '0000.0107.4233',
+    arp_on_linkup              => 0,
+    ns_on_linkup               => 0,
+    single_arp_per_gateway     => 1,
+    single_ns_per_gateway      => 1,
 });
 &catch_error();
 
@@ -313,8 +313,8 @@ push(@trafficItemList, $traffic_item2);
 # Start Traffic Item -1 & 2 using the  stream names                            #
 ################################################################################
 $_result_ = ixiahlt::traffic_control ( {
-    action  => 'run',    
-    handle  => \@trafficItemList,    
+    action  => 'run',
+    handle  => \@trafficItemList,
 });
 &catch_error();
 
@@ -324,8 +324,8 @@ sleep (5);
 # Stop Traffic Item -1  using the  stream names                                #
 ################################################################################
 $_result_ = ixiahlt::traffic_control ( {
-    action  => 'stop',    
-    handle  => $traffic_item,    
+    action  => 'stop',
+    handle  => $traffic_item,
 });
 &catch_error();
 

@@ -52,8 +52,8 @@
 #    This script intends to demonstrate how to use NGPF BGP+ API.              #
 #                                                                              #
 #    1. It will create 2 BGP+ topologies, each having an ipv6 network          #
-#       topology and loopback device group behind the network group(NG) with   # 
-#       loopback interface on it. A loopback device group(DG) behind network   # 
+#       topology and loopback device group behind the network group(NG) with   #
+#       loopback interface on it. A loopback device group(DG) behind network   #
 #       group is needed to support applib traffic.                             #
 #    2. Start BGP+ protocol.                                                   #
 #    3. Retrieve protocol statistics.                                          #
@@ -77,7 +77,7 @@
 
 
 ################################################################################
-# Utils                                                                        #	
+# Utils                                                                        #
 ################################################################################
 
 # Libraries to be included
@@ -90,7 +90,7 @@ import time, re
 
 # Append paths to python APIs (Linux and Windows)
 
-# sys.path.append('/path/to/hltapi/library/common/ixiangpf/python') 
+# sys.path.append('/path/to/hltapi/library/common/ixiangpf/python')
 # sys.path.append('/path/to/ixnetwork/api/python')
 
 from ixiatcl import IxiaTcl
@@ -101,7 +101,7 @@ from ixiaerror import IxiaError
 ixiatcl = IxiaTcl()
 ixiahlt = IxiaHlt(ixiatcl)
 ixiangpf = IxiaNgpf(ixiahlt)
-    
+
 try:
 	ErrorHandler('', {})
 except (NameError,):
@@ -110,7 +110,7 @@ except (NameError,):
 		err = ixiatcl.tcl_error_info()
 		log = retval['log']
 		additional_info = '> command: %s\n> tcl errorInfo: %s\n> log: %s' % (cmd, err, log)
-		raise IxiaError(IxiaError.COMMAND_FAIL, additional_info)        
+		raise IxiaError(IxiaError.COMMAND_FAIL, additional_info)
 
 ################################################################################
 # Connection to the chassis, IxNetwork Tcl Server                              #
@@ -139,7 +139,7 @@ connect_result = ixiangpf.connect(
 
 if connect_result['status'] != '1':
     ErrorHandler('connect', connect_result)
-    
+
 print " Printing connection result"
 pprint(connect_result)
 
@@ -147,7 +147,7 @@ pprint(connect_result)
 ports = connect_result['vport_list'].split()
 
 ################################################################################
-# Configure Topology, Device Group                                             # 
+# Configure Topology, Device Group                                             #
 ################################################################################
 
 # Creating a topology on first port
@@ -158,11 +158,11 @@ _result_ = ixiangpf.topology_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', _result_)
-    
+
 topology_1_handle = _result_['topology_handle']
 
-# Creating a device group in topology 
-print "Creating device group 1 in topology 1" 
+# Creating a device group in topology
+print "Creating device group 1 in topology 1"
 _result_ = ixiangpf.topology_config(
     topology_handle              = topology_1_handle,
     device_group_name            = """BGP+_1 Device Group""",
@@ -171,7 +171,7 @@ _result_ = ixiangpf.topology_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('topology_config', _result_)
-    
+
 deviceGroup_1_handle = _result_['device_group_handle']
 
 # Creating a topology on second port
@@ -202,7 +202,7 @@ deviceGroup_2_handle = _result_['device_group_handle']
 #  Configure protocol interfaces                                               #
 ################################################################################
 
-# Creating ethernet stack for the first Device Group 
+# Creating ethernet stack for the first Device Group
 print "Creating ethernet stack for the first Device Group"
 _result_ = ixiangpf.interface_config(
     protocol_name                = """Ethernet 1""",
@@ -213,11 +213,11 @@ _result_ = ixiangpf.interface_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('interface_config', _result_)
-    
+
 ethernet_1_handle = _result_['ethernet_handle']
 
 # Creating ethernet stack for the second Device Group
-print "Creating ethernet for the second Device Group"   
+print "Creating ethernet for the second Device Group"
 _result_ = ixiangpf.interface_config(
     protocol_name                = """Ethernet 2""",
     protocol_handle              = deviceGroup_2_handle,
@@ -230,7 +230,7 @@ if _result_['status'] != IxiaHlt.SUCCESS:
 
 ethernet_2_handle = _result_['ethernet_handle']
 
-# Creating IPv6 Stack on top of Ethernet Stack for the first Device Group                                 
+# Creating IPv6 Stack on top of Ethernet Stack for the first Device Group
 print "Creating IPv6 Stack on top of Ethernet Stack for the first Device Group on Port 1"
 _result_ = ixiangpf.interface_config(
     protocol_name                     = """IPv6 1""",
@@ -271,7 +271,7 @@ if _result_['status'] != IxiaHlt.SUCCESS:
 ipv6_2_handle = _result_['ipv6_handle']
 
 ################################################################################
-# Other protocol configurations                                                # 
+# Other protocol configurations                                                #
 ################################################################################
 
 # This will create BGP Stack on top of IPv6 stack
@@ -282,7 +282,7 @@ _result_ = ixiangpf.emulation_bgp_config(
     mode                                    = "enable",
     active                                  = "1",
     handle                                  = ipv6_1_handle,
-    ip_version                              = 6, 
+    ip_version                              = 6,
     remote_ipv6_addr                        = "11:0:0:0:0:0:0:2",
 )
 
@@ -322,7 +322,7 @@ if _result_['status'] != IxiaHlt.SUCCESS:
 
 multivalue_4_handle = _result_['multivalue_handle']
 
-# Creating BGP+ Network Group 
+# Creating BGP+ Network Group
 print "Creating BGP+ Network Group on Port 1"
 _result_ = ixiangpf.network_group_config(
     protocol_handle                      = deviceGroup_1_handle,
@@ -439,7 +439,7 @@ if _result_['status'] != IxiaHlt.SUCCESS:
 deviceGroup_4_handle = _result_['device_group_handle']
 
 # Creating multivalue pattern for IPv6 Loopback
-print "Creating multivalue pattern for IPv6 Loopback on Port 2"	
+print "Creating multivalue pattern for IPv6 Loopback on Port 2"
 _result_ = ixiangpf.multivalue_config(
     pattern                = "counter",
     counter_start          = "3000:1:1:1:0:0:0:0",
@@ -451,9 +451,9 @@ _result_ = ixiangpf.multivalue_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('multivalue_config', _result_)
-	
+
 multivalue_13_handle = _result_['multivalue_handle']
-	
+
 # Creating IPv6 Loopback
 print "Creating IPv6 Loopback on Port 2"
 _result_ = ixiangpf.interface_config(
@@ -475,18 +475,18 @@ time.sleep(5)
 
 ############################################################################
 # Start BGP protocol                                                       #
-############################################################################    
+############################################################################
 _result_ = ixiangpf.test_control(action='start_all_protocols')
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('test_control', _result_)
 
 print "Waiting for 45 seconds"
 time.sleep(45)
-	
+
 ############################################################################
 # Retrieve protocol statistics                                             #
 ############################################################################
-print "Fetching BGP aggregated statistics on Port1"               
+print "Fetching BGP aggregated statistics on Port1"
 protostats = ixiangpf.emulation_bgp_info(\
     handle = bgpIpv6Peer_1_handle,
     mode   = 'stats')
@@ -495,7 +495,7 @@ if protostats['status'] != IxiaHlt.SUCCESS:
 
 pprint(protostats)
 
-print "Fetching BGP aggregated statistics on Port2"           
+print "Fetching BGP aggregated statistics on Port2"
 protostats = ixiangpf.emulation_bgp_info(\
     handle = bgpIpv6Peer_2_handle,
     mode   = 'stats')
@@ -524,8 +524,8 @@ bgp_1_status = ixiangpf.emulation_bgp_config (
 )
 if bgp_1_status['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_bgp_config', bgp_1_status)
-	
- 
+
+
 ################################################################################
 # Applying changes one the fly                                                 #
 ################################################################################
@@ -537,7 +537,7 @@ if applyChanges['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('test_control', applyChanges)
 
 time.sleep(10)
-	
+
 ############################################################################
 # Retrieve Learned Info                                                    #
 ############################################################################
@@ -559,7 +559,7 @@ if bgpLearnedInfo['status'] != IxiaHlt.SUCCESS:
 
 pprint(bgpLearnedInfo)
 
-############################################################################ 
+############################################################################
 # Configure L2-L3 traffic                                                  #
 ############################################################################
 print "Configure L2-L3 traffic"
@@ -576,8 +576,8 @@ _result_ = ixiangpf.traffic_config(
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('traffic_config', _result_)
-	
-############################################################################ 
+
+############################################################################
 # Configure L4-L7 traffic                                                  #
 ############################################################################
 print "Configure L4-L7 traffic"
@@ -594,7 +594,7 @@ _result_ = ixiangpf.traffic_l47_config(
     flows                       = """Bandwidth_BitTorrent_File_Download Bandwidth_eDonkey Bandwidth_HTTP Bandwidth_IMAPv4 Bandwidth_POP3 Bandwidth_Radius Bandwidth_Raw Bandwidth_Telnet Bandwidth_uTorrent_DHT_File_Download BBC_iPlayer BBC_iPlayer_Radio BGP_IGP_Open_Advertise_Routes BGP_IGP_Withdraw_Routes Bing_Search BitTorrent_Ares_v217_File_Download BitTorrent_BitComet_v126_File_Download BitTorrent_Blizzard_File_Download BitTorrent_Cisco_EMIX BitTorrent_Enterprise BitTorrent_File_Download BitTorrent_LimeWire_v5516_File_Download BitTorrent_RMIX_5M""",
 )
 if _result_['status'] != IxiaHlt.SUCCESS:
-    ErrorHandler('traffic_l47_config', _result_)     
+    ErrorHandler('traffic_l47_config', _result_)
 
 ############################################################################
 #  Start L2-L3 & L4-L7 traffic configured earlier                          #
@@ -636,7 +636,7 @@ if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('traffic_control', _result_)
 
 time.sleep(2)
-    
+
 ############################################################################
 # Stop all protocols
 ############################################################################
@@ -645,5 +645,5 @@ _result_ = ixiangpf.test_control(action='stop_all_protocols')
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('test_control', _result_)
 
-time.sleep(2)                       
+time.sleep(2)
 print "!!! Test Script Ends !!!"

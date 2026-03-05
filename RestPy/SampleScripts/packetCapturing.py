@@ -50,7 +50,7 @@ password = 'admin'
 
 try:
     # LogLevel: none, info, warning, request, request_response, all
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin', 
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin',
                                SessionName=None, SessionId=15, ApiKey=None,
                                ClearConfig=False, LogLevel='info', LogFilename='restpy.log')
 
@@ -101,7 +101,7 @@ try:
     if captureDataPlane:
         ixNetwork.info('Total data packets captured: {}'.format(vport.Capture.DataPacketCounter))
 
-        # There could be thousands of packets captured.  State the amount of packets to 
+        # There could be thousands of packets captured.  State the amount of packets to
         # inspect with a starting value and an ending value.
         for packetNumber in range(1, 2):
             try:
@@ -116,7 +116,7 @@ try:
             for packetHeader in packetHeaderStacks.find():
                 print('\nPacketHeaderName: {}'.format(packetHeader.DisplayName))
                 for field in packetHeader.Field.find():
-                    print('\t{}: {}'.format(field.DisplayName, field.FieldValue)) 
+                    print('\t{}: {}'.format(field.DisplayName, field.FieldValue))
 
                     # Do your parsing and logics here using the packetHeader and field.FieldValue
 
@@ -124,7 +124,7 @@ try:
     if captureControlPlane:
         ixNetwork.info('Total control packets captured: {}'.format(vport.Capture.ControlPacketCounter))
 
-        # There could be thousands of packets captured.  State the amount of packets to 
+        # There could be thousands of packets captured.  State the amount of packets to
         # inspect with a starting value and an ending value.
         for packetNumber in range(1, 2):
             try:
@@ -139,7 +139,7 @@ try:
             for packetHeader in packetHeaderStacks.find():
                 print('\nPacketHeaderName: {}'.format(packetHeader.DisplayName))
                 for field in packetHeader.Field.find():
-                    print('\t{}: {}'.format(field.DisplayName, field.FieldValue)) 
+                    print('\t{}: {}'.format(field.DisplayName, field.FieldValue))
 
                     # Do your parsing and logics here using the packetHeader and field.FieldValue
 
@@ -214,14 +214,14 @@ try:
         Source or Destination Address: 20.20.0.26
         Destination Host: 20.20.0.26
         Source or Destination Host: 20.20.0.26
-        Source GeoIP: Unknown: 
-        Destination GeoIP: Unknown: 
+        Source GeoIP: Unknown:
+        Destination GeoIP: Unknown:
 
     PacketHeaderName: Data
         Data: eb57d6e9b7a240dc497869600000000010111213150365a518191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f30313233...
         Length: 86
     '''
-        
+
 
 except Exception as errMsg:
     print('\nError: %s' % traceback.format_exc())

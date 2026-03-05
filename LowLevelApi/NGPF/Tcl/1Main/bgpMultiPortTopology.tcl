@@ -42,7 +42,7 @@ set ixChassisIp 192.168.70.11
 set ixNetworkVersion 8.40
 
 set licenseServerIp 192.168.70.3 ;# This could be on an ixChassisIp or a remote Windows PC.
-set licenseMode subscription 
+set licenseMode subscription
 set licenseTier tier3
 
 set portList [list "$ixChassisIp 1 1" "$ixChassisIp 2 1" "$ixChassisIp 3 1" "$ixChassisIp 4 1"]
@@ -50,7 +50,7 @@ set topology1Ports [list "$ixChassisIp 1 1" "$ixChassisIp 3 1"]
 set topology2Ports [list "$ixChassisIp 2 1" "$ixChassisIp 4 1"]
 
 if {$osPlatform == "linux"} {
-    package req IxTclNetworkLinuxApiServer 
+    package req IxTclNetworkLinuxApiServer
    if {[Connect -apiServerIp $apiServerIp -ixNetworkVersion $ixNetworkVersion -osPlatform linux -username admin -password admin]} {
 	exit
     }
@@ -129,7 +129,7 @@ set ipv4Obj2 [CreateIpv4Ngpf -ethernetObj $ethernet2Obj -name IPv4-2 \
 	     ]
 
 ConfigIpv4GatewayIpNgpf -ipv4Obj $ipv4Obj1 -gatewayIp 1.1.1.3 \
-    -direction increment -step 0.0.0.1 -ipv4GatewayPortStep 0.0.0.1 
+    -direction increment -step 0.0.0.1 -ipv4GatewayPortStep 0.0.0.1
 
 ConfigIpv4GatewayIpNgpf -ipv4Obj $ipv4Obj2 -gatewayIp 1.1.1.1 \
     -direction increment -step 0.0.0.1  -ipv4GatewayPortStep 0.0.0.1

@@ -16,8 +16,8 @@
 #       that matters to you.
 #       All the fields/values are on the same packet number
 #       before moving on.
-       
-      
+
+
 package req IxTclNetwork
 
 set ixiaChassisIp 10.219.117.101
@@ -32,10 +32,10 @@ proc GetVport { port } {
 	set card [lindex [split [lindex [split $connectedTo /] 3] :] end]
 	set portNum [lindex [split [lindex [split $connectedTo /] 4] :] end]
 	set currentPort $card/$portNum
-	
+
 	if {$port == $currentPort} {
 	    return $vport
-	} 
+	}
     }
     puts "Error: $port is connect part of configuration."
     return 0

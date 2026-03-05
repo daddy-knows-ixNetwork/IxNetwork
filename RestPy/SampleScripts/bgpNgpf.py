@@ -53,12 +53,12 @@ forceTakePortOwnership = True
 
 try:
     # LogLevel: none, info, warning, request, request_response, all
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin', 
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin',
                                SessionName=None, SessionId=None, ApiKey=None,
                                ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
     ixNetwork = session.Ixnetwork
-   
+
     ixNetwork.info('Assign ports')
     portMap = session.PortMapAssistant()
     vport = dict()
@@ -110,7 +110,7 @@ try:
     ipv4 = ethernet2.Ipv4.add(Name='Ipv4-2')
     ipv4.Address.Increment(start_value='1.1.1.4', step_value='0.0.0.1')
     ipv4.GatewayIp.Increment(start_value='1.1.1.1', step_value='0.0.0.0')
-  
+
     ixNetwork.info('Configuring BgpIpv4Peer 2')
     bgp2 = ipv4.BgpIpv4Peer.add(Name='Bgp2')
     bgp2.DutIp.Increment(start_value='1.1.1.1', step_value='0.0.0.1')
@@ -145,14 +145,14 @@ try:
     configElement.FrameRateDistribution.PortDistribution = 'splitRateEvenly'
     configElement.FrameSize.FixedSize = 128
     trafficItem.Tracking.find()[0].TrackBy = ['flowGroup0']
-    
+
     trafficItem.Generate()
     ixNetwork.Traffic.Apply()
     ixNetwork.Traffic.StartStatelessTrafficBlocking()
 
     flowStatistics = session.StatViewAssistant('Flow Statistics')
 
-    # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL. 
+    # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL.
     # Examples:
     #    flowStatistics.AddRowFilter('Port Name', flowStatistics.REGEX, '^Port 1$')
     #    flowStatistics.AddRowFilter('Tx Frames', flowStatistics.GREATER_THAN, "5000")
@@ -171,7 +171,7 @@ try:
     if debugMode == False:
         for vport in ixNetwork.Vport.find():
             vport.ReleasePort()
-            
+
         # For linux and connection_manager only
         if session.TestPlatform.Platform != 'windows':
             session.Session.remove()
@@ -181,7 +181,3 @@ except Exception as errMsg:
     if debugMode == False and 'session' in locals():
         if session.TestPlatform.Platform != 'windows':
             session.Session.remove()
-
-
-
-

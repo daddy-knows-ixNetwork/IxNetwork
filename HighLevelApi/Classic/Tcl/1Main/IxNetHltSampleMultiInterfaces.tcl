@@ -4,11 +4,11 @@
 # You have to create a list of ports aligning to the rest of the list
 # of parameters. For example:
 #
-#   -port_handle "1/1/1 1/1/1" 
+#   -port_handle "1/1/1 1/1/1"
 #   -intf_ip_addr "1.1.1.1 1.1.1.2"
-#   -gateway "1.1.1.3 1.1.1.4" 
-#   -netmask "255.255.255.0 255.255.255.0" 
-#   -src_mac_addr "00:01:01:01:00:01 00:01:01:01:00:02" 
+#   -gateway "1.1.1.3 1.1.1.4"
+#   -netmask "255.255.255.0 255.255.255.0"
+#   -src_mac_addr "00:01:01:01:00:01 00:01:01:01:00:02"
 #
 # This example shows 2 interfaces per port.
 # You have to create a list of -port_handle, -netmask and everything else.
@@ -17,7 +17,7 @@
 
 package req Ixia
 
-if 0 { 
+if 0 {
 set ixiaChassisIp 10.205.4.172
 set ixNetworkTclServerIp 10.205.1.42
 set userName hgee
@@ -62,7 +62,7 @@ set connectStatus [::ixia::connect \
 if {[keylget connectStatus status] != $::SUCCESS} {
     puts "Connecting to ixNetwork Tcl server failed\n\n$connectStatus\n"
     exit
-} 
+}
 
 puts "\nconnectStatus: $connectStatus"
 # connectStatus: {port_handle {{10 {{205 {{4 {{172 {{1/1 1/1/1} {1/2 1/1/2}}}}}}}}}}} {connection {{using_tcl_proxy 0} {server_version 7.12.850.46} {port 8009} {username IxNetwork/hgee-winPc2/hgee} {hostname hgee-winPc2}}} {vport_list {1/1/1 1/1/2}} {vport_protocols_handle {::ixNet::OBJ-/vport:1/protocols ::ixNet::OBJ-/vport:2/protocols}} {status 1}
@@ -96,7 +96,7 @@ puts "\nport2Interfaces: $port2Interface\n"
 # port2Interface = ::ixNet::OBJ-/vport:2/interface:1 ::ixNet::OBJ-/vport:2/interface:2
 
 #		      -src_dest_mesh fully \
-#		      -track_by  "sourceDestEndpointPair0 vlanVlanId0"\ 
+#		      -track_by  "sourceDestEndpointPair0 vlanVlanId0"\
 # transmit_mode options: single_burst or continuous
 set trafficItem1 [::ixia::traffic_config \
 		      -mode create \
@@ -162,4 +162,3 @@ puts "\n[KeylPrint flowStats]"
 
 puts "\nPort: [keylget flowStats flow.1.rx.port]"
 puts "Rx: [keylget flowStats flow.1.rx.total_pkts]"
-

@@ -126,7 +126,7 @@ ixNet.execute('newConfig')
 
 ################################################################################
 # protocol configuration section                                               #
-################################################################################ 
+################################################################################
 assignPorts(ixNet, ports[0], ports[1])
 time.sleep(5)
 
@@ -344,7 +344,7 @@ print("***************************************************")
 ixNet.execute('getLinkStateLearnedInfo', bgp2, '1')
 time.sleep(5)
 
-linfo  = ixNet.getList(bgp2, 'learnedInfo')[0] 
+linfo  = ixNet.getList(bgp2, 'learnedInfo')[0]
 linfoList = ixNet.getList(linfo, 'table')
 print("***************************************************")
 for table in linfoList :
@@ -359,7 +359,7 @@ for table in linfoList :
                print(word)
           #end for
       # end for
-# end for 
+# end for
 
 time.sleep(15)
 

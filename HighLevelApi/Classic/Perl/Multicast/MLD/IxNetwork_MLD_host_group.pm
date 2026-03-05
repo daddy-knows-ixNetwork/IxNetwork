@@ -62,7 +62,7 @@ use Carp;
 
 # use lib where the HLPAPI files are located
 # This can be moved to .pl files in the JT framework
-# It is typically: 
+# It is typically:
 # "/volume/labtools/ixia/<version_number>/lib/library/common/ixia_hl_lib-<version>"
 # For Ex:
 # use lib "/volume/labtools/ixia/6.30.850.7/lib";
@@ -254,7 +254,7 @@ sub ip_expand_address {
 # add ipv6 addresses
 sub add_ipv6 {
     my ($addr_ipv6, $incr_ipv6) = @_;
-    
+
     # Expand Ipv6 Addresses
     #$addr_ipv6 = &ip_expand_address($addr_ipv6, 6);
     #$incr_ipv6 = &ip_expand_address($incr_ipv6, 6);
@@ -308,7 +308,7 @@ sub add_ipv6 {
     }
     # Reverse result
     my $ipv6_result = join(':', unpack('H4H4H4H4H4H4H4H4', pack('B128', scalar(reverse($result)))));
-    return $ipv6_result; 
+    return $ipv6_result;
 }
 
 sub catch_error {
@@ -325,7 +325,7 @@ sub catch_error {
 # Result:                                             #
 #                                                     #
 # my $ipv6_result =                                   #
-# &add_ipv6("2000:0001:0002:0003:0004:0005:0006:0007",# 
+# &add_ipv6("2000:0001:0002:0003:0004:0005:0006:0007",#
 # "0001:0000:0000:0000:0000:0000:0000:0001");         #
 # INFO: Sum IP Address in ipv6 format                 #
 # 2001:0001:0002:0003:0004:0005:0006:0008             #
@@ -426,9 +426,9 @@ my @mld_host_handle_list = ixiahlt::status_item('handle');
 ######################################################
 #  For each MLD host, configure a group ranges       #
 ######################################################
-my @group_range_handle_list; 
+my @group_range_handle_list;
 my $mcast_group_handle;
-my $mld_host_handle; 
+my $mld_host_handle;
 my $group_range_ip_address_temp = $group_range_ip_address;
 
 $_result_ = ixiahlt::emulation_multicast_group_config ({
@@ -449,7 +449,7 @@ foreach (@mld_host_handle_list) {
     });
     &catch_error();
 }
- 
+
 ######################################################
 # Start MLD                                          #
 ######################################################

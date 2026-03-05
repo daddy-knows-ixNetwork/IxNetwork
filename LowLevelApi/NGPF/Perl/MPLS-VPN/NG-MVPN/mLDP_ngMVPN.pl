@@ -47,8 +47,8 @@
 # Description:                                                                  #
 #    This script intends to demonstrate how to use NGPF RSVPTE P2MP API         #
 #    About Topology:                                                            #
-#       Within topology both Sender and Receiver PEs are configured, each behind# 
-#    Ingress and Egress P routers respectively. P2MP tunnels used in topology is# 
+#       Within topology both Sender and Receiver PEs are configured, each behind#
+#    Ingress and Egress P routers respectively. P2MP tunnels used in topology is#
 #	 RSVPTE-P2MP. Both I-PMSI and S-PMSI tunnels for IPv4 & Ipv6 multicast      #
 #    streams are configured using RSVPTE-P2MP. Multicast traffic soruce address #
 #    are distributed by BGP as UMH routes(AFI:1,SAFI:129). Multicast L2-L3      #
@@ -65,7 +65,7 @@
 #                     BGP within chain DG                                       #
 #         vi.     Configuring Parameters in mVRF at sender PE Router            #
 #         vii.    Adding mVRF Route Range(both IPv4 and v6) as Sender Site      #
-#                     behind Sender PE Router and as Receiver Site behind       # 
+#                     behind Sender PE Router and as Receiver Site behind       #
 #                     Receiver PE Router                                        #
 #         viii.   Configuring S-PMSI Tunnel in Sender Site (both IPv4/v6 range) #
 #        Step 2. Start of protocol                                              #
@@ -83,7 +83,7 @@
 #################################################################################
 
 ################################################################################
-# Please ensure that PERL5LIB environment variable is set properly so that 
+# Please ensure that PERL5LIB environment variable is set properly so that
 # IxNetwork.pm module is available. IxNetwork.pm is generally available in
 # C:\<IxNetwork Install Path>\API\Perl
 ################################################################################
@@ -101,13 +101,13 @@ sub assignPorts {
     my $port2    = $my_resource[6];
     my $vport1   = $my_resource[7];
     my $vport2   = $my_resource[8];
-    
+
     my $root = $ixNet->getRoot();
     my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-    
+
     my $chassisObj2 = '';
     if ($chassis1 ne $chassis2) {
         $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -117,7 +117,7 @@ sub assignPorts {
     } else {
         $chassisObj2 = $chassisObj1;
     }
-    
+
     my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -135,7 +135,7 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.39.50.134';
 my $ixTclPort   = '8990';
 my @ports       = (('10.39.50.126', '2', '1'), ('10.39.50.126', '2', '2'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
@@ -864,8 +864,8 @@ $ixNet->setMultiAttribute($upOrDownStreamAssignedLabel1,
      '-pattern', 'counter',
      '-clearOverlays', 'False');
 $ixNet->setMultiAttribute($upOrDownStreamAssignedLabel1.'/counter',
-     '-step', '1', 
-	 '-start', '10001', 
+     '-step', '1',
+	 '-start', '10001',
 	 '-direction', 'increment');
 $ixNet->commit();
 
@@ -884,8 +884,8 @@ $ixNet->setMultiAttribute($upOrDownStreamAssignedLabel2,
      '-pattern', 'counter',
      '-clearOverlays', 'False');
 $ixNet->setMultiAttribute($upOrDownStreamAssignedLabel2.'/counter',
-     '-step', '1', 
-	 '-start', '3116', 
+     '-step', '1',
+	 '-start', '3116',
 	 '-direction', 'increment');
 $ixNet->commit();
 
@@ -1250,16 +1250,16 @@ $ixNet->setMultiAttribute($mulValUpAsLabel,
      '-pattern', 'counter',
      '-clearOverlays', 'False');
 $ixNet->setMultiAttribute($mulValUpAsLabel.'/counter',
-     '-step', '10', 
-	 '-start', '14400', 
+     '-step', '10',
+	 '-start', '14400',
 	 '-direction', 'increment');
 $ixNet->commit();
 
 print("Configuring Root Address for S-PMSI in IPv4 Address Pool in Sender Sites\n");
 my $mulValRootAdd = $ixNet->getAttribute($bgpMVpnSenderSiteSpmsiV4, '-sPmsirootAddress');
 $ixNet->setMultiAttribute($mulValRootAdd.'/counter',
-     '-step', '0.0.0.1', 
-	 '-start', '8.8.8.7', 
+     '-step', '0.0.0.1',
+	 '-start', '8.8.8.7',
 	 '-direction', 'increment');
 $ixNet->commit();
 
@@ -1315,16 +1315,16 @@ $ixNet->setMultiAttribute($mulValUpAsLabel_S,
      '-pattern', 'counter',
      '-clearOverlays', 'False');
 $ixNet->setMultiAttribute($mulValUpAsLabel_S.'/counter',
-     '-step', '10', 
-	 '-start', '14400', 
+     '-step', '10',
+	 '-start', '14400',
 	 '-direction', 'increment');
 $ixNet->commit();
 
 print("Configuring Root Address for S-PMSI in IPv6 Address Pool in Sender Sites\n");
 my $mulValRootAddv6 = $ixNet->getAttribute($bgpMVpnSenderSiteSpmsiV6, '-sPmsirootAddress');
 $ixNet->setMultiAttribute($mulValRootAddv6.'/counter',
-     '-step', '0.0.0.1', 
-	 '-start', '7.7.7.7', 
+     '-step', '0.0.0.1',
+	 '-start', '7.7.7.7',
 	 '-direction', 'increment');
 $ixNet->commit();
 
@@ -1376,13 +1376,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-        my $statIndiv = ''; 
+        my $statIndiv = '';
         $index = 0;
         foreach $statIndiv (@$statVal) {
             printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
             $index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -1544,13 +1544,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 

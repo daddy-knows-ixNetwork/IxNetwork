@@ -90,7 +90,7 @@ def main():
 	'ipv42ResolveGateway':   {'type':'str', 'required':True, 'default':None},
 
 	'bgp1Name':      {'type':'str', 'required':True, 'default':None},
-	'bgp1Enable':    {'type':'str', 'required':True, 'default':None}, 
+	'bgp1Enable':    {'type':'str', 'required':True, 'default':None},
 	'bgp1HoldTimer': {'type':'str', 'required':True, 'default':None},
 	'bgp1DutIp':     {'type':'str', 'required':True, 'default':None},
 	'bgp1DutIpDirection': {'type':'str', 'required':True, 'default':None},
@@ -101,7 +101,7 @@ def main():
 	'bgp1Type':                  {'type':'str', 'required':True, 'default':None},
 
 	'bgp2Name':      {'type':'str', 'required':True, 'default':None},
-	'bgp2Enable':    {'type':'str', 'required':True, 'default':None}, 
+	'bgp2Enable':    {'type':'str', 'required':True, 'default':None},
 	'bgp2HoldTimer': {'type':'str', 'required':True, 'default':None},
 	'bgp2DutIp':     {'type':'str', 'required':True, 'default':None},
 	'bgp2DutIpDirection': {'type':'str', 'required':True, 'default':None},
@@ -111,14 +111,14 @@ def main():
 	'bgp2RestartTime':           {'type':'str', 'required':True, 'default':None},
 	'bgp2Type':                  {'type':'str', 'required':True, 'default':None},
 
-        'networkGroup1Name':        {'type':'str', 'required':True, 'default':None}, 
+        'networkGroup1Name':        {'type':'str', 'required':True, 'default':None},
 	'networkGroup1Multiplier':  {'type':'int', 'required':True, 'default':None},
 	'networkGroup1Address':     {'type':'str', 'required':True, 'default':None},
 	'networkGroup1AddressStep': {'type':'str', 'required':True, 'default':None},
 	'networkGroup1AddressDirection': {'type':'str', 'required':True, 'default':None},
 	'networkGroup1PrefixLength':     {'type':'int', 'required':True, 'default':None},
 
-        'networkGroup2Name':        {'type':'str', 'required':True, 'default':None}, 
+        'networkGroup2Name':        {'type':'str', 'required':True, 'default':None},
 	'networkGroup2Multiplier':  {'type':'int', 'required':True, 'default':None},
 	'networkGroup2Address':     {'type':'str', 'required':True, 'default':None},
 	'networkGroup2AddressStep': {'type':'str', 'required':True, 'default':None},
@@ -174,7 +174,7 @@ def main():
 
     if module.params['osPlatform'] not in ['windows', 'windowsConnectionMgr', 'linux']:
         raise IxNetRestApiException("\nError: %s is not a known option. Choices are 'windows' or 'linux'." % module.params['osPlatform'])
-        
+
     try:
         #---------- Preference Settings --------------
 
@@ -182,7 +182,7 @@ def main():
         releasePortsWhenDone = module.params['releasePortsWhenDone']
         enableDebugTracing = module.params['enableDebugTracing']
         deleteSessionAfterTest = module.params['deleteSessionAfterTest'] ;# For Windows Connection Mgr and Linux API server only
-              
+
         ixChassisIp = module.params['ixChassisIp']
         # [chassisIp, cardNumber, slotNumber]
         portList = module.params['portList']
@@ -196,7 +196,7 @@ def main():
                                 verifySslCert = False,
                                 serverOs = module.params['osPlatform']
                             )
-            
+
         if module.params['osPlatform'] in ['windows', 'windowsConnectionMgr']:
               mainObj = Connect(apiServerIp = module.params['apiServerIp'],
                                 serverIpPort = module.params['apiServerIpPort'],
@@ -222,7 +222,7 @@ def main():
             portObj.releaseAllPorts()
             mainObj.configLicenseServerDetails([module.params['licenseServerIp']],
                                                module.params['licenseMode'], module.params['licenseTier'])
-            
+
         # Set createVports = True if building config from scratch.
         portObj.assignPorts(module.params['portList'])
 
@@ -369,7 +369,7 @@ def main():
         #    'started': If you expect traffic to be started such as in continuous mode.
         trafficObj.checkTrafficState(expectedState=['stopped'], timeout=45)
         #trafficObj.checkTrafficState(expectedState=['started'], timeout=45)
-        
+
         statObj = Statistics(mainObj)
         stats = statObj.getStats(viewName='Flow Statistics')
 

@@ -8,7 +8,7 @@ loadConfigFile.py:
    - Optional: Assign ports or use the ports that are in the saved config file.
    - Start all protocols
    - Verify all protocols
-   - Start traffic 
+   - Start traffic
    - Get Traffic Item
    - Get Flow Statistics stats
 
@@ -54,7 +54,7 @@ configFile = 'bgp_ngpf_8.30.ixncfg'
 
 try:
     # LogLevel: none, info, warning, request, request_response, all
-    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin', 
+    session = SessionAssistant(IpAddress=apiServerIp, RestPort=None, UserName='admin', Password='admin',
                                SessionName=None, SessionId=None, ApiKey=None,
                                ClearConfig=True, LogLevel='all', LogFilename='restpy.log')
 
@@ -62,7 +62,7 @@ try:
 
     ixNetwork.info('Loading config file: {0}'.format(configFile))
     ixNetwork.LoadConfig(Files(configFile, local_file=True))
-   
+
     # Assign ports. Map physical ports to the configured vports.
     portMap = session.PortMapAssistant()
     vport = dict()
@@ -70,7 +70,7 @@ try:
         # For the port name, get the loaded configuration's port name
         portName = ixNetwork.Vport.find()[index].Name
         portMap.Map(IpAddress=port[0], CardId=port[1], PortId=port[2], Name=portName)
-        
+
     portMap.Connect(forceTakePortOwnership)
 
     ixNetwork.StartAllProtocols(Arg1='sync')
@@ -90,7 +90,7 @@ try:
 
     trafficItemStatistics = session.StatViewAssistant('Traffic Item Statistics')
 
-    # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL. 
+    # StatViewAssistant could also filter by REGEX, LESS_THAN, GREATER_THAN, EQUAL.
     # Examples:
     #    trafficItemStatistics.AddRowFilter('Port Name', trafficItemStatistics.REGEX, '^Port 1$')
     #    trafficItemStatistics.AddRowFilter('Tx Frames', trafficItemStatistics.GREATER_THAN, "5000")
@@ -114,8 +114,3 @@ except Exception as errMsg:
     if debugMode == False and 'session' in locals():
         if session.TestPlatform.Platform != 'windows':
             session.Session.remove()
-
-
-
-
-

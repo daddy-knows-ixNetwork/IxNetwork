@@ -58,7 +58,7 @@
 #    2. Enable SR and SR IPv6 in ISIS Emulated Router.                         #
 #    3. Set IPv6 Node Prefix & IPv6 Adj-Sid.                                   #
 #    4. Enable Segment Routing in Simulated Router and                         #
-#       Set IPv6 Node Prefix & IPv6 Adj-Sid in Simulated Router.               #  
+#       Set IPv6 Node Prefix & IPv6 Adj-Sid in Simulated Router.               #
 #    5. Start protocol.                                                        #
 #    6. Retrieve protocol statistics.                                          #
 #    7. Retrieve protocol learned info in Port1.                               #
@@ -149,7 +149,7 @@ ixNet.execute('newConfig')
 ################################################################################
 # 1. Protocol configuration section. Configure ISIS as per the description
 #  give above
-################################################################################ 
+################################################################################
 
 # assigning ports
 print("Assigning the ports")
@@ -433,7 +433,7 @@ time.sleep(5)
 linfo = ixNet.getList(isisL3_1, 'learnedInfo')[0]
 ipv6table = ixNet.getList(linfo, 'table')[2]
 values    = ixNet.getAttribute(ipv6table, '-values')
-	 
+
 print("***************************************************\n")
 for v in values:
     print(v)
@@ -446,7 +446,7 @@ time.sleep(5)
 linfo = ixNet.getList(isisL3_1, 'learnedInfo')[0]
 ipv6table = ixNet.getList(linfo, 'table')[3]
 values    = ixNet.getAttribute(ipv6table, '-values')
-	 
+
 print("***************************************************\n")
 for v in values:
     print(v)
@@ -481,7 +481,7 @@ time.sleep(5)
 linfo = ixNet.getList(isisL3_1, 'learnedInfo')[0]
 ipv6table = ixNet.getList(linfo, 'table')[3]
 values    = ixNet.getAttribute(ipv6table, '-values')
-	 
+
 print("***************************************************\n")
 for v in values:
     print(v)

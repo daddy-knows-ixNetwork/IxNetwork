@@ -137,7 +137,7 @@ ixNet.execute('newConfig')
 ################################################################################
 # 1. Protocol configuration section. Configure ISIS as per the description
 #  give above
-################################################################################ 
+################################################################################
 # assigning ports
 print("Assigning the ports")
 assignPorts(ixNet, ports[0], ports[1])
@@ -192,7 +192,7 @@ ixNet.setAttribute(ixNet.getAttribute(mac2, '-mac') + '/singleValue',
     '-value', '18:03:73:C7:6C:01')
 ixNet.commit()
 
-# Adding Ipv4 stack 
+# Adding Ipv4 stack
 print("Add ipv4 over Ethernet stack")
 ixNet.add(mac1, 'ipv4')
 ixNet.add(mac2, 'ipv4')
@@ -401,42 +401,42 @@ ixNet.commit()
 ## Adding BGP and Enabling BGPLS
 #################################################################################
 print("Adding BGP over IP4 stacks")
-ixNet.add(ip1, 'bgpIpv4Peer') 
-ixNet.add(ip2, 'bgpIpv4Peer') 
-ixNet.commit() 
+ixNet.add(ip1, 'bgpIpv4Peer')
+ixNet.add(ip2, 'bgpIpv4Peer')
+ixNet.commit()
 
-bgp1 = ixNet.getList(ip1, 'bgpIpv4Peer')[0] 
-bgp2 = ixNet.getList(ip2, 'bgpIpv4Peer')[0] 
+bgp1 = ixNet.getList(ip1, 'bgpIpv4Peer')[0]
+bgp2 = ixNet.getList(ip2, 'bgpIpv4Peer')[0]
 
-print("Enabling BGPLS Capability") 
-capLS1 = ixNet.getAttribute(bgp1, '-capabilityLinkStateNonVpn') 
-capLS2 = ixNet.getAttribute(bgp2, '-capabilityLinkStateNonVpn') 
-svCap1 = ixNet.getList(capLS1, 'singleValue')[0] 
-svCap2 = ixNet.getList(capLS2, 'singleValue')[0] 
-ixNet.setAttribute(svCap1, '-value', 'True') 
-ixNet.setAttribute(svCap2, '-value', 'True') 
-ixNet.commit() 
+print("Enabling BGPLS Capability")
+capLS1 = ixNet.getAttribute(bgp1, '-capabilityLinkStateNonVpn')
+capLS2 = ixNet.getAttribute(bgp2, '-capabilityLinkStateNonVpn')
+svCap1 = ixNet.getList(capLS1, 'singleValue')[0]
+svCap2 = ixNet.getList(capLS2, 'singleValue')[0]
+ixNet.setAttribute(svCap1, '-value', 'True')
+ixNet.setAttribute(svCap2, '-value', 'True')
+ixNet.commit()
 
-print("Enabling BGPLS Filter Link State") 
-filterLS1 = ixNet.getAttribute(bgp1, '-filterLinkState') 
-filterLS2 = ixNet.getAttribute(bgp2, '-filterLinkState') 
-svLS1 = ixNet.getList(filterLS1, 'singleValue')[0] 
-svLS2 = ixNet.getList(filterLS2, 'singleValue')[0] 
-ixNet.setAttribute(svLS1, '-value', 'True') 
-ixNet.setAttribute(svLS2, '-value', 'True') 
-ixNet.commit() 
+print("Enabling BGPLS Filter Link State")
+filterLS1 = ixNet.getAttribute(bgp1, '-filterLinkState')
+filterLS2 = ixNet.getAttribute(bgp2, '-filterLinkState')
+svLS1 = ixNet.getList(filterLS1, 'singleValue')[0]
+svLS2 = ixNet.getList(filterLS2, 'singleValue')[0]
+ixNet.setAttribute(svLS1, '-value', 'True')
+ixNet.setAttribute(svLS2, '-value', 'True')
+ixNet.commit()
 
-print("Setting IPs in BGP DUT IP tab") 
-ixNet.setAttribute(ixNet.getAttribute(bgp1, '-dutIp') + '/singleValue', '-value', '20.20.20.1') 
-ixNet.setAttribute(ixNet.getAttribute(bgp2, '-dutIp') + '/singleValue', '-value', '20.20.20.2') 
-ixNet.commit() 
+print("Setting IPs in BGP DUT IP tab")
+ixNet.setAttribute(ixNet.getAttribute(bgp1, '-dutIp') + '/singleValue', '-value', '20.20.20.1')
+ixNet.setAttribute(ixNet.getAttribute(bgp2, '-dutIp') + '/singleValue', '-value', '20.20.20.2')
+ixNet.commit()
 
-print("Adding the NetworkGroup with Routers at back of it") 
-ixNet.execute('createDefaultStack', t1dev1, 'networkTopology') 
-networkGroup = ixNet.getList(t1dev1, 'networkGroup')[0] 
-networkTopology = ixNet.getList(networkGroup, 'networkTopology')[0] 
-ixNet.setAttribute(networkGroup,'-name', 'ISIS_Network_Group1') 
-ixNet.commit() 
+print("Adding the NetworkGroup with Routers at back of it")
+ixNet.execute('createDefaultStack', t1dev1, 'networkTopology')
+networkGroup = ixNet.getList(t1dev1, 'networkGroup')[0]
+networkTopology = ixNet.getList(networkGroup, 'networkTopology')[0]
+ixNet.setAttribute(networkGroup,'-name', 'ISIS_Network_Group1')
+ixNet.commit()
 
 ################################################################################
 ## Enabling Segment Routing in simulated router
@@ -550,7 +550,7 @@ for table in linfoList :
                print(word)
           #end for
       # end for
-# end for 
+# end for
 
 time.sleep(15)
 

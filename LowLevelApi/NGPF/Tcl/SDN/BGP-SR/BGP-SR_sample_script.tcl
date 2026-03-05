@@ -63,7 +63,7 @@
 #    8. Retrieve L2-L3 traffic stats.                                          #
 #    9. Stop L2-L3 traffic.                                                    #
 #   10. Stop all protocols.                                                    #
-#                                                                              # 
+#                                                                              #
 # Ixia Software:                                                               #
 #    IxOS      8.10 EA                                                         #
 #    IxNetwork 8.10 EA                                                         #
@@ -88,7 +88,7 @@ ixNet exec newConfig
 
 ################################################################################
 # protocol configuration section                                               #
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -258,7 +258,7 @@ foreach statValList [ixNet getAttr $viewPage -rowValues] {
 puts "***************************************************"
 
 ################################################################################
-# On the fly enable MPLS Learned info filter                                   #  
+# On the fly enable MPLS Learned info filter                                   #
 ################################################################################
 puts "Enabling IPv4 MPLS Learned Information for BGP Router"
 ixNet setAttr [ixNet getAttr $bgp1 -filterIpV4Mpls]/singleValue -value true
@@ -309,7 +309,7 @@ ixNet setMultiAttribute $endpointSet1\
 	-ngpfFilters           [list]\
 	-trafficGroups         [list]\
 	-sources               $source\
-	-destinations          $destination\	
+	-destinations          $destination\
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\
@@ -317,7 +317,7 @@ ixNet setMultiAttribute $trafficItem1/tracking\
 	-values [list ] \
 	-fieldWidth thirtyTwoBits \
 	-protocolOffset Root.0
-	
+
 ixNet commit
 
 ###############################################################################
@@ -361,4 +361,3 @@ after 5000
 puts "Stop All Protocols"
 ixNet exec stopAllProtocols
 puts "Sample Script Ends"
-

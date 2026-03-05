@@ -9,7 +9,7 @@ package req Ixia
 #                       |----------------------------------|
 #    IxPort1 1.1.1.1 -->|1.1.1.2    DUT/10.1.1.1    2.2.2.1|--> IxPort2 2.2.2.2
 #                       |----------------------------------|
-# 
+#
 # Solution:
 #
 #       -Create a static ip address on IxRxPort2 of 10.1.1.1.
@@ -22,10 +22,10 @@ package req Ixia
 #       -Flow Tracking select dest_ip.
 #
 #    .ixncfg file
-#    
+#
 #       - scenario_1.ixncfg
 #
-# 
+#
 
 set ixiaChassisIp 10.205.4.35
 set ixNetworkTclServerIp 10.205.1.42
@@ -49,7 +49,7 @@ set connectStatus [::ixia::connect \
 if {[keylget connectStatus status] != $::SUCCESS} {
     puts "Connecting to ixNetwork Tcl server failed\n\n$connectStatus\n"
     exit
-} 
+}
 
 set port1Status [::ixia::interface_config \
 		     -mode config \
@@ -98,7 +98,7 @@ set port2StaticInterface [keylget port2StaticIp interface_handle]
 puts "\nport2StaticInterface: $port2StaticInterface\n"
 
 # port1Interface = ::ixNet::OBJ-/vport:1/interface:1
-# port2Interfaces = ::ixNet::OBJ-/vport:2/interface:1 
+# port2Interfaces = ::ixNet::OBJ-/vport:2/interface:1
 
 # transmit_mode options: single_burst or continuous
 # -transmit_distribution options:
@@ -148,10 +148,10 @@ for {set flowNumber 1} {$flowNumber <= [llength [keylget flowStats flow]]} {incr
     set rxPort [keylget flowStats flow.$flowNumber.rx.port]
     set txFrames [keylget flowStats flow.$flowNumber.tx.total_pkts]
     set rxFrames [keylget flowStats flow.$flowNumber.rx.total_pkts]
-    
+
     # flow_name: 1/1/2 TI0-TrafficItem_1 1.1.1.6 TI0-TrafficItem_1-EndpointSet-1 - Flow Group 0001
     set flowName [keylget flowStats flow.$flowNumber.flow_name]
     regexp "TrafficItem_\[0-9]+ *(\[0-9]+\.\[0-9]+\.\[0-9]+\.\[0-9]+)" $flowName - destIp
-  
+
     puts "[format %5s $flowNumber][format %15s $txPort][format %10s $rxPort][format %14s $txFrames][format %14s $rxFrames][format %14s $destIp]"
 }

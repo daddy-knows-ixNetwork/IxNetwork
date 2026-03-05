@@ -87,7 +87,7 @@ ixNet exec newConfig
 
 ################################################################################
 # Protocol configuration section                                               #
-################################################################################ 
+################################################################################
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -194,7 +194,7 @@ ixNet commit
 # Import BGP Routes in Ixia csv format in Topology2                            #
 ################################################################################
 puts "Importing BGP Routes in Ixia Format"
-set networkGroup [ixNet add $t2dev1 networkGroup] 
+set networkGroup [ixNet add $t2dev1 networkGroup]
 ixNet commit
 set networkGroup [ixNet remapId $networkGroup]
 set ipv4PrefixPools [ixNet add $networkGroup ipv4PrefixPools]
@@ -211,7 +211,7 @@ ixNet setMultiAttribute $importBgpRoutesParams -routeDistributionType roundRobin
 ixNet commit
 ixNet exec importBgpRoutes $importBgpRoutesParams
 puts "Successfully imported IPv4 Routes !!!"
-after 2000 
+after 2000
 
 ################################################################################
 # Start protocol and check statistics                                          #
@@ -236,7 +236,7 @@ foreach statValList [ixNet getAttr $viewPage -rowValues] {
 puts "***************************************************"
 
 ################################################################################
-# On the fly section                                                           #  
+# On the fly section                                                           #
 ################################################################################
 puts "Enabling IPv4 Unicast Learned Information for BGP Router"
 ixNet setAttr [ixNet getAttr $bgp1 -filterIpV4Unicast]/singleValue -value true

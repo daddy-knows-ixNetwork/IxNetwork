@@ -58,7 +58,7 @@
 #     dual stack router connected to both IPv4 and IPv6 interface. The         #
 #     transport connection preference in LDP router is set to IPv6.            #
 #     The network groups consists of both IPv4 and IPv6 prefix pools.          #
-#     Traffic is configured in between IPv6 prefix pools as end points.        #       
+#     Traffic is configured in between IPv6 prefix pools as end points.        #
 #                                                                              #
 # Script Flow:                                                                 #
 #    1. Configuration of protocols as described in topology.                   #
@@ -72,7 +72,7 @@
 #   11. Retrieve L2-L3 traffic stats.                                          #
 #   12. Stop L2-L3 traffic.                                                    #
 #   13. Stop all protocols.                                                    #
-#                                                                              #                                                                                
+#                                                                              #
 ################################################################################
 
 # Script Starts
@@ -108,7 +108,7 @@ ixNet exec newConfig
 ################################################################################
 # Protocol configuration section                                               #
 # Configure LDPv6 as per the description given above                           #
-################################################################################ 
+################################################################################
 puts "Adding two virtual ports"
 ixNet add [ixNet getRoot] vport
 ixNet add [ixNet getRoot] vport
@@ -303,7 +303,7 @@ puts "All configuration is completed..Wait for 5 seconds..."
 after 5000
 
 ################################################################################
-# Start LDPv6 protocol and wait for 60 seconds                                 #  
+# Start LDPv6 protocol and wait for 60 seconds                                 #
 ################################################################################
 puts "Starting protocols and waiting for 60 seconds for protocols to come up"
 ixNet exec startAllProtocols
@@ -345,7 +345,7 @@ for {set i 0} {$i < 2} {incr i} {
     foreach v $values {
         puts $v
     }
-}    
+}
 puts "***************************************************"
 
 ################################################################################
@@ -435,7 +435,7 @@ ixNet setMultiAttribute $endpointSet1\
     -ngpfFilters           [list]\
     -trafficGroups         [list]\
     -sources               $source\
-    -destinations          $destination    
+    -destinations          $destination
 ixNet commit
 
 ixNet setMultiAttribute $trafficItem1/tracking\

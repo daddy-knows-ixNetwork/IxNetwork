@@ -83,7 +83,7 @@ ixNet exec newConfig
 ################################################################################
 # Protocol configuration section. Configure ISIS as per the description
 #  give above
-################################################################################ 
+################################################################################
 # Adding Virtual ports
 puts "Adding 2 vports"
 ixNet add [ixNet getRoot] vport
@@ -572,4 +572,3 @@ puts "***************************************************"
 ################################################################################
 ixNet exec stopAllProtocols
 puts "!!! Test Script Ends !!!"
-

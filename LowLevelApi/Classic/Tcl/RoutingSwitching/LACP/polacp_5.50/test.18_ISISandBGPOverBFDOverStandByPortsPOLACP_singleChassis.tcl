@@ -57,7 +57,7 @@ package req IxTclNetwork
 
 proc Action {testPortConnElement} {
     source [pwd]/LACP_Utils.tcl
-    
+
     # initialize return value
     set FAILED 1
     set PASSED 0

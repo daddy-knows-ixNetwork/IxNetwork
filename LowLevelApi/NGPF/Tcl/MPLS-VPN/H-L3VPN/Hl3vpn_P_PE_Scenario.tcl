@@ -53,8 +53,8 @@
 #    1. It will create a BGP topology with OSPF, RSVP-TE and Targeted LDP      #
 #       configured in Area Border Router.                                      #
 #    2. In Provider Edge Router configuration  BGP Peer is configured.         #
-#    3. BGP VRF is configured on top of BGP Peer.                              # 
-#    4. IPv4 & IPv6 Prefix Pools are added behind BGP VRF.                     # 
+#    3. BGP VRF is configured on top of BGP Peer.                              #
+#    4. IPv4 & IPv6 Prefix Pools are added behind BGP VRF.                     #
 #    5. IPv4 and IPv6 addresses  are configured in IPv4 and IPv6 Prefix Pools. #
 #    6. Label values are configured in V4 & V6 Prefix Pools.                   #
 #    3. Only one side configuration is provided.                               #
@@ -83,7 +83,7 @@ ixNet exec newConfig
 
 ################################################################################
 # 1. Configure H-L3VPN topology as per the description give above
-################################################################################ 
+################################################################################
 puts "Adding vport"
 ixNet add [ixNet getRoot] vport
 ixNet commit
@@ -197,7 +197,7 @@ ixNet setMultiAttribute $chainedDg1\
 ixNet commit
 set chainedDg1 [lindex [ixNet remapIds $chainedDg1] 0]
 
-# Add ipv4 loopback in Chained DG 
+# Add ipv4 loopback in Chained DG
 puts "Adding ipv4 loopback in Chained DG"
 set loopback1 [ixNet add $chainedDg1 "ipv4Loopback"]
 ixNet setMultiAttribute $loopback1\
@@ -248,7 +248,7 @@ ixNet commit
 
 set bgpVrf [ixNet getList $bgp bgpVrf]
 
-# Adding IPv4 Address Pool behind bgpVrf 
+# Adding IPv4 Address Pool behind bgpVrf
 puts "Adding IPv4 Address Pools behind bgpVrf"
 set networkGroup3 [ixNet add $chainedDg1 networkGroup]
 ixNet commit
@@ -261,7 +261,7 @@ puts "Changing default values of IPv4 prefixes"
 ixNet setAttr [ixNet getAttr $ipv4PrefixPool -networkAddress]/singleValue -value "203.1.0.0"
 ixNet commit
 
-# Changing Label value in IPv4 Prefix Pool 
+# Changing Label value in IPv4 Prefix Pool
 puts "Changing Label value in IPv4 Prefix Pool"
 set v4RouteProperty [ixNet getList $ipv4PrefixPool bgpL3VpnRouteProperty]
 set multiValue [ixNet getAttr $v4RouteProperty -labelStart]

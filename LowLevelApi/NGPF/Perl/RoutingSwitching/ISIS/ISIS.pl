@@ -48,8 +48,8 @@
 #    This script intends to demonstrate how to use NGPF ISISL3 API.            #
 #                                                                              #
 #    1. It will create 2 ISISL3 topologies, each having an ipv4 & ipv6 network #
-#       topology and loopback device group behind the network group(NG) with   # 
-#       loopback interface on it. A loopback device group(DG) behind network   # 
+#       topology and loopback device group behind the network group(NG) with   #
+#       loopback interface on it. A loopback device group(DG) behind network   #
 #       group is needed to support applib traffic.                             #
 #    2. Start the isisL3 protocol.                                             #
 #    3. Retrieve protocol statistics.                                          #
@@ -62,7 +62,7 @@
 #    8. Configure IPv4 application traffic.[application Traffic type is set    #
 #       using variable "trafficType". "ipv4ApplicationTraffic" for ipv4 profile#
 #       and "ipv6ApplicationTraffic" for ipv6 profile.                         #
-#       Note: IPv4 & IPv6 both could not be configured in same endpoint set.   # 
+#       Note: IPv4 & IPv6 both could not be configured in same endpoint set.   #
 #    9. Start the L2-L3 traffic.                                               #
 #   10. Start the application traffic.                                         #
 #   11. Retrieve Application traffic stats.                                    #
@@ -74,7 +74,7 @@
 ################################################################################
 
 ################################################################################
-# Please ensure that PERL5LIB environment variable is set properly so that 
+# Please ensure that PERL5LIB environment variable is set properly so that
 # IxNetwork.pm module is available. IxNetwork.pm is generally available in
 # C:\<IxNetwork Install Path>\API\Perl
 ################################################################################
@@ -92,13 +92,13 @@ sub assignPorts {
 	my $port2    = $my_resource[6];
 	my $vport1   = $my_resource[7];
 	my $vport2   = $my_resource[8];
-	
+
 	my $root = $ixNet->getRoot();
 	my $chassisObj1 = $ixNet->add($root.'/availableHardware', 'chassis');
     $ixNet->setAttribute($chassisObj1, '-hostname', $chassis1);
     $ixNet->commit();
     $chassisObj1 = ($ixNet->remapIds($chassisObj1))[0];
-	
+
 	my $chassisObj2 = '';
 	if ($chassis1 ne $chassis2) {
 	    $chassisObj2 = $ixNet->add($root.'/availableHardware', 'chassis');
@@ -108,7 +108,7 @@ sub assignPorts {
 	} else {
 	    $chassisObj2 = $chassisObj1;
 	}
-	
+
 	my $cardPortRef1 = $chassisObj1.'/card:'.$card1.'/port:'.$port1;
     $ixNet->setMultiAttribute($vport1, '-connectedTo', $cardPortRef1,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 001');
@@ -117,7 +117,7 @@ sub assignPorts {
     my $cardPortRef2 = $chassisObj2.'/card:'.$card2.'/port:'.$port2;
     $ixNet->setMultiAttribute($vport2, '-connectedTo', $cardPortRef2,
         '-rxMode', 'captureAndMeasure', '-name', 'Ethernet - 002');
-		
+
     $ixNet->commit();
 }
 
@@ -133,7 +133,7 @@ my @ports       = (('10.205.28.170', '1', '5'), ('10.205.28.170', '1', '6'));
 # "ipv4ApplicationTraffic" for ipv4 profile & "ipv6ApplicationTraffic" for ipv6 profile.
 my $trafficType = 'ipv6ApplicationTraffic';
 
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 print("Connect to IxNetwork Tcl server\n");
@@ -146,7 +146,7 @@ $ixNet->execute('newConfig');
 ################################################################################
 #  Protocol configuration section. Configure ISIS as per the description
 #  give above
-################################################################################ 
+################################################################################
 # Adding Virtual ports
 print("Adding 2 vports\n");
 $ixNet->add($ixNet->getRoot(), 'vport');
@@ -282,7 +282,7 @@ my $networkTypeMultiValue2 = ($ixNet->getAttribute($isisL3_2, '-networkType'));
 $ixNet->setAttribute($networkTypeMultiValue2, '-pattern', 'singleValue', '-clearOverlays', 'False');
 $ixNet->setAttribute($networkTypeMultiValue2.'/singleValue', '-value', 'pointpoint');
 
-# Disable Discard Learned LSP 
+# Disable Discard Learned LSP
 print("Disabling the Discard Learned Info CheckBox\n");
 my $isisL3RouterDiscardLearnedLSP1 = $ixNet->getAttribute(($ixNet->getList($t1devices[0], 'isisL3Router'))[0],
     '-discardLSPs');
@@ -464,13 +464,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -572,7 +572,7 @@ sleep(30);
 
 ###############################################################################
 # Retrieve protocol learned info again and compare with
-# previously retrieved learned info.  
+# previously retrieved learned info.
 ###############################################################################
 print("Fetching ISISL3 learned info after enabling IPv4 Node Routes\n");
 $ixNet->execute('getLearnedInfo', $isisL3_1, '1');
@@ -596,21 +596,21 @@ sleep(5);
 my $linfo = ($ixNet->getList($isisL3_1, 'learnedInfo'))[0];
 my $ipv6table = ($ixNet->getList($linfo, 'table'))[1];
      my @values   = $ixNet->getAttribute($ipv6table, '-values');
-     my $v        = ''; 
-	 
+     my $v        = '';
+
 
 print("***************************************************\n");
 foreach $v (@values) {
  	my $w = '0';
 	foreach $w (@$v) {
 	    printf("%15s", $w);
-	}    
+	}
 	print("\n");
 }
 print("***************************************************\n");
 
 ################################################################################
-# Configure L2-L3 traffic 
+# Configure L2-L3 traffic
 ################################################################################
 print ("Congfiguring L2-L3 IPv4 Traffic Item\n");
 my $trafficItem1 = $ixNet->add(($ixNet->getRoot()).'/traffic', 'trafficItem');
@@ -699,7 +699,7 @@ $ixNet->setMultiAttribute($endpointSet2,
     '-ngpfFilters',           (''),
     '-trafficGroups',         (''),
     '-sources',               @source_app,
-    '-destinations',          @destin_app);    
+    '-destinations',          @destin_app);
 $ixNet->commit();
 $endpointSet2 = ($ixNet->remapIds($endpointSet2))[0];
 
@@ -771,13 +771,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 ###############################################################################
@@ -793,13 +793,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-	    my $statIndiv = ''; 
+	    my $statIndiv = '';
 		$index = 0;
 	    foreach $statIndiv (@$statVal) {
 		    printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
 			$index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 #################################################################################
@@ -821,4 +821,3 @@ sleep(5);
 ################################################################################
 $ixNet->execute('stopAllProtocols');
 print("!!! Test Script Ends !!!");
-

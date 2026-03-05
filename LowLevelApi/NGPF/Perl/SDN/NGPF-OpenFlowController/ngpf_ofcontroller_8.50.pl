@@ -64,12 +64,12 @@ print("!!! Test Script Starts !!!\n");
 my $ixTclServer = '10.39.65.1';
 my $ixTclPort   = '8009';
 my @ports       = (('10.39.64.118', '7', '1'));
-# Spawn a new instance of IxNetwork object. 
+# Spawn a new instance of IxNetwork object.
 my $ixNet = new IxNetwork();
 
 ################################################################################
 # Connecting to IxTclNetwork Server and adding ports                           #
-################################################################################ 
+################################################################################
 
 print("Connect to IxNetwork Tcl server\n");
 $ixNet->connect($ixTclServer, '-port', $ixTclPort, '-version', '8.50',
@@ -105,7 +105,7 @@ $ixNet->commit();
 
 ################################################################################
 # protocol configuration section                                               #
-################################################################################ 
+################################################################################
 
 print("Adding 2 topologies\n");
 $ixNet->add($ixNet->getRoot(), 'topology', '-vports', $vportTx);
@@ -161,7 +161,7 @@ print "OFchannel is : $openflowchannels\n";
 
 my $ofchannel_remote_ip = $ixNet->getAttribute($openflowchannels, '-remoteIp');
 # $self->{_objRefs}->{27} = $self->{_ixNet}->add($self->{_objRefs}->{26}, 'singleValue');;
-# $self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{27}, 
+# $self->{_ixNet}->setMultiAttribute($self->{_objRefs}->{27},
 	# '-value', '1.1.1.1');
 $ixNet->setAttribute($ofchannel_remote_ip.'/singleValue', '-value', '1.1.1.1');
 $ixNet->commit();
@@ -243,7 +243,7 @@ foreach $matchCriteria (@match_criteria_list){
                 $ixNet->commit();
                 sleep(5);
             }
-                
+
         }
     }
     if (($ixNet->getAttribute($matchCriteria, '-name')) eq "IP") {
@@ -270,7 +270,7 @@ foreach $matchCriteria (@match_criteria_list){
                 $ixNet->setAttribute($valuemulti.'/singleValue', '-value', '4.1.1.1');
                 $ixNet->commit();
                 sleep(5);
-                
+
             }
         }
     }
@@ -335,13 +335,13 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-        my $statIndiv = ''; 
+        my $statIndiv = '';
         $index = 0;
         foreach $statIndiv (@$statVal) {
             printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
             $index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
@@ -355,24 +355,24 @@ foreach $statValueList (@rowvals) {
     print("***************************************************\n");
     my $statVal = '';
     foreach $statVal (@$statValueList) {
-        my $statIndiv = ''; 
+        my $statIndiv = '';
         $index = 0;
         foreach $statIndiv (@$statVal) {
             printf(" %-30s:%s\n", $statcap[$index], $statIndiv);
             $index++;
         }
-    }    
+    }
 }
 print("***************************************************\n");
 
 
 ################################################################################
-# On the fly section                                                           #  
+# On the fly section                                                           #
 ################################################################################
 
 my $flowProfileMatchAction = ($ixNet->getList($flowprofile, 'matchAction'))[0];
 print $flowProfileMatchAction;
-my $flowProfileInstruction = ($ixNet->getList($flowProfileMatchAction, 'instructions'))[0];    
+my $flowProfileInstruction = ($ixNet->getList($flowProfileMatchAction, 'instructions'))[0];
 my $flowProfileInstructionAdded = ($ixNet->getList($flowProfileInstruction, 'instruction'))[0];
 my $actionsAdded = ($ixNet->getList($flowProfileInstructionAdded, 'actions'))[0];
 my $actionList = ($ixNet->getList($actionsAdded, 'action'))[0];
@@ -384,7 +384,7 @@ if ($ixNet->getAttribute($actionList, '-name') == "Set Ethernet Source") {
 my $Ethernetfield = ($ixNet->getList($actionList, 'field'))[0];
 my $actionValue = ($ixNet->getAttribute($Ethernetfield, '-value'));
 $ixNet->setAttribute($actionValue .'/singleValue', '-value', $val);
-$ixNet->commit();   
+$ixNet->commit();
 
 my $globals   = ($ixNet->getRoot()).'/globals';
 my $topology  = $globals.'/topology';
@@ -432,8 +432,3 @@ sleep(5);
 ################################################################################
 $ixNet->execute('stopAllProtocols');
 print("!!! Test Script Ends !!!\n");
-
-
-
-
-

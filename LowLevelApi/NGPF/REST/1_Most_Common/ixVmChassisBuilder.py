@@ -20,7 +20,7 @@
 #       1> Interactive mode: Will ask you all the necessary questions to add
 #          the vChassis and vLMs on your IxNetwork API server.
 #
-#       2> Non-Interactive mode: Will not ask you any questions. 
+#       2> Non-Interactive mode: Will not ask you any questions.
 #          Requires you to fill out the ixvmParams.py file.
 #
 # USAGE
@@ -29,7 +29,7 @@
 #                           You must have the ixvmParams.py file in the same path as ixVmChassisBuilder.py
 #         Enter: python ixVmChassisBuilder.py add|remove
 #
-#     Interactive mode: Ask questions. 
+#     Interactive mode: Ask questions.
 #         Enter: python ixVmChassisBuilder.py
 #
 # Version 2: Automate adding interfaces through VMWare and Openstack using APIs.
@@ -53,7 +53,7 @@ class IxVmChassisBuilder(object):
         """
         Description
            A HTTP GET function to send REST APIs.
-        
+
         Parameters
            restApi: The REST API URL.
            data: The data payload for the URL.
@@ -81,13 +81,13 @@ class IxVmChassisBuilder(object):
         """
         Description
            A HTTP POST function to mainly used to create or start operations.
-        
+
         Parameters
            restApi: The REST API URL.
            data: The data payload for the URL.
            headers: The special header to use for the URL.
            silentMode: True or False.  To display URL, data and header info.
-           noDataJsonDumps: True or False. If True, use json dumps. Else, accept the data as-is. 
+           noDataJsonDumps: True or False. If True, use json dumps. Else, accept the data as-is.
            ignoreError: True or False.  If False, the response will be returned. No exception will be raised.
         """
 
@@ -119,7 +119,7 @@ class IxVmChassisBuilder(object):
         """
         Description
            A HTTP PATCH function to modify configurations.
-        
+
         Parameters
            restApi: The REST API URL.
            data: The data payload for the URL.
@@ -146,7 +146,7 @@ class IxVmChassisBuilder(object):
         Description
            A HTTP DELETE function to delete the session.
            For Linux API server only.
-        
+
         Parameters
            restApi: The REST API URL.
            data: The data payload for the URL.
@@ -173,7 +173,7 @@ class IxVmChassisBuilder(object):
         Description
             Connect to a Windows IxNetwork API Server to create a session URL.
             http://{apiServerIp:port}/api/v1/sessions/1/ixnetwork
-        
+
          ixNetRestServerIp: The IxNetwork API Server IP address.
          ixNetRestServerPort: Provide a port number to connect to your non Linux API Server.
                               On a Linux API Server, a socket port is not needed. State "None".
@@ -182,7 +182,7 @@ class IxVmChassisBuilder(object):
         serverAndPort = ixNetRestServerIp+':'+str(ixNetRestServerPort)
         response = self.get(url)
         sessionId = response.json()[0]['id']
-        self.sessionUrl = 'http://{apiServer}:{port}/api/v1/sessions/{id}/ixnetwork'.format(apiServer=ixNetRestServerIp, 
+        self.sessionUrl = 'http://{apiServer}:{port}/api/v1/sessions/{id}/ixnetwork'.format(apiServer=ixNetRestServerIp,
                                                                                             port=ixNetRestServerPort,
                                                                                             id=sessionId)
         # http://192.168.70.127:11009
@@ -208,7 +208,7 @@ class IxVmChassisBuilder(object):
                 errorList.append(errorId['description'])
             print()
 
-    def ixVmCreateHypervisor(self, enabled='true', serverIp='', 
+    def ixVmCreateHypervisor(self, enabled='true', serverIp='',
                              hypervisorType='vmware', userLoginName='admin', userPassword='admin'):
         """
         Description
@@ -226,7 +226,7 @@ class IxVmChassisBuilder(object):
         """
         vChassisObj = self.sessionUrl+'/availableHardware/virtualChassis'
         url = self.sessionUrl+'/availableHardware/virtualChassis/hypervisor'
-        data = {'enabled': enabled, 
+        data = {'enabled': enabled,
                 'serverIp': serverIp,
                 'type': hypervisorType,
                 'user': userLoginName,
@@ -339,7 +339,7 @@ class IxVmChassisBuilder(object):
             for error in response.json()['errors']:
                 print('\t', error['detail'])
             raise IxNetRestApiException
-        
+
         if cardName is not None:
             self.patch(url, data={'cardName': cardName})
 
@@ -350,7 +350,7 @@ class IxVmChassisBuilder(object):
         """
         Description
             Add/Configure a virtual port to the cardId.
-        
+
         Parameters
             cardUrl:    The cardId object: /api/v1/sessions/1/ixnetwork/availableHardware/virtualChassis/ixVmCard/1
             interface:  eth1|eth2|eth3 ...
@@ -399,7 +399,7 @@ class IxVmChassisBuilder(object):
         return portId
 
     def ixVmClearPortOwnershipByCardId(self, cardId):
-        """ 
+        """
         Description
            Clear ownership on all virtual ports from the provided IxVM cardId.
 
@@ -439,7 +439,7 @@ class IxVmChassisBuilder(object):
 
         Parameter
            managementIp: The IP address of the IxVM card.
-        
+
         """
         response = self.get(self.sessionUrl+'/availableHardware/virtualChassis/ixVmCard')
         for eachVmCard in response.json():
@@ -461,14 +461,14 @@ class IxVmChassisBuilder(object):
                 http://{apiServerIp:11009/availableHardware/virtualChassis/ixVmCard
 
             To disconnect virtual line cards:
-                http://{apiServerIp:11009/operations/disconnectcardbyid 
+                http://{apiServerIp:11009/operations/disconnectcardbyid
                 data={'arg1': str(cardId)}
         """
         url = self.sessionUrl+'/availableHardware/virtualChassis/ixVmCard'
         response = self.get(url)
         cardIdList = [item['links'][0]['href'] for item in response.json()]
         for eachCard in cardIdList:
-            # /api/v1/sessions/1/ixnetwork/availableHardware/virtualChassis/ixVmCard/5        
+            # /api/v1/sessions/1/ixnetwork/availableHardware/virtualChassis/ixVmCard/5
             response = self.get(self.httpHeader+eachCard)
             if response.status_code == 200:
                 cardIdNumber = response.json()['cardId']
@@ -516,7 +516,7 @@ class IxVmChassisBuilder(object):
 
         Parameter
            chassisIp: The chassis IP address.
-        """ 
+        """
         url = self.sessionUrl+'/availableHardware/chassis'
         data = {'hostname': chassisIp}
         response = self.post(url, data=data)
@@ -624,7 +624,7 @@ class IxVmChassisBuilder(object):
         """
         Description
             Wait for an operation progress to complete.
-        
+
         Parameters
             response: The POST action response.  Generally, after an /operations action.
                       Such as /operations/startallprotocols, /operations/assignports
@@ -707,7 +707,7 @@ def askQuestion(question, defaultValue=None, expectedPattern=None):
         if response and expectedPattern == None:
             return response
         # No response and no default value, ask again
-        if not response and defaultValue == None:            
+        if not response and defaultValue == None:
             continue
         # No resposne, return the default value as the value.
         if not response and defaultValue:
@@ -716,7 +716,7 @@ def askQuestion(question, defaultValue=None, expectedPattern=None):
 readline.set_completer(completer)
 readline.parse_and_bind("tab: complete")
 
-vmMgmtCardListToRemove = 'all' 
+vmMgmtCardListToRemove = 'all'
 
 if len(sys.argv) == 1:
     # Ask questions. Not reading ixvmParams.py file.
