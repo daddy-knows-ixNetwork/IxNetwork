@@ -138,6 +138,7 @@ RUN set -ex && \
     cp .bashrc .bashrc_copy && \
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" && \
     cat .bashrc_copy >> .bashrc && \
-    rm .bashrc_copy
+    rm .bashrc_copy && \
+    sed -i 's/spack_env\$python_venv/spack_env\$HL_VERSION\$python_venv/g' ~/.oh-my-bash/themes/font/font.theme.sh
 
 WORKDIR ${WORKDIR}
