@@ -95,8 +95,8 @@ except (NameError,):
 #ixnetwork_tcl_server = '10.36.93.72'  # SY 11.00 ixNetwork web
 #ixnetwork_tcl_server = '10.36.94.228'  # SY 10.00 ixNetwork web
 
-ixnetwork_tcl_server = '10.36.94.229'  # SY 11.10 ixNetwork web
-#xnetwork_tcl_server = '10.36.93.72'  # SY 11.00 ixNetwork web
+ixnetwork_tcl_server = '10.36.94.225'  # SY 11.10 ixNetwork web
+#ixnetwork_tcl_server = '10.36.93.72'  # SY 11.00 ixNetwork web
 #ixnetwork_tcl_server = '10.36.94.228'  # SY 10.00 ixNetwork web
 
 chassis_ip = "10.36.88.110" # Chassis 11.10
@@ -114,8 +114,8 @@ connect_result = ixiangpf.connect(
     port_list=port_list,
     break_locks=1,
     reset=1,
-    user_name='admin',      # Linux
-    user_password='admin'   # Linux
+    user_name='seunyang',      # Linux
+    user_password='seunyang'   # Linux
 )
 
 if connect_result['status'] != '1':
