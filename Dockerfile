@@ -89,7 +89,8 @@ RUN set -ex && \
     pip install \
     ansible \
     uv \
-    pre-commit
+    pre-commit \
+    jupyterlab
 
 # kubectl cli
 #RUN set -ex && \
@@ -139,6 +140,6 @@ RUN set -ex && \
     bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" && \
     cat .bashrc_copy >> .bashrc && \
     rm .bashrc_copy && \
-    sed -i 's/spack_env\$python_venv/spack_env\$HL_VERSION\$python_venv/g' ~/.oh-my-bash/themes/font/font.theme.sh
+    sed -i 's/spack_env\$python_venv/spack_env\$HL_VERSION \$python_venv/g' ~/.oh-my-bash/themes/font/font.theme.sh
 
 WORKDIR ${WORKDIR}
