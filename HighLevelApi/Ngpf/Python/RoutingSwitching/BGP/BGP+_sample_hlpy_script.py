@@ -127,15 +127,15 @@ chassis_ip = "10.36.88.110" # Chassis 11.10
 port_list = ['1/3', '1/4']  # The ports from 88.110
 cfgErrors = 0
 
-connect_result = ixiangpf.connect(
-    ixnetwork_tcl_server=ixnetwork_tcl_server,
-    device=chassis_ip,
-    port_list=port_list,
-    break_locks=1,
-    reset=1,
-    user_name='seunyang',      # Linux
-    user_password='seunyang'   # Linux
-)
+#connect_result = ixiangpf.connect(
+#    ixnetwork_tcl_server=ixnetwork_tcl_server,
+#    device=chassis_ip,
+#    port_list=port_list,
+#    break_locks=1,
+#    reset=1,
+#    user_name='seunyang',      # Linux
+#    user_password='seunyang'   # Linux
+#)
 
 #chassis_ip              = ['10.205.28.170']
 #tcl_server              = '10.205.28.170'
@@ -260,8 +260,10 @@ _result_ = ixiangpf.interface_config(
     protocol_name                     = """IPv6 1""",
     protocol_handle                   = ethernet_1_handle,
     ipv6_multiplier                   = "1",
-    ipv6_resolve_gateway              = "1",
-    ipv6_manual_gateway_mac           = "00.00.00.00.00.01",
+    #ipv6_resolve_gateway              = "1",
+    #ipv6_manual_gateway_mac           = "00.00.00.00.00.01",
+    ipv6_resolve_gateway              = "0",
+    ipv6_manual_gateway_mac           = "18.03.73.c7.6c.01",
     ipv6_manual_gateway_mac_step      = "00.00.00.00.00.00",
     ipv6_gateway                      = "11:0:0:0:0:0:0:2",
     ipv6_gateway_step                 = "::0",
@@ -280,8 +282,10 @@ _result_ = ixiangpf.interface_config(
     protocol_name                     = """IPv6 2""",
     protocol_handle                   = ethernet_2_handle,
     ipv6_multiplier                   = "1",
-    ipv6_resolve_gateway              = "1",
-    ipv6_manual_gateway_mac           = "00.00.00.00.00.01",
+    #ipv6_resolve_gateway              = "1",
+    #ipv6_manual_gateway_mac           = "00.00.00.00.00.01",
+    ipv6_resolve_gateway              = "0",
+    ipv6_manual_gateway_mac           = "18.03.73.c7.6c.b1",
     ipv6_manual_gateway_mac_step      = "00.00.00.00.00.00",
     ipv6_gateway                      = "11:0:0:0:0:0:0:1",
     ipv6_gateway_step                 = "::0",
@@ -305,7 +309,7 @@ ipv6_2_handle = _result_['ipv6_handle']
 _result_ = ixiangpf.emulation_bgp_config(
     mode                                    = "enable",
     active                                  = "1",
-    handle                                  = ipv6_1_handle,
+    handle                                  = ipv6_1_handle, #
     ip_version                              = 6,
     remote_ipv6_addr                        = "11:0:0:0:0:0:0:2",
 )
@@ -313,13 +317,13 @@ _result_ = ixiangpf.emulation_bgp_config(
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('emulation_bgp_config', _result_)
 
-bgpIpv6Peer_1_handle = _result_['bgp_handle']
+bgpIpv6Peer_1_handle = _result_['bgp_handle'] #
 
 #print "Creating BGP+ Stack on top of IPv6 stack in first topology on port 2"
 _result_ = ixiangpf.emulation_bgp_config(
     mode                                    = "enable",
     active                                  = "1",
-    handle                                  = ipv6_2_handle,
+    handle                                  = ipv6_2_handle, #
     ip_version                              = 6,
     remote_ipv6_addr                        = "11:0:0:0:0:0:0:1",
 )

@@ -125,7 +125,8 @@ pprint(connect_result)
 
 ports = connect_result['vport_list'].split()
 
-result = ixiahlt.interface_config(
+#result = ixiahlt.interface_config( # SY 03/18/26
+result = ixiangpf.interface_config(
     mode='config',
     port_handle = ports,
     phy_mode = ['fiber', 'fiber']
@@ -397,14 +398,16 @@ pprint(traffic_config_result)
 # Start traffic configured earlier
 #
 
-_result_ = ixiahlt.traffic_control(
+#_result_ = ixiahlt.traffic_control( # SY 03/18/26
+_result_ = ixiangpf.traffic_control(
     action='apply',
     packet_loss_duration_enable=0,
 )
 # Check status
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('traffic_control', _result_)
-_result_ = ixiahlt.traffic_control(
+#_result_ = ixiahlt.traffic_control( # SY 03/18/26
+_result_ = ixiangpf.traffic_control(
     action='run'
 )
 # Check status
@@ -436,7 +439,8 @@ time.sleep(10)
 # Stop traffic started earlier
 #
 print('Stopping Traffic...')
-_result_ = ixiahlt.traffic_control(
+#_result_ = ixiahlt.traffic_control( # SY 03/18/26
+_result_ = ixiangpf.traffic_control(
     action='stop'
 )
 # Check status
@@ -457,7 +461,8 @@ print('Stopping all protocol(s) ...')
 
 # pdb.set_trace()
 
-_result_ = ixiahlt.test_control(action='stop_all_protocols')
+#_result_ = ixiahlt.test_control(action='stop_all_protocols') # SY 03/18/26
+_result_ = ixiangpf.test_control(action='stop_all_protocols')
 # Check status
 if _result_['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('ixiahlt::traffic_control', _result_)
