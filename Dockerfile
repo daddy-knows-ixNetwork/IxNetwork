@@ -109,7 +109,7 @@ RUN set -ex && \
 
 # By default, pip install the requirements from 26.0 that's the same requirements.txt for the 11.xx release
 ADD IxNetworkAPI26.0.2601.6PI.tar.gz /opt/
-RUN pip install -r /opt/ixia/ixnetwork/26.0.2601.6/lib/PythonApi/requirements.txt
+# RUN pip install -r /opt/ixia/ixnetwork/26.0.2601.6/lib/PythonApi/requirements.txt
 ADD IxNetworkAPI11.10.2508.10PI.tar.gz /opt/
 ADD IxNetworkAPI11.00.2504.10PI.tar.gz /opt/
 # different requirements.txt for 10.00
@@ -119,18 +119,22 @@ RUN set -ex && \
     uv venv /opt/ixia/venv/venv26.00 &&\
     . /opt/ixia/venv/venv26.00/bin/activate &&\
     uv pip install -r /opt/ixia/ixnetwork/26.0.2601.6/lib/PythonApi/requirements.txt &&\
+    uv pip install --upgrade ixnetwork-restpy &&\
     deactivate &&\
     uv venv /opt/ixia/venv/venv11.10 &&\
     . /opt/ixia/venv/venv11.10/bin/activate &&\
     uv pip install -r /opt/ixia/ixnetwork/11.10.2508.10/lib/PythonApi/requirements.txt &&\
+    uv pip install --upgrade ixnetwork-restpy &&\
     deactivate &&\
     uv venv /opt/ixia/venv/venv11.00 &&\
     . /opt/ixia/venv/venv11.00/bin/activate &&\
     uv pip install -r /opt/ixia/ixnetwork/11.00.2504.10/lib/PythonApi/requirements.txt &&\
+    uv pip install --upgrade ixnetwork-restpy &&\
     deactivate &&\
     uv venv /opt/ixia/venv/venv10.00 &&\
     . /opt/ixia/venv/venv10.00/bin/activate &&\
     uv pip install -r /opt/ixia/ixnetwork/10.00.2312.4/lib/PythonApi/requirements.txt &&\
+    uv pip install --upgrade ixnetwork-restpy &&\
     deactivate
 
 # ohmybash
