@@ -82,3 +82,4 @@ IxNetworkAPI*
 api.key
 artifacts/
 cases/
+*.log
