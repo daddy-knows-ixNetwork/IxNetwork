@@ -33,7 +33,7 @@ Usage:
    - Enter: python <script>
 """
 
-import sys, os, time, traceback
+import sys, os, time, traceback, yaml
 
 # Import the RestPy module
 from ixnetwork_restpy import SessionAssistant
@@ -41,24 +41,61 @@ from ixnetwork_restpy import SessionAssistant
 # For linux and connection_manager only. Set to True to leave the session alive for debugging.
 debugMode = False
 
+
+def load_config(config_file_path):
+    with open(config_file_path, 'r') as file:
+        try:
+            # Use safe_load to safely parse the YAML content
+            config_data = yaml.safe_load(file)
+            return config_data
+        except yaml.YAMLError as exc:
+            print(exc)
+            return None
+
+#cwd = os.getcwd()
+#print(cwd)
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+config=load_config('ixnetwork_config.yaml')
+
 try:
     # LogLevel: none, info, warning, request, request_response, all
-    session = SessionAssistant(IpAddress='10.36.94.225', RestPort=None, UserName='seunyang', Password='seunyang',
-                               SessionName=None, SessionId=None, ApiKey=None,
-                               ClearConfig=True, LogLevel='info', LogFilename='restpy.log')
+
+    session = SessionAssistant(
+        IpAddress=config['session']['IpAddress'],
+        RestPort=config['session']['RestPort'],
+        UserName=config['session']['UserName'],
+        Password=config['session']['Password'],
+        SessionName=config['session']['SessionName'],
+        SessionId=config['session']['SessionId'],
+        ApiKey=config['session']['ApiKey'],
+        ClearConfig=config['session']['ClearConfig'],
+        LogLevel=config['session']['LogLevel'],
+        LogFilename=config['session']['LogFilename']
+    )
 
     ixNetwork = session.Ixnetwork
 
+
     ixNetwork.info('Assign ports')
     portMap = session.PortMapAssistant()
-    #vport1 = portMap.Map(IpAddress='192.168.70.128', CardId=1, PortId=1, Name='Port_1')
-    #vport2 = portMap.Map(IpAddress='192.168.70.128', CardId=2, PortId=1, Name='Port_2')
-    vport1 = portMap.Map(IpAddress='10.36.88.110', CardId=1, PortId=3, Name='Port_1')
-    vport2 = portMap.Map(IpAddress='10.36.88.110', CardId=1, PortId=4, Name='Port_2')
-    vport1.L1Config.Ethernet.update(Media = 'fiber')
-    vport2.L1Config.Ethernet.update(Media = 'fiber')
+    vport1 = portMap.Map(
+        IpAddress=config['portMap'][0]['IpAddress'],
+        CardId=config['portMap'][0]['CardId'],
+        PortId=config['portMap'][0]['PortId'],
+        Name=config['portMap'][0]['Name']
+    )
+    vport2 = portMap.Map(
+        IpAddress=config['portMap'][1]['IpAddress'],
+        CardId=config['portMap'][1]['CardId'],
+        PortId=config['portMap'][1]['PortId'],
+        Name=config['portMap'][1]['Name']
+    )
+    vport1.L1Config.Ethernet.update(Media = config['portMap'][0]['Media'])
+    vport2.L1Config.Ethernet.update(Media = config['portMap'][0]['Media'])
 
     portMap.Connect(ForceOwnership=True)
+
+
 
     ixNetwork.info('Creating Topology Group 1')
     topology1 = ixNetwork.Topology.add(Name='Topo1', Ports=vport1)

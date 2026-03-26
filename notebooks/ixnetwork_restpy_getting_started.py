@@ -5,6 +5,7 @@ from ixnetwork_restpy import SessionAssistant
 #session_assistant = SessionAssistant(IpAddress='127.0.0.1',
 session_assistant = SessionAssistant(IpAddress='10.36.94.225',
     LogLevel=SessionAssistant.LOGLEVEL_INFO,
+    UserName='seunyang', Password='seunyang',
     ClearConfig=True)
 ixnetwork = session_assistant.Ixnetwork
 

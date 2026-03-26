@@ -119,22 +119,22 @@ RUN set -ex && \
     uv venv /opt/ixia/venv/venv26.00 &&\
     . /opt/ixia/venv/venv26.00/bin/activate &&\
     uv pip install -r /opt/ixia/ixnetwork/26.0.2601.6/lib/PythonApi/requirements.txt &&\
-    uv pip install --upgrade ixnetwork-restpy &&\
+    uv pip install --upgrade ixnetwork-restpy pyyaml &&\
     deactivate &&\
     uv venv /opt/ixia/venv/venv11.10 &&\
     . /opt/ixia/venv/venv11.10/bin/activate &&\
     uv pip install -r /opt/ixia/ixnetwork/11.10.2508.10/lib/PythonApi/requirements.txt &&\
-    uv pip install --upgrade ixnetwork-restpy &&\
+    uv pip install --upgrade ixnetwork-restpy pyyaml &&\
     deactivate &&\
     uv venv /opt/ixia/venv/venv11.00 &&\
     . /opt/ixia/venv/venv11.00/bin/activate &&\
     uv pip install -r /opt/ixia/ixnetwork/11.00.2504.10/lib/PythonApi/requirements.txt &&\
-    uv pip install --upgrade ixnetwork-restpy &&\
+    uv pip install --upgrade ixnetwork-restpy pyyaml &&\
     deactivate &&\
     uv venv /opt/ixia/venv/venv10.00 &&\
     . /opt/ixia/venv/venv10.00/bin/activate &&\
     uv pip install -r /opt/ixia/ixnetwork/10.00.2312.4/lib/PythonApi/requirements.txt &&\
-    uv pip install --upgrade ixnetwork-restpy &&\
+    uv pip install --upgrade ixnetwork-restpy pyyaml &&\
     deactivate
 
 # ohmybash
