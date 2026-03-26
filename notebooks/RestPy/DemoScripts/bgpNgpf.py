@@ -51,19 +51,14 @@ def load_config(config_file_path):
         except yaml.YAMLError as exc:
             print(exc)
             return None
+
 #cwd = os.getcwd()
 #print(cwd)
-script_dir = os.path.dirname(os.path.abspath(__file__))
-os.chdir(script_dir)
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 config=load_config('ixnetwork_config.yaml')
 
 try:
     # LogLevel: none, info, warning, request, request_response, all
-    #session = SessionAssistant(IpAddress='10.36.94.225', RestPort=None, UserName='seunyang', Password='seunyang',
-    #                           SessionName=None, SessionId=None, ApiKey=None,
-    #                           ClearConfig=True, LogLevel='info', LogFilename='restpy.log')
-    #
-    #ixNetwork = session.Ixnetwork
 
     session = SessionAssistant(
         IpAddress=config['session']['IpAddress'],
@@ -80,16 +75,6 @@ try:
 
     ixNetwork = session.Ixnetwork
 
-    #ixNetwork.info('Assign ports')
-    #portMap = session.PortMapAssistant()
-    ##vport1 = portMap.Map(IpAddress='192.168.70.128', CardId=1, PortId=1, Name='Port_1')
-    ##vport2 = portMap.Map(IpAddress='192.168.70.128', CardId=2, PortId=1, Name='Port_2')
-    #vport1 = portMap.Map(IpAddress='10.36.88.110', CardId=1, PortId=3, Name='Port_1')
-    #vport2 = portMap.Map(IpAddress='10.36.88.110', CardId=1, PortId=4, Name='Port_2')
-    #vport1.L1Config.Ethernet.update(Media = 'fiber')
-    #vport2.L1Config.Ethernet.update(Media = 'fiber')
-    #
-    #portMap.Connect(ForceOwnership=True)
 
     ixNetwork.info('Assign ports')
     portMap = session.PortMapAssistant()
