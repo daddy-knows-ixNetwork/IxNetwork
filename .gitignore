@@ -83,3 +83,4 @@ api.key
 artifacts/
 cases/
 *.log
+*.csv
