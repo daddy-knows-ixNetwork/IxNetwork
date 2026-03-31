@@ -1,0 +1,1295 @@
+26-03-26 13:57:50 Start L1 config for ports
+
+26-03-26 13:57:50 ixNet getAttribute ::ixNet::OBJ-/vport:1 -type
+	--> 'sertHundredGigLan'
+26-03-26 13:57:50 ixNet getAttribute ::ixNet::OBJ-/vport:1/l1Config -currentType
+	--> 'sertHundredGigLan'
+26-03-26 13:57:50 ixNet getAttribute ::ixNet::OBJ-/vport:1/l1Config -currentType
+	--> 'sertHundredGigLan'
+26-03-26 13:57:50 ixNet getAttribute ::ixNet::OBJ-/vport:2 -type
+	--> 'sertHundredGigLan'
+26-03-26 13:57:50 ixNet getAttribute ::ixNet::OBJ-/vport:2/l1Config -currentType
+	--> 'sertHundredGigLan'
+26-03-26 13:57:50 ixNet getAttribute ::ixNet::OBJ-/vport:2/l1Config -currentType
+	--> 'sertHundredGigLan'
+26-03-26 13:57:50 ixNet getAttribute ::ixNet::OBJ-/vport:1/l1Config -currentType
+	--> 'sertHundredGigLan'
+26-03-26 13:57:50 ixNet setMultiAttrs ::ixNet::OBJ-/vport:1/l1Config/sertHundredGigLan -autoInstrumentation floating
+
+26-03-26 13:57:50 ixNet setMultiAttrs ::ixNet::OBJ-/vport:1/l1Config/sertHundredGigLan -autoInstrumentation floating
+	--> '::ixNet::OK'
+26-03-26 13:57:50 ixNet getList ::ixNet::OBJ-/vport:1/l1Config/sertHundredGigLan fcoe
+	--> '::ixNet::ERROR- is not a valid child of /vport/l1Config/sertHundredGigLan (possible options are: )'
+26-03-26 13:57:50 ixNet getAttribute ::ixNet::OBJ-/vport:2/l1Config -currentType
+	--> 'sertHundredGigLan'
+26-03-26 13:57:50 ixNet setMultiAttrs ::ixNet::OBJ-/vport:2/l1Config/sertHundredGigLan -autoInstrumentation floating
+
+26-03-26 13:57:50 ixNet setMultiAttrs ::ixNet::OBJ-/vport:2/l1Config/sertHundredGigLan -autoInstrumentation floating
+	--> '::ixNet::OK'
+26-03-26 13:57:50 ixNet getList ::ixNet::OBJ-/vport:2/l1Config/sertHundredGigLan fcoe
+	--> '::ixNet::ERROR- is not a valid child of /vport/l1Config/sertHundredGigLan (possible options are: )'
+26-03-26 13:57:51 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:57:51 ixNet getAttribute ::ixNet::OBJ-/vport:1/l1Config -currentType
+	--> 'sertHundredGigLan'
+26-03-26 13:57:51 ixNet setMultiAttrs ::ixNet::OBJ-/vport:1 -txMode interleaved
+
+26-03-26 13:57:51 ixNet setMultiAttrs ::ixNet::OBJ-/vport:1 -txMode interleaved
+	--> '::ixNet::OK'
+26-03-26 13:57:51 ixNet getAttribute ::ixNet::OBJ-/vport:2/l1Config -currentType
+	--> 'sertHundredGigLan'
+26-03-26 13:57:51 ixNet setMultiAttrs ::ixNet::OBJ-/vport:2 -txMode interleaved
+
+26-03-26 13:57:51 ixNet setMultiAttrs ::ixNet::OBJ-/vport:2 -txMode interleaved
+	--> '::ixNet::OK'
+26-03-26 13:57:52 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:57:52 ixNet getAttribute ::ixNet::OBJ-/vport:1 -stateDetail
+	--> 'idle'
+26-03-26 13:57:52 ixNet getAttribute ::ixNet::OBJ-/vport:1 -stateDetail
+	--> 'idle'
+26-03-26 13:57:52 ixNet getAttribute ::ixNet::OBJ-/vport:2 -stateDetail
+	--> 'idle'
+26-03-26 13:57:52 ixNet getAttribute ::ixNet::OBJ-/vport:2 -stateDetail
+	--> 'idle'
+26-03-26 13:57:52 Done L1 config for ports
+
+26-03-26 13:57:59 ixNet exec startAllProtocols async
+	--> '::ixNet::OK'
+26-03-26 13:58:09 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:09 ixNet getList ::ixNet::OBJ-/
+	--> '::ixNet::ERROR-syntax error: ixNet getList <objRef> <listName>'
+26-03-26 13:58:09 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:09 ixNet getList ::ixNet::OBJ-/availableHardware chassis
+	--> '::ixNet::OBJ-/availableHardware/chassis:"10.36.88.17"'
+26-03-26 13:58:09 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:"10.36.88.17" -hostname
+
+26-03-26 13:58:09 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:\"10.36.88.17\" -hostname
+	--> '10.36.88.17'
+26-03-26 13:58:09 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:"10.36.88.17" -state
+
+26-03-26 13:58:09 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:\"10.36.88.17\" -state
+	--> 'ready'
+26-03-26 13:58:09 All Chassis in the list already connected...
+
+26-03-26 13:58:09 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:09 ixNet add ::ixNet::OBJ-/traffic trafficItem
+
+26-03-26 13:58:09 ixNet add ::ixNet::OBJ-/traffic trafficItem
+	--> '::ixNet::OBJ-/traffic/trafficItem:L5'
+26-03-26 13:58:09 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/trafficItem:L5 -enabled true -name TI0-Traffic_Item_1 -srcDestMesh oneToOne -routeMesh oneToOne -trafficType ipv4 -biDirectional true -allowSelfDestined false -useControlPlaneFrameSize true -useControlPlaneRate true
+
+26-03-26 13:58:09 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/trafficItem:L5 -enabled true -name TI0-Traffic_Item_1 -srcDestMesh oneToOne -routeMesh oneToOne -trafficType ipv4 -biDirectional true -allowSelfDestined false -useControlPlaneFrameSize true -useControlPlaneRate true
+	--> '::ixNet::OK'
+26-03-26 13:58:09 ixNet commit
+
+26-03-26 13:58:09 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:58:09 ixNet remapIds ::ixNet::OBJ-/traffic/trafficItem:L5
+
+26-03-26 13:58:09 ixNet remapIds ::ixNet::OBJ-/traffic/trafficItem:L5
+	--> '::ixNet::OBJ-/traffic/trafficItem:1'
+26-03-26 13:58:09 ixNet remapIds /topology:1
+	--> '::ixNet::OBJ-/topology:1'
+26-03-26 13:58:09 ixNet remapIds /topology:2
+	--> '::ixNet::OBJ-/topology:2'
+26-03-26 13:58:09 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1 -trafficItemType
+	--> 'l2L3'
+26-03-26 13:58:09 ixNet add ::ixNet::OBJ-/hlapi/session:1 traffic_handle_translator -emulation_src_handle ::ixNet::OBJ-/topology:1 -emulation_dst_handle ::ixNet::OBJ-/topology:2 -type ipv4 -args_to_validate {-emulation_src_handle ::ixNet::OBJ-/topology:1 -emulation_dst_handle ::ixNet::OBJ-/topology:2 -type ipv4}
+	--> '::ixNet::OBJ-/hlapi/session:1/traffic_handle_translator:L6'
+26-03-26 13:58:09 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:58:09 ixNet remapIds ::ixNet::OBJ-/hlapi/session:1/traffic_handle_translator:L6
+	--> '::ixNet::OBJ-/hlapi/session:1/traffic_handle_translator:1'
+26-03-26 13:58:10 ixNet exec executeCommand ::ixNet::OBJ-/hlapi/session:1/traffic_handle_translator:1
+	--> '::ixNet::OK-{kString,{status 1} {command_handled 1}}'
+26-03-26 13:58:10 ixNet exec GetSessionStatus ::ixNet::OBJ-/hlapi/session:1
+	--> '::ixNet::OK-{kString,{status 1} {command_handled 1} {messages {{line0 {[03/26/2026 13:58:10    info] COMPLETED: traffic_handle_translator      : PASS}}}} {result {{status 1} {command_handled 1} {emulation_src_handle ::ixNet::OBJ-/topology:1} {emulation_dst_handle ::ixNet::OBJ-/topology:2} {translated_keys {emulation_src_handle emulation_dst_handle}}}}}'
+26-03-26 13:58:10 ixNet add ::ixNet::OBJ-/hlapi/session:1 traffic_handle_translator -emulation_src_handle ::ixNet::OBJ-/topology:1 -emulation_dst_handle ::ixNet::OBJ-/topology:2 -type ipv4 -args_to_validate {-emulation_src_handle ::ixNet::OBJ-/topology:1 -emulation_dst_handle ::ixNet::OBJ-/topology:2 -type ipv4}
+	--> '::ixNet::OBJ-/hlapi/session:1/traffic_handle_translator:L7'
+26-03-26 13:58:10 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:58:10 ixNet remapIds ::ixNet::OBJ-/hlapi/session:1/traffic_handle_translator:L7
+	--> '::ixNet::OBJ-/hlapi/session:1/traffic_handle_translator:2'
+26-03-26 13:58:10 ixNet exec executeCommand ::ixNet::OBJ-/hlapi/session:1/traffic_handle_translator:2
+	--> '::ixNet::OK-{kString,{status 1} {command_handled 1}}'
+26-03-26 13:58:10 ixNet exec GetSessionStatus ::ixNet::OBJ-/hlapi/session:1
+	--> '::ixNet::OK-{kString,{status 1} {command_handled 1} {messages {{line0 {[03/26/2026 13:58:10    info] COMPLETED: traffic_handle_translator      : PASS}}}} {result {{status 1} {command_handled 1} {emulation_src_handle ::ixNet::OBJ-/topology:1} {emulation_dst_handle ::ixNet::OBJ-/topology:2} {translated_keys {emulation_src_handle emulation_dst_handle}}}}}'
+26-03-26 13:58:10 ixNet add ::ixNet::OBJ-/traffic/trafficItem:1 endpointSet
+
+26-03-26 13:58:10 ixNet add ::ixNet::OBJ-/traffic/trafficItem:1 endpointSet
+	--> '::ixNet::OBJ-/traffic/trafficItem:1/endpointSet:L8'
+26-03-26 13:58:10 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/trafficItem:1/endpointSet:L8 -sources ::ixNet::OBJ-/topology:1 -destinations ::ixNet::OBJ-/topology:2 -sourceFilter {} -destinationFilter {}
+
+26-03-26 13:58:10 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/trafficItem:1/endpointSet:L8 -sources ::ixNet::OBJ-/topology:1 -destinations ::ixNet::OBJ-/topology:2 -sourceFilter {} -destinationFilter {}
+	--> '::ixNet::OK'
+26-03-26 13:58:11 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:58:11 ixNet getList ::ixNet::OBJ-/traffic/trafficItem:1 configElement
+	--> '::ixNet::OBJ-/traffic/trafficItem:1/configElement:1'
+26-03-26 13:58:11 540IxNetTrafficItemGetFirstTxPort ::ixNet::OBJ-/traffic/trafficItem:1
+
+26-03-26 13:58:11 ixNet exists ::ixNet::OBJ-/traffic/trafficItem:1
+	--> 'true'
+26-03-26 13:58:11 ixNet getNull
+	--> '::ixNet::OBJ-null'
+26-03-26 13:58:11 ixNet getList ::ixNet::OBJ-/traffic/trafficItem:1 endpointSet
+	--> '::ixNet::OBJ-/traffic/trafficItem:1/endpointSet:1'
+26-03-26 13:58:11 ixNet getAttribute ::ixNet::OBJ-/traffic/trafficItem:1/endpointSet:1 -sources
+	--> '::ixNet::OBJ-/topology:1'
+26-03-26 13:58:11 ixNet getAttribute ::ixNet::OBJ-/topology:1 -vports
+	--> '::ixNet::OBJ-/vport:1'
+26-03-26 13:58:11 ixNet getAttribute ::ixNet::OBJ-/vport:1 -txMode
+	--> 'interleaved'
+26-03-26 13:58:11 ixNet getAttribute ::ixNet::OBJ-/traffic/trafficItem:1 -transmitMode
+	--> 'interleaved'
+26-03-26 13:58:11 ixNet exists ::ixNet::OBJ-/traffic/trafficItem:1
+	--> 'true'
+26-03-26 13:58:11 ixNet getL ::ixNet::OBJ-/traffic/trafficItem:1 configElement
+	--> '::ixNet::OBJ-/traffic/trafficItem:1/configElement:1'
+26-03-26 13:58:11 ixNet exists ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1
+	--> 'true'
+26-03-26 13:58:11 ixNet getL ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1 stack
+	--> '::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:"ethernet-1" ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:"vlan-2" ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:"ipv4-3" ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:"fcs-4"'
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:\"ethernet-1\" -displayName
+	--> 'Ethernet II'
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:\"vlan-2\" -displayName
+	--> 'VLAN'
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:\"ipv4-3\" -displayName
+	--> 'IPv4 '
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:\"fcs-4\" -displayName
+	--> 'Frame Check Sequence CRC-32'
+26-03-26 13:58:11 ixNet setAttribute ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1 -destinationMacMode manual
+	--> '::ixNet::OK'
+26-03-26 13:58:11 args == -frame_sequencing {{enable}} -frame_sequencing_mode {{rx_switched_path_fixed}} -mode create -handle ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1
+
+26-03-26 13:58:11 opt_args ==
+        -data_pattern
+        -data_pattern_mode                  CHOICES incr_byte decr_byte fixed
+                                            CHOICES random repeating incr_word
+                                            CHOICES decr_word
+        -fcs                                CHOICES 0 1
+        -fcs_type                           CHOICES alignment dribble bad_CRC
+        -frame_sequencing                   CHOICES enable disable
+        -frame_sequencing_mode              CHOICES rx_switched_path rx_switched_path_fixed advanced
+                                            CHOICES rx_threshold
+        -advanced_frame_sequencing          CHOICES enable disable
+        -advanced_frame_sequencing_threshold NUMERIC
+        -atm_header_encapsulation           CHOICES vcc_mux_ipv4_routed
+                                            CHOICES vcc_mux_bridged_eth_fcs
+                                            CHOICES vcc_mux_bridged_eth_no_fcs
+                                            CHOICES vcc_mux_ipv6_routed
+                                            CHOICES vcc_mux_mpls_routed
+                                            CHOICES llc_routed_clip
+                                            CHOICES llc_bridged_eth_fcs
+                                            CHOICES llc_bridged_eth_no_fcs
+                                            CHOICES llc_pppoa
+                                            CHOICES vcc_mux_ppoa
+                                            CHOICES llc_nlpid_routed
+                                            CHOICES llc_ppp
+                                            CHOICES llc_routed_snap
+                                            CHOICES vcc_mux_ppp
+                                            CHOICES vcc_mux_routed
+        -mode                               CHOICES create modify remove reset
+                                            CHOICES enable disable append_header modify_or_insert
+                                            CHOICES prepend_header replace_header
+                                            CHOICES dynamic_update dynamic_update_packet_fields
+                                            CHOICES get_available_protocol_templates
+                                            CHOICES get_available_fields get_field_values set_field_values
+                                            CHOICES add_field_level remove_field_level
+                                            CHOICES get_available_dynamic_update_fields
+                                            CHOICES get_available_session_aware_traffic
+                                            CHOICES get_available_fields_for_link
+        -handle
+        -is_raw_item                        CHOICES 0 1
+                                            DEFAULT 1
+        -l2_encap                           CHOICES atm_vc_mux
+                                            CHOICES atm_vc_mux_ethernet_ii
+                                            CHOICES atm_vc_mux_802.3snap
+                                            CHOICES atm_snap_802.3snap_nofcs
+                                            CHOICES atm_vc_mux_ppp
+                                            CHOICES atm_vc_mux_pppoe
+                                            CHOICES atm_snap
+                                            CHOICES atm_snap_ethernet_ii
+                                            CHOICES atm_snap_802.3snap
+                                            CHOICES atm_vc_mux_802.3snap_nofcs
+                                            CHOICES atm_snap_ppp
+                                            CHOICES atm_snap_pppoe
+                                            CHOICES hdlc_unicast
+                                            CHOICES hdlc_broadcast
+                                            CHOICES hdlc_unicast_mpls
+                                            CHOICES hdlc_multicast_mpls
+                                            CHOICES ethernet_ii
+                                            CHOICES ethernet_ii_unicast_mpls
+                                            CHOICES ethernet_ii_multicast_mpls
+                                            CHOICES ethernet_ii_vlan
+                                            CHOICES ethernet_ii_vlan_unicast_mpls
+                                            CHOICES ethernet_ii_vlan_multicast_mpls
+                                            CHOICES ethernet_ii_pppoe
+                                            CHOICES ethernet_ii_vlan_pppoe
+                                            CHOICES ppp_link
+                                            CHOICES ietf_framerelay
+                                            CHOICES cisco_framerelay
+        -l3_protocol                        CHOICES ipv4 ipv6 arp pause_control
+                                            CHOICES ipx
+        -l4_protocol                        CHOICES icmp igmp ggp ip st tcp ucl
+                                            CHOICES egp igp bbn_rcc_mon nvp_ii
+                                            CHOICES pup argus emcon xnet chaos
+                                            CHOICES udp mux dcn_meas hmp prm
+                                            CHOICES xns_idp trunk_1 trunk_2
+                                            CHOICES leaf_1 leaf_2 rdp irtp
+                                            CHOICES iso_tp4 netblt mfe_nsp
+                                            CHOICES merit_inp sep cftp
+                                            CHOICES sat_expak mit_subnet rvd
+                                            CHOICES ippc sat_mon ipcv
+                                            CHOICES br_sat_mon wb_mon wb_expak
+                                            CHOICES rip dhcp gre ospf
+
+
+26-03-26 13:58:11 ixNet exists ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1
+	--> 'true'
+26-03-26 13:58:11 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:11 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/sequenceChecking -enabled true -sequenceMode rxPacketArrival
+
+26-03-26 13:58:11 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/sequenceChecking -enabled true -sequenceMode rxPacketArrival
+	--> '::ixNet::OK'
+26-03-26 13:58:11 ixNet commit
+
+26-03-26 13:58:11 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:58:11 args == -rate_mode {{first_option_provided}} -mode create -handle ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1
+
+26-03-26 13:58:11 opt_args ==
+        -rate_bps
+        -rate_kbps
+        -rate_mbps
+        -rate_byteps
+        -rate_kbyteps
+        -rate_mbyteps
+        -rate_mode                          CHOICES first_option_provided percent pps bps
+                                            CHOICES kbps mbps byteps kbyteps mbyteps
+                                            DEFAULT first_option_provided
+        -rate_percent                       RANGE   0-100
+        -rate_frame_gap                     RANGE   0-100
+        -rate_pps
+        -return_to_id
+        -transmit_mode                      CHOICES continuous random_spaced
+                                            CHOICES single_pkt single_burst
+                                            CHOICES multi_burst continuous_burst
+                                            CHOICES return_to_id advance
+                                            CHOICES return_to_id_for_count
+        -pkts_per_burst
+        -inter_burst_gap
+        -inter_burst_gap_unit               CHOICES bytes ns
+        -inter_frame_gap                    NUMERIC
+        -inter_frame_gap_unit               CHOICES bytes ns
+        -inter_stream_gap
+        -burst_loop_count
+        -tx_delay                           NUMERIC
+        -number_of_packets_per_stream       RANGE   1-9999999999
+        -number_of_packets_tx
+        -loop_count
+        -tx_delay_unit                      CHOICES bytes ns
+        -enforce_min_gap                    NUMERIC
+        -min_gap_bytes                      RANGE 1-2147483647
+        -frame_rate_distribution_port       CHOICES apply_to_all split_evenly
+        -frame_rate_distribution_stream     CHOICES apply_to_all split_evenly
+        -duration                           NUMERIC
+
+        -atm_header_encapsulation           CHOICES vcc_mux_ipv4_routed
+                                            CHOICES vcc_mux_bridged_eth_fcs
+                                            CHOICES vcc_mux_bridged_eth_no_fcs
+                                            CHOICES vcc_mux_ipv6_routed
+                                            CHOICES vcc_mux_mpls_routed
+                                            CHOICES llc_routed_clip
+                                            CHOICES llc_bridged_eth_fcs
+                                            CHOICES llc_bridged_eth_no_fcs
+                                            CHOICES llc_pppoa
+                                            CHOICES vcc_mux_ppoa
+                                            CHOICES llc_nlpid_routed
+                                            CHOICES llc_ppp
+                                            CHOICES llc_routed_snap
+                                            CHOICES vcc_mux_ppp
+                                            CHOICES vcc_mux_routed
+        -mode                               CHOICES create modify remove reset
+                                            CHOICES enable disable append_header modify_or_insert
+                                            CHOICES prepend_header replace_header
+                                            CHOICES dynamic_update dynamic_update_packet_fields
+                                            CHOICES get_available_protocol_templates
+                                            CHOICES get_available_fields get_field_values set_field_values
+                                            CHOICES add_field_level remove_field_level
+                                            CHOICES get_available_dynamic_update_fields
+                                            CHOICES get_available_session_aware_traffic
+                                            CHOICES get_available_fields_for_link
+        -handle
+        -is_raw_item                        CHOICES 0 1
+                                            DEFAULT 1
+        -l2_encap                           CHOICES atm_vc_mux
+                                            CHOICES atm_vc_mux_ethernet_ii
+                                            CHOICES atm_vc_mux_802.3snap
+                                            CHOICES atm_snap_802.3snap_nofcs
+                                            CHOICES atm_vc_mux_ppp
+                                            CHOICES atm_vc_mux_pppoe
+                                            CHOICES atm_snap
+                                            CHOICES atm_snap_ethernet_ii
+                                            CHOICES atm_snap_802.3snap
+                                            CHOICES atm_vc_mux_802.3snap_nofcs
+                                            CHOICES atm_snap_ppp
+                                            CHOICES atm_snap_pppoe
+                                            CHOICES hdlc_unicast
+                                            CHOICES hdlc_broadcast
+                                            CHOICES hdlc_unicast_mpls
+                                            CHOICES hdlc_multicast_mpls
+                                            CHOICES ethernet_ii
+                                            CHOICES ethernet_ii_unicast_mpls
+                                            CHOICES ethernet_ii_multicast_mpls
+                                            CHOICES ethernet_ii_vlan
+                                            CHOICES ethernet_ii_vlan_unicast_mpls
+                                            CHOICES ethernet_ii_vlan_multicast_mpls
+                                            CHOICES ethernet_ii_pppoe
+                                            CHOICES ethernet_ii_vlan_pppoe
+                                            CHOICES ppp_link
+                                            CHOICES ietf_framerelay
+                                            CHOICES cisco_framerelay
+        -l3_protocol                        CHOICES ipv4 ipv6 arp pause_control
+                                            CHOICES ipx
+        -l4_protocol                        CHOICES icmp igmp ggp ip st tcp ucl
+                                            CHOICES egp igp bbn_rcc_mon nvp_ii
+                                            CHOICES pup argus emcon xnet chaos
+                                            CHOICES udp mux dcn_meas hmp prm
+                                            CHOICES xns_idp trunk_1 trunk_2
+                                            CHOICES leaf_1 leaf_2 rdp irtp
+                                            CHOICES iso_tp4 netblt mfe_nsp
+                                            CHOICES merit_inp sep cftp
+                                            CHOICES sat_expak mit_subnet rvd
+                                            CHOICES ippc sat_mon ipcv
+                                            CHOICES br_sat_mon wb_mon wb_expak
+                                            CHOICES rip dhcp gre ospf
+
+
+26-03-26 13:58:11 ixNet exists ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1
+	--> 'true'
+26-03-26 13:58:11 540IxNetTrafficItemGetFirstTxPort ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1
+
+26-03-26 13:58:11 ixNet exists ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1
+	--> 'true'
+26-03-26 13:58:11 ixNet getNull
+	--> '::ixNet::OBJ-null'
+26-03-26 13:58:11 ixNet getNull
+	--> '::ixNet::OBJ-null'
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1 -encapsulationName
+	--> 'Ethernet.VLAN.IPv4'
+26-03-26 13:58:11 ixNet getNull
+	--> '::ixNet::OBJ-null'
+26-03-26 13:58:11 ixNet getL ::ixNet::OBJ-/traffic/trafficItem:1 highLevelStream
+	--> '::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1 ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:2'
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1 -encapsulationName
+	--> 'Ethernet.VLAN.IPv4'
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1 -endpointSetId
+	--> '1'
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:2 -encapsulationName
+	--> 'Ethernet.VLAN.IPv4'
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:2 -endpointSetId
+	--> '1'
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1 -txPort
+	--> '1'
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1 -txPortId
+	--> '::ixNet::OBJ-/vport:1'
+26-03-26 13:58:11 ixNet getAttribute ::ixNet::OBJ-/vport:1 -txMode
+	--> 'interleaved'
+26-03-26 13:58:11 ixNet getList ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1 frameRate
+	--> '::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/frameRate'
+26-03-26 13:58:11 ixNet exists ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1
+	--> 'true'
+26-03-26 13:58:11 ixNet getList ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1 frameRateDistribution
+	--> '::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/frameRateDistribution'
+26-03-26 13:58:11 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/frameRateDistribution -portDistribution splitRateEvenly
+
+26-03-26 13:58:11 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/frameRateDistribution -portDistribution splitRateEvenly
+	--> '::ixNet::OK'
+26-03-26 13:58:11 ixNet commit
+
+26-03-26 13:58:11 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:58:11 ixNet exists ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1
+	--> 'true'
+26-03-26 13:58:11 ixNet exists ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1
+	--> 'true'
+26-03-26 13:58:11 ixNet getNull
+	--> '::ixNet::OBJ-null'
+26-03-26 13:58:11 ixNet getNull
+	--> '::ixNet::OBJ-null'
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1 -encapsulationName
+	--> 'Ethernet.VLAN.IPv4'
+26-03-26 13:58:11 ixNet getNull
+	--> '::ixNet::OBJ-null'
+26-03-26 13:58:11 ixNet getL ::ixNet::OBJ-/traffic/trafficItem:1 highLevelStream
+	--> '::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1 ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:2'
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1 -encapsulationName
+	--> 'Ethernet.VLAN.IPv4'
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1 -endpointSetId
+	--> '1'
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:2 -encapsulationName
+	--> 'Ethernet.VLAN.IPv4'
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:2 -endpointSetId
+	--> '1'
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1 -txPort
+	--> '1'
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1 -txPortId
+	--> '::ixNet::OBJ-/vport:1'
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/vport:1/l1Config -currentType
+	--> 'sertHundredGigLan'
+26-03-26 13:58:11 ===> currentType == sertHundredGigLan
+
+26-03-26 13:58:11 ixNet getL ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1 stack
+	--> '::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:"ethernet-1" ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:"vlan-2" ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:"ipv4-3" ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:"fcs-4"'
+26-03-26 13:58:11 args == -track_by {{endpoint_pair}} -latency_bins_enable {{0}} -mode create -handle ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1
+
+26-03-26 13:58:11 opt_args ==
+        -track_by                         ANY
+        -hosts_per_net                    NUMERIC
+        -custom_offset                    NUMERIC
+        -custom_values                    NUMERIC
+        -egress_tracking                  CHOICES none dscp ipv6TC mplsExp custom custom_by_field
+                                          CHOICES outer_vlan_priority outer_vlan_id_4
+                                          CHOICES outer_vlan_id_6 outer_vlan_id_8
+                                          CHOICES outer_vlan_id_10 outer_vlan_id_12
+                                          CHOICES inner_vlan_priority inner_vlan_id_4
+                                          CHOICES inner_vlan_id_6 inner_vlan_id_8
+                                          CHOICES inner_vlan_id_10 inner_vlan_id_12
+                                          CHOICES tos_precedence ipv6TC_bits_0_2
+                                          CHOICES ipv6TC_bits_0_5 vnTag_direction_bit
+                                          CHOICES vnTag_pointer_bit vnTag_looped_bit
+        -egress_tracking_encap            CHOICES custom ethernet LLCRoutedCLIP LLCPPPoA
+                                          CHOICES LLCBridgedEthernetFCS LLCBridgedEthernetNoFCS
+                                          CHOICES VccMuxPPPoA VccMuxIPV4Routed
+                                          CHOICES VccMuxBridgedEthernetFCS
+                                          CHOICES VccMuxBridgedEthernetNoFCS
+                                          CHOICES pos_ppp pos_hdlc frame_relay1490
+                                          CHOICES frame_relay2427 frame_relay_cisco
+        -egress_custom_offset             VCMD ::ixia::validate_egress_custom_offset
+        -egress_custom_width              VCMD ::ixia::validate_egress_custom_width
+        -egress_custom_field_offset       ANY
+        -enable_override_value            CHOICES 0 1
+        -latency_bins_enable              CHOICES 0 1
+                                          DEFAULT 0
+        -latency_bins                     RANGE   2-16
+        -latency_values                   DECIMAL
+        -override_value_list
+
+        -atm_header_encapsulation           CHOICES vcc_mux_ipv4_routed
+                                            CHOICES vcc_mux_bridged_eth_fcs
+                                            CHOICES vcc_mux_bridged_eth_no_fcs
+                                            CHOICES vcc_mux_ipv6_routed
+                                            CHOICES vcc_mux_mpls_routed
+                                            CHOICES llc_routed_clip
+                                            CHOICES llc_bridged_eth_fcs
+                                            CHOICES llc_bridged_eth_no_fcs
+                                            CHOICES llc_pppoa
+                                            CHOICES vcc_mux_ppoa
+                                            CHOICES llc_nlpid_routed
+                                            CHOICES llc_ppp
+                                            CHOICES llc_routed_snap
+                                            CHOICES vcc_mux_ppp
+                                            CHOICES vcc_mux_routed
+        -mode                               CHOICES create modify remove reset
+                                            CHOICES enable disable append_header modify_or_insert
+                                            CHOICES prepend_header replace_header
+                                            CHOICES dynamic_update dynamic_update_packet_fields
+                                            CHOICES get_available_protocol_templates
+                                            CHOICES get_available_fields get_field_values set_field_values
+                                            CHOICES add_field_level remove_field_level
+                                            CHOICES get_available_dynamic_update_fields
+                                            CHOICES get_available_session_aware_traffic
+                                            CHOICES get_available_fields_for_link
+        -handle
+        -is_raw_item                        CHOICES 0 1
+                                            DEFAULT 1
+        -l2_encap                           CHOICES atm_vc_mux
+                                            CHOICES atm_vc_mux_ethernet_ii
+                                            CHOICES atm_vc_mux_802.3snap
+                                            CHOICES atm_snap_802.3snap_nofcs
+                                            CHOICES atm_vc_mux_ppp
+                                            CHOICES atm_vc_mux_pppoe
+                                            CHOICES atm_snap
+                                            CHOICES atm_snap_ethernet_ii
+                                            CHOICES atm_snap_802.3snap
+                                            CHOICES atm_vc_mux_802.3snap_nofcs
+                                            CHOICES atm_snap_ppp
+                                            CHOICES atm_snap_pppoe
+                                            CHOICES hdlc_unicast
+                                            CHOICES hdlc_broadcast
+                                            CHOICES hdlc_unicast_mpls
+                                            CHOICES hdlc_multicast_mpls
+                                            CHOICES ethernet_ii
+                                            CHOICES ethernet_ii_unicast_mpls
+                                            CHOICES ethernet_ii_multicast_mpls
+                                            CHOICES ethernet_ii_vlan
+                                            CHOICES ethernet_ii_vlan_unicast_mpls
+                                            CHOICES ethernet_ii_vlan_multicast_mpls
+                                            CHOICES ethernet_ii_pppoe
+                                            CHOICES ethernet_ii_vlan_pppoe
+                                            CHOICES ppp_link
+                                            CHOICES ietf_framerelay
+                                            CHOICES cisco_framerelay
+        -l3_protocol                        CHOICES ipv4 ipv6 arp pause_control
+                                            CHOICES ipx
+        -l4_protocol                        CHOICES icmp igmp ggp ip st tcp ucl
+                                            CHOICES egp igp bbn_rcc_mon nvp_ii
+                                            CHOICES pup argus emcon xnet chaos
+                                            CHOICES udp mux dcn_meas hmp prm
+                                            CHOICES xns_idp trunk_1 trunk_2
+                                            CHOICES leaf_1 leaf_2 rdp irtp
+                                            CHOICES iso_tp4 netblt mfe_nsp
+                                            CHOICES merit_inp sep cftp
+                                            CHOICES sat_expak mit_subnet rvd
+                                            CHOICES ippc sat_mon ipcv
+                                            CHOICES br_sat_mon wb_mon wb_expak
+                                            CHOICES rip dhcp gre ospf
+
+
+26-03-26 13:58:11 ixNet exists ::ixNet::OBJ-/traffic/trafficItem:1
+	--> 'true'
+26-03-26 13:58:11 ixNet getAttribute ::ixNet::OBJ-/traffic/trafficItem:1/tracking -trackBy
+	--> ''
+26-03-26 13:58:11 ixNet getAttribute ::ixNet::OBJ-/traffic/trafficItem:1/tracking -availableTrackBy
+	--> 'customOverride ethernetIiSourceaddress0 flowGroup0 mplsFlowDescriptor0 sourceDestValuePair0 ethernetIiPfcQueue0 ipv4DestIp0 ethernetIiEtherType0 ipv4Precedence0 frameSize0 vlanVlanId0 sourcePort0 sourceEndpoint0 sourceDestPortPair0 trafficGroupId0 ethernetIiDestinationaddress0 sourceDestEndpointPair0 ipv4SourceIp0 avbStreamName0 smFlowDescriptor0 intendedRxPorts0 destSessionDescription0 vlanVlanUserPriority0 destEndpoint0 trackingenabled0'
+26-03-26 13:58:11 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/trafficItem:1/tracking -trackBy {trackingenabled0 sourceDestEndpointPair0}
+
+26-03-26 13:58:11 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/trafficItem:1/tracking -trackBy {trackingenabled0 sourceDestEndpointPair0}
+	--> '::ixNet::OK'
+26-03-26 13:58:11 ixNet commit
+
+26-03-26 13:58:11 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:58:11 ixNet exists ::ixNet::OBJ-/traffic/trafficItem:1
+	--> 'true'
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1 -biDirectional
+	--> 'true'
+26-03-26 13:58:11 ixNet getL ::ixNet::OBJ-/traffic/trafficItem:1 endpointSet
+	--> '::ixNet::OBJ-/traffic/trafficItem:1/endpointSet:1'
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/endpointSet:1 -destinations
+	--> '::ixNet::OBJ-/topology:2'
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/endpointSet:1 -sources
+	--> '::ixNet::OBJ-/topology:1'
+26-03-26 13:58:11 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/trafficItem:1/tracking/latencyBin -enabled false
+
+26-03-26 13:58:11 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/trafficItem:1/tracking/latencyBin -enabled false
+	--> '::ixNet::OK'
+26-03-26 13:58:11 ixNet commit
+
+26-03-26 13:58:11 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:58:11 ixNet getParent ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1
+	--> '::ixNet::OBJ-/traffic/trafficItem:1'
+26-03-26 13:58:11 ixNet setAttribute ::ixNet::OBJ-/traffic/trafficItem:1 -hasOpenFlow 0
+	--> '::ixNet::OK'
+26-03-26 13:58:11 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:58:11 ixNet getParent ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1
+	--> '::ixNet::OBJ-/traffic/trafficItem:1'
+26-03-26 13:58:11 ixNet setAttribute ::ixNet::OBJ-/traffic/trafficItem:1 -multicastForwardingMode replication
+	--> '::ixNet::OK'
+26-03-26 13:58:11 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:58:11 ixNet getParent ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1
+	--> '::ixNet::OBJ-/traffic/trafficItem:1'
+26-03-26 13:58:11 ixNet setAttribute ::ixNet::OBJ-/traffic/trafficItem:1 -frerDuplicateElimination 0
+	--> '::ixNet::OK'
+26-03-26 13:58:11 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:58:11 ixNet getParent ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1
+	--> '::ixNet::OBJ-/traffic/trafficItem:1'
+26-03-26 13:58:11 ixNet setAttribute ::ixNet::OBJ-/traffic/trafficItem:1 -enableMacsecEgressOnlyAutoConfig 0
+	--> '::ixNet::OK'
+26-03-26 13:58:11 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:58:11 ixNet getParent ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1
+	--> '::ixNet::OBJ-/traffic/trafficItem:1'
+26-03-26 13:58:11 ixNet setAttribute ::ixNet::OBJ-/traffic/trafficItem:1 -rawTrafficRxPortsBehavior replicated
+	--> '::ixNet::OK'
+26-03-26 13:58:11 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:58:11 ixNet getList ::ixNet::OBJ-/traffic/trafficItem:1 dynamicUpdate
+	--> '::ixNet::OBJ-/traffic/trafficItem:1/dynamicUpdate'
+26-03-26 13:58:11 args == -length_mode {{fixed}} -mode create -handle ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1
+
+26-03-26 13:58:11 opt_args ==
+        -frame_size                         NUMERIC
+        -frame_size_max                     NUMERIC
+        -frame_size_min                     NUMERIC
+        -frame_size_step                    NUMERIC
+        -frame_size_distribution            CHOICES cisco imix quadmodal tolly
+                                            CHOICES trimodal imix_ipsec imix_ipv6
+                                            CHOICES imix_std imix_tcp
+        -frame_size_gauss                   REGEXP  ^([0-9]+(\.[0-9])*:[0-9]+(\.[0-9])*:[0-9]+ ){0,3}[0-9]+(\.[0-9])*:[0-9]+(\.[0-9])*:[0-9]+$
+        -frame_size_imix                    REGEXP  ^([0-9]+:[0-9]+ )*[0-9]+:[0-9]+$
+        -length_mode                        CHOICES fixed increment random auto
+                                            CHOICES imix gaussian quad
+                                            CHOICES distribution
+                                            DEFAULT fixed
+        -l3_imix1_size                      RANGE   32-9000
+        -l3_imix1_ratio                     RANGE   0-262144
+        -l3_imix2_size                      RANGE   32-9000
+        -l3_imix2_ratio                     RANGE   0-262144
+        -l3_imix3_size                      RANGE   32-9000
+        -l3_imix3_ratio                     RANGE   0-262144
+        -l3_imix4_size                      RANGE   32-9000
+        -l3_imix4_ratio                     RANGE   0-262144
+        -l3_gaus1_avg                       DECIMAL
+        -l3_gaus1_halfbw                    DECIMAL
+        -l3_gaus1_weight                    NUMERIC
+        -l3_gaus2_avg                       DECIMAL
+        -l3_gaus2_halfbw                    DECIMAL
+        -l3_gaus2_weight                    NUMERIC
+        -l3_gaus3_avg                       DECIMAL
+        -l3_gaus3_halfbw                    DECIMAL
+        -l3_gaus3_weight                    NUMERIC
+        -l3_gaus4_avg                       DECIMAL
+        -l3_gaus4_halfbw                    DECIMAL
+        -l3_gaus4_weight                    NUMERIC
+        -l3_length                          RANGE   1-64000
+        -l3_length_min                      RANGE   1-64000
+        -l3_length_max                      RANGE   1-64000
+        -l3_length_step                     RANGE   0-64000
+        -skip_frame_size_validation         FLAG
+
+        -atm_header_encapsulation           CHOICES vcc_mux_ipv4_routed
+                                            CHOICES vcc_mux_bridged_eth_fcs
+                                            CHOICES vcc_mux_bridged_eth_no_fcs
+                                            CHOICES vcc_mux_ipv6_routed
+                                            CHOICES vcc_mux_mpls_routed
+                                            CHOICES llc_routed_clip
+                                            CHOICES llc_bridged_eth_fcs
+                                            CHOICES llc_bridged_eth_no_fcs
+                                            CHOICES llc_pppoa
+                                            CHOICES vcc_mux_ppoa
+                                            CHOICES llc_nlpid_routed
+                                            CHOICES llc_ppp
+                                            CHOICES llc_routed_snap
+                                            CHOICES vcc_mux_ppp
+                                            CHOICES vcc_mux_routed
+        -mode                               CHOICES create modify remove reset
+                                            CHOICES enable disable append_header modify_or_insert
+                                            CHOICES prepend_header replace_header
+                                            CHOICES dynamic_update dynamic_update_packet_fields
+                                            CHOICES get_available_protocol_templates
+                                            CHOICES get_available_fields get_field_values set_field_values
+                                            CHOICES add_field_level remove_field_level
+                                            CHOICES get_available_dynamic_update_fields
+                                            CHOICES get_available_session_aware_traffic
+                                            CHOICES get_available_fields_for_link
+        -handle
+        -is_raw_item                        CHOICES 0 1
+                                            DEFAULT 1
+        -l2_encap                           CHOICES atm_vc_mux
+                                            CHOICES atm_vc_mux_ethernet_ii
+                                            CHOICES atm_vc_mux_802.3snap
+                                            CHOICES atm_snap_802.3snap_nofcs
+                                            CHOICES atm_vc_mux_ppp
+                                            CHOICES atm_vc_mux_pppoe
+                                            CHOICES atm_snap
+                                            CHOICES atm_snap_ethernet_ii
+                                            CHOICES atm_snap_802.3snap
+                                            CHOICES atm_vc_mux_802.3snap_nofcs
+                                            CHOICES atm_snap_ppp
+                                            CHOICES atm_snap_pppoe
+                                            CHOICES hdlc_unicast
+                                            CHOICES hdlc_broadcast
+                                            CHOICES hdlc_unicast_mpls
+                                            CHOICES hdlc_multicast_mpls
+                                            CHOICES ethernet_ii
+                                            CHOICES ethernet_ii_unicast_mpls
+                                            CHOICES ethernet_ii_multicast_mpls
+                                            CHOICES ethernet_ii_vlan
+                                            CHOICES ethernet_ii_vlan_unicast_mpls
+                                            CHOICES ethernet_ii_vlan_multicast_mpls
+                                            CHOICES ethernet_ii_pppoe
+                                            CHOICES ethernet_ii_vlan_pppoe
+                                            CHOICES ppp_link
+                                            CHOICES ietf_framerelay
+                                            CHOICES cisco_framerelay
+        -l3_protocol                        CHOICES ipv4 ipv6 arp pause_control
+                                            CHOICES ipx
+        -l4_protocol                        CHOICES icmp igmp ggp ip st tcp ucl
+                                            CHOICES egp igp bbn_rcc_mon nvp_ii
+                                            CHOICES pup argus emcon xnet chaos
+                                            CHOICES udp mux dcn_meas hmp prm
+                                            CHOICES xns_idp trunk_1 trunk_2
+                                            CHOICES leaf_1 leaf_2 rdp irtp
+                                            CHOICES iso_tp4 netblt mfe_nsp
+                                            CHOICES merit_inp sep cftp
+                                            CHOICES sat_expak mit_subnet rvd
+                                            CHOICES ippc sat_mon ipcv
+                                            CHOICES br_sat_mon wb_mon wb_expak
+                                            CHOICES rip dhcp gre ospf
+
+
+26-03-26 13:58:11 ixNet exists ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1
+	--> 'true'
+26-03-26 13:58:11 ixNet getList ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1 frameSize
+	--> '::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/frameSize'
+26-03-26 13:58:11 ixNet getList ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1 frameSize
+	--> '::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/frameSize'
+26-03-26 13:58:11 -type fixed -fixedSize 64
+
+26-03-26 13:58:11 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/frameSize -type fixed -fixedSize 64
+
+26-03-26 13:58:11 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/frameSize -type fixed -fixedSize 64
+	--> '::ixNet::OK'
+26-03-26 13:58:11 ixNet commit
+
+26-03-26 13:58:11 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:58:11 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:11 ixNet getL ::ixNet::OBJ-//traffic trafficItem
+	--> '::ixNet::OBJ-/traffic/trafficItem:1'
+26-03-26 13:58:11 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1 -warnings
+	--> '{Traffic Generate required: The Traffic Item was modified. Please perform a Traffic Generate to update the associated traffic Flow Groups}'
+26-03-26 13:58:11 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:58:11 ixNet getAttribute ::ixNet::OBJ-/traffic/trafficItem:1 -trafficItemType
+	--> 'l2L3'
+26-03-26 13:58:11 ixNet getNull
+	--> '::ixNet::OBJ-null'
+26-03-26 13:58:12 ixNet exec generate ::ixNet::OBJ-/traffic/trafficItem:1
+	--> '::ixNet::OK'
+26-03-26 13:58:12 ixNet getAttr ::ixNet::OBJ-/traffic/trafficItem:1 -name
+	--> 'TI0-Traffic_Item_1'
+26-03-26 13:58:12 ixNet getNull
+	--> '::ixNet::OBJ-null'
+26-03-26 13:58:12 ixNet getAttribute ::ixNet::OBJ-/traffic/trafficItem:1 -warnings
+	--> ''
+26-03-26 13:58:12 ixNet getList ::ixNet::OBJ-/traffic/trafficItem:1 configElement
+	--> '::ixNet::OBJ-/traffic/trafficItem:1/configElement:1'
+26-03-26 13:58:12 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1 -encapsulationName
+	--> 'Ethernet.VLAN.IPv4'
+26-03-26 13:58:12 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1 -endpointSetId
+	--> '1'
+26-03-26 13:58:12 ixNet getNull
+	--> '::ixNet::OBJ-null'
+26-03-26 13:58:12 ixNet getL ::ixNet::OBJ-/traffic/trafficItem:1 highLevelStream
+	--> '::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1 ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:2'
+26-03-26 13:58:12 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1 -encapsulationName
+	--> 'Ethernet.VLAN.IPv4'
+26-03-26 13:58:12 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1 -endpointSetId
+	--> '1'
+26-03-26 13:58:12 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:2 -encapsulationName
+	--> 'Ethernet.VLAN.IPv4'
+26-03-26 13:58:12 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:2 -endpointSetId
+	--> '1'
+26-03-26 13:58:12 ixNet getList ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1 stack
+	--> '::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:"ethernet-1" ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:"vlan-2" ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:"ipv4-3" ::ixNet::OBJ-/traffic/trafficItem:1/configElement:1/stack:"fcs-4"'
+26-03-26 13:58:12 ixNet getList ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1 stack
+	--> '::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1/stack:"ethernet-1" ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1/stack:"vlan-2" ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1/stack:"ipv4-3" ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:1/stack:"fcs-4"'
+26-03-26 13:58:12 ixNet getList ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:2 stack
+	--> '::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:2/stack:"ethernet-1" ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:2/stack:"vlan-2" ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:2/stack:"ipv4-3" ::ixNet::OBJ-/traffic/trafficItem:1/highLevelStream:2/stack:"fcs-4"'
+26-03-26 13:58:12 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:12 ixNet getList ::ixNet::OBJ-/
+	--> '::ixNet::ERROR-syntax error: ixNet getList <objRef> <listName>'
+26-03-26 13:58:12 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:12 ixNet getList ::ixNet::OBJ-/availableHardware chassis
+	--> '::ixNet::OBJ-/availableHardware/chassis:"10.36.88.17"'
+26-03-26 13:58:12 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:"10.36.88.17" -hostname
+
+26-03-26 13:58:12 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:\"10.36.88.17\" -hostname
+	--> '10.36.88.17'
+26-03-26 13:58:12 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:"10.36.88.17" -state
+
+26-03-26 13:58:12 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:\"10.36.88.17\" -state
+	--> 'ready'
+26-03-26 13:58:12 All Chassis in the list already connected...
+
+26-03-26 13:58:12 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:12 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:12 ixNet getL ::ixNet::OBJ-/traffic statistics
+	--> '::ixNet::OBJ-/traffic/statistics'
+26-03-26 13:58:12 ixNet getL ::ixNet::OBJ-/traffic/statistics sequenceChecking
+	--> '::ixNet::OBJ-/traffic/statistics/sequenceChecking'
+26-03-26 13:58:12 ixNet getL ::ixNet::OBJ-/traffic/statistics cpdpConvergence
+	--> '::ixNet::OBJ-/traffic/statistics/cpdpConvergence'
+26-03-26 13:58:12 ixNet getL ::ixNet::OBJ-/traffic/statistics delayVariation
+	--> '::ixNet::OBJ-/traffic/statistics/delayVariation'
+26-03-26 13:58:12 ixNet getL ::ixNet::OBJ-/traffic/statistics interArrivalTimeRate
+	--> '::ixNet::OBJ-/traffic/statistics/interArrivalTimeRate'
+26-03-26 13:58:12 ixNet getL ::ixNet::OBJ-/traffic/statistics latency
+	--> '::ixNet::OBJ-/traffic/statistics/latency'
+26-03-26 13:58:12 ixNet getL ::ixNet::OBJ-/traffic/statistics l1Rates
+	--> '::ixNet::OBJ-/traffic/statistics/l1Rates'
+26-03-26 13:58:12 ixNet getL ::ixNet::OBJ-/traffic/statistics packetLossDuration
+	--> '::ixNet::OBJ-/traffic/statistics/packetLossDuration'
+26-03-26 13:58:12 ixNet getL ::ixNet::OBJ-/traffic/statistics misdirectedPerFlow
+	--> '::ixNet::OBJ-/traffic/statistics/misdirectedPerFlow'
+26-03-26 13:58:12 ixNet getA ::ixNet::OBJ-/traffic/statistics/sequenceChecking -enabled
+	--> 'true'
+26-03-26 13:58:12 ixNet getA ::ixNet::OBJ-/traffic/statistics/latency -enabled
+	--> 'true'
+26-03-26 13:58:12 ixNet getA ::ixNet::OBJ-/traffic/statistics/interArrivalTimeRate -enabled
+	--> 'false'
+26-03-26 13:58:12 ixNet getA ::ixNet::OBJ-/traffic/statistics/delayVariation -enabled
+	--> 'false'
+26-03-26 13:58:12 ixNet getA ::ixNet::OBJ-/traffic/statistics/cpdpConvergence -enabled
+	--> 'false'
+26-03-26 13:58:12 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/cpdpConvergence -enabled false
+
+26-03-26 13:58:12 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/cpdpConvergence -enabled false
+	--> '::ixNet::OK'
+26-03-26 13:58:12 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/delayVariation -enabled false
+
+26-03-26 13:58:12 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/delayVariation -enabled false
+	--> '::ixNet::OK'
+26-03-26 13:58:12 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/interArrivalTimeRate -enabled false
+
+26-03-26 13:58:12 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/interArrivalTimeRate -enabled false
+	--> '::ixNet::OK'
+26-03-26 13:58:12 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/latency -enabled true
+
+26-03-26 13:58:12 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/latency -enabled true
+	--> '::ixNet::OK'
+26-03-26 13:58:12 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/packetLossDuration -enabled false
+
+26-03-26 13:58:12 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/packetLossDuration -enabled false
+	--> '::ixNet::OK'
+26-03-26 13:58:12 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:58:12 ixNet getA ::ixNet::OBJ-/traffic -enableInstantaneousStatsSupport
+	--> 'false'
+26-03-26 13:58:12 ixNet add ::ixNet::OBJ-/hlapi/session:1 ixnetwork_traffic_control -action apply -packet_loss_duration_enable 0 -traffic_generator ixnetwork_540 -args_to_validate {-action apply -packet_loss_duration_enable 0 -traffic_generator ixnetwork_540}
+	--> '::ixNet::OBJ-/hlapi/session:1/ixnetwork_traffic_control:L9'
+26-03-26 13:58:12 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:58:12 ixNet remapIds ::ixNet::OBJ-/hlapi/session:1/ixnetwork_traffic_control:L9
+	--> '::ixNet::OBJ-/hlapi/session:1/ixnetwork_traffic_control:1'
+26-03-26 13:58:12 ixNet exec executeCommand ::ixNet::OBJ-/hlapi/session:1/ixnetwork_traffic_control:1
+	--> '::ixNet::OK-{kString,{status 1} {command_handled 1}}'
+26-03-26 13:58:16 ixNet exec GetSessionStatus ::ixNet::OBJ-/hlapi/session:1
+	--> '::ixNet::OK-{kString,{status 1} {command_handled 1} {messages {{line0 {[03/26/2026 13:58:15    info] COMPLETED: ixnetwork_traffic_control      : PASS}}}} {result {{status 1} {command_handled 1}}}}'
+26-03-26 13:58:16 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:16 ixNet getList ::ixNet::OBJ-/
+	--> '::ixNet::ERROR-syntax error: ixNet getList <objRef> <listName>'
+26-03-26 13:58:16 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:16 ixNet getList ::ixNet::OBJ-/availableHardware chassis
+	--> '::ixNet::OBJ-/availableHardware/chassis:"10.36.88.17"'
+26-03-26 13:58:16 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:"10.36.88.17" -hostname
+
+26-03-26 13:58:16 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:\"10.36.88.17\" -hostname
+	--> '10.36.88.17'
+26-03-26 13:58:16 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:"10.36.88.17" -state
+
+26-03-26 13:58:16 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:\"10.36.88.17\" -state
+	--> 'ready'
+26-03-26 13:58:16 All Chassis in the list already connected...
+
+26-03-26 13:58:16 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:16 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:16 ixNet getL ::ixNet::OBJ-/traffic statistics
+	--> '::ixNet::OBJ-/traffic/statistics'
+26-03-26 13:58:16 ixNet getL ::ixNet::OBJ-/traffic/statistics sequenceChecking
+	--> '::ixNet::OBJ-/traffic/statistics/sequenceChecking'
+26-03-26 13:58:16 ixNet getL ::ixNet::OBJ-/traffic/statistics cpdpConvergence
+	--> '::ixNet::OBJ-/traffic/statistics/cpdpConvergence'
+26-03-26 13:58:16 ixNet getL ::ixNet::OBJ-/traffic/statistics delayVariation
+	--> '::ixNet::OBJ-/traffic/statistics/delayVariation'
+26-03-26 13:58:16 ixNet getL ::ixNet::OBJ-/traffic/statistics interArrivalTimeRate
+	--> '::ixNet::OBJ-/traffic/statistics/interArrivalTimeRate'
+26-03-26 13:58:16 ixNet getL ::ixNet::OBJ-/traffic/statistics latency
+	--> '::ixNet::OBJ-/traffic/statistics/latency'
+26-03-26 13:58:16 ixNet getL ::ixNet::OBJ-/traffic/statistics l1Rates
+	--> '::ixNet::OBJ-/traffic/statistics/l1Rates'
+26-03-26 13:58:16 ixNet getL ::ixNet::OBJ-/traffic/statistics packetLossDuration
+	--> '::ixNet::OBJ-/traffic/statistics/packetLossDuration'
+26-03-26 13:58:16 ixNet getL ::ixNet::OBJ-/traffic/statistics misdirectedPerFlow
+	--> '::ixNet::OBJ-/traffic/statistics/misdirectedPerFlow'
+26-03-26 13:58:16 ixNet getA ::ixNet::OBJ-/traffic/statistics/sequenceChecking -enabled
+	--> 'true'
+26-03-26 13:58:16 ixNet getA ::ixNet::OBJ-/traffic/statistics/latency -enabled
+	--> 'true'
+26-03-26 13:58:16 ixNet getA ::ixNet::OBJ-/traffic/statistics/interArrivalTimeRate -enabled
+	--> 'false'
+26-03-26 13:58:16 ixNet getA ::ixNet::OBJ-/traffic/statistics/delayVariation -enabled
+	--> 'false'
+26-03-26 13:58:16 ixNet getA ::ixNet::OBJ-/traffic/statistics/packetLossDuration -enabled
+	--> 'false'
+26-03-26 13:58:16 ixNet getA ::ixNet::OBJ-/traffic/statistics/cpdpConvergence -enabled
+	--> 'false'
+26-03-26 13:58:16 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/cpdpConvergence -enabled false
+
+26-03-26 13:58:16 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/cpdpConvergence -enabled false
+	--> '::ixNet::OK'
+26-03-26 13:58:16 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/delayVariation -enabled false
+
+26-03-26 13:58:16 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/delayVariation -enabled false
+	--> '::ixNet::OK'
+26-03-26 13:58:16 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/interArrivalTimeRate -enabled false
+
+26-03-26 13:58:16 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/interArrivalTimeRate -enabled false
+	--> '::ixNet::OK'
+26-03-26 13:58:16 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/latency -enabled true
+
+26-03-26 13:58:16 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/latency -enabled true
+	--> '::ixNet::OK'
+26-03-26 13:58:16 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/packetLossDuration -enabled false
+
+26-03-26 13:58:16 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/packetLossDuration -enabled false
+	--> '::ixNet::OK'
+26-03-26 13:58:16 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:58:16 ixNet getA ::ixNet::OBJ-/traffic -enableInstantaneousStatsSupport
+	--> 'false'
+26-03-26 13:58:16 ixNet add ::ixNet::OBJ-/hlapi/session:1 ixnetwork_traffic_control -action run -traffic_generator ixnetwork_540 -args_to_validate {-action run -traffic_generator ixnetwork_540}
+	--> '::ixNet::OBJ-/hlapi/session:1/ixnetwork_traffic_control:L10'
+26-03-26 13:58:16 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:58:16 ixNet remapIds ::ixNet::OBJ-/hlapi/session:1/ixnetwork_traffic_control:L10
+	--> '::ixNet::OBJ-/hlapi/session:1/ixnetwork_traffic_control:2'
+26-03-26 13:58:16 ixNet exec executeCommand ::ixNet::OBJ-/hlapi/session:1/ixnetwork_traffic_control:2
+	--> '::ixNet::OK-{kString,{status 1} {command_handled 1}}'
+26-03-26 13:58:16 ixNet exec GetSessionStatus ::ixNet::OBJ-/hlapi/session:1
+	--> '::ixNet::OK-{kString,{status 1} {command_handled 1} {messages {{line0 {[03/26/2026 13:58:16 warning] max_wait_timer argument was not specified. In this case the starting of the traffic is done asynchronous. Please allow for few seconds for the traffic to start. }}}}}'
+26-03-26 13:58:17 ixNet exec GetSessionStatus ::ixNet::OBJ-/hlapi/session:1
+	--> '::ixNet::OK-{kString,{status 1} {command_handled 1} {messages {{line0 {[03/26/2026 13:58:17    info] COMPLETED: ixnetwork_traffic_control      : PASS}}}} {result {{status 1} {command_handled 1} {stopped 1}}}}'
+26-03-26 13:58:29 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:29 ixNet getList ::ixNet::OBJ-/
+	--> '::ixNet::ERROR-syntax error: ixNet getList <objRef> <listName>'
+26-03-26 13:58:29 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:29 ixNet getList ::ixNet::OBJ-/availableHardware chassis
+	--> '::ixNet::OBJ-/availableHardware/chassis:"10.36.88.17"'
+26-03-26 13:58:29 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:"10.36.88.17" -hostname
+
+26-03-26 13:58:29 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:\"10.36.88.17\" -hostname
+	--> '10.36.88.17'
+26-03-26 13:58:29 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:"10.36.88.17" -state
+
+26-03-26 13:58:29 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:\"10.36.88.17\" -state
+	--> 'ready'
+26-03-26 13:58:29 All Chassis in the list already connected...
+
+26-03-26 13:58:29 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:29 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:29 ixNet getL ::ixNet::OBJ-/traffic statistics
+	--> '::ixNet::OBJ-/traffic/statistics'
+26-03-26 13:58:29 ixNet getL ::ixNet::OBJ-/traffic/statistics sequenceChecking
+	--> '::ixNet::OBJ-/traffic/statistics/sequenceChecking'
+26-03-26 13:58:29 ixNet getL ::ixNet::OBJ-/traffic/statistics cpdpConvergence
+	--> '::ixNet::OBJ-/traffic/statistics/cpdpConvergence'
+26-03-26 13:58:29 ixNet getL ::ixNet::OBJ-/traffic/statistics delayVariation
+	--> '::ixNet::OBJ-/traffic/statistics/delayVariation'
+26-03-26 13:58:29 ixNet getL ::ixNet::OBJ-/traffic/statistics interArrivalTimeRate
+	--> '::ixNet::OBJ-/traffic/statistics/interArrivalTimeRate'
+26-03-26 13:58:29 ixNet getL ::ixNet::OBJ-/traffic/statistics latency
+	--> '::ixNet::OBJ-/traffic/statistics/latency'
+26-03-26 13:58:29 ixNet getL ::ixNet::OBJ-/traffic/statistics l1Rates
+	--> '::ixNet::OBJ-/traffic/statistics/l1Rates'
+26-03-26 13:58:29 ixNet getL ::ixNet::OBJ-/traffic/statistics packetLossDuration
+	--> '::ixNet::OBJ-/traffic/statistics/packetLossDuration'
+26-03-26 13:58:29 ixNet getL ::ixNet::OBJ-/traffic/statistics misdirectedPerFlow
+	--> '::ixNet::OBJ-/traffic/statistics/misdirectedPerFlow'
+26-03-26 13:58:29 ixNet getA ::ixNet::OBJ-/traffic/statistics/sequenceChecking -enabled
+	--> 'true'
+26-03-26 13:58:29 ixNet getA ::ixNet::OBJ-/traffic/statistics/latency -enabled
+	--> 'true'
+26-03-26 13:58:29 ixNet getA ::ixNet::OBJ-/traffic/statistics/interArrivalTimeRate -enabled
+	--> 'false'
+26-03-26 13:58:29 ixNet getA ::ixNet::OBJ-/traffic/statistics/delayVariation -enabled
+	--> 'false'
+26-03-26 13:58:29 ixNet getA ::ixNet::OBJ-/traffic/statistics/packetLossDuration -enabled
+	--> 'false'
+26-03-26 13:58:29 ixNet getA ::ixNet::OBJ-/traffic/statistics/cpdpConvergence -enabled
+	--> 'false'
+26-03-26 13:58:29 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/cpdpConvergence -enabled false
+
+26-03-26 13:58:29 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/cpdpConvergence -enabled false
+	--> '::ixNet::OK'
+26-03-26 13:58:29 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/delayVariation -enabled false
+
+26-03-26 13:58:29 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/delayVariation -enabled false
+	--> '::ixNet::OK'
+26-03-26 13:58:29 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/interArrivalTimeRate -enabled false
+
+26-03-26 13:58:29 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/interArrivalTimeRate -enabled false
+	--> '::ixNet::OK'
+26-03-26 13:58:29 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/latency -enabled true
+
+26-03-26 13:58:29 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/latency -enabled true
+	--> '::ixNet::OK'
+26-03-26 13:58:29 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/packetLossDuration -enabled false
+
+26-03-26 13:58:29 ixNet setMultiAttrs ::ixNet::OBJ-/traffic/statistics/packetLossDuration -enabled false
+	--> '::ixNet::OK'
+26-03-26 13:58:29 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:58:29 ixNet getA ::ixNet::OBJ-/traffic -enableInstantaneousStatsSupport
+	--> 'false'
+26-03-26 13:58:29 ixNet add ::ixNet::OBJ-/hlapi/session:1 ixnetwork_traffic_control -action stop -traffic_generator ixnetwork_540 -args_to_validate {-action stop -traffic_generator ixnetwork_540}
+	--> '::ixNet::OBJ-/hlapi/session:1/ixnetwork_traffic_control:L11'
+26-03-26 13:58:29 ixNet commit
+	--> '::ixNet::OK'
+26-03-26 13:58:29 ixNet remapIds ::ixNet::OBJ-/hlapi/session:1/ixnetwork_traffic_control:L11
+	--> '::ixNet::OBJ-/hlapi/session:1/ixnetwork_traffic_control:3'
+26-03-26 13:58:29 ixNet exec executeCommand ::ixNet::OBJ-/hlapi/session:1/ixnetwork_traffic_control:3
+	--> '::ixNet::OK-{kString,{status 1} {command_handled 1}}'
+26-03-26 13:58:29 ixNet exec GetSessionStatus ::ixNet::OBJ-/hlapi/session:1
+	--> '::ixNet::OK-{kString,{status 1} {command_handled 1} {messages {{line0 {[03/26/2026 13:58:29 warning] max_wait_timer argument was not specified. In this case the stopping of the traffic is done asynchronous. Please allow for few seconds for the traffic to stop. }}}}}'
+26-03-26 13:58:30 ixNet exec GetSessionStatus ::ixNet::OBJ-/hlapi/session:1
+	--> '::ixNet::OK-{kString,{status 1} {command_handled 1} {messages {{line0 {[03/26/2026 13:58:30    info] COMPLETED: ixnetwork_traffic_control      : PASS}}}} {result {{status 1} {command_handled 1} {stopped 0}}}}'
+26-03-26 13:58:36 ixNet exec stopAllProtocols
+	--> '::ixNet::OK'
+26-03-26 13:58:36 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:36 ixNet getList ::ixNet::OBJ-/
+	--> '::ixNet::ERROR-syntax error: ixNet getList <objRef> <listName>'
+26-03-26 13:58:36 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:36 ixNet getList ::ixNet::OBJ-/availableHardware chassis
+	--> '::ixNet::OBJ-/availableHardware/chassis:"10.36.88.17"'
+26-03-26 13:58:36 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:"10.36.88.17" -hostname
+
+26-03-26 13:58:36 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:\"10.36.88.17\" -hostname
+	--> '10.36.88.17'
+26-03-26 13:58:36 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:"10.36.88.17" -state
+
+26-03-26 13:58:36 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:\"10.36.88.17\" -state
+	--> 'ready'
+26-03-26 13:58:36 All Chassis in the list already connected...
+
+26-03-26 13:58:36 ixNet getA ::ixNet::OBJ-/statistics/measurementMode -measurementMode
+	--> 'mixedMode'
+26-03-26 13:58:36 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:36 ixNet getList ::ixNet::OBJ-/traffic trafficItem
+	--> '::ixNet::OBJ-/traffic/trafficItem:1'
+26-03-26 13:58:36 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1 -name
+	--> 'TI0-Traffic_Item_1'
+26-03-26 13:58:36 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:36 ixNet getL ::ixNet::OBJ-/traffic trafficItem
+	--> '::ixNet::OBJ-/traffic/trafficItem:1'
+26-03-26 13:58:36 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1 -trafficItemType
+	--> 'l2L3'
+26-03-26 13:58:36 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:36 ixNet getAttribute ::ixNet::OBJ-/traffic -state
+	--> 'stopped'
+26-03-26 13:58:36 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:36 ixNet getA ::ixNet::OBJ-/traffic/statistics/latency -mode
+	--> 'storeForward'
+26-03-26 13:58:36 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:36 ixNet getList ::ixNet::OBJ-/statistics view
+	--> '{::ixNet::OBJ-/statistics/view:"Port Statistics"} {::ixNet::OBJ-/statistics/view:"Tx-Rx Frame Rate Statistics"} {::ixNet::OBJ-/statistics/view:"PCS Lane Statistics"} {::ixNet::OBJ-/statistics/view:"Frame Preemption Statistics"} {::ixNet::OBJ-/statistics/view:"MACsec Global Port Statistics"} {::ixNet::OBJ-/statistics/view:"Qbv Gate Statistics"} {::ixNet::OBJ-/statistics/view:"Transceiver DOM Statistics"} {::ixNet::OBJ-/statistics/view:"Port CPU Statistics"} {::ixNet::OBJ-/statistics/view:"Global Protocol Statistics"} {::ixNet::OBJ-/statistics/view:"Protocols Summary"} {::ixNet::OBJ-/statistics/view:"Port Summary"} {::ixNet::OBJ-/statistics/view:"IPv4 Drill Down"} {::ixNet::OBJ-/statistics/view:"L2-L3 Test Summary Statistics"} {::ixNet::OBJ-/statistics/view:"Flow Statistics"} {::ixNet::OBJ-/statistics/view:"Flow Detective"} {::ixNet::OBJ-/statistics/view:"Data Plane Port Statistics"} {::ixNet::OBJ-/statistics/view:"User Defined Statistics"} {::ixNet::OBJ-/statistics/view:"Traffic Item Statistics"}'
+26-03-26 13:58:36 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Port Statistics"} -caption
+	--> 'Port Statistics'
+26-03-26 13:58:36 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Tx-Rx Frame Rate Statistics"} -caption
+	--> 'Tx-Rx Frame Rate Statistics'
+26-03-26 13:58:36 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"PCS Lane Statistics"} -caption
+	--> 'PCS Lane Statistics'
+26-03-26 13:58:36 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Frame Preemption Statistics"} -caption
+	--> 'Frame Preemption Statistics'
+26-03-26 13:58:36 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"MACsec Global Port Statistics"} -caption
+	--> 'MACsec Global Port Statistics'
+26-03-26 13:58:36 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Qbv Gate Statistics"} -caption
+	--> 'Qbv Gate Statistics'
+26-03-26 13:58:36 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Transceiver DOM Statistics"} -caption
+	--> 'Transceiver DOM Statistics'
+26-03-26 13:58:36 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Port CPU Statistics"} -caption
+	--> 'Port CPU Statistics'
+26-03-26 13:58:36 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Global Protocol Statistics"} -caption
+	--> 'Global Protocol Statistics'
+26-03-26 13:58:36 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Protocols Summary"} -caption
+	--> 'Protocols Summary'
+26-03-26 13:58:36 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Port Summary"} -caption
+	--> 'Port Summary'
+26-03-26 13:58:36 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"IPv4 Drill Down"} -caption
+	--> 'IPv4 Drill Down'
+26-03-26 13:58:36 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"L2-L3 Test Summary Statistics"} -caption
+	--> 'L2-L3 Test Summary Statistics'
+26-03-26 13:58:36 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Flow Statistics"} -caption
+	--> 'Flow Statistics'
+26-03-26 13:58:36 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Flow Detective"} -caption
+	--> 'Flow Detective'
+26-03-26 13:58:36 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Data Plane Port Statistics"} -caption
+	--> 'Data Plane Port Statistics'
+26-03-26 13:58:36 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"User Defined Statistics"} -caption
+	--> 'User Defined Statistics'
+26-03-26 13:58:36 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Traffic Item Statistics"} -caption
+	--> 'Traffic Item Statistics'
+26-03-26 13:58:36 ixNet getList {::ixNet::OBJ-/statistics/view:"Traffic Item Statistics"} statistic
+	--> ''
+26-03-26 13:58:36 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Traffic Item Statistics"} -enabled
+	--> 'true'
+26-03-26 13:58:36 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Traffic Item Statistics"/page} -isReady
+	--> 'true'
+26-03-26 13:58:36 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Traffic Item Statistics"/page} -isReady
+	--> 'true'
+26-03-26 13:58:36 ixNet exec GetDefaultSnapshotSettings
+	--> '::ixNet::OK-{kArray,{{kString,Snapshot.View.Contents: "allPages"},{kString,Snapshot.View.Csv.Location: "/root/.local/share/Ixia/IxNetwork/data/logs/Test1-20260326-135734437635/Snapshot CSV"},{kString,Snapshot.View.Csv.GeneratingMode: "kNewCSVFile"},{kString,Snapshot.View.Csv.StringQuotes: "True"},{kString,Snapshot.View.Csv.SupportsCSVSorting: "False"},{kString,Snapshot.View.Csv.FormatTimestamp: "True"},{kString,Snapshot.View.Csv.DumpTxPortLabelMap: "False"},{kString,Snapshot.View.Csv.DecimalPrecision: "3"},{kString,Snapshot.Settings.Name: "DefaultSnapshotSettings"}}}'
+26-03-26 13:58:37 ixNet exec TakeViewCSVSnapshot {{Traffic Item Statistics}} {{Snapshot.View.Contents: "allPages"} {Snapshot.View.Csv.Location: "/root/.local/share/Ixia/IxNetwork/data/logs/Test1-20260326-135734437635/Snapshot CSV"} {Snapshot.View.Csv.GeneratingMode: "kOverwriteCSVFile"} {Snapshot.View.Csv.StringQuotes: "True"} {Snapshot.View.Csv.SupportsCSVSorting: "False"} {Snapshot.View.Csv.FormatTimestamp: "True"} {Snapshot.View.Csv.DumpTxPortLabelMap: "False"} {Snapshot.View.Csv.DecimalPrecision: "3"} {Snapshot.Settings.Name: "Traffic Item Statistics"}}
+	--> '::ixNet::OK'
+26-03-26 13:58:37 ixNet getA ::ixNet::OBJ-/traffic -enableInstantaneousStatsSupport
+	--> 'false'
+26-03-26 13:58:37 ixNet getA {::ixNet::OBJ-/statistics/view:"Traffic Item Statistics"} -viewCategory
+	--> 'L23Traffic'
+26-03-26 13:58:37 L23Traffic ==> Traffic Item Statistics
+
+26-03-26 13:58:37 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:37 ixNet getA ::ixNet::OBJ-//globals -username
+	--> 'IxNetwork/ixnetworkweb/seunyang-13-30879'
+26-03-26 13:58:37 ixNet readFrom {/root/.local/share/Ixia/IxNetwork/data/logs/Test1-20260326-135734437635/Snapshot CSV/Traffic Item Statistics.csv} -ixNetRelative
+	--> '::ixNet::FILEHANDLE-1'
+26-03-26 13:58:37 ixNet writeTo /IxNetwork/notebooks/HighLevelApi/Ngpf/Python/Traffic/Traffic_Item_Statistics_20260326135837_seunyang-13-30879_2298.csv -overwrite
+	--> '::ixNet::FILEHANDLE-2'
+26-03-26 13:58:37 ixNet exec copyFile ::ixNet::FILEHANDLE-1 ::ixNet::FILEHANDLE-2
+	--> '::ixNet::OK'
+26-03-26 13:58:37 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:37 ixNet getList ::ixNet::OBJ-/
+	--> '::ixNet::ERROR-syntax error: ixNet getList <objRef> <listName>'
+26-03-26 13:58:37 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:37 ixNet getList ::ixNet::OBJ-/availableHardware chassis
+	--> '::ixNet::OBJ-/availableHardware/chassis:"10.36.88.17"'
+26-03-26 13:58:37 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:"10.36.88.17" -hostname
+
+26-03-26 13:58:37 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:\"10.36.88.17\" -hostname
+	--> '10.36.88.17'
+26-03-26 13:58:37 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:"10.36.88.17" -state
+
+26-03-26 13:58:37 ixNet getAttr ::ixNet::OBJ-/availableHardware/chassis:\"10.36.88.17\" -state
+	--> 'ready'
+26-03-26 13:58:37 All Chassis in the list already connected...
+
+26-03-26 13:58:37 ixNet getA ::ixNet::OBJ-/statistics/measurementMode -measurementMode
+	--> 'mixedMode'
+26-03-26 13:58:37 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:37 ixNet getList ::ixNet::OBJ-/traffic trafficItem
+	--> '::ixNet::OBJ-/traffic/trafficItem:1'
+26-03-26 13:58:37 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1 -name
+	--> 'TI0-Traffic_Item_1'
+26-03-26 13:58:37 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:37 ixNet getL ::ixNet::OBJ-/traffic trafficItem
+	--> '::ixNet::OBJ-/traffic/trafficItem:1'
+26-03-26 13:58:37 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1 -trafficItemType
+	--> 'l2L3'
+26-03-26 13:58:37 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:37 ixNet getAttribute ::ixNet::OBJ-/traffic -state
+	--> 'stopped'
+26-03-26 13:58:37 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:37 ixNet getA ::ixNet::OBJ-/traffic/statistics/latency -mode
+	--> 'storeForward'
+26-03-26 13:58:37 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:37 ixNet getA ::ixNet::OBJ-/traffic/statistics/delayVariation -latencyMode
+	--> 'storeForward'
+26-03-26 13:58:37 ixNet getAttribute /traffic/statistics/delayVariation -enabled
+	--> 'false'
+26-03-26 13:58:37 ixNet getAttribute /traffic/statistics/interArrivalTimeRate -enabled
+	--> 'false'
+26-03-26 13:58:37 540CreateLatencyStatsView -traffic_item ::ixNet::OBJ-/traffic/trafficItem:1
+
+26-03-26 13:58:37 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/tracking/latencyBin -enabled
+	--> 'false'
+26-03-26 13:58:37 540CreateLatencyStatsView --> latencyBins not enabled on ::ixNet::OBJ-/traffic/trafficItem:1/tracking/latencyBin
+
+26-03-26 13:58:37 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:37 ixNet getList ::ixNet::OBJ-/statistics view
+	--> '{::ixNet::OBJ-/statistics/view:"Port Statistics"} {::ixNet::OBJ-/statistics/view:"Tx-Rx Frame Rate Statistics"} {::ixNet::OBJ-/statistics/view:"PCS Lane Statistics"} {::ixNet::OBJ-/statistics/view:"Frame Preemption Statistics"} {::ixNet::OBJ-/statistics/view:"MACsec Global Port Statistics"} {::ixNet::OBJ-/statistics/view:"Qbv Gate Statistics"} {::ixNet::OBJ-/statistics/view:"Transceiver DOM Statistics"} {::ixNet::OBJ-/statistics/view:"Port CPU Statistics"} {::ixNet::OBJ-/statistics/view:"Global Protocol Statistics"} {::ixNet::OBJ-/statistics/view:"Protocols Summary"} {::ixNet::OBJ-/statistics/view:"Port Summary"} {::ixNet::OBJ-/statistics/view:"IPv4 Drill Down"} {::ixNet::OBJ-/statistics/view:"L2-L3 Test Summary Statistics"} {::ixNet::OBJ-/statistics/view:"Flow Statistics"} {::ixNet::OBJ-/statistics/view:"Flow Detective"} {::ixNet::OBJ-/statistics/view:"Data Plane Port Statistics"} {::ixNet::OBJ-/statistics/view:"User Defined Statistics"} {::ixNet::OBJ-/statistics/view:"Traffic Item Statistics"}'
+26-03-26 13:58:37 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Port Statistics"} -caption
+	--> 'Port Statistics'
+26-03-26 13:58:37 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Tx-Rx Frame Rate Statistics"} -caption
+	--> 'Tx-Rx Frame Rate Statistics'
+26-03-26 13:58:37 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"PCS Lane Statistics"} -caption
+	--> 'PCS Lane Statistics'
+26-03-26 13:58:37 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Frame Preemption Statistics"} -caption
+	--> 'Frame Preemption Statistics'
+26-03-26 13:58:37 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"MACsec Global Port Statistics"} -caption
+	--> 'MACsec Global Port Statistics'
+26-03-26 13:58:37 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Qbv Gate Statistics"} -caption
+	--> 'Qbv Gate Statistics'
+26-03-26 13:58:37 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Transceiver DOM Statistics"} -caption
+	--> 'Transceiver DOM Statistics'
+26-03-26 13:58:37 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Port CPU Statistics"} -caption
+	--> 'Port CPU Statistics'
+26-03-26 13:58:37 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Global Protocol Statistics"} -caption
+	--> 'Global Protocol Statistics'
+26-03-26 13:58:37 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Protocols Summary"} -caption
+	--> 'Protocols Summary'
+26-03-26 13:58:37 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Port Summary"} -caption
+	--> 'Port Summary'
+26-03-26 13:58:37 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"IPv4 Drill Down"} -caption
+	--> 'IPv4 Drill Down'
+26-03-26 13:58:37 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"L2-L3 Test Summary Statistics"} -caption
+	--> 'L2-L3 Test Summary Statistics'
+26-03-26 13:58:37 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Flow Statistics"} -caption
+	--> 'Flow Statistics'
+26-03-26 13:58:37 ixNet getList {::ixNet::OBJ-/statistics/view:"Flow Statistics"} statistic
+	--> ''
+26-03-26 13:58:37 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Flow Statistics"} -enabled
+	--> 'true'
+26-03-26 13:58:37 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Flow Statistics"/page} -isReady
+	--> 'true'
+26-03-26 13:58:38 ixNet getAttribute {::ixNet::OBJ-/statistics/view:"Flow Statistics"/page} -isReady
+	--> 'true'
+26-03-26 13:58:38 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:38 ixNet getList ::ixNet::OBJ-/traffic trafficItem
+	--> '::ixNet::OBJ-/traffic/trafficItem:1'
+26-03-26 13:58:38 ixNet getA ::ixNet::OBJ-/traffic/trafficItem:1/tracking -trackBy
+	--> 'sourceDestEndpointPair0 trackingenabled0'
+26-03-26 13:58:38 ixNet exec GetDefaultSnapshotSettings
+	--> '::ixNet::OK-{kArray,{{kString,Snapshot.View.Contents: "allPages"},{kString,Snapshot.View.Csv.Location: "/root/.local/share/Ixia/IxNetwork/data/logs/Test1-20260326-135734437635/Snapshot CSV"},{kString,Snapshot.View.Csv.GeneratingMode: "kNewCSVFile"},{kString,Snapshot.View.Csv.StringQuotes: "True"},{kString,Snapshot.View.Csv.SupportsCSVSorting: "False"},{kString,Snapshot.View.Csv.FormatTimestamp: "True"},{kString,Snapshot.View.Csv.DumpTxPortLabelMap: "False"},{kString,Snapshot.View.Csv.DecimalPrecision: "3"},{kString,Snapshot.Settings.Name: "DefaultSnapshotSettings"}}}'
+26-03-26 13:58:38 ixNet exec TakeViewCSVSnapshot {{Flow Statistics}} {{Snapshot.View.Contents: "allPages"} {Snapshot.View.Csv.Location: "/root/.local/share/Ixia/IxNetwork/data/logs/Test1-20260326-135734437635/Snapshot CSV"} {Snapshot.View.Csv.GeneratingMode: "kOverwriteCSVFile"} {Snapshot.View.Csv.StringQuotes: "True"} {Snapshot.View.Csv.SupportsCSVSorting: "False"} {Snapshot.View.Csv.FormatTimestamp: "True"} {Snapshot.View.Csv.DumpTxPortLabelMap: "False"} {Snapshot.View.Csv.DecimalPrecision: "3"} {Snapshot.Settings.Name: "Flow Statistics"}}
+	--> '::ixNet::OK'
+26-03-26 13:58:38 ixNet getA ::ixNet::OBJ-/traffic -enableInstantaneousStatsSupport
+	--> 'false'
+26-03-26 13:58:38 ixNet getA {::ixNet::OBJ-/statistics/view:"Flow Statistics"} -viewCategory
+	--> 'L23Traffic'
+26-03-26 13:58:38 L23Traffic ==> Flow Statistics
+
+26-03-26 13:58:38 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:38 ixNet getA ::ixNet::OBJ-//globals -username
+	--> 'IxNetwork/ixnetworkweb/seunyang-13-30879'
+26-03-26 13:58:38 ixNet readFrom {/root/.local/share/Ixia/IxNetwork/data/logs/Test1-20260326-135734437635/Snapshot CSV/Flow Statistics.csv} -ixNetRelative
+	--> '::ixNet::FILEHANDLE-3'
+26-03-26 13:58:38 ixNet writeTo /IxNetwork/notebooks/HighLevelApi/Ngpf/Python/Traffic/Flow_Statistics_20260326135838_seunyang-13-30879_7851.csv -overwrite
+	--> '::ixNet::FILEHANDLE-4'
+26-03-26 13:58:38 ixNet exec copyFile ::ixNet::FILEHANDLE-3 ::ixNet::FILEHANDLE-4
+	--> '::ixNet::OK'
+26-03-26 13:58:38 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:38 ixNet getList ::ixNet::OBJ-/ vport
+	--> '::ixNet::OBJ-/vport:1 ::ixNet::OBJ-/vport:2'
+26-03-26 13:58:38 ixNet getA ::ixNet::OBJ-/vport:1 -name
+	--> '1/1/5'
+26-03-26 13:58:38 ixNet getRoot
+	--> '::ixNet::OBJ-/'
+26-03-26 13:58:38 ixNet getList ::ixNet::OBJ-/ vport
+	--> '::ixNet::OBJ-/vport:1 ::ixNet::OBJ-/vport:2'
+26-03-26 13:58:38 ixNet getA ::ixNet::OBJ-/vport:1 -name
+	--> '1/1/5'
+26-03-26 13:58:38 ixNet getA ::ixNet::OBJ-/vport:2 -name
+	--> '1/1/6'
