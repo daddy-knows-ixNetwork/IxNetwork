@@ -1,0 +1,23 @@
+session:
+  IpAddress: '10.36.94.212'
+  RestPort: null
+  UserName: seunyang
+  Password: seunyang
+  SessionName: null
+  SessionId: null
+  ApiKey: null
+  ClearConfig: True
+  LogLevel: info
+  LogFilename: restpy.log
+
+portMap:
+  - IpAddress: 10.36.88.116
+    CardId: 1
+    PortId: 11
+    Name: 'Port_1'
+    Media: fiber
+  - IpAddress: 10.36.88.116
+    CardId: 1
+    PortId: 12
+    Name: 'Port_2'
+    Media: fiber

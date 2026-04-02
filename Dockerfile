@@ -60,7 +60,7 @@ RUN set -ex && \
     python3-setuptools \
     python3-pip \
     python3-tk \
-    tcl tcltls tcllib tcl-dev tclx  && \
+    tcl tcltls tcllib tcl-dev tclx  tree && \
     echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME && \
     chmod 0440 /etc/sudoers.d/$USERNAME
 
@@ -111,9 +111,16 @@ RUN set -ex && \
 ADD IxNetworkAPI26.0.2601.6PI.tar.gz /opt/
 # RUN pip install -r /opt/ixia/ixnetwork/26.0.2601.6/lib/PythonApi/requirements.txt
 ADD IxNetworkAPI11.10.2508.10PI.tar.gz /opt/
+ADD IxNetworkAPI11.00.2407.37PI.tar.gz /opt/
 ADD IxNetworkAPI11.00.2504.10PI.tar.gz /opt/
 # different requirements.txt for 10.00
 ADD IxNetworkAPI10.00.2312.4PI.tar.gz /opt/
+# Debug versions
+ADD IxNetworkAPI26.0.2601.6PI.tar.gz /opt2600/
+ADD IxNetworkAPI11.10.2508.10PI.tar.gz /opt1110/
+ADD IxNetworkAPI11.00.2407.37PI.tar.gz /opt1100U1/
+ADD IxNetworkAPI11.00.2504.10PI.tar.gz /opt1100/
+ADD IxNetworkAPI10.00.2312.4PI.tar.gz /opt1000/
 
 RUN set -ex && \
     uv venv /opt/ixia/venv/venv26.00 &&\
@@ -129,6 +136,11 @@ RUN set -ex && \
     uv venv /opt/ixia/venv/venv11.00 &&\
     . /opt/ixia/venv/venv11.00/bin/activate &&\
     uv pip install -r /opt/ixia/ixnetwork/11.00.2504.10/lib/PythonApi/requirements.txt &&\
+    uv pip install --upgrade ixnetwork-restpy pyyaml &&\
+    deactivate &&\
+    uv venv /opt/ixia/venv/venv11.00U1 &&\
+    . /opt/ixia/venv/venv11.00U1/bin/activate &&\
+    uv pip install -r /opt/ixia/ixnetwork/11.00.2407.37/lib/PythonApi/requirements.txt &&\
     uv pip install --upgrade ixnetwork-restpy pyyaml &&\
     deactivate &&\
     uv venv /opt/ixia/venv/venv10.00 &&\
