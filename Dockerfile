@@ -116,11 +116,11 @@ ADD IxNetworkAPI11.00.2504.10PI.tar.gz /opt/
 # different requirements.txt for 10.00
 ADD IxNetworkAPI10.00.2312.4PI.tar.gz /opt/
 # Debug versions
-ADD IxNetworkAPI26.0.2601.6PI.tar.gz /opt2600/
-ADD IxNetworkAPI11.10.2508.10PI.tar.gz /opt1110/
-ADD IxNetworkAPI11.00.2407.37PI.tar.gz /opt1100U1/
-ADD IxNetworkAPI11.00.2504.10PI.tar.gz /opt1100/
-ADD IxNetworkAPI10.00.2312.4PI.tar.gz /opt1000/
+#ADD IxNetworkAPI26.0.2601.6PI.tar.gz /opt2600/
+#ADD IxNetworkAPI11.10.2508.10PI.tar.gz /opt1110/
+#ADD IxNetworkAPI11.00.2407.37PI.tar.gz /opt1100U1/
+#ADD IxNetworkAPI11.00.2504.10PI.tar.gz /opt1100/
+#ADD IxNetworkAPI10.00.2312.4PI.tar.gz /opt1000/
 
 RUN set -ex && \
     uv venv /opt/ixia/venv/venv26.00 &&\
