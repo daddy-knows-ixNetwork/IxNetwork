@@ -58,6 +58,24 @@ services:
       - ./ixenv/ixnetwork11.10.env
     working_dir: /IxNetwork
 
+  ixnetwork11.00U1:
+    platform: linux/amd64
+    privileged: true
+    build:
+      context: .
+    image: ghcr.io/daddy-knows-ixnetwork/ixnetwork:main
+    volumes:
+      # For future ssh use in development
+      - ~/.ssh:/home/ubuntu/.ssh:ro
+      - .:/IxNetwork
+      - ~/.gitconfig:/home/ubuntu/.gitconfig:ro
+      #- /var/run/docker.sock:/var/run/docker.sock
+      #- ~/.kube:/home/ubuntu/.kube_host:ro
+      #environment:
+    env_file:
+      - ./ixenv/ixnetwork11.00U1.env
+    working_dir: /IxNetwork
+
   ixnetwork11.00:
     platform: linux/amd64
     privileged: true

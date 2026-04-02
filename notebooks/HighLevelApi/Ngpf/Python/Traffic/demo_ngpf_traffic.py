@@ -93,6 +93,7 @@ cfgErrors = 0
 
 connect_result = ixiangpf.connect(
     ixnetwork_tcl_server=ixnetwork_tcl_server,
+    close_server_on_disconnect=0,
     device=chassis_ip,
     port_list=port_list,
     break_locks=1,
@@ -109,8 +110,8 @@ pprint(connect_result)
 ports = connect_result['vport_list'].split()
 
 # Enable Debug and Log
-ixiahlt.ixiatcl._eval("set ::ixia::debug 3")
-ixiahlt.ixiatcl._eval("set ::ixia::debug_file_name ./ixnetwork_hlt_log.txt")
+#ixiahlt.ixiatcl._eval("set ::ixia::debug 3")
+#ixiahlt.ixiatcl._eval("set ::ixia::debug_file_name ./ixnetwork_hlt_log.txt")
 
 #result = ixiahlt.interface_config( # SY 03/18/26
 result = ixiangpf.interface_config(
@@ -356,7 +357,7 @@ if start['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('test_control', start)
 
 print("\nSleeping for 10 seconds ... ")
-time.sleep(10)
+time.sleep(3)
 
 # pdb.set_trace()
 
@@ -417,7 +418,7 @@ while str(ixiangpf.ixnet.getAttribute('/traffic', '-state')) != 'started':
         raise IxiaError(IxiaError.COMMAND_FAIL, additional_info)
 
 print("\nRun traffic for 10 seconds\n")
-time.sleep(10)
+#jtime.sleep(10)
 
 # ######################
 # stop phase of the test
@@ -426,40 +427,41 @@ time.sleep(10)
 # Stop traffic started earlier
 #
 print('Stopping Traffic...')
-#_result_ = ixiahlt.traffic_control( # SY 03/18/26
-_result_ = ixiangpf.traffic_control(
-    action='stop'
-)
-# Check status
-if _result_['status'] != IxiaHlt.SUCCESS:
-    ErrorHandler('traffic_control', _result_)
-
-start_time = time.time()
-while str(ixiangpf.ixnet.getAttribute('/traffic', '-state')) != 'stopped':
-    curr_time = time.time()
-    if curr_time - start_time < 120:
-        time.sleep(2)
-    else:
-        additional_info = 'Unexpected traffic -state after traffic_control action=stop.  state = %s' % str(
-            ixiangpf.ixnet.getAttribute('/traffic', '-state'))
-        raise IxiaError(IxiaError.COMMAND_FAIL, additional_info)
-
-print('Stopping all protocol(s) ...')
+# #_result_ = ixiahlt.traffic_control( # SY 03/18/26
+# _result_ = ixiangpf.traffic_control(
+#     action='stop'
+# )
+# # Check status
+# if _result_['status'] != IxiaHlt.SUCCESS:
+#     ErrorHandler('traffic_control', _result_)
+#
+# start_time = time.time()
+# while str(ixiangpf.ixnet.getAttribute('/traffic', '-state')) != 'stopped':
+#     curr_time = time.time()
+#     if curr_time - start_time < 120:
+#         time.sleep(2)
+#     else:
+#         additional_info = 'Unexpected traffic -state after traffic_control action=stop.  state = %s' % str(
+#             ixiangpf.ixnet.getAttribute('/traffic', '-state'))
+#         raise IxiaError(IxiaError.COMMAND_FAIL, additional_info)
+#
+# print('Stopping all protocol(s) ...')
 
 # pdb.set_trace()
 
 #_result_ = ixiahlt.test_control(action='stop_all_protocols') # SY 03/18/26
-_result_ = ixiangpf.test_control(action='stop_all_protocols')
-# Check status
-if _result_['status'] != IxiaHlt.SUCCESS:
-    ErrorHandler('ixiahlt::traffic_control', _result_)
-
-print('\n\nCollecting traffic stats...\n\n')
+# _result_ = ixiangpf.test_control(action='stop_all_protocols')
+# # Check status
+# if _result_['status'] != IxiaHlt.SUCCESS:
+#     ErrorHandler('ixiahlt::traffic_control', _result_)
+#
+# print('\n\nCollecting traffic stats...\n\n')
 
 # pdb.set_trace()
 
 traffic_stats = ixiangpf.traffic_stats(
     mode='traffic_item',
+    #mode='aggregate', # if I don't pass the parameter then that's aggregate
 )
 if traffic_stats['status'] != IxiaHlt.SUCCESS:
     ErrorHandler('traffic_stats', traffic_stats)
@@ -486,6 +488,24 @@ print("t1_rx_loss_pkts = %s " % t1_rx_loss_pkts)
 
 print('\n\nTraffic Item Stats\n')
 pprint(traffic_stats)
+
+# Enable Debug and Log
+#ixiahlt.ixiatcl._eval("set ::ixia::debug 1")
+#1ixiahlt.ixiatcl._eval("set ::ixia::debug_file_name ./ixnetwork_hlt_log.txt")
+
+
+for _ in range(3):
+    try:
+        result = ixiangpf.traffic_stats()
+        if result['status'] != '1':
+            ErrorHandler('traffic_stats', result)
+        else:
+            pprint(result)
+    except Exception as e:
+        pprint(e)
+    # time.sleep(3)
+
+
 
 # need to make sure the waiting_for_stats is 0; if it's 1, need to call traffic_stats once more
 # TK debug
