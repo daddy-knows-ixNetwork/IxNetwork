@@ -1,65 +1,3 @@
-# -*- coding: cp1252 -*-
-################################################################################
-# Version 1.0    $Revision: 1 $                                                #
-#                                                                              #
-#    Copyright � 1997 - 2015 by IXIA                                           #
-#    All Rights Reserved.                                                      #
-#                                                                              #
-#    Revision Log:                                                             #
-#    19/02/2015 - Rudra Dutta - created sample                                 #
-#                                                                              #
-################################################################################
-
-################################################################################
-#                                                                              #
-#                                LEGAL  NOTICE:                                #
-#                                ==============                                #
-# The following code and documentation (hereinafter "the script") is an        #
-# example script for demonstration purposes only.                              #
-# The script is not a standard commercial product offered by Ixia and have     #
-# been developed and is being provided for use only as indicated herein. The   #
-# script [and all modifications enhancements and updates thereto (whether      #
-# made by Ixia and/or by the user and/or by a third party)] shall at all times #
-# remain the property of Ixia.                                                 #
-#                                                                              #
-# Ixia does not warrant (i) that the functions contained in the script will    #
-# meet the users requirements or (ii) that the script will be without          #
-# omissions or error-free.                                                     #
-# THE SCRIPT IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND AND IXIA         #
-# DISCLAIMS ALL WARRANTIES EXPRESS IMPLIED STATUTORY OR OTHERWISE              #
-# INCLUDING BUT NOT LIMITED TO ANY WARRANTY OF MERCHANTABILITY AND FITNESS FOR #
-# A PARTICULAR PURPOSE OR OF NON-INFRINGEMENT.                                 #
-# THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE SCRIPT  IS WITH THE #
-# USER.                                                                        #
-# IN NO EVENT SHALL IXIA BE LIABLE FOR ANY DAMAGES RESULTING FROM OR ARISING   #
-# OUT OF THE USE OF OR THE INABILITY TO USE THE SCRIPT OR ANY PART THEREOF     #
-# INCLUDING BUT NOT LIMITED TO ANY LOST PROFITS LOST BUSINESS LOST OR          #
-# DAMAGED DATA OR SOFTWARE OR ANY INDIRECT INCIDENTAL PUNITIVE OR              #
-# CONSEQUENTIAL DAMAGES EVEN IF IXIA HAS BEEN ADVISED OF THE POSSIBILITY OF    #
-# SUCH DAMAGES IN ADVANCE.                                                     #
-# Ixia will not be required to provide any software maintenance or support     #
-# services of any kind (e.g. any error corrections) in connection with the     #
-# script or any part thereof. The user acknowledges that although Ixia may     #
-# from time to time and in its sole discretion provide maintenance or support  #
-# services for the script any such services are subject to the warranty and    #
-# damages limitations set forth herein and will not obligate Ixia to provide   #
-# any additional maintenance or support services.                              #
-#                                                                              #
-################################################################################
-
-################################################################################
-#                                                                              #
-# Description:                                                                 #
-#    This script intends to demonstrate how to use NGPF BGP API                #
-#    It will create 2 BGP topologyes, it will start the emulation and          #
-#    than it will retrieve and display few statistics                          #
-# Module:                                                                      #
-#    The sample was tested on an XMVDC16 module.                               #
-# Software:                                                                    #
-#    IxOS      6.80 EA                                                         #
-#    IxNetwork 7.40 EA                                                         #
-#                                                                              #
-################################################################################
 import os
 import sys
 import time
@@ -111,23 +49,34 @@ def assignPorts (ixNet, realPort1, realPort2) :
 # IxNetwork.py file somewhere else where we python can autoload it             #
 # "IxNetwork.py" is available in <IxNetwork_installer_path>\API\Python         #
 ################################################################################
-ixNetPath = r'C:\Program Files (x86)\Ixia\IxNetwork\7.40-EA\API\Python'
-sys.path.append(ixNetPath)
+#ixNetPath = r'C:\Program Files (x86)\Ixia\IxNetwork\7.40-EA\API\Python'
+#sys.path.append(ixNetPath)
 import IxNetwork
 
 #################################################################################
 # Give chassis/client/ixNetwork server port/ chassis port HW port information   #
 # below                                                                         #
 #################################################################################
-ixTclServer = '10.205.25.97'
-ixTclPort   = '8009'
-ports       = [('10.205.28.63', '2', '7',), ('10.205.28.63', '2', '8',)]
+#ixTclServer = '10.205.25.97'
+ixTclServer = '10.36.94.212'
+#ixTclPort   = '8009' # Windows
+ixTclPort   = '443' # Linux
+#ports       = [('10.205.28.63', '2', '7',), ('10.205.28.63', '2', '8',)]
+ports       = [('10.36.88.91', '6', '13',), ('10.36.88.91', '6', '14',)]
+
+# print('Get the API key')
+# #ixNet.getApiKey (hostname, "-username", "user", "-password", "pass" [, “-port”, 443] [, “-apiKeyFile”, ”api.key”] )
+# apiKey = ixNet.getApiKey (ixia.ixApiServer, "-username", "admin", "-password", "admin")
+#
+# print('Connect to IxNetwork API server')
+# ixNet.connect(ixia.ixApiServer, '-port', ixia.ixApiPort, '-setAttribute', 'strict', '-version', '8.50', '-apiKey', apiKey)
+
+ixNet = IxNetwork.IxNet()
+apiKey = ixNet.getApiKey (ixTclServer, "-username", "admin", "-password", "admin")
 
 # get IxNet class
-ixNet = IxNetwork.IxNet()
 print("connecting to IxNetwork client")
-ixNet.connect(ixTclServer, '-port', ixTclPort, '-version', '7.40',
-     '-setAttribute', 'strict')
+ixNet.connect(ixTclServer, '-port', ixTclPort, '-version', '11.10', '-setAttribute', 'strict', '-apiKey', apiKey)
 
 # cleaning up the old configfile, and creating an empty config
 print("cleaning up the old configfile, and creating an empty config")
@@ -150,7 +99,7 @@ topologies = ixNet.getList(ixNet.getRoot(), 'topology')
 topo1 = topologies[0]
 topo2 = topologies[1]
 
-print "Adding 2 device groups"
+print ("Adding 2 device groups")
 ixNet.add(topo1, 'deviceGroup')
 ixNet.add(topo2, 'deviceGroup')
 ixNet.commit()
@@ -283,10 +232,10 @@ addressSet2 = ixNet.getAttribute(loopback2, '-address')
 ixNet.setMultiAttribute(addressSet2, '-clearOverlays', 'false', '-pattern', 'counter')
 ixNet.commit()
 
-addressSet2 = ixNet.add(addressSet2, 'counter')
-ixNet.setMultiAttribute(addressSet2, '-step', '0.1.0.0 ', '-start', '201.1.0.0', '-direction', 'increment')
-ixNet.commit()
-addressSet2 = ixNet.remapIds(addressSet2)[0]
+#addressSet2 = ixNet.add(addressSet2, 'counter')
+#ixNet.setMultiAttribute(addressSet2, '-step', '0.1.0.0 ', '-start', '201.1.0.0', '-direction', 'increment')
+#ixNet.commit()
+# addressSet2 = ixNet.remapIds(addressSet2)[0]
 
 ################################################################################
 # Start BGP protocol and wait for 45 seconds                                   #

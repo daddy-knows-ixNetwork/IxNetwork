@@ -91,7 +91,7 @@ try:
         Name=config['portMap'][1]['Name']
     )
     vport1.L1Config.Ethernet.update(Media = config['portMap'][0]['Media'])
-    vport2.L1Config.Ethernet.update(Media = config['portMap'][0]['Media'])
+    vport2.L1Config.Ethernet.update(Media = config['portMap'][1]['Media'])
 
     portMap.Connect(ForceOwnership=True)
 

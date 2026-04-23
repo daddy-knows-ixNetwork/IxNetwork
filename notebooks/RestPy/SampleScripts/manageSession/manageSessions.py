@@ -72,6 +72,7 @@ try:
     if sessions:
         for session in sessions:
             print(session)
+            print(session.Ixnetwork.Globals.BuildNumber)
     else:
         print("No sessions", sessions)
 
